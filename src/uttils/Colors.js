@@ -9,4 +9,8 @@ export default {
   blue: 'blue',
   linkBtnColor: '#337ab7',
   approvedAmtBgColor: '#5dc34b',
+  paidAmtBgColor: 'green',
+  pendingAmtBgColor: 'red',
+  deniedAmtBgColor: 'red',
+  gray: 'gray',
 };

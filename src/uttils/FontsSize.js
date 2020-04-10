@@ -6,4 +6,6 @@ export default {
   primaryBtnName: fontscale(16),
   textInput: fontscale(14),
   special: fontscale(24),
+  paymentStatus: fontscale(20),
+  payDescription: fontscale(13),
 };
