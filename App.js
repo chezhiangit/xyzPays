@@ -47,7 +47,7 @@ const HomeNavigator = () => {
         width: 240,
       }}
       initialRouteName="Home"
-      drawerType={'slide'}
+      // drawerType={'slide'}
       hideStatusBar={true}
       overlayColor>
       <Drawer.Screen name="Home" component={HomePage} />
