@@ -30,8 +30,12 @@ class EmailInputComponent extends React.Component {
             styles.textInput,
             this.state.focus &&
               !this.state.emailValid && {borderColor: 'red', borderWidth: 1},
+            this.state.focus &&
+              this.state.emailValid && {borderColor: 'blue', borderWidth: 1},
           ]}
-          autoFocus={this.props.autoFocus}
+          textContentType={'emailAddress'}
+          spellCheck={false}
+          autoFocus={false}
           multiline={false}
           placeholderTextColor="rgb(117, 129, 155)"
           autoCorrect={false}

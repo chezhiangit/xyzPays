@@ -16,6 +16,7 @@ class TextInputComponent extends React.Component {
       placeholderText: '',
       inputValue: '',
       focus: false,
+      valieInput: true,
     };
   }
   handleOnChangeText = inputValue => {
@@ -26,8 +27,15 @@ class TextInputComponent extends React.Component {
     return (
       <View style={styles.textInputContainer}>
         <TextInput
-          style={styles.textInput}
-          autoFocus={this.props.autoFocus}
+          style={[
+            styles.textInput,
+            this.state.focus &&
+              !this.state.valieInput && {borderColor: 'red', borderWidth: 1},
+            this.state.focus &&
+              this.state.valieInput && {borderColor: 'blue', borderWidth: 1},
+          ]}
+          spellCheck={false}
+          autoFocus={false}
           multiline={false}
           placeholderTextColor="rgb(117, 129, 155)"
           autoCorrect={false}

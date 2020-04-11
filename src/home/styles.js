@@ -21,7 +21,7 @@ export default StyleSheet.create({
     // borderColor: 'red',
     marginLeft: widthAdapter(40),
     marginRight: widthAdapter(40),
-    marginBottom: heightAdapter(150),
+    marginBottom: widthAdapter(150),
   },
   logedInUserInfo: {
     flexDirection: 'row',

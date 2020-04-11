@@ -35,7 +35,7 @@ class HomePage extends React.Component {
     const taskBtnName = this.getTaskButtonName(this.state.taskCount);
     return (
       <View style={[BaseStyles.baseContainer]}>
-        <Header headerName={I18n.t('homePage.headerTitle')} />
+        {/* <Header headerName={I18n.t('homePage.headerTitle')} /> */}
         <ScrollView
           style={styles.scrollContainer}
           showsVerticalScrollIndicator={false}>

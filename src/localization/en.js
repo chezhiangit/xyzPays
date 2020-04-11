@@ -44,6 +44,22 @@ export default {
 
     View: 'View',
   },
+  userRegistration: {
+    headerTitle: 'New Registration',
+    firstName: 'First Name',
+    lastName: 'Last Name',
+    mobileNumber: 'Mobile Number',
+    email: 'Login Email',
+    password: 'Password',
+    retypePassword: 'Retype Password',
+    registerBtnName: 'Register',
+  },
+  forgotPassword: {
+    headerTitle: 'Forgot Password',
+    userInfoStep1: 'XYZPays Password Recovery - Step 1',
+    step1: 'Enter your registered Email Id',
+    next: 'Next',
+  },
   common: {
     placeHolder: 'Enter value',
   },

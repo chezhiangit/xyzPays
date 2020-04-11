@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
 import Header from '../common/UIComponents/Header';
@@ -15,11 +16,19 @@ class LoginPage extends React.Component {
     this.props.navigation.replace('HomePage');
   };
 
+  onSignUp = () => {
+    this.props.navigation.navigate('UserRegistration');
+  };
+
+  onForgotPassword = () => {
+    this.props.navigation.navigate('ForgotPassword');
+  };
+
   render() {
     // const {navigation} = this.props;
     return (
       <View style={[BaseStyles.baseContainer]}>
-        <Header headerName={I18n.t('login.headerTitle')} />
+        {/* <Header headerName={I18n.t('login.headerTitle')} /> */}
         <View style={styles.loginViewContainer}>
           <View style={styles.loginUserInfo}>
             <Text style={styles.loginUserInfoTxt}>
@@ -40,8 +49,11 @@ class LoginPage extends React.Component {
               onSubmit={this.onSubmitLogin}
             />
             <View style={BaseStyles.emptyHView} />
-            <LinkBtnComponent btnName={I18n.t('login.signUpNow')} />
-            <LinkBtnComponent btnName={I18n.t('login.forgotPwd')} />
+            <LinkBtnComponent
+              btnName={I18n.t('login.signUpNow')}
+              onClick={this.onSignUp}
+            />
+            <LinkBtnComponent btnName={I18n.t('login.forgotPwd')} onClick={this.onForgotPassword}/>
           </View>
         </View>
         <Footer />

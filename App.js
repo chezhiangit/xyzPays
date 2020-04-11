@@ -7,36 +7,27 @@
  */
 import 'react-native-gesture-handler';
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import {Button} from 'react-native';
+import {NavigationContainer, DrawerActions} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {Provider} from 'react-redux';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {configureStore} from './src/AppStore/ConfigureStore';
 import LoginPage from './src/login/LoginPage';
+import UserRegistration from './src/login/userRegistration/UserRegistration';
+import ForgotPassword from './src/login/forgotPassword/ForgotPassword';
 import HomePage from './src/home/HomePage';
 import DetailsPage from './src/Details/DetailsPage';
 import MapComponent from './src/GoogleMapView/MapView';
+import Header from './src/common/UIComponents/Header';
+import MenuIcon from './src/common/UIComponents/HamburgerMenu';
+import I18n from './src/localization/i18n';
 
 const store = configureStore();
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
-
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
 const HomeNavigator = () => {
   return (
@@ -48,9 +39,24 @@ const HomeNavigator = () => {
       }}
       initialRouteName="Home"
       // drawerType={'slide'}
-      hideStatusBar={true}
+      hideStatusBar={false}
       overlayColor>
-      <Drawer.Screen name="Home" component={HomePage} />
+      <Drawer.Screen
+        name="Home"
+        component={HomePage}
+        options={{
+          headerTitle: props => (
+            <Header headerName={I18n.t('login.headerTitle')} {...props} />
+          ),
+          headerRight: () => (
+            <Button
+              onPress={() => alert('This is a button!')}
+              title="Info"
+              color="#fff"
+            />
+          ),
+        }}
+      />
       <Drawer.Screen name="Details" component={DetailsPage} />
     </Drawer.Navigator>
   );
@@ -59,54 +65,80 @@ const HomeNavigator = () => {
 const App: () => React$Node = () => {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen name="Login" component={LoginPage} />
-          <Stack.Screen name="HomePage" component={HomeNavigator} />
-          <Stack.Screen name="MapView" component={MapComponent} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Login"
+            screenOptions={
+              {
+                // headerShown: false,
+              }
+            }>
+            <Stack.Screen
+              name="Login"
+              component={LoginPage}
+              options={{
+                headerTitle: props => (
+                  <Header headerName={I18n.t('login.headerTitle')} {...props} />
+                ),
+                // headerRight: () => (
+                //   <Button
+                //     onPress={() => alert('This is a button!')}
+                //     title="Info"
+                //     color="#fff"
+                //   />
+                // ),
+              }}
+            />
+            <Stack.Screen
+              name="UserRegistration"
+              component={UserRegistration}
+              options={{
+                // headerBackTitle: 'Login',
+                // headerBackTitleVisible: true,
+                headerTitle: props => (
+                  <Header
+                    headerName={I18n.t('userRegistration.headerTitle')}
+                    {...props}
+                  />
+                ),
+              }}
+            />
+            <Stack.Screen
+              name="ForgotPassword"
+              component={ForgotPassword}
+              options={{
+                // headerBackTitle: 'Login',
+                // headerBackTitleVisible: true,
+                headerTitle: props => (
+                  <Header
+                    headerName={I18n.t('forgotPassword.headerTitle')}
+                    {...props}
+                  />
+                ),
+              }}
+            />
+            <Stack.Screen
+              name="HomePage"
+              component={HomeNavigator}
+              options={{
+                headerTitle: props => (
+                  <Header
+                    headerName={I18n.t('homePage.headerTitle')}
+                    {...props}
+                  />
+                ),
+                headerRight: () => (
+                  <MenuIcon onPress={() => DrawerActions.toggleDrawer()} />
+                ),
+              }}
+            />
+            <Stack.Screen name="MapView" component={MapComponent} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
     </Provider>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
 
 export default App;

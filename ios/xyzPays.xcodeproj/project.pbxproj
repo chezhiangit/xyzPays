@@ -148,7 +148,6 @@
 				AC14FA50D2AB97D64C24BDF6 /* Pods-xyzPays-xyzPaysTests.debug.xcconfig */,
 				8EF8CEDC9650379E79901D0E /* Pods-xyzPays-xyzPaysTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};

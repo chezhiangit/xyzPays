@@ -11,10 +11,11 @@ import fontFamily from '../../../uttils/FontFamily';
 
 export default StyleSheet.create({
   paymentContainer: {
-    height: heightAdapter(500),
+    // height: heightAdapter(500),
     width: widthAdapter(300),
     borderWidth: widthAdapter(1),
     borderColor: Colors.primaryAppColor,
+    paddingBottom: heightAdapter(30),
   },
   paymentStatus: {
     fontSize: FontsSize.paymentStatus,

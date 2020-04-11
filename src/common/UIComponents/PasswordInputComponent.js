@@ -24,8 +24,13 @@ class PasswordInputComponent extends React.Component {
             styles.textInput,
             this.state.focus &&
               !this.state.pwdValid && {borderColor: 'red', borderWidth: 1},
+            this.state.focus &&
+              this.state.pwdValid && {borderColor: 'blue', borderWidth: 1},
           ]}
-          autoFocus={this.props.autoFocus}
+          secureTextEntry={true}
+          spellCheck={false}
+          textContentType={'password'}
+          autoFocus={false}
           multiline={false}
           placeholderTextColor="rgb(117, 129, 155)"
           autoCorrect={false}

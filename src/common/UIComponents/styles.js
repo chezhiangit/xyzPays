@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {widthAdapter, heightAdapter, fontscale} from '../../uttils/adapterUtil';
+import {widthAdapter, heightAdapter, fontscale, deviceWidth} from '../../uttils/adapterUtil';
 import Colors from '../../uttils/Colors';
 import FontsSize from '../../uttils/FontsSize';
 import FontsWeight from '../../uttils/FontsWeight';
@@ -9,7 +9,7 @@ export default StyleSheet.create({
   header: {
     height: heightAdapter(120),
     backgroundColor: Colors.primaryAppColor,
-    width: '100%',
+    width: deviceWidth, //'100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -75,19 +75,36 @@ export default StyleSheet.create({
   },
   captionText: {
     position: 'absolute',
-    top: heightAdapter(-25),
+    top: widthAdapter(-25),
     left: widthAdapter(30),
-    height: heightAdapter(50),
+    height: widthAdapter(50),
     fontSize: fontscale(12),
     backgroundColor: Colors.white,
     padding: widthAdapter(10),
     fontFamily: fontFamily.primaryFontFamily,
+    color: 'blue',
   },
   roundBtn: {
-    height: heightAdapter(150),
+    height: widthAdapter(150),
     width: widthAdapter(150),
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  menu: {
+    width: widthAdapter(100),
+    height: heightAdapter(100),
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // borderColor: 'white',
+    // borderWidth: 2,
+  },
+  menuLine: {
+    width: widthAdapter(75),
+    height: heightAdapter(5),
+    backgroundColor: Colors.white,
+    margin: widthAdapter(10),
+    borderRadius: widthAdapter(5),
   },
 });
