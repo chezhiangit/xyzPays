@@ -18,6 +18,8 @@ import LoginPage from './src/login/LoginPage';
 import UserRegistration from './src/login/userRegistration/UserRegistration';
 import ForgotPassword from './src/login/forgotPassword/ForgotPassword';
 import HomePage from './src/home/HomePage';
+import CommissionPage from './src/Commission/commissionPage';
+import TrendingPage from './src/Trending/TrendingPage';
 import DetailsPage from './src/Details/DetailsPage';
 import MapComponent from './src/GoogleMapView/MapView';
 import Header from './src/common/UIComponents/Header';
@@ -55,6 +57,38 @@ const HomeNavigator = () => {
               color="#fff"
             />
           ),
+        }}
+      />
+      <Drawer.Screen
+        name="CommissionPage"
+        component={CommissionPage}
+        options={{
+          headerTitle: props => (
+            <Header headerName={I18n.t('commission.headerTitle')} {...props} />
+          ),
+          // headerRight: () => (
+          //   <Button
+          //     onPress={() => alert('This is a button!')}
+          //     title="Info"
+          //     color="#fff"
+          //   />
+          // ),
+        }}
+      />
+      <Drawer.Screen
+        name="TrendingPage"
+        component={TrendingPage}
+        options={{
+          headerTitle: props => (
+            <Header headerName={I18n.t('trending.headerTitle')} {...props} />
+          ),
+          // headerRight: () => (
+          //   <Button
+          //     onPress={() => alert('This is a button!')}
+          //     title="Info"
+          //     color="#fff"
+          //   />
+          // ),
         }}
       />
       <Drawer.Screen name="Details" component={DetailsPage} />
@@ -133,6 +167,7 @@ const App: () => React$Node = () => {
                 ),
               }}
             />
+            <Stack.Screen name="CommissionPage" component={CommissionPage} />
             <Stack.Screen name="MapView" component={MapComponent} />
           </Stack.Navigator>
         </NavigationContainer>

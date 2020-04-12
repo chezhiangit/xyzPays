@@ -1,11 +1,19 @@
 import * as React from 'react';
-import {View, Text, TouchableOpacity, Animated} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Animated,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import styles from './styles';
 import SprinnerView from './hoc/SpinnerView';
 
 const RoundButton = props => {
   return (
-    <TouchableOpacity onPress={props.startSpinner}>
+    <TouchableWithoutFeedback
+      style={[styles.roundBtn, props.btnStyle]}
+      onPress={props.startSpinner}>
       <Animated.View
         style={[
           styles.roundBtn,
@@ -14,7 +22,7 @@ const RoundButton = props => {
         ]}>
         <Text style={[styles.btnName, props.textStyle]}>${props.btnName}</Text>
       </Animated.View>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   );
 };
 

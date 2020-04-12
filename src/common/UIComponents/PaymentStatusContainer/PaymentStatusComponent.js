@@ -36,6 +36,7 @@ const PaymentStatusComponent = props => {
       <View
         style={{width: '100%', alignItems: 'center', justifyContent: 'center'}}>
         <PrimayButton
+          onSubmit={props.onSubmit}
           btnStyle={styles.viewBtnStyle}
           btnName={I18n.t('homePage.View')}
         />

@@ -28,7 +28,18 @@ class HomePage extends React.Component {
     const taskBtnText = `${taskBtnPrefix} ${taskCount} ${taskBtnPostfix}`;
     return taskBtnText;
   };
-  onPressApproveButton = () => {};
+  onPressApprovedButton = () => {
+    this.props.navigation.navigate('CommissionPage');
+  };
+  onPressPaidButton = () => {
+    this.props.navigation.navigate('CommissionPage');
+  };
+  onPressPendingButton = () => {
+    this.props.navigation.navigate('CommissionPage');
+  };
+  onPressDeniedButton = () => {
+    this.props.navigation.navigate('CommissionPage');
+  };
 
   render() {
     const {navigation} = this.props;
@@ -63,7 +74,7 @@ class HomePage extends React.Component {
           /> */}
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <PaymentStatusComponent
-              onSubmit={this.onPressApproveButton}
+              onSubmit={this.onPressApprovedButton}
               btnName={this.state.approvedAmt}
               btnStyle={styles.approveBtnStyle}
               textStyle={styles.amountText}
@@ -82,7 +93,7 @@ class HomePage extends React.Component {
               )}
             />
             <PaymentStatusComponent
-              onSubmit={this.onPressApproveButton}
+              onSubmit={this.onPressPaidButton}
               btnName={this.state.paidAmt}
               btnStyle={styles.paidBtnStyle}
               textStyle={styles.amountText}
@@ -96,7 +107,7 @@ class HomePage extends React.Component {
           <View style={[BaseStyles.emptyHView, {height: heightAdapter(150)}]} />
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <PaymentStatusComponent
-              onSubmit={this.onPressApproveButton}
+              onSubmit={this.onPressPendingButton}
               btnName={this.state.pendingAmt}
               btnStyle={styles.pendingBtnStyle}
               textStyle={styles.amountText}
@@ -115,7 +126,7 @@ class HomePage extends React.Component {
               )}
             />
             <PaymentStatusComponent
-              onSubmit={this.onPressApproveButton}
+              onSubmit={this.onPressDeniedButton}
               btnName={this.state.deniedAmt}
               btnStyle={styles.deniedBtnStyle}
               textStyle={styles.amountText}

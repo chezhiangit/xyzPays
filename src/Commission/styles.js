@@ -1,0 +1,202 @@
+import {StyleSheet} from 'react-native';
+import {widthAdapter, heightAdapter} from '../uttils/adapterUtil';
+import Colors from '../uttils/Colors';
+import fontFamily from '../uttils/FontFamily';
+
+const styles = StyleSheet.create({
+  commissionContainer: {
+    flex: 1,
+    marginLeft: widthAdapter(40),
+    marginRight: widthAdapter(40),
+    paddingTop: heightAdapter(50),
+  },
+  dropdownContainer: {
+    width: '100%',
+    height: heightAdapter(100),
+    borderWidth: 1,
+    borderColor: 'gray',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    borderRadius: widthAdapter(3),
+    borderBottomWidth: widthAdapter(4),
+    zIndex: 100,
+  },
+  image: {
+    height: heightAdapter(40),
+    width: widthAdapter(40),
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginRight: widthAdapter(10),
+  },
+  selectionBox: {
+    flexDirection: 'row',
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    paddingLeft: widthAdapter(10),
+  },
+  transparentView: {
+    flex: 1,
+    position: 'absolute',
+    top: widthAdapter(-35),
+    bottom: 0,
+    left: widthAdapter(-35),
+    right: widthAdapter(-35),
+    backgroundColor: 'gray',
+    zIndex: 1,
+    opacity: 0.1,
+  },
+  segmentItemRow: {
+    width: '100%',
+    height: heightAdapter(75),
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: 'gray',
+    borderBottomWidth: 1,
+    backgroundColor: Colors.white,
+  },
+  segmentItemText: {
+    width: '100%',
+    padding: widthAdapter(10),
+    fontWeight: 'bold',
+  },
+  segmentedView: {
+    width: '100%',
+    position: 'absolute',
+    top: heightAdapter(99),
+    left: widthAdapter(0),
+    borderBottomLeftRadius: widthAdapter(8),
+    borderBottomRightRadius: widthAdapter(8),
+    backgroundColor: Colors.white,
+  },
+  commissionList: {
+    marginTop: heightAdapter(50),
+    marginBottom: heightAdapter(160),
+  },
+  commissionItemContainer: {
+    flexDirection: 'row',
+    height: heightAdapter(350),
+    marginBottom: widthAdapter(10),
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    borderRadius: widthAdapter(4),
+    borderWidth: 1,
+    borderBottomWidth: widthAdapter(5),
+    borderColor: Colors.gray,
+    paddingTop: widthAdapter(30),
+    paddingBottom: widthAdapter(30),
+    paddingLeft: widthAdapter(10),
+  },
+  commissionDetailsContainer: {
+    width: '70%',
+    height: '100%',
+  },
+  commissionImageContainer: {
+    width: '30%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  commissionImage: {
+    height: heightAdapter(100),
+    width: widthAdapter(100),
+  },
+  commissionType: {
+    width: '100%',
+    height: heightAdapter(50),
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  commissionTypeTxt: {
+    fontFamily: fontFamily.primaryFontFamily,
+    color: '#333',
+    fontWeight: '500',
+    fontSize: widthAdapter(35),
+  },
+  amountStatusContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    height: heightAdapter(50),
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  amountLabel: {
+    fontSize: widthAdapter(24),
+    fontFamily: fontFamily.primaryFontFamily,
+    color: Colors.primaryAppColor,
+    fontWeight: 'bold',
+  },
+  dollar: {
+    fontSize: widthAdapter(24),
+    fontFamily: fontFamily.primaryFontFamily,
+    color: 'green',
+    fontWeight: 'bold',
+  },
+  amount: {
+    fontSize: widthAdapter(24),
+    fontFamily: fontFamily.primaryFontFamily,
+    color: Colors.primaryAppColor,
+    fontWeight: 'bold',
+  },
+  statusLabel: {
+    fontSize: widthAdapter(24),
+    fontFamily: fontFamily.primaryFontFamily,
+    color: '#a6a6a6',
+    fontWeight: 'bold',
+  },
+  status: {
+    fontSize: widthAdapter(24),
+    fontFamily: fontFamily.primaryFontFamily,
+    color: 'green',
+    fontWeight: 'bold',
+  },
+  paymentDateContainer: {
+    width: '100%',
+    height: heightAdapter(50),
+    flexDirection: 'row',
+  },
+  accountNoContainer: {
+    width: '100%',
+    height: heightAdapter(50),
+    flexDirection: 'row',
+  },
+  reasonContainer: {
+    width: '100%',
+    height: heightAdapter(50),
+    flexDirection: 'row',
+  },
+  paymentDateLabel: {
+    fontSize: widthAdapter(40),
+    fontFamily: fontFamily.primaryFontFamily,
+    color: '#737373',
+  },
+  paymentDate: {
+    fontSize: widthAdapter(40),
+    fontFamily: fontFamily.primaryFontFamily,
+    color: '#737373',
+  },
+  accountNoLabel: {
+    fontSize: widthAdapter(40),
+    fontFamily: fontFamily.primaryFontFamily,
+    color: '#737373',
+  },
+  accountNo: {
+    fontSize: widthAdapter(40),
+    fontFamily: fontFamily.primaryFontFamily,
+    color: '#737373',
+  },
+  reasonLabel: {
+    fontSize: widthAdapter(40),
+    fontFamily: fontFamily.primaryFontFamily,
+    color: '#737373',
+  },
+  reason: {
+    fontSize: widthAdapter(40),
+    fontFamily: fontFamily.primaryFontFamily,
+    color: '#737373',
+    fontWeight: 'bold',
+  },
+});
+
+export default styles;
