@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
 import I18n from '../localization/i18n';
@@ -8,11 +8,13 @@ import Footer from '../common/UIComponents/Footer';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import {heightAdapter, widthAdapter} from '../uttils/adapterUtil';
 import PaymentStatusComponent from '../common/UIComponents/PaymentStatusContainer/PaymentStatusComponent';
+import SliderView from '../common/UIComponents/SliderView';
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      showTask: false,
       taskCount: 10,
       approvedAmt: 100,
       paidAmt: 50,
@@ -21,7 +23,9 @@ class HomePage extends React.Component {
     };
   }
 
-  onPressTaskButton = () => {};
+  onPressTaskButton = () => {
+    this.setState({showTask: true});
+  };
   getTaskButtonName = taskCount => {
     const taskBtnPrefix = I18n.t('homePage.taskBtnPrefixText');
     const taskBtnPostfix = I18n.t('homePage.taskBtnPostfixText');
@@ -139,6 +143,20 @@ class HomePage extends React.Component {
           </View>
         </ScrollView>
         <Footer />
+        <SliderView
+          visible={this.state.showTask}
+          animateFrom="right"
+          height="100%"
+          width={widthAdapter(600)}>
+          {/* <View /> */}
+        </SliderView>
+        {this.state.showTask && (
+          <TouchableOpacity
+            style={styles.transparentView}
+            onPress={() => this.setState({showTask: false})}>
+            <View style={styles.transparentView} />
+          </TouchableOpacity>
+        )}
       </View>
       // <View style={BaseStyles.baseContainer}>
       //   <TouchableOpacity onPress={() => navigation.navigate('Details')}>

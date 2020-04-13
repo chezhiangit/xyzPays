@@ -48,7 +48,7 @@ const HomeNavigator = () => {
         component={HomePage}
         options={{
           headerTitle: props => (
-            <Header headerName={I18n.t('login.headerTitle')} {...props} />
+            <Header headerName={I18n.t('homePage.headerTitle')} {...props} />
           ),
           headerRight: () => (
             <Button
@@ -167,7 +167,7 @@ const App: () => React$Node = () => {
                 ),
               }}
             />
-            <Stack.Screen name="CommissionPage" component={CommissionPage} />
+            {/* <Stack.Screen name="CommissionPage" component={CommissionPage} /> */}
             <Stack.Screen name="MapView" component={MapComponent} />
           </Stack.Navigator>
         </NavigationContainer>

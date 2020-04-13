@@ -67,4 +67,15 @@ export default StyleSheet.create({
     fontSize: fontscale(25),
     fontWeight: '500',
   },
+  transparentView: {
+    flex: 1,
+    position: 'absolute',
+    top: widthAdapter(-35),
+    bottom: 0,
+    left: widthAdapter(-35),
+    right: widthAdapter(-35),
+    backgroundColor: 'gray',
+    zIndex: 1,
+    opacity: 0.1,
+  },
 });

@@ -44,10 +44,11 @@ const styles = StyleSheet.create({
     width: widthAdapter(100),
   },
   trendingProduct: {
+    flexDirection: 'row',
     width: '100%',
     height: heightAdapter(50),
-    alignItems: 'flex-start',
-    justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
   trendingProductTxt: {
     fontFamily: fontFamily.primaryFontFamily,
@@ -55,14 +56,20 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: widthAdapter(35),
   },
+  dotWithTick: {
+    height: widthAdapter(40),
+    width: widthAdapter(40),
+    backgroundColor: Colors.primaryAppColor,
+    borderRadius: 100,
+    marginRight: widthAdapter(10),
+  },
   amountStatusContainer: {
     flexDirection: 'row',
     width: '100%',
     // height: heightAdapter(50),
     alignItems: 'center',
     justifyContent: 'flex-start',
-    borderColor: 'red',
-    borderWidth: 1,
+    marginLeft: widthAdapter(50),
   },
   amountLabel: {
     fontSize: widthAdapter(35),
@@ -85,7 +92,7 @@ const styles = StyleSheet.create({
   statusLabel: {
     fontSize: widthAdapter(35),
     fontFamily: fontFamily.primaryFontFamily,
-    color: '#a6a6a6',
+    color: Colors.primaryAppColor,
     fontWeight: '500',
   },
   status: {
@@ -94,12 +101,21 @@ const styles = StyleSheet.create({
     color: 'green',
     fontWeight: '500',
   },
+  trendingStatusContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    height: heightAdapter(50),
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginLeft: widthAdapter(50),
+  },
   trendingSalesContainer: {
     flexDirection: 'row',
     width: '100%',
     height: heightAdapter(50),
     alignItems: 'center',
     justifyContent: 'flex-start',
+    marginLeft: widthAdapter(50),
   },
   trendingSalesLabel: {
     fontSize: widthAdapter(35),

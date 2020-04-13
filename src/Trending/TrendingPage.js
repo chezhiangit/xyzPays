@@ -149,6 +149,7 @@ class TrendingPage extends React.Component {
       <View style={styles.trendingItemContainer}>
         <View style={styles.trendingDetailsContainer}>
           <View style={styles.trendingProduct}>
+            <View style={styles.dotWithTick} />
             <Text style={styles.trendingProductTxt}>{item.productName}</Text>
           </View>
           <View style={styles.amountStatusContainer}>
@@ -157,6 +158,10 @@ class TrendingPage extends React.Component {
               {I18n.t('trending.currencySymbol')}
             </Text>
             <Text style={styles.amount}>{item.Amount}, </Text>
+            {/* <Text style={styles.statusLabel}>{I18n.t('trending.status')} </Text>
+            <Text style={styles.status}>{item.Status}</Text> */}
+          </View>
+          <View style={styles.trendingStatusContainer}>
             <Text style={styles.statusLabel}>{I18n.t('trending.status')} </Text>
             <Text style={styles.status}>{item.Status}</Text>
           </View>
