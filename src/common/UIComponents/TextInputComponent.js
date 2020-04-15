@@ -58,7 +58,7 @@ class TextInputComponent extends React.Component {
           }}
           value={this.state.inputValue}
         />
-        {this.state.focus && (
+        {this.state.focus && this.props.placeholder.length > 0 && (
           <Text style={styles.captionText}>{this.props.placeholder}</Text>
         )}
       </View>

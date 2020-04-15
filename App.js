@@ -13,17 +13,19 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {Provider} from 'react-redux';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {configureStore} from './src/AppStore/ConfigureStore';
+import {configureStore} from './src/appStore/ConfigureStore';
 import LoginPage from './src/login/LoginPage';
 import UserRegistration from './src/login/userRegistration/UserRegistration';
 import ForgotPassword from './src/login/forgotPassword/ForgotPassword';
 import HomePage from './src/home/HomePage';
-import CommissionPage from './src/Commission/commissionPage';
+import CommissionPage from './src/commission/commissionPage';
 import TrendingPage from './src/Trending/TrendingPage';
 import DetailsPage from './src/Details/DetailsPage';
-import MapComponent from './src/GoogleMapView/MapView';
+import MapComponent from './src/googleMapView/MapView';
 import Header from './src/common/UIComponents/Header';
 import MenuIcon from './src/common/UIComponents/HamburgerMenu';
+import TaskEntryPage from './src/taskEntry/TaskEntryPage';
+import ProfilePage from './src/profile/profilePage';
 import I18n from './src/localization/i18n';
 
 const store = configureStore();
@@ -57,6 +59,22 @@ const HomeNavigator = () => {
               color="#fff"
             />
           ),
+        }}
+      />
+      <Drawer.Screen
+        name="ProfilePage"
+        component={ProfilePage}
+        options={{
+          headerTitle: props => (
+            <Header headerName={I18n.t('profile.headerTitle')} {...props} />
+          ),
+          // headerRight: () => (
+          //   <Button
+          //     onPress={() => alert('This is a button!')}
+          //     title="Info"
+          //     color="#fff"
+          //   />
+          // ),
         }}
       />
       <Drawer.Screen
@@ -155,10 +173,23 @@ const App: () => React$Node = () => {
             <Stack.Screen
               name="HomePage"
               component={HomeNavigator}
-              options={{
+              options={({navigation, route}) => ({
                 headerTitle: props => (
                   <Header
                     headerName={I18n.t('homePage.headerTitle')}
+                    {...props}
+                  />
+                ),
+                headerRight: () => <MenuIcon onPress={() => {}} />,
+              })}
+            />
+            <Stack.Screen
+              name="TaskEntryPage"
+              component={TaskEntryPage}
+              options={{
+                headerTitle: props => (
+                  <Header
+                    headerName={I18n.t('taskEntryPage.headerTitle')}
                     {...props}
                   />
                 ),

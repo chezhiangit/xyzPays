@@ -1,5 +1,12 @@
 import * as React from 'react';
-import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  FlatList,
+  Image,
+} from 'react-native';
 import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
 import I18n from '../localization/i18n';
@@ -9,6 +16,34 @@ import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import {heightAdapter, widthAdapter} from '../uttils/adapterUtil';
 import PaymentStatusComponent from '../common/UIComponents/PaymentStatusContainer/PaymentStatusComponent';
 import SliderView from '../common/UIComponents/SliderView';
+import Images from '../assets/index';
+
+const taskListData = [
+  {
+    productName: 'Cable protal',
+  },
+  {
+    productName: 'Customer Lead',
+  },
+  {
+    productName: 'Cable protal',
+  },
+  {
+    productName: 'Customer Lead',
+  },
+  {
+    productName: 'Cable protal',
+  },
+  {
+    productName: 'Customer Lead',
+  },
+  {
+    productName: 'Cable protal',
+  },
+  {
+    productName: 'Customer Lead',
+  },
+];
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -16,15 +51,25 @@ class HomePage extends React.Component {
     this.state = {
       showTask: false,
       taskCount: 10,
+      taskListData: [...taskListData],
       approvedAmt: 100,
       paidAmt: 50,
       pendingAmt: 75,
       deniedAmt: 25,
+      visibleTaskIndex: 0,
+    };
+
+    this.viewabilityConfig = {
+      waitForInteraction: true,
+      viewAreaCoveragePercentThreshold: 50,
     };
   }
 
   onPressTaskButton = () => {
     this.setState({showTask: true});
+  };
+  onPressStartTaskButton = () => {
+    this.props.navigation.navigate('TaskEntryPage');
   };
   getTaskButtonName = taskCount => {
     const taskBtnPrefix = I18n.t('homePage.taskBtnPrefixText');
@@ -43,6 +88,36 @@ class HomePage extends React.Component {
   };
   onPressDeniedButton = () => {
     this.props.navigation.navigate('CommissionPage');
+  };
+
+  onViewableItemsChanged = ({viewableItems, changed}) => {
+    console.log("Visible items are", viewableItems);
+    console.log("Changed in this iteration", changed);
+    this.setState({visibleTaskIndex: viewableItems[0].index});
+  };
+
+  renderDots = () => this.state.taskListData.map((e,index) => <View style={[styles.dot, this.state.visibleTaskIndex === index && {backgroundColor: 'gray'}]} />);
+
+  renderTaskCard = ({item, index}) => {
+    return (
+      <View style={styles.taskItemContainer}>
+        <View style={styles.taskItemCardContainer}>
+          <View style={styles.taskDetailRow}>
+            <View style={styles.taskNameRow}>
+              <Text style={styles.productName}>{item.productName}</Text>
+            </View>
+            <View style={styles.productImageContainer}>
+              <Image style={styles.productImage} source={Images.productBox} />
+            </View>
+          </View>
+        </View>
+        <PrimaryButton
+          btnStyle={styles.taskStartBtn}
+          onSubmit={this.onPressStartTaskButton}
+          btnName={I18n.t('homePage.taskBtnName')}
+        />
+      </View>
+    );
   };
 
   render() {
@@ -69,13 +144,32 @@ class HomePage extends React.Component {
             onSubmit={this.onPressTaskButton}
             btnName={taskBtnName}
           />
+
+          <View style={[BaseStyles.emptyHView, {height: heightAdapter(70)}]} />
+
+          <View style={styles.taskListContainer}>
+            <FlatList
+              pagingEnabled={true}
+              onViewableItemsChanged={this.onViewableItemsChanged}
+              viewabilityConfig={this.viewabilityConfig}
+              showsHorizontalScrollIndicator={false}
+              horizontal={true}
+              style={styles.taskList}
+              data={this.state.taskListData}
+              renderItem={this.renderTaskCard}
+              keyExtractor={(item, index) => index}
+            />
+            <View style={styles.scrollIndicator}>
+              {this.renderDots()}
+              {/* <View style={styles.dot} />
+              <View style={styles.dot} />
+              <View style={styles.dot} />
+              <View style={styles.dot} /> */}
+            </View>
+          </View>
+
           <View style={[BaseStyles.emptyHView, {height: heightAdapter(140)}]} />
-          {/* <RoundButton
-            onSubmit={this.onPressApproveButton}
-            btnName={this.state.approvedAmt}
-            btnStyle={styles.approveBtnStyle}
-            textStyle={styles.amountText}
-          /> */}
+
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <PaymentStatusComponent
               onSubmit={this.onPressApprovedButton}

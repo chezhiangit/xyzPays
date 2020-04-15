@@ -51,7 +51,7 @@ export default StyleSheet.create({
   btnName: {
     fontSize: FontsSize.primaryBtnName,
     color: Colors.primaryFontColor,
-    fontWeight: '400',
+    fontWeight: 'bold',
     fontFamily: fontFamily.primaryFontFamily,
   },
   textInputContainer: {

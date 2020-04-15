@@ -43,6 +43,7 @@ export default {
     paymentDeniedDescription4: 'Vendor',
 
     View: 'View',
+    taskBtnName: 'Start Task',
   },
   userRegistration: {
     headerTitle: 'New Registration',
@@ -81,6 +82,30 @@ export default {
     status: 'Status:',
     currencySymbol: '$',
     sales: 'Sales:',
+  },
+  taskEntryPage: {
+    headerTitle: 'Task Entry',
+    active: 'Active',
+    sku: 'SKU',
+    saveBtnName: 'Save',
+  },
+  profile: {
+    headerTitle: 'My Profile',
+    editProfile: 'Edit Profile',
+    accountInfoLabel: 'Account Info',
+    repId: 'Rep Id',
+    registrationType: 'Registration Type',
+    status: 'Status',
+    registeredOn: 'Registered On',
+    productAccess: 'Product Access',
+    createdBy: 'Created By',
+    contactDetails: 'Contact Details',
+    address: 'Address',
+    stateCity: 'State/City',
+    mobile: 'Mobile',
+    paypalEmail: 'Paypal Email',
+    website: 'Website',
+    interest: 'Interest',
   },
   common: {
     placeHolder: 'Enter value',

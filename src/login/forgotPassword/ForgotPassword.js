@@ -13,7 +13,7 @@ import styles from './styles';
 
 class ForgotPassword extends React.Component {
   onStepOneNext = () => {
-    this.props.navigation.replace('HomePage');
+    this.props.navigation.goBack();
   };
 
   //   onSignUp = () => {

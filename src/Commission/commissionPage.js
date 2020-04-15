@@ -14,7 +14,7 @@ import moment from 'moment';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
 import {heightAdapter} from '../uttils/adapterUtil';
-import Images from '../Assets/index';
+import Images from '../assets/index';
 // import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const commission = [

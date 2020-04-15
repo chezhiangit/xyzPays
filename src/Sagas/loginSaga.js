@@ -1,6 +1,6 @@
 import {takeLatest, call, put} from 'redux-saga/effects';
 // import {fetchItemDescription} from '../network/TireService';
-import {USER_LOGIN} from '../AppStore/ActionTypes';
+import {USER_LOGIN} from '../appStore/ActionTypes';
 import {userLoginSuccess} from './SagaActions';
 
 function* userLogin(action) {

@@ -14,7 +14,7 @@ import styles from './styles';
 
 class UserRegistration extends React.Component {
   onSubmitRegistration = () => {
-    this.props.navigation.replace('Login');
+    this.props.navigation.goBack();
   };
 
   render() {
