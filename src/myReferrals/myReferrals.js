@@ -146,19 +146,19 @@ const commission = [
   },
 ];
 const segmentationData = [
-  I18n.t('commission.dropdownAll'),
-  I18n.t('commission.dropdown7Days'),
-  I18n.t('commission.dropdownLast2Weeks'),
-  I18n.t('commission.dropdownLast3Weeks'),
-  I18n.t('commission.dropdownLast1Month'),
-  I18n.t('commission.dropdownLast3Months'),
+  I18n.t('myReferrals.dropdownAll'),
+  I18n.t('myReferrals.registered'),
+  I18n.t('myReferrals.notRegistered'),
+  // I18n.t('commission.dropdownLast3Weeks'),
+  // I18n.t('commission.dropdownLast1Month'),
+  // I18n.t('commission.dropdownLast3Months'),
 ];
-class CommissionPage extends React.Component {
+class MyReferrals extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedValue: segmentationData[4],
-      selectedIndex: 4,
+      selectedValue: segmentationData[0],
+      selectedIndex: 0,
       isSegmentVisible: false,
       commissionData: [...commission],
     };
@@ -205,12 +205,23 @@ class CommissionPage extends React.Component {
     }
   };
 
-  renderCommissionCard = ({item, index}) => {
+  renderReferralsCard = ({item, index}) => {
     return (
-      <View style={styles.commissionItemContainer}>
-        <View style={styles.commissionDetailsContainer}>
-          <View style={styles.commissionType}>
-            <Text style={styles.commissionTypeTxt}>{item.commissionName}</Text>
+      <View style={styles.referralsItemContainer}>
+        <View style={styles.expandCollapseHeader}>
+          <View style={styles.expandCollapseLeftChild}>
+            <Text style={styles.childTxt}>Will</Text>
+          </View>
+          <View style={styles.expandCollapseRightChild}>
+            <View style={styles.regStatus}>
+              <Text style={styles.regStatusText}>Registered</Text>
+            </View>
+            <Image source={''} style={styles.dropDownIcon} />
+          </View>
+        </View>
+        <View style={styles.referralsDetailsContainer}>
+          <View style={styles.referralsType}>
+            <Text style={styles.referralsTypeTxt}>{item.commissionName}</Text>
           </View>
           <View style={styles.amountStatusContainer}>
             <Text style={styles.amountLabel}>
@@ -247,9 +258,9 @@ class CommissionPage extends React.Component {
             <Text style={styles.reasonLabel}>{'Test reason'}</Text>
           </View>
         </View>
-        <View style={styles.commissionImageContainer}>
+        {/* <View style={styles.commissionImageContainer}>
           <Image style={styles.commissionImage} source={Images.productBox} />
-        </View>
+        </View> */}
       </View>
     );
   };
@@ -257,7 +268,7 @@ class CommissionPage extends React.Component {
   render() {
     return (
       <View style={BaseStyles.baseContainer}>
-        <View style={styles.commissionContainer}>
+        <View style={styles.referralsContainer}>
           <View style={styles.dropdownContainer}>
             <TouchableOpacity
               style={styles.selectionBox}
@@ -275,7 +286,7 @@ class CommissionPage extends React.Component {
                 {
                   height: this.translate.interpolate({
                     inputRange: [0, 1],
-                    outputRange: [0, heightAdapter(460)],
+                    outputRange: [0, heightAdapter(230)],
                   }),
                   borderWidth: this.state.segmentBorder,
                 },
@@ -296,9 +307,9 @@ class CommissionPage extends React.Component {
             </TouchableOpacity>
           )}
           <FlatList
-            style={styles.commissionList}
+            style={styles.referralList}
             data={this.state.commissionData}
-            renderItem={this.renderCommissionCard}
+            renderItem={this.renderReferralsCard}
             keyExtractor={(item, index) => index}
           />
         </View>
@@ -315,4 +326,4 @@ class CommissionPage extends React.Component {
   }
 }
 
-export default CommissionPage;
+export default MyReferrals;

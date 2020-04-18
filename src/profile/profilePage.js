@@ -1,6 +1,7 @@
 import * as React from 'react';
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
-import moment from 'moment';import BaseStyles from '../common/BaseStyles';
+import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
+import moment from 'moment';
+import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
 import EmailInputComponent from '../common/UIComponents/EmailInputComponent';
@@ -9,6 +10,7 @@ import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
 import ReadOnlyView from '../common/UIComponents/readOnlyView/ReadOnlyView';
 import styles from './styles';
+import Colors from '../uttils/Colors';
 
 class ProfilePage extends React.Component {
   constructor(props) {
@@ -28,32 +30,36 @@ class ProfilePage extends React.Component {
     };
   }
 
-  onSubmitLogin = () => {
-    this.props.navigation.replace('HomePage');
-  };
-
-  onSignUp = () => {
-    this.props.navigation.navigate('UserRegistration');
-  };
-
-  onForgotPassword = () => {
-    this.props.navigation.navigate('ForgotPassword');
+  onEditProfile = () => {
+    this.props.navigation.navigate('EditProfilePage');
   };
 
   render() {
     // const {navigation} = this.props;
     return (
       <View style={[BaseStyles.baseContainer]}>
-        <ScrollView style={styles.profileViewContainer}>
-          <View style={styles.profileUserInfo}>
+        <ScrollView
+          style={styles.profileViewContainer}
+          showsVerticalScrollIndicator={false}>
+          <View style={styles.photoContainer}>
+            <View style={styles.photoView}>
+              <Image source={''} style={styles.photo} />
+            </View>
+            <View style={styles.nameContainer}>
+              <Text style={styles.firstName}>Harry</Text>
+              <Text style={styles.secondName}> Harish</Text>
+            </View>
+          </View>
+          {/* <View style={styles.profileUserInfo}>
             <Text style={styles.profileUserInfoTxt}>
               {I18n.t('login.userInfo')}
             </Text>
-          </View>
+          </View> */}
           <LinkBtnComponent
             containerStyle={styles.editProfileContainer}
             btnName={I18n.t('profile.editProfile')}
-            onClick={this.onSignUp}
+            onClick={this.onEditProfile}
+            btnTextStyle={{color: Colors.primaryAppColor, fontWeight: 'bold'}}
           />
           <View style={styles.labelContainer}>
             <ReadOnlyView
