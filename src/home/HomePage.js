@@ -49,7 +49,7 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showTask: false,
+      // showTask: false,
       taskCount: 10,
       taskListData: [...taskListData],
       approvedAmt: 100,
@@ -66,7 +66,7 @@ class HomePage extends React.Component {
   }
 
   onPressTaskButton = () => {
-    this.setState({showTask: true});
+    // this.setState({showTask: true});
   };
   onPressStartTaskButton = () => {
     this.props.navigation.navigate('TaskEntryPage');
@@ -237,20 +237,20 @@ class HomePage extends React.Component {
           </View>
         </ScrollView>
         <Footer />
-        <SliderView
+        {/* <SliderView
           visible={this.state.showTask}
           animateFrom="right"
           height="100%"
           width={widthAdapter(600)}>
-          {/* <View /> */}
-        </SliderView>
-        {this.state.showTask && (
+          <View />
+        </SliderView> */}
+        {/* {this.state.showTask && (
           <TouchableOpacity
             style={styles.transparentView}
             onPress={() => this.setState({showTask: false})}>
             <View style={styles.transparentView} />
           </TouchableOpacity>
-        )}
+        )} */}
       </View>
       // <View style={BaseStyles.baseContainer}>
       //   <TouchableOpacity onPress={() => navigation.navigate('Details')}>

@@ -4,7 +4,7 @@ import Colors from '../uttils/Colors';
 import fontFamily from '../uttils/FontFamily';
 
 const styles = StyleSheet.create({
-  referralsContainer: {
+  commissionContainer: {
     flex: 1,
     marginLeft: widthAdapter(40),
     marginRight: widthAdapter(40),
@@ -77,87 +77,28 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderColor: '#737373',
   },
-  referralList: {
+  commissionList: {
     marginTop: heightAdapter(50),
     marginBottom: heightAdapter(160),
   },
-  referralsItemContainer: {
-    // flexDirection: 'row',
-    // height: heightAdapter(450),
-    marginBottom: widthAdapter(30),
-    // alignItems: 'center',
-    justifyContent: 'flex-start',
+  commissionItemContainer: {
+    flexDirection: 'row',
+    // height: heightAdapter(350),
+    marginBottom: widthAdapter(75),
+    alignItems: 'center',
+    justifyContent: 'center',
     width: '100%',
     borderRadius: widthAdapter(4),
-    // borderWidth: 1,
-    borderBottomWidth: widthAdapter(1),
-    borderBottomColor: '#eee',
-    // borderColor: Colors.gray,
-    // paddingTop: widthAdapter(30),
-    // paddingBottom: widthAdapter(30),
-    // paddingLeft: widthAdapter(10),
-  },
-  expandCollapseHeader: {
-    flexDirection: 'row',
-    height: heightAdapter(100),
-    // borderColor: 'red',
-    // borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingLeft: widthAdapter(20),
-    paddingRight: widthAdapter(20),
-  },
-  expandCollapseLeftChild: {
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-  },
-  childTxt: {
-    fontSize: fontscale(20),
-    fontFamily: fontFamily.primaryFontFamily,
-    // color: 'green',
-    fontWeight: 'bold',
-  },
-  expandCollapseRightChild: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  regStatus: {
-    height: heightAdapter(50),
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: widthAdapter(30),
-    borderRadius: widthAdapter(50),
-    backgroundColor: '#32CD32',
-    paddingRight: widthAdapter(20),
-    paddingLeft: widthAdapter(20),
-  },
-  regStatusText: {
-    fontSize: fontscale(15),
-    color: Colors.white,
-    fontFamily: fontFamily.primaryFontFamily,
-    fontWeight: 'bold',
-    // borderColor: 'red',
-    // borderWidth: 1,
-    // margin: widthAdapter(20),
-  },
-  dropDownIcon: {
-    height: widthAdapter(40),
-    width: widthAdapter(40),
-    borderColor: 'red',
     borderWidth: 1,
+    borderBottomWidth: widthAdapter(5),
+    borderColor: '#737373',
+    paddingTop: widthAdapter(30),
+    paddingBottom: widthAdapter(30),
+    paddingLeft: widthAdapter(10),
   },
-  referralsDetailsContainer: {
-    // width: '80%',
+  commissionDetailsContainer: {
+    width: '100%',
     // height: '100%',
-    // borderWidth: 1,
-    // borderColor: 'red',
-    height: 0,
-    // position: 'absolute',
-    // top: heightAdapter(100),
-    // right: 0,
-    // left: 0,
-    backgroundColor: '#eee',
   },
   customerDetails: {
     width: '100%',
@@ -167,6 +108,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingLeft: widthAdapter(20),
     paddingRight: widthAdapter(20),
+    paddingTop: heightAdapter(30),
   },
   emailphoneIcon: {
     // height: widthAdapter(20),
@@ -177,15 +119,16 @@ const styles = StyleSheet.create({
   },
   customerDetailsTxt: {
     fontFamily: fontFamily.primaryFontFamily,
-    color: '#333',
-    // fontWeight: '700',
-    fontSize: fontscale(20),
+    color: '#737373',
+    fontWeight: 'bold',
+    fontSize: fontscale(15),
   },
   customerDetailsLabel: {
     fontFamily: fontFamily.primaryFontFamily,
-    color: '#333',
-    // fontWeight: '700',
-    fontSize: fontscale(20),
+    color: '#737373',
+    fontWeight: '400',
+    fontSize: fontscale(15),
+    // lineHeight: 2,
   },
 });
 

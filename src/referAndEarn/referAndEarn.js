@@ -4,7 +4,7 @@ import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
 // import Header from '../common/UIComponents/Header';
-// import Footer from '../common/UIComponents/Footer';
+import Footer from '../common/UIComponents/Footer';
 import TextInputComponent from '../common/UIComponents/TextInputComponent';
 // import PasswordInputComponent from '../common/UIComponents/PasswordInputComponent';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
@@ -58,6 +58,7 @@ class ReferAndEarn extends React.Component {
             btnTextStyle={{fontSize: fontscale(25)}}
           />
         </ScrollView>
+        <Footer />
       </View>
     );
   }

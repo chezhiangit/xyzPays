@@ -1,23 +1,21 @@
 import React from 'react';
-import {
-  Animated, Easing, Dimensions,
-} from 'react-native';
+import {Animated, Easing, Dimensions} from 'react-native';
 
-
-const { height, width } = Dimensions.get('window');
+const {height, width} = Dimensions.get('window');
 
 const styles = {
   container: {
     position: 'absolute',
     // height: '100%',
     // width: '50%%',
-    right: -width, // initial position of the view. Hide the view at bottom. for bottom to top -height
+    // right: -width, // render from right to left
+    bottom: height, // render from bottom to top
     backgroundColor: '#fff',
     borderWidth: 1,
     borderColor: '#ddd',
     borderBottomWidth: 0,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.8,
     elevation: 1,
     zIndex: 102,
@@ -27,35 +25,58 @@ const styles = {
 export default class ViewLogAnimatedModal extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
 
     this.translate = new Animated.Value(0);
-    this.hidingPosition = 0;// = -width //for bottom to top, use -height
+    this.hidingPosition = 0; // = -width //for bottom to top, use -height
     this.translateModal = 0; //= this.translate.interpolate({
     //     inputRange: [0, 1],
     //     outputRange: [0, this.hidingPosition]
     // });
-    this.translateStyle = null;// = { transform: [{ translateX: this.translateModal }] };
+    this.translateStyle = null; // = { transform: [{ translateX: this.translateModal }] };
   }
 
   componentDidMount() {
     if (this.props.animateFrom === 'right') {
       this.hidingPosition = -width;
-      this.animateStyle = { right: -width, height: this.props.height, width: this.props.width };
-      this.translateStyle = { transform: [{ translateX: this.findTranslateValue() }] };
+      this.animateStyle = {
+        right: -width,
+        height: this.props.height,
+        width: this.props.width,
+      };
+      this.translateStyle = {
+        transform: [{translateX: this.findTranslateValue()}],
+      };
     } else if (this.props.animateFrom === 'left') {
       this.hidingPosition = width;
-      this.animateStyle = { left: -width, height: this.props.height, width: this.props.width };
-      this.translateStyle = { transform: [{ translateX: this.findTranslateValue() }] };
+      this.animateStyle = {
+        left: -width,
+        height: this.props.height,
+        width: this.props.width,
+      };
+      this.translateStyle = {
+        transform: [{translateX: this.findTranslateValue()}],
+      };
     } else if (this.props.animateFrom === 'bottom') {
       this.hidingPosition = -height;
-      this.animateStyle = { bottom: -height, height: this.props.height, width: this.props.width };
-      this.translateStyle = { transform: [{ translateY: this.findTranslateValue() }] };
+      this.animateStyle = {
+        bottom: -height,
+        height: this.props.height,
+        width: this.props.width,
+      };
+      this.translateStyle = {
+        transform: [{translateY: this.findTranslateValue()}],
+      };
     } else if (this.props.animateFrom === 'top') {
       this.hidingPosition = height;
-      this.animateStyle = { top: -height, height: this.props.height, width: this.props.width };
-      this.translateStyle = { transform: [{ translateY: this.findTranslateValue() }] };
+      this.animateStyle = {
+        top: -height,
+        height: this.props.height,
+        width: this.props.width,
+      };
+      this.translateStyle = {
+        transform: [{translateY: this.findTranslateValue()}],
+      };
     }
   }
 
@@ -93,7 +114,7 @@ export default class ViewLogAnimatedModal extends React.Component {
       outputRange: [0, this.hidingPosition],
     });
     return this.translateModal;
-  }
+  };
 
   render() {
     return (
@@ -103,9 +124,7 @@ export default class ViewLogAnimatedModal extends React.Component {
           this.translateStyle,
           this.animateStyle,
           this.props.containerStyle,
-        ]
-        }
-      >
+        ]}>
         {this.props.children}
       </Animated.View>
     );

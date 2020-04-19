@@ -117,6 +117,7 @@ class EditProfilePage extends React.Component {
             />
           </View>
         </ScrollView>
+        <Footer />
       </View>
     );
   }

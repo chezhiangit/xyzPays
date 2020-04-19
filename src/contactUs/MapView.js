@@ -1,10 +1,35 @@
 import * as React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, Animated, Keyboard} from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
+import PrimaryButton from '../common/UIComponents/PrimaryButton';
+import {heightAdapter, widthAdapter} from '../uttils/adapterUtil';
+import SliderView from '../common/UIComponents/SliderView';
+import TextInputComponent from '../common/UIComponents/TextInputComponent';
+import KeyboardAwareComponent from '../common/UIComponents/hoc/KeyboardAwareComponent';
+import Footer from '../common/UIComponents/Footer';
 
-class MapComponent extends React.Component {
+// import Animated from 'react-native-reanimated';
+// import styles from '../myReferrals/styles';
+
+class ContactUs extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showFindUsView: false,
+    };
+  }
+
+  onFindUs = () => {
+    this.setState({showFindUsView: true});
+    this.props.registerKeyboard();
+  };
+  onSubmit = () => {
+    this.setState({showFindUsView: false});
+    Keyboard.dismiss();
+    this.props.deregisterKeyboard();
+  };
   render() {
     const {navigation} = this.props;
     var mapStyle = [
@@ -110,6 +135,44 @@ class MapComponent extends React.Component {
             description={'This is a description of the marker'}
           />
         </MapView>
+        <View style={styles.bottomContainer}>
+          <PrimaryButton
+            btnStyle={styles.findUsBtn}
+            onSubmit={this.onFindUs}
+            btnName={I18n.t('contactUs.findUsBtnName')}
+          />
+        </View>
+        <Animated.View
+          style={{width: '100%', transform: [{translateY: this.props.shift}]}}>
+          <SliderView
+            // containerStyle={{transform: [{translateY: this.props.shift}]}}
+            visible={this.state.showFindUsView}
+            animateFrom="bottom"
+            height={heightAdapter(600)}
+            width="100%">
+            <View style={styles.contactUsContainer}>
+              <TextInputComponent
+                placeholder={I18n.t('contactUs.subject')}
+                autoFocus={false}
+                onFieldFocus={this.props.onFieldFocus}
+              />
+              <TextInputComponent
+                placeholder={I18n.t('contactUs.message')}
+                autoFocus={false}
+                onFieldFocus={this.props.onFieldFocus}
+              />
+              <PrimaryButton
+                btnStyle={styles.submitBtn}
+                onSubmit={this.onSubmit}
+                btnName={I18n.t('contactUs.submitBtnName')}
+              />
+              <View
+                style={[BaseStyles.emptyHView, {height: heightAdapter(100)}]}
+              />
+            </View>
+          </SliderView>
+        </Animated.View>
+        <Footer />
       </View>
     );
     // return (
@@ -137,8 +200,40 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    bottom: 0,
+    bottom: heightAdapter(150),
+  },
+  bottomContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    position: 'absolute',
+    bottom: heightAdapter(200),
+    right: widthAdapter(50),
+    left: 0,
+    zIndex: 100,
+    justifyContent: 'flex-end',
+  },
+  findUsBtn: {
+    height: heightAdapter(50),
+    width: widthAdapter(150),
+    marginRight: widthAdapter(30),
+    // position: 'absolute',
+    // bottom: heightAdapter(50),
+    // right: widthAdapter(50),
+    // left: 0,
+    // zIndex: 0,
+  },
+  contactUsContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: widthAdapter(30),
+  },
+  submitBtn: {
+    height: heightAdapter(100),
+    width: widthAdapter(200),
+    marginRight: widthAdapter(30),
+    borderRadius: widthAdapter(50),
   },
 });
 
-export default MapComponent;
+export default KeyboardAwareComponent(ContactUs);

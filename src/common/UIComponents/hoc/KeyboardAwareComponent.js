@@ -1,25 +1,26 @@
-import React, { PureComponent } from 'react';
+import React, {PureComponent} from 'react';
+import {Animated, Keyboard, Easing} from 'react-native';
 import {
-  Animated,
-  Keyboard,
-  Easing,
-} from 'react-native';
-import { adapter } from '../../utils/adapterUtil';
+  heightAdapter,
+  widthAdapter,
+  fontscale,
+} from '../../../uttils/adapterUtil';
 
-const KeyboardAwareComponent = ChildComponent => class ParentComponent extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      shift: new Animated.Value(0),
-    };
-    this.keyboardDidShowSub = null;
-    this.keyboardDidHideSub = null;
-    this.moveTo = adapter(170);
-  }
+const KeyboardAwareComponent = ChildComponent =>
+  class ParentComponent extends PureComponent {
+    constructor(props) {
+      super(props);
+      this.state = {
+        shift: new Animated.Value(0),
+      };
+      this.keyboardDidShowSub = null;
+      this.keyboardDidHideSub = null;
+      this.moveTo = heightAdapter(170);
+    }
 
     handleKeyboardDidShow = () => {
       Animated.timing(this.state.shift, {
-        toValue: -adapter(this.moveTo), // move towards top of the page
+        toValue: -heightAdapter(this.moveTo), // move towards top of the page
         duration: 400,
         useNativeDriver: true,
         easing: Easing.ball,
@@ -28,6 +29,7 @@ const KeyboardAwareComponent = ChildComponent => class ParentComponent extends P
 
     handleKeyboardDidHide = () => {
       console.log('handleKeyboardDidHide.....');
+      this.moveTo = 0;
       Animated.timing(this.state.shift, {
         toValue: 0,
         duration: 400,
@@ -37,6 +39,7 @@ const KeyboardAwareComponent = ChildComponent => class ParentComponent extends P
     };
 
     registerKeyboard = () => {
+      this.moveTo = 0;
       console.log('registerKeyboard.....');
       this.keyboardDidShowSub = Keyboard.addListener(
         'keyboardWillShow',
@@ -58,8 +61,8 @@ const KeyboardAwareComponent = ChildComponent => class ParentComponent extends P
       Keyboard.dismiss();
     };
 
-    onFieldFocus = (moveTo) => {
-      this.moveTo = moveTo;
+    onFieldFocus = moveTo => {
+      this.moveTo = heightAdapter(moveTo);
     };
 
     render() {
@@ -73,6 +76,6 @@ const KeyboardAwareComponent = ChildComponent => class ParentComponent extends P
         />
       );
     }
-};
+  };
 
 export default KeyboardAwareComponent;

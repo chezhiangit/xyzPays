@@ -228,7 +228,7 @@ class ProfilePage extends React.Component {
             />
           </View>
         </ScrollView>
-        {/* <Footer /> */}
+        <Footer />
       </View>
     );
   }

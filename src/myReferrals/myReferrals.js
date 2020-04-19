@@ -7,6 +7,7 @@ import {
   Image,
   Easing,
   TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
@@ -14,135 +15,64 @@ import moment from 'moment';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
 import {heightAdapter} from '../uttils/adapterUtil';
+import Colors from '../uttils/Colors';
 import Images from '../assets/index';
 // import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const commission = [
   {
-    commissionName: 'Customer Lead',
-    Amount: '6.00',
-    Status: 'Paid',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
+    customerName: 'Jimkim',
+    emailId: 'chezhian.p@gmail.com',
+    mobile: '9585058087',
+    referredOn: moment().format('MM/DD/YY'),
+    registeredOn: moment().format('MM/DD/YY'),
+    registrationStatus: 'Registered',
+    Expanded: false,
   },
   {
-    commissionName: 'Customer Lead',
-    Amount: '6.00',
-    Status: 'Paid',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
+    customerName: 'Chezhian',
+    emailId: 'chezhian.p@gmail.com',
+    mobile: '9585058087',
+    referredOn: moment().format('MM/DD/YY'),
+    registeredOn: moment().format('MM/DD/YY'),
+    registrationStatus: 'Not Registered',
+    Expanded: false,
   },
   {
-    commissionName: 'Customer Lead',
-    Amount: '6.00',
-    Status: 'Paid',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
+    customerName: 'Jimkim',
+    emailId: 'chezhian.p@gmail.com',
+    mobile: '9585058087',
+    referredOn: moment().format('MM/DD/YY'),
+    registeredOn: moment().format('MM/DD/YY'),
+    registrationStatus: 'Registered',
+    Expanded: false,
   },
   {
-    commissionName: 'Customer Lead',
-    Amount: '6.00',
-    Status: 'Paid',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
+    customerName: 'Chezhian',
+    emailId: 'chezhian.p@gmail.com',
+    mobile: '9585058087',
+    referredOn: moment().format('MM/DD/YY'),
+    registeredOn: moment().format('MM/DD/YY'),
+    registrationStatus: 'Not Registered',
+    Expanded: false,
   },
   {
-    commissionName: 'Customer Lead',
-    Amount: '6.00',
-    Status: 'Approved',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
+    customerName: 'Jimkim',
+    emailId: 'chezhian.p@gmail.com',
+    mobile: '9585058087',
+    referredOn: moment().format('MM/DD/YY'),
+    registeredOn: moment().format('MM/DD/YY'),
+    registrationStatus: 'Registered',
+    Expanded: false,
   },
   {
-    commissionName: 'Customer Lead',
-    Amount: '6.00',
-    Status: 'Pending',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Appoinment confirmation',
-    Amount: '6.00',
-    Status: 'Denied',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Customer Lead',
-    Amount: '6.00',
-    Status: 'Approved',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Vonage',
-    Amount: '6.00',
-    Status: 'Pending',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Customer Lead',
-    Amount: '6.00',
-    Status: 'Paid',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Customer Lead',
-    Amount: '6.00',
-    Status: 'Paid',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Appoinment confirmation',
-    Amount: '6.00',
-    Status: 'Paid',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Customer Lead',
-    Amount: '6.00',
-    Status: 'Paid',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Appoinment confirmation',
-    Amount: '6.00',
-    Status: 'Approved',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Vonage',
-    Amount: '6.00',
-    Status: 'Pending',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Vonage',
-    Amount: '6.00',
-    Status: 'Denied',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Vonage',
-    Amount: '6.00',
-    Status: 'Approved',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Appoinment confirmation',
-    Amount: '6.00',
-    Status: 'Pending',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
+    customerName: 'Chezhian',
+    emailId: 'chezhian.p@gmail.com',
+    mobile: '9585058087',
+    referredOn: moment().format('MM/DD/YY'),
+    registeredOn: moment().format('MM/DD/YY'),
+    registrationStatus: 'Not Registered',
+    Expanded: false,
   },
 ];
 const segmentationData = [
@@ -160,10 +90,14 @@ class MyReferrals extends React.Component {
       selectedValue: segmentationData[0],
       selectedIndex: 0,
       isSegmentVisible: false,
+      isExpandCollapseVisible: false,
       commissionData: [...commission],
+      currentIndex: -1,
     };
     // this.show=false;
-    this.translate = new Animated.Value(0);
+    this.dropDownTranslate = new Animated.Value(0);
+    this.expandCollapseTranslate = new Animated.Value(0);
+    this.expandedViewHeight = heightAdapter(350);
   }
   onSegmentItemSelected = (item, index) => {
     this.toggleDropdown(false);
@@ -187,8 +121,8 @@ class MyReferrals extends React.Component {
     this.setState({isSegmentVisible: show});
     if (show) {
       this.setState({segmentBorder: 1});
-      this.translate.setValue(0);
-      Animated.spring(this.translate, {
+      this.dropDownTranslate.setValue(0);
+      Animated.spring(this.dropDownTranslate, {
         toValue: 1,
         duration: 400,
         overshootClamping: true,
@@ -196,7 +130,7 @@ class MyReferrals extends React.Component {
       }).start();
     } else {
       // this.segmentBorder = 0;
-      Animated.timing(this.translate, {
+      Animated.timing(this.dropDownTranslate, {
         toValue: 0,
         duration: 400,
         easing: Easing.linear,
@@ -205,62 +139,155 @@ class MyReferrals extends React.Component {
     }
   };
 
+  toggleExpandCollapse = (show, index) => {
+    // console.log('toggleExpandCollapse index selected ....', index);
+    console.log('toggleExpandCollapse index show ....', show);
+    // if (this.state.isExpandCollapseVisible === show && ) {
+    //   return;
+    // }
+
+    this.expandedViewHeight =
+      this.state.commissionData[index].registrationStatus === 'Registered'
+        ? heightAdapter(350)
+        : heightAdapter(300);
+
+    if (show) {
+      this.setState({currentIndex: index});
+      // this.setState({segmentBorder: 1});
+      this.expandCollapseTranslate.setValue(0);
+      Animated.spring(this.expandCollapseTranslate, {
+        toValue: 1,
+        duration: 400,
+        overshootClamping: true,
+        // useNativeDriver: true,
+      }).start();
+    } else {
+      // this.segmentBorder = 0;
+      Animated.timing(this.expandCollapseTranslate, {
+        toValue: 0,
+        duration: 400,
+        easing: Easing.linear,
+        // useNativeDriver: true,
+      }).start();
+    }
+  };
+
+  onExpandCollapse = index => {
+    console.log('toggled index....', index);
+    console.log('current index....', this.state.currentIndex);
+    // if (this.state.currentIndex === index) {
+    //   return;
+    // }
+    const commissionData = [...this.state.commissionData];
+    commissionData[index].Expanded = !commissionData[index].Expanded;
+    this.setState({commissionData: [...commissionData], currentIndex: index});
+    this.toggleExpandCollapse(!this.state.commissionData[index].Expanded);
+
+    // console.log('current index selected ....', index);
+    // if (this.state.currentIndex === index) {
+    //   this.setState(
+    //     state => {
+    //       return {
+    //         currentIndex: index,
+    //         isExpandCollapseVisible: !state.isExpandCollapseVisible,
+    //       };
+    //     },
+    //     () =>
+    //       this.toggleExpandCollapse(
+    //         this.state.isExpandCollapseVisible,
+    //         this.state.currentIndex,
+    //       ),
+    //   );
+    //   // this.toggleExpandCollapse(
+    //   //   this.state.isExpandCollapseVisible,
+    //   //   this.state.currentIndex,
+    //   // );
+    // } else if (this.state.currentIndex !== index) {
+    //   this.toggleExpandCollapse(false, this.state.currentIndex);
+    //   this.setState(
+    //     state => {
+    //       return {
+    //         currentIndex: index,
+    //         isExpandCollapseVisible: true,
+    //       };
+    //     },
+    //     () =>
+    //       this.toggleExpandCollapse(
+    //         this.state.isExpandCollapseVisible,
+    //         this.state.currentIndex,
+    //       ),
+    //   );
+    // }
+  };
+
   renderReferralsCard = ({item, index}) => {
     return (
       <View style={styles.referralsItemContainer}>
-        <View style={styles.expandCollapseHeader}>
-          <View style={styles.expandCollapseLeftChild}>
-            <Text style={styles.childTxt}>Will</Text>
-          </View>
-          <View style={styles.expandCollapseRightChild}>
-            <View style={styles.regStatus}>
-              <Text style={styles.regStatusText}>Registered</Text>
+        <TouchableWithoutFeedback
+          onPress={() =>
+            this.toggleExpandCollapse(
+              !this.state.commissionData[index].Expanded,
+              index,
+            )
+          }>
+          <View style={styles.expandCollapseHeader}>
+            <View style={styles.expandCollapseLeftChild}>
+              <Text style={styles.childTxt}>{item.customerName}</Text>
             </View>
-            <Image source={''} style={styles.dropDownIcon} />
+            <View style={styles.expandCollapseRightChild}>
+              <View
+                style={[
+                  styles.regStatus,
+                  item.registrationStatus !== 'Registered' && {
+                    backgroundColor: Colors.primaryAppColor,
+                  },
+                ]}>
+                <Text style={styles.regStatusText}>
+                  {item.registrationStatus}
+                </Text>
+              </View>
+              <Image source={''} style={styles.dropDownIcon} />
+            </View>
           </View>
-        </View>
-        <View style={styles.referralsDetailsContainer}>
-          <View style={styles.referralsType}>
-            <Text style={styles.referralsTypeTxt}>{item.commissionName}</Text>
+        </TouchableWithoutFeedback>
+        <Animated.View
+          style={[
+            styles.referralsDetailsContainer,
+            this.state.currentIndex === index && {
+              height: this.expandCollapseTranslate.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, this.expandedViewHeight],
+              }),
+            },
+          ]}>
+          <View style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]} />
+          <View style={styles.customerDetails}>
+            <Image source={''} style={styles.emailphoneIcon} />
+            <Text style={styles.customerDetailsTxt}>{item.emailId}</Text>
           </View>
-          <View style={styles.amountStatusContainer}>
-            <Text style={styles.amountLabel}>
-              {I18n.t('commission.amount')}{' '}
-            </Text>
-            <Text style={styles.dollar}>
-              {I18n.t('commission.currencySymbol')}
-            </Text>
-            <Text style={styles.amount}>{item.Amount}, </Text>
-            <Text style={styles.statusLabel}>
-              {I18n.t('commission.status')}{' '}
-            </Text>
-            <Text style={styles.status}>{item.Status}</Text>
+          <View style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]} />
+          <View style={styles.customerDetails}>
+            <Image source={''} style={styles.emailphoneIcon} />
+            <Text style={styles.customerDetailsTxt}>{item.mobile}</Text>
           </View>
-          <View style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]} />
-          <View style={styles.paymentDateContainer}>
-            <Text style={styles.paymentDateLabel}>
-              {I18n.t('commission.paymentDate')}
+          <View style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]} />
+          <View style={styles.customerDetails}>
+            <Text style={styles.customerDetailsLabel}>
+              {I18n.t('myReferrals.referredOn')}
             </Text>
-            <Text style={styles.paymentDate}>
-              {moment().format('MM/DD/YYYY')}
-            </Text>
+            <Text style={styles.customerDetailsTxt}>{item.referredOn}</Text>
           </View>
-          <View style={styles.accountNoContainer}>
-            <Text style={styles.accountNoLabel}>
-              {I18n.t('commission.accountNo')}
-            </Text>
-            <Text style={styles.accountNo}>xxxxxxxx567</Text>
-          </View>
-          <View style={styles.reasonContainer}>
-            <Text style={styles.reasonLabel}>
-              {I18n.t('commission.reason')}
-            </Text>
-            <Text style={styles.reasonLabel}>{'Test reason'}</Text>
-          </View>
-        </View>
-        {/* <View style={styles.commissionImageContainer}>
-          <Image style={styles.commissionImage} source={Images.productBox} />
-        </View> */}
+          <View style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]} />
+          {item.registrationStatus === 'Registered' && (
+            <View style={styles.customerDetails}>
+              <Text style={styles.customerDetailsLabel}>
+                {I18n.t('myReferrals.registeredOn')}
+              </Text>
+              <Text style={styles.customerDetailsTxt}>{item.registeredOn}</Text>
+            </View>
+          )}
+          <View style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]} />
+        </Animated.View>
       </View>
     );
   };
@@ -284,7 +311,7 @@ class MyReferrals extends React.Component {
               style={[
                 styles.segmentedView,
                 {
-                  height: this.translate.interpolate({
+                  height: this.dropDownTranslate.interpolate({
                     inputRange: [0, 1],
                     outputRange: [0, heightAdapter(230)],
                   }),

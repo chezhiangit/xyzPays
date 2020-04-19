@@ -21,7 +21,7 @@ import HomePage from './src/home/HomePage';
 import CommissionPage from './src/commission/commissionPage';
 import TrendingPage from './src/Trending/TrendingPage';
 import DetailsPage from './src/Details/DetailsPage';
-import MapComponent from './src/googleMapView/MapView';
+import ContactUsPage from './src/contactUs/MapView';
 import Header from './src/common/UIComponents/Header';
 import MenuIcon from './src/common/UIComponents/HamburgerMenu';
 import TaskEntryPage from './src/taskEntry/TaskEntryPage';
@@ -29,6 +29,8 @@ import ProfilePage from './src/profile/profilePage';
 import EditProfilePage from './src/profile/editProfile';
 import ReferAndEarnPage from './src/referAndEarn/referAndEarn';
 import MyReferralsPage from './src/myReferrals/myReferrals';
+import ReferralCommissionsPage from './src/referralCommissions/referralCommissions';
+import PayoutHistoryPage from './src/payoutHistory/payoutHistory';
 import I18n from './src/localization/i18n';
 import {
   widthAdapter,
@@ -135,6 +137,25 @@ const HomeNavigator = () => {
         // }}
       />
       <Drawer.Screen
+        name="PayoutHistoryPage"
+        component={PayoutHistoryPage}
+        options={{
+          title: I18n.t('payoutHistory.headerTitle'),
+        }}
+        // options={{
+        //   headerTitle: props => (
+        //     <Header headerName={I18n.t('commission.headerTitle')} {...props} />
+        //   ),
+        //   // headerRight: () => (
+        //   //   <Button
+        //   //     onPress={() => alert('This is a button!')}
+        //   //     title="Info"
+        //   //     color="#fff"
+        //   //   />
+        //   // ),
+        // }}
+      />
+      <Drawer.Screen
         name="ReferAndEarnPage"
         component={ReferAndEarnPage}
         options={{
@@ -173,6 +194,25 @@ const HomeNavigator = () => {
         // }}
       />
       <Drawer.Screen
+        name="ReferralCommissionsPage"
+        component={ReferralCommissionsPage}
+        options={{
+          title: I18n.t('referralCommissions.headerTitle'),
+        }}
+        // options={{
+        //   headerTitle: props => (
+        //     <Header headerName={I18n.t('commission.headerTitle')} {...props} />
+        //   ),
+        //   // headerRight: () => (
+        //   //   <Button
+        //   //     onPress={() => alert('This is a button!')}
+        //   //     title="Info"
+        //   //     color="#fff"
+        //   //   />
+        //   // ),
+        // }}
+      />
+      <Drawer.Screen
         name="TrendingPage"
         component={TrendingPage}
         options={{
@@ -191,7 +231,26 @@ const HomeNavigator = () => {
         //   // ),
         // }}
       />
-      <Drawer.Screen name="Details" component={DetailsPage} />
+      <Stack.Screen
+        name="ContactUsPage"
+        component={ContactUsPage}
+        options={{
+          title: I18n.t('contactUs.headerTitle'),
+        }}
+        // options={{
+        //   headerTitle: props => (
+        //     <Header headerName={I18n.t('trending.headerTitle')} {...props} />
+        //   ),
+        //   // headerRight: () => (
+        //   //   <Button
+        //   //     onPress={() => alert('This is a button!')}
+        //   //     title="Info"
+        //   //     color="#fff"
+        //   //   />
+        //   // ),
+        // }}
+      />
+      {/* <Drawer.Screen name="Details" component={DetailsPage} /> */}
     </Drawer.Navigator>
   );
 };
@@ -260,7 +319,7 @@ const App: () => React$Node = () => {
             <Stack.Screen
               name="HomePage"
               component={HomeNavigator}
-              options={({ route }) => ({
+              options={({route}) => ({
                 title: I18n.t('homePage.headerTitle'),
                 headerRight: ({}) => <MenuIcon onPress={() => {}} />,
               })}
@@ -305,7 +364,7 @@ const App: () => React$Node = () => {
               // }}
             />
             {/* <Stack.Screen name="CommissionPage" component={CommissionPage} /> */}
-            <Stack.Screen name="MapView" component={MapComponent} />
+            {/* <Stack.Screen name="ContactUsPage" component={ContactUsPage} /> */}
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>
