@@ -25,7 +25,7 @@ class PasswordInputComponent extends React.Component {
             this.state.focus &&
               !this.state.pwdValid && {borderColor: 'red', borderWidth: 1},
             this.state.focus &&
-              this.state.pwdValid && {borderColor: 'blue', borderWidth: 1},
+              this.state.pwdValid && {borderColor: '#22caff', borderWidth: 1},
           ]}
           secureTextEntry={true}
           spellCheck={false}

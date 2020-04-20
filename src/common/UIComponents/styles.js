@@ -82,7 +82,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.white,
     padding: widthAdapter(10),
     fontFamily: fontFamily.primaryFontFamily,
-    color: 'blue',
+    color: '#22caff',
   },
   roundBtn: {
     height: widthAdapter(150),

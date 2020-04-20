@@ -139,9 +139,33 @@ class MyReferrals extends React.Component {
     }
   };
 
+  expand = () => {
+    this.expandCollapseTranslate.setValue(0);
+    Animated.spring(this.expandCollapseTranslate, {
+      toValue: 1,
+      duration: 400,
+      overshootClamping: true,
+      // useNativeDriver: true,
+    }).start();
+  };
+
+  collapse = (callback = () => {}) => {
+    Animated.timing(this.expandCollapseTranslate, {
+      toValue: 0,
+      duration: 400,
+      easing: Easing.linear,
+      // useNativeDriver: true,
+    }).start(() => callback());
+  };
+
   toggleExpandCollapse = (show, index) => {
-    // console.log('toggleExpandCollapse index selected ....', index);
+    console.log('toggleExpandCollapse index selected ....', index);
     console.log('toggleExpandCollapse index show ....', show);
+    console.log(
+      'toggleExpandCollapse currentIndex ....',
+      this.state.currentIndex,
+    );
+
     // if (this.state.isExpandCollapseVisible === show && ) {
     //   return;
     // }
@@ -151,73 +175,50 @@ class MyReferrals extends React.Component {
         ? heightAdapter(350)
         : heightAdapter(300);
 
-    if (show) {
-      this.setState({currentIndex: index});
-      // this.setState({segmentBorder: 1});
-      this.expandCollapseTranslate.setValue(0);
-      Animated.spring(this.expandCollapseTranslate, {
-        toValue: 1,
-        duration: 400,
-        overshootClamping: true,
-        // useNativeDriver: true,
-      }).start();
-    } else {
-      // this.segmentBorder = 0;
-      Animated.timing(this.expandCollapseTranslate, {
-        toValue: 0,
-        duration: 400,
-        easing: Easing.linear,
-        // useNativeDriver: true,
-      }).start();
+    if (show && this.state.currentIndex === -1) {
+      this.setState(
+        state => {
+          const data = [...state.commissionData];
+          data[index].Expanded = show;
+          return {
+            currentIndex: index,
+            commissionData: data,
+          };
+        },
+        () => this.expand(),
+      );
+      // this.expand();
+    } else if (!show && this.state.currentIndex === index) {
+      this.collapse(() =>
+        this.setState(state => {
+          const data = [...state.commissionData];
+          data[index].Expanded = show;
+          return {
+            currentIndex: -1,
+            commissionData: data,
+          };
+        }),
+      );
+    } else if (
+      show &&
+      this.state.currentIndex !== -1 &&
+      this.state.currentIndex !== index
+    ) {
+      this.collapse(() =>
+        this.setState(
+          state => {
+            const data = [...state.commissionData];
+            data[index].Expanded = show;
+            data[state.currentIndex].Expanded = false;
+            return {
+              currentIndex: index,
+              commissionData: data,
+            };
+          },
+          () => this.expand(),
+        ),
+      );
     }
-  };
-
-  onExpandCollapse = index => {
-    console.log('toggled index....', index);
-    console.log('current index....', this.state.currentIndex);
-    // if (this.state.currentIndex === index) {
-    //   return;
-    // }
-    const commissionData = [...this.state.commissionData];
-    commissionData[index].Expanded = !commissionData[index].Expanded;
-    this.setState({commissionData: [...commissionData], currentIndex: index});
-    this.toggleExpandCollapse(!this.state.commissionData[index].Expanded);
-
-    // console.log('current index selected ....', index);
-    // if (this.state.currentIndex === index) {
-    //   this.setState(
-    //     state => {
-    //       return {
-    //         currentIndex: index,
-    //         isExpandCollapseVisible: !state.isExpandCollapseVisible,
-    //       };
-    //     },
-    //     () =>
-    //       this.toggleExpandCollapse(
-    //         this.state.isExpandCollapseVisible,
-    //         this.state.currentIndex,
-    //       ),
-    //   );
-    //   // this.toggleExpandCollapse(
-    //   //   this.state.isExpandCollapseVisible,
-    //   //   this.state.currentIndex,
-    //   // );
-    // } else if (this.state.currentIndex !== index) {
-    //   this.toggleExpandCollapse(false, this.state.currentIndex);
-    //   this.setState(
-    //     state => {
-    //       return {
-    //         currentIndex: index,
-    //         isExpandCollapseVisible: true,
-    //       };
-    //     },
-    //     () =>
-    //       this.toggleExpandCollapse(
-    //         this.state.isExpandCollapseVisible,
-    //         this.state.currentIndex,
-    //       ),
-    //   );
-    // }
   };
 
   renderReferralsCard = ({item, index}) => {

@@ -32,7 +32,7 @@ class TextInputComponent extends React.Component {
             this.state.focus &&
               !this.state.valieInput && {borderColor: 'red', borderWidth: 1},
             this.state.focus &&
-              this.state.valieInput && {borderColor: 'blue', borderWidth: 1},
+              this.state.valieInput && {borderColor: '#22caff', borderWidth: 1},
           ]}
           spellCheck={false}
           autoFocus={false}
