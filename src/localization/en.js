@@ -160,6 +160,9 @@ export default {
     transferBtnName: 'Transfer to you Paypal Account',
     emailId: 'Your Paypal email Id: ',
   },
+  faq: {
+    headerTitle: 'FAQ',
+  },
   common: {
     placeHolder: 'Enter value',
   },

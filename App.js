@@ -31,6 +31,7 @@ import ReferAndEarnPage from './src/referAndEarn/referAndEarn';
 import MyReferralsPage from './src/myReferrals/myReferrals';
 import ReferralCommissionsPage from './src/referralCommissions/referralCommissions';
 import PayoutHistoryPage from './src/payoutHistory/payoutHistory';
+import FAQPage from './src/faq/faq';
 import I18n from './src/localization/i18n';
 import {
   widthAdapter,
@@ -236,6 +237,25 @@ const HomeNavigator = () => {
         component={ContactUsPage}
         options={{
           title: I18n.t('contactUs.headerTitle'),
+        }}
+        // options={{
+        //   headerTitle: props => (
+        //     <Header headerName={I18n.t('trending.headerTitle')} {...props} />
+        //   ),
+        //   // headerRight: () => (
+        //   //   <Button
+        //   //     onPress={() => alert('This is a button!')}
+        //   //     title="Info"
+        //   //     color="#fff"
+        //   //   />
+        //   // ),
+        // }}
+      />
+      <Stack.Screen
+        name="FAQPage"
+        component={FAQPage}
+        options={{
+          title: I18n.t('faq.headerTitle'),
         }}
         // options={{
         //   headerTitle: props => (
