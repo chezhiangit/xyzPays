@@ -183,6 +183,11 @@ class TrendingPage extends React.Component {
     return (
       <View style={BaseStyles.baseContainer}>
         <View style={styles.trendingContainer}>
+          <View style={BaseStyles.userInfo}>
+            <Text style={BaseStyles.userInfoTxt}>
+              {I18n.t('trending.userInfo')}
+            </Text>
+          </View>
           <FlatList
             style={styles.trendingList}
             data={this.state.trendingData}

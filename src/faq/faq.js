@@ -17,7 +17,7 @@ import Footer from '../common/UIComponents/Footer';
 import {heightAdapter} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
 import Images from '../assets/index';
-import { TextInput } from 'react-native-gesture-handler';
+import {TextInput} from 'react-native-gesture-handler';
 // import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const faqData = [
@@ -29,12 +29,14 @@ const faqData = [
         itemDescription:
           'XYZpays is an application that allows Sales Reps to receive extra incentives on demand when they place orders for Spectrum in the XYZies portal. ',
         Expanded: false,
+        sectionIndex: 0,
       },
       {
         itemTitle: 'Why should I have XYZpays? ',
         itemDescription:
           'XYZpays is a free up that allows you to receive extra commissions, is user friendly and connects to your PayPal account to transfer the money instantly.',
         Expanded: false,
+        sectionIndex: 0,
       },
     ],
   },
@@ -46,18 +48,21 @@ const faqData = [
         itemTitle: 'Do I have to pay to use the app? ',
         itemDescription: 'No, the app is completely free. ',
         Expanded: false,
+        sectionIndex: 1,
       },
       {
         itemTitle: 'What’s the commission I’ll be receiving through XYZpays? ',
         itemDescription:
           'Please contact your accounts manager to know the commission.',
         Expanded: false,
+        sectionIndex: 1,
       },
       {
         itemTitle: 'How can I edit my information on XYZpays? ',
         itemDescription:
           'Go to the menu, click on My profile and then you can edit your information. Keep in mind that the information you edit can affect the information associated on your XYZies portal.',
         Expanded: false,
+        sectionIndex: 1,
       },
 
       {
@@ -65,6 +70,7 @@ const faqData = [
         itemDescription:
           'Here are the steps in how to link your PayPal account to the XYZpays app: \n\n1.	Go to the Menu of the app,\n2.	Click on the menu \n3.	Click on My Profile \n4.	Click on edit profile and add the email address associated with your Paypal account \n5.	Update your profile ',
         Expanded: false,
+        sectionIndex: 1,
       },
     ],
   },
@@ -77,6 +83,7 @@ const faqData = [
         itemDescription:
           '\n\n1.	Click on the menu\n2.	Click on transfer money \n3.	Click on transfer money to Paypal\n\n',
         Expanded: false,
+        sectionIndex: 2,
       },
       {
         itemTitle:
@@ -84,6 +91,7 @@ const faqData = [
         itemDescription:
           'No, there’s not cost or transfer fee when you transfer the money from XYZpays to Paypal.',
         Expanded: false,
+        sectionIndex: 2,
       },
 
       {
@@ -92,6 +100,7 @@ const faqData = [
         itemDescription:
           'Call your Account manager, He/she will help you fix the issue. ',
         Expanded: false,
+        sectionIndex: 2,
       },
       {
         itemTitle:
@@ -99,69 +108,12 @@ const faqData = [
         itemDescription:
           'No, there’s no minimum amount to transfer the money. ',
         Expanded: false,
+        sectionIndex: 2,
       },
     ],
   },
 ];
 
-// const faqData = [
-//   {
-//     sectionTitle:
-//   },
-//   {
-//     customerName: 'Chezhian',
-//     emailId: 'chezhian.p@gmail.com',
-//     mobile: '9585058087',
-//     referredOn: moment().format('MM/DD/YY'),
-//     registeredOn: moment().format('MM/DD/YY'),
-//     registrationStatus: 'Not Registered',
-//     Expanded: false,
-//   },
-//   {
-//     customerName: 'Jimkim',
-//     emailId: 'chezhian.p@gmail.com',
-//     mobile: '9585058087',
-//     referredOn: moment().format('MM/DD/YY'),
-//     registeredOn: moment().format('MM/DD/YY'),
-//     registrationStatus: 'Registered',
-//     Expanded: false,
-//   },
-//   {
-//     customerName: 'Chezhian',
-//     emailId: 'chezhian.p@gmail.com',
-//     mobile: '9585058087',
-//     referredOn: moment().format('MM/DD/YY'),
-//     registeredOn: moment().format('MM/DD/YY'),
-//     registrationStatus: 'Not Registered',
-//     Expanded: false,
-//   },
-//   {
-//     customerName: 'Jimkim',
-//     emailId: 'chezhian.p@gmail.com',
-//     mobile: '9585058087',
-//     referredOn: moment().format('MM/DD/YY'),
-//     registeredOn: moment().format('MM/DD/YY'),
-//     registrationStatus: 'Registered',
-//     Expanded: false,
-//   },
-//   {
-//     customerName: 'Chezhian',
-//     emailId: 'chezhian.p@gmail.com',
-//     mobile: '9585058087',
-//     referredOn: moment().format('MM/DD/YY'),
-//     registeredOn: moment().format('MM/DD/YY'),
-//     registrationStatus: 'Not Registered',
-//     Expanded: false,
-//   },
-// ];
-// const segmentationData = [
-//   I18n.t('myReferrals.dropdownAll'),
-//   I18n.t('myReferrals.registered'),
-//   I18n.t('myReferrals.notRegistered'),
-//   // I18n.t('commission.dropdownLast3Weeks'),
-//   // I18n.t('commission.dropdownLast1Month'),
-//   // I18n.t('commission.dropdownLast3Months'),
-// ];
 class FAQ extends React.Component {
   constructor(props) {
     super(props);
@@ -172,28 +124,14 @@ class FAQ extends React.Component {
       isExpandCollapseVisible: false,
       faqData: [...faqData],
       currentIndex: -1,
+      currentSectionIndex: -1,
     };
     // this.show=false;
     this.dropDownTranslate = new Animated.Value(0);
     this.expandCollapseTranslate = new Animated.Value(0);
     this.expandedViewHeight = heightAdapter(350);
-    this.sectionItemIndex = -1;
+    // this.sectionItemIndex = -1;
   }
-  // onSegmentItemSelected = (item, index) => {
-  //   this.toggleDropdown(false);
-  //   this.setState({
-  //     selectedValue: segmentationData[index],
-  //     selectedIndex: index,
-  //   });
-  // };
-  // renderSegmentItem = ({item, index}) => (
-  //   <TouchableOpacity onPress={() => this.onSegmentItemSelected(item, index)}>
-  //     <View style={styles.segmentItemRow}>
-  //       <Text style={styles.segmentItemText}>{item}</Text>
-  //     </View>
-  //   </TouchableOpacity>
-  // );
-
   toggleDropdown = show => {
     if (this.state.isSegmentVisible === show) {
       return;
@@ -239,16 +177,9 @@ class FAQ extends React.Component {
   };
 
   toggleExpandCollapse = (show, index, sectionIndex) => {
-    // console.log('toggleExpandCollapse index selected ....', index);
-    // console.log('toggleExpandCollapse index show ....', show);
-    // console.log(
-    //   'toggleExpandCollapse currentIndex ....',
-    //   this.state.currentIndex,
-    // );
-
-    // if (this.state.isExpandCollapseVisible === show && ) {
-    //   return;
-    // }
+    console.log('toggleExpandCollapse index ....', index);
+    console.log('toggleExpandCollapse show ....', show);
+    console.log('toggleExpandCollapse sectionIndex ....', sectionIndex);
 
     this.expandedViewHeight = 300;
     // this.state.commissionData[index].registrationStatus === 'Registered'
@@ -264,6 +195,7 @@ class FAQ extends React.Component {
           faqTempData[sectionIndex].data[index].Expanded = show;
           return {
             currentIndex: index,
+            currentSectionIndex: sectionIndex,
             faqData: faqTempData,
           };
         },
@@ -277,6 +209,7 @@ class FAQ extends React.Component {
           faqTempData[sectionIndex].data[index].Expanded = show;
           return {
             currentIndex: -1,
+            currentSectionIndex: -1,
             faqData: faqTempData,
           };
         }),
@@ -291,9 +224,12 @@ class FAQ extends React.Component {
           state => {
             const faqTempData = [...state.faqData];
             faqTempData[sectionIndex].data[index].Expanded = show;
-            faqTempData[sectionIndex].data[state.currentIndex].Expanded = false;
+            faqTempData[state.currentSectionIndex].data[
+              state.currentIndex
+            ].Expanded = false;
             return {
               currentIndex: index,
+              currentSectionIndex: sectionIndex,
               faqData: faqTempData,
             };
           },
@@ -304,8 +240,10 @@ class FAQ extends React.Component {
   };
 
   renderFqaSectionHeader = data => {
-    this.sectionItemIndex += 1;
-    console.log('this.sectionItemIndex ....', this.sectionItemIndex);
+    // data !== undefined && (this.sectionItemIndex += 1);
+    // console.log('this.sectionItemIndex ....', this.sectionItemIndex);
+    // console.log('renderFqaSectionHeader data ....', data);
+
     const {
       section: {title},
     } = data;
@@ -316,15 +254,18 @@ class FAQ extends React.Component {
     );
   };
 
-  renderFaqCard = ({item, index}, sectionIndex = this.sectionItemIndex) => {
+  renderFaqCard = ({item, index}) => {
+    // console.log('item index ....', index);
+    // console.log('sectionIndex ....', sectionIndex);
+    // console.log('section ....', section);
     return (
-      <View style={styles.referralsItemContainer}>
+      <View style={styles.faqItemContainer}>
         <TouchableWithoutFeedback
           onPress={() =>
             this.toggleExpandCollapse(
-              !this.state.faqData[index].Expanded,
+              !this.state.faqData[item.sectionIndex].data[index].Expanded,
               index,
-              sectionIndex,
+              item.sectionIndex,
             )
           }>
           <View style={styles.expandCollapseHeader}>
@@ -338,17 +279,21 @@ class FAQ extends React.Component {
         </TouchableWithoutFeedback>
         <Animated.View
           style={[
-            styles.referralsDetailsContainer,
-            this.state.currentIndex === index && {
-              height: this.expandCollapseTranslate.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, this.expandedViewHeight],
-              }),
-            },
+            styles.faqDetailsContainer,
+            this.state.currentIndex === index &&
+              this.state.currentSectionIndex === item.sectionIndex && {
+                height: this.expandCollapseTranslate.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [0, this.expandedViewHeight],
+                }),
+              },
           ]}>
           <View style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]} />
-          <View style={styles.customerDetails}>
-            <TextInput style={styles.customerDetailsTxt} multiline={true}>
+          <View style={styles.faqDetails}>
+            <TextInput
+              style={styles.faqDetailsTxt}
+              multiline={true}
+              editable={false}>
               {item.itemDescription}
             </TextInput>
           </View>
@@ -362,7 +307,10 @@ class FAQ extends React.Component {
     this.sectionItemIndex = -1;
     return (
       <View style={BaseStyles.baseContainer}>
-        <View style={styles.referralsContainer}>
+        <View style={styles.faqContainer}>
+          <View style={BaseStyles.userInfo}>
+            <Text style={BaseStyles.userInfoTxt}>{I18n.t('faq.userInfo')}</Text>
+          </View>
           <SectionList
             style={styles.faqList}
             sections={this.state.faqData}

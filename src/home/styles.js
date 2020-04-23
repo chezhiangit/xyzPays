@@ -123,7 +123,7 @@ export default StyleSheet.create({
     width: widthAdapter(730),
     borderWidth: 1,
     borderColor: Colors.primaryAppColor,
-    borderTopEndRadius: 3,
+    borderTopEndRadius: widthAdapter(3),
     borderBottomEndRadius: 0,
     alignItems: 'center',
     justifyContent: 'center',

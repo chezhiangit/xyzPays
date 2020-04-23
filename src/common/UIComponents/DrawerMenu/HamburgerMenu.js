@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {DrawerActions} from '@react-navigation/native';
-import styles from './styles';
+import styles from '../styles';
 
 const HamburgerMenu = props => {
   // const {navigation} = props;

@@ -38,6 +38,11 @@ class ProfilePage extends React.Component {
     // const {navigation} = this.props;
     return (
       <View style={[BaseStyles.baseContainer]}>
+        <View style={BaseStyles.userInfo}>
+          <Text style={BaseStyles.userInfoTxt}>
+            {I18n.t('profile.userInfo')}
+          </Text>
+        </View>
         <ScrollView
           style={styles.profileViewContainer}
           showsVerticalScrollIndicator={false}>

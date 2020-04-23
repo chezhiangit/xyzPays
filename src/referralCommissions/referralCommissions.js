@@ -199,6 +199,11 @@ class ReferralCommissions extends React.Component {
     return (
       <View style={BaseStyles.baseContainer}>
         <View style={styles.commissionContainer}>
+          <View style={BaseStyles.userInfo}>
+            <Text style={BaseStyles.userInfoTxt}>
+              {I18n.t('referralCommissions.userInfo')}
+            </Text>
+          </View>
           <View style={styles.dropdownContainer}>
             <TouchableOpacity
               style={styles.selectionBox}

@@ -63,6 +63,7 @@ export default {
   },
   commission: {
     headerTitle: 'Commissions',
+    userInfo: 'Your Commission Details',
     dropdownAll: 'All',
     dropdown7Days: 'Last 7 Days',
     dropdownLast2Weeks: 'Last 2 Weeks',
@@ -78,6 +79,7 @@ export default {
   },
   trending: {
     headerTitle: 'Trending',
+    userInfo: 'Trending Products',
     amount: 'Amount:',
     status: 'Status:',
     currencySymbol: '$',
@@ -91,6 +93,7 @@ export default {
   },
   profile: {
     headerTitle: 'My Profile',
+    userInfo: 'Your Profile Informations',
     editProfile: 'Edit Profile',
     accountInfoLabel: 'Account Info',
     repId: 'Rep Id',
@@ -109,6 +112,7 @@ export default {
   },
   editProfile: {
     headerTitle: 'Edit Profile',
+    userInfo: 'Edit Your Profile Informations',
     editPhoto: 'Choose Photo',
     firstName: 'First Name',
     lastName: 'Last Name',
@@ -133,6 +137,7 @@ export default {
   },
   myReferrals: {
     headerTitle: 'My Referrals',
+    userInfo: 'Your Referrals details',
     dropdownAll: 'All',
     registered: 'Registered',
     notRegistered: 'Not Registered',
@@ -141,6 +146,7 @@ export default {
   },
   referralCommissions: {
     headerTitle: 'Referral Comissions',
+    userInfo: 'Your Referral Commissions',
     rferredUser: 'Referred User: ',
     referralCommission: 'Referral Commission: ',
     status: 'Status: ',
@@ -157,11 +163,30 @@ export default {
   },
   payoutHistory: {
     headerTitle: 'Payout History',
+    userInfo: 'Transfer Money & View Payout History',
     transferBtnName: 'Transfer to you Paypal Account',
     emailId: 'Your Paypal email Id: ',
   },
   faq: {
     headerTitle: 'FAQ',
+    userInfo: 'Frequently Asked Questions',
+  },
+  hamburgerMenu: {
+    home: 'Home',
+    profile: 'Profile',
+    viewProfile: 'View Profile',
+    editProfile: 'Edit Profile',
+    referrals: 'Referrals',
+    referAndEarn: 'Refer & Earn',
+    myReferrals: 'My Referrals',
+    referralsCommission: 'Referrals Commission',
+    commissionAndPayout: 'Commission & Payout',
+    viewCommissions: 'View Commissions',
+    transferMoney: 'Transfer Money',
+    products: 'Products',
+    trendingProducts: 'Trending Products',
+    contactUs: 'ContactUs',
+    FAQs: 'FAQs',
   },
   common: {
     placeHolder: 'Enter value',

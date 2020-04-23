@@ -8,23 +8,18 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import {connect} from 'react-redux';
-import {Button} from 'react-native';
-import {NavigationContainer, DrawerActions} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {Provider} from 'react-redux';
-// import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {configureStore} from './src/appStore/ConfigureStore';
 import LoginPage from './src/login/LoginPage';
 import UserRegistration from './src/login/userRegistration/UserRegistration';
 import ForgotPassword from './src/login/forgotPassword/ForgotPassword';
 import HomePage from './src/home/HomePage';
 import CommissionPage from './src/commission/commissionPage';
 import TrendingPage from './src/Trending/TrendingPage';
-// import DetailsPage from './src/Details/DetailsPage';
 import ContactUsPage from './src/contactUs/MapView';
-// import Header from './src/common/UIComponents/Header';
-import MenuIcon from './src/common/UIComponents/HamburgerMenu';
+import MenuIcon from './src/common/UIComponents/DrawerMenu/HamburgerMenu';
+import DrawerComponent from './src/common/UIComponents/DrawerMenu/drawerComponent';
 import TaskEntryPage from './src/taskEntry/TaskEntryPage';
 import ProfilePage from './src/profile/profilePage';
 import EditProfilePage from './src/profile/editProfile';
@@ -34,71 +29,30 @@ import ReferralCommissionsPage from './src/referralCommissions/referralCommissio
 import PayoutHistoryPage from './src/payoutHistory/payoutHistory';
 import FAQPage from './src/faq/faq';
 import I18n from './src/localization/i18n';
-// import {
-//   widthAdapter,
-//   heightAdapter,
-//   fontscale,
-//   deviceWidth,
-// } from './src/uttils/adapterUtil';
 import Colors from './src/uttils/Colors';
 import FontsSize from './src/uttils/FontsSize';
 import fontFamily from './src/uttils/FontFamily';
 import FontsWeight from './src/uttils/FontsWeight';
 
-// const store = configureStore();
-
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const HomeNavigator = () => {
+const HomeNavigator = ({route, navigation}) => {
   return (
     <Drawer.Navigator
+      drawerContent={() => <DrawerComponent navigation={navigation} />}
       drawerPosition={'right'}
-      drawerStyle={{
-        backgroundColor: '#c6cbef',
-        width: 240,
-      }}
       initialRouteName="Home"
-      // drawerType={'slide'}
       hideStatusBar={false}
-      overlayColor>
-      <Drawer.Screen
-        name="Home"
-        component={HomePage}
-        // options={{
-        //   title: I18n.t('homePage.headerTitle'),
-        // }}
-        // options={{
-        //   headerTitle: props => (
-        //     <Header headerName={I18n.t('homePage.headerTitle')} {...props} />
-        //   ),
-        //   headerRight: () => (
-        //     <Button
-        //       onPress={() => alert('This is a button!')}
-        //       title="Info"
-        //       color="#fff"
-        //     />
-        //   ),
-        // }}
-      />
+      overlayColor
+      cont>
+      <Drawer.Screen name="Home" component={HomePage} />
       <Drawer.Screen
         name="ProfilePage"
         component={ProfilePage}
         options={{
           title: I18n.t('profile.headerTitle'),
         }}
-        // options={{
-        //   headerTitle: props => (
-        //     <Header headerName={I18n.t('profile.headerTitle')} {...props} />
-        //   ),
-        //   // headerRight: () => (
-        //   //   <Button
-        //   //     onPress={() => alert('This is a button!')}
-        //   //     title="Info"
-        //   //     color="#fff"
-        //   //   />
-        //   // ),
-        // }}
       />
       <Drawer.Screen
         name="EditProfilePage"
@@ -106,18 +60,6 @@ const HomeNavigator = () => {
         options={{
           title: I18n.t('editProfile.headerTitle'),
         }}
-        // options={{
-        //   headerTitle: props => (
-        //     <Header headerName={I18n.t('editProfile.headerTitle')} {...props} />
-        //   ),
-        //   // headerRight: () => (
-        //   //   <Button
-        //   //     onPress={() => alert('This is a button!')}
-        //   //     title="Info"
-        //   //     color="#fff"
-        //   //   />
-        //   // ),
-        // }}
       />
       <Drawer.Screen
         name="CommissionPage"
@@ -125,18 +67,6 @@ const HomeNavigator = () => {
         options={{
           title: I18n.t('commission.headerTitle'),
         }}
-        // options={{
-        //   headerTitle: props => (
-        //     <Header headerName={I18n.t('commission.headerTitle')} {...props} />
-        //   ),
-        //   // headerRight: () => (
-        //   //   <Button
-        //   //     onPress={() => alert('This is a button!')}
-        //   //     title="Info"
-        //   //     color="#fff"
-        //   //   />
-        //   // ),
-        // }}
       />
       <Drawer.Screen
         name="PayoutHistoryPage"
@@ -144,18 +74,6 @@ const HomeNavigator = () => {
         options={{
           title: I18n.t('payoutHistory.headerTitle'),
         }}
-        // options={{
-        //   headerTitle: props => (
-        //     <Header headerName={I18n.t('commission.headerTitle')} {...props} />
-        //   ),
-        //   // headerRight: () => (
-        //   //   <Button
-        //   //     onPress={() => alert('This is a button!')}
-        //   //     title="Info"
-        //   //     color="#fff"
-        //   //   />
-        //   // ),
-        // }}
       />
       <Drawer.Screen
         name="ReferAndEarnPage"
@@ -163,18 +81,6 @@ const HomeNavigator = () => {
         options={{
           title: I18n.t('referAndEarn.headerTitle'),
         }}
-        // options={{
-        //   headerTitle: props => (
-        //     <Header headerName={I18n.t('commission.headerTitle')} {...props} />
-        //   ),
-        //   // headerRight: () => (
-        //   //   <Button
-        //   //     onPress={() => alert('This is a button!')}
-        //   //     title="Info"
-        //   //     color="#fff"
-        //   //   />
-        //   // ),
-        // }}
       />
       <Drawer.Screen
         name="MyReferralsPage"
@@ -182,18 +88,6 @@ const HomeNavigator = () => {
         options={{
           title: I18n.t('myReferrals.headerTitle'),
         }}
-        // options={{
-        //   headerTitle: props => (
-        //     <Header headerName={I18n.t('commission.headerTitle')} {...props} />
-        //   ),
-        //   // headerRight: () => (
-        //   //   <Button
-        //   //     onPress={() => alert('This is a button!')}
-        //   //     title="Info"
-        //   //     color="#fff"
-        //   //   />
-        //   // ),
-        // }}
       />
       <Drawer.Screen
         name="ReferralCommissionsPage"
@@ -201,18 +95,6 @@ const HomeNavigator = () => {
         options={{
           title: I18n.t('referralCommissions.headerTitle'),
         }}
-        // options={{
-        //   headerTitle: props => (
-        //     <Header headerName={I18n.t('commission.headerTitle')} {...props} />
-        //   ),
-        //   // headerRight: () => (
-        //   //   <Button
-        //   //     onPress={() => alert('This is a button!')}
-        //   //     title="Info"
-        //   //     color="#fff"
-        //   //   />
-        //   // ),
-        // }}
       />
       <Drawer.Screen
         name="TrendingPage"
@@ -220,18 +102,6 @@ const HomeNavigator = () => {
         options={{
           title: I18n.t('trending.headerTitle'),
         }}
-        // options={{
-        //   headerTitle: props => (
-        //     <Header headerName={I18n.t('trending.headerTitle')} {...props} />
-        //   ),
-        //   // headerRight: () => (
-        //   //   <Button
-        //   //     onPress={() => alert('This is a button!')}
-        //   //     title="Info"
-        //   //     color="#fff"
-        //   //   />
-        //   // ),
-        // }}
       />
       <Stack.Screen
         name="ContactUsPage"
@@ -239,18 +109,6 @@ const HomeNavigator = () => {
         options={{
           title: I18n.t('contactUs.headerTitle'),
         }}
-        // options={{
-        //   headerTitle: props => (
-        //     <Header headerName={I18n.t('trending.headerTitle')} {...props} />
-        //   ),
-        //   // headerRight: () => (
-        //   //   <Button
-        //   //     onPress={() => alert('This is a button!')}
-        //   //     title="Info"
-        //   //     color="#fff"
-        //   //   />
-        //   // ),
-        // }}
       />
       <Stack.Screen
         name="FAQPage"
@@ -258,20 +116,7 @@ const HomeNavigator = () => {
         options={{
           title: I18n.t('faq.headerTitle'),
         }}
-        // options={{
-        //   headerTitle: props => (
-        //     <Header headerName={I18n.t('trending.headerTitle')} {...props} />
-        //   ),
-        //   // headerRight: () => (
-        //   //   <Button
-        //   //     onPress={() => alert('This is a button!')}
-        //   //     title="Info"
-        //   //     color="#fff"
-        //   //   />
-        //   // ),
-        // }}
       />
-      {/* <Drawer.Screen name="Details" component={DetailsPage} /> */}
     </Drawer.Navigator>
   );
 };

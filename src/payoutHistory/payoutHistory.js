@@ -95,6 +95,11 @@ class PayoutHistory extends React.Component {
     return (
       <View style={[BaseStyles.baseContainer]}>
         <View style={styles.payoutHistoryContainer}>
+          <View style={BaseStyles.userInfo}>
+            <Text style={BaseStyles.userInfoTxt}>
+              {I18n.t('payoutHistory.userInfo')}
+            </Text>
+          </View>
           <View style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]} />
           <View style={styles.availableAmount}>
             <Text style={styles.availableAmountTxt}>

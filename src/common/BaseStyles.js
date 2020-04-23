@@ -1,7 +1,8 @@
 // import * as React from 'react';
 import {StyleSheet} from 'react-native';
 import Colors from '../uttils/Colors';
-import {heightAdapter} from '../uttils/adapterUtil';
+import fontFamily from '../uttils/FontFamily';
+import {heightAdapter, fontscale} from '../uttils/adapterUtil';
 import DeviceInfo from 'react-native-device-info';
 import {Platform} from 'react-native';
 
@@ -19,5 +20,17 @@ export default StyleSheet.create({
   emptyHView: {
     height: heightAdapter(50),
     width: '100%',
+  },
+  userInfo: {
+    width: '100%',
+    height: heightAdapter(150),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  userInfoTxt: {
+    fontSize: fontscale(24),
+    color: Colors.black,
+    fontWeight: 'bold',
+    fontFamily: fontFamily.primaryFontFamily,
   },
 });

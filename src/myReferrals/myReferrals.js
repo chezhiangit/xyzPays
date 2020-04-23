@@ -144,7 +144,7 @@ class MyReferrals extends React.Component {
     Animated.spring(this.expandCollapseTranslate, {
       toValue: 1,
       duration: 400,
-      overshootClamping: true,
+      // overshootClamping: true,
       // useNativeDriver: true,
     }).start();
   };
@@ -152,24 +152,13 @@ class MyReferrals extends React.Component {
   collapse = (callback = () => {}) => {
     Animated.timing(this.expandCollapseTranslate, {
       toValue: 0,
-      duration: 400,
+      duration: 100,
       easing: Easing.linear,
       // useNativeDriver: true,
     }).start(() => callback());
   };
 
   toggleExpandCollapse = (show, index) => {
-    console.log('toggleExpandCollapse index selected ....', index);
-    console.log('toggleExpandCollapse index show ....', show);
-    console.log(
-      'toggleExpandCollapse currentIndex ....',
-      this.state.currentIndex,
-    );
-
-    // if (this.state.isExpandCollapseVisible === show && ) {
-    //   return;
-    // }
-
     this.expandedViewHeight =
       this.state.commissionData[index].registrationStatus === 'Registered'
         ? heightAdapter(350)
@@ -262,32 +251,46 @@ class MyReferrals extends React.Component {
             },
           ]}>
           <View style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]} />
-          <View style={styles.customerDetails}>
-            <Image source={''} style={styles.emailphoneIcon} />
-            <Text style={styles.customerDetailsTxt}>{item.emailId}</Text>
-          </View>
-          <View style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]} />
-          <View style={styles.customerDetails}>
-            <Image source={''} style={styles.emailphoneIcon} />
-            <Text style={styles.customerDetailsTxt}>{item.mobile}</Text>
-          </View>
-          <View style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]} />
-          <View style={styles.customerDetails}>
-            <Text style={styles.customerDetailsLabel}>
-              {I18n.t('myReferrals.referredOn')}
-            </Text>
-            <Text style={styles.customerDetailsTxt}>{item.referredOn}</Text>
-          </View>
-          <View style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]} />
-          {item.registrationStatus === 'Registered' && (
-            <View style={styles.customerDetails}>
-              <Text style={styles.customerDetailsLabel}>
-                {I18n.t('myReferrals.registeredOn')}
-              </Text>
-              <Text style={styles.customerDetailsTxt}>{item.registeredOn}</Text>
+          {this.state.currentIndex === index && (
+            <View style={{width: '100%'}}>
+              <View style={styles.customerDetails}>
+                <Image source={''} style={styles.emailphoneIcon} />
+                <Text style={styles.customerDetailsTxt}>{item.emailId}</Text>
+              </View>
+              <View
+                style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]}
+              />
+              <View style={styles.customerDetails}>
+                <Image source={''} style={styles.emailphoneIcon} />
+                <Text style={styles.customerDetailsTxt}>{item.mobile}</Text>
+              </View>
+              <View
+                style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]}
+              />
+              <View style={styles.customerDetails}>
+                <Text style={styles.customerDetailsLabel}>
+                  {I18n.t('myReferrals.referredOn')}
+                </Text>
+                <Text style={styles.customerDetailsTxt}>{item.referredOn}</Text>
+              </View>
+              <View
+                style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]}
+              />
+              {item.registrationStatus === 'Registered' && (
+                <View style={styles.customerDetails}>
+                  <Text style={styles.customerDetailsLabel}>
+                    {I18n.t('myReferrals.registeredOn')}
+                  </Text>
+                  <Text style={styles.customerDetailsTxt}>
+                    {item.registeredOn}
+                  </Text>
+                </View>
+              )}
+              <View
+                style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]}
+              />
             </View>
           )}
-          <View style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]} />
         </Animated.View>
       </View>
     );
@@ -297,6 +300,11 @@ class MyReferrals extends React.Component {
     return (
       <View style={BaseStyles.baseContainer}>
         <View style={styles.referralsContainer}>
+          <View style={BaseStyles.userInfo}>
+            <Text style={BaseStyles.userInfoTxt}>
+              {I18n.t('myReferrals.userInfo')}
+            </Text>
+          </View>
           <View style={styles.dropdownContainer}>
             <TouchableOpacity
               style={styles.selectionBox}

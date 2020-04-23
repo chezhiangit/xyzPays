@@ -231,6 +231,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: widthAdapter(30),
+    zIndex: 100,
   },
   submitBtn: {
     height: heightAdapter(100),
