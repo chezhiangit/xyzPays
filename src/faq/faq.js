@@ -81,7 +81,7 @@ const faqData = [
         itemTitle:
           'How can I transfer the money from XYZpays to my Paypal account? ',
         itemDescription:
-          '\n\n1.	Click on the menu\n2.	Click on transfer money \n3.	Click on transfer money to Paypal\n\n',
+          '1.	Click on the menu\n2.	Click on transfer money \n3.	Click on transfer money to Paypal',
         Expanded: false,
         sectionIndex: 2,
       },
@@ -129,7 +129,7 @@ class FAQ extends React.Component {
     // this.show=false;
     this.dropDownTranslate = new Animated.Value(0);
     this.expandCollapseTranslate = new Animated.Value(0);
-    this.expandedViewHeight = heightAdapter(350);
+    this.expandedViewHeight = heightAdapter(0);
     // this.sectionItemIndex = -1;
   }
   toggleDropdown = show => {
@@ -177,15 +177,6 @@ class FAQ extends React.Component {
   };
 
   toggleExpandCollapse = (show, index, sectionIndex) => {
-    console.log('toggleExpandCollapse index ....', index);
-    console.log('toggleExpandCollapse show ....', show);
-    console.log('toggleExpandCollapse sectionIndex ....', sectionIndex);
-
-    this.expandedViewHeight = 300;
-    // this.state.commissionData[index].registrationStatus === 'Registered'
-    //   ? heightAdapter(350)
-    //   : heightAdapter(300);
-
     if (show && this.state.currentIndex === -1) {
       this.setState(
         state => {
@@ -240,34 +231,28 @@ class FAQ extends React.Component {
   };
 
   renderFqaSectionHeader = data => {
-    // data !== undefined && (this.sectionItemIndex += 1);
-    // console.log('this.sectionItemIndex ....', this.sectionItemIndex);
-    // console.log('renderFqaSectionHeader data ....', data);
-
     const {
       section: {title},
     } = data;
     return (
       <View>
-        <Text>{title}</Text>
+        <Text style={styles.sectionTitle}>{title}</Text>
       </View>
     );
   };
 
   renderFaqCard = ({item, index}) => {
-    // console.log('item index ....', index);
-    // console.log('sectionIndex ....', sectionIndex);
-    // console.log('section ....', section);
     return (
       <View style={styles.faqItemContainer}>
         <TouchableWithoutFeedback
-          onPress={() =>
+          onPress={() => {
             this.toggleExpandCollapse(
               !this.state.faqData[item.sectionIndex].data[index].Expanded,
               index,
               item.sectionIndex,
-            )
-          }>
+            );
+            this.expandedViewHeight = item.height + heightAdapter(40);
+          }}>
           <View style={styles.expandCollapseHeader}>
             <View style={styles.expandCollapseLeftChild}>
               <Text style={styles.childTxt}>{item.itemTitle}</Text>
@@ -291,6 +276,9 @@ class FAQ extends React.Component {
           <View style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]} />
           <View style={styles.faqDetails}>
             <TextInput
+              onContentSizeChange={e =>
+                (item.height = e.nativeEvent.contentSize.height)
+              }
               style={styles.faqDetailsTxt}
               multiline={true}
               editable={false}>
@@ -312,6 +300,7 @@ class FAQ extends React.Component {
             <Text style={BaseStyles.userInfoTxt}>{I18n.t('faq.userInfo')}</Text>
           </View>
           <SectionList
+            showsVerticalScrollIndicator={false}
             style={styles.faqList}
             sections={this.state.faqData}
             renderItem={this.renderFaqCard}
