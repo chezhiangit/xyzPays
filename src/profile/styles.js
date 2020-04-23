@@ -15,7 +15,7 @@ export default StyleSheet.create({
     // alignItems: 'center',
     // // justifyContent: 'center',
     // padding: widthAdapter(60),
-    flex: 1,
+    height: '70%',
     flexDirection: 'column',
     // borderWidth: 1,
     // borderColor: 'red',

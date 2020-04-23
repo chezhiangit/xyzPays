@@ -21,14 +21,18 @@ class ContactUs extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.props.registerKeyboard();
+  }
+  componentWillUnmount() {
+    this.props.deregisterKeyboard();
+  }
   onFindUs = () => {
     this.setState({showFindUsView: true});
-    this.props.registerKeyboard();
   };
   onSubmit = () => {
-    this.setState({showFindUsView: false});
     Keyboard.dismiss();
-    this.props.deregisterKeyboard();
+    this.setState({showFindUsView: false});
   };
   render() {
     const {navigation} = this.props;
@@ -209,7 +213,7 @@ const styles = StyleSheet.create({
     bottom: heightAdapter(200),
     right: widthAdapter(50),
     left: 0,
-    zIndex: 100,
+    zIndex: 0,
     justifyContent: 'flex-end',
   },
   findUsBtn: {

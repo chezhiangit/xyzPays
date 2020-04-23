@@ -1,6 +1,9 @@
 import {LOGIN_SUCCESSFUL} from '../ActionTypes';
 
-const loginReducer = (state = {userName: '', passWord: ''}, action) => {
+const loginReducer = (
+  state = {userName: '', passWord: '', userLoggedIn: true},
+  action,
+) => {
   switch (action.type) {
     case LOGIN_SUCCESSFUL:
       return {

@@ -13,7 +13,7 @@ import styles from './styles';
 
 class LoginPage extends React.Component {
   onSubmitLogin = () => {
-    this.props.navigation.replace('HomePage');
+    // this.props.navigation.replace('HomePage');
   };
 
   onSignUp = () => {

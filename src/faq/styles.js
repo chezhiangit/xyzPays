@@ -110,9 +110,10 @@ const styles = StyleSheet.create({
   expandCollapseLeftChild: {
     alignItems: 'flex-start',
     justifyContent: 'center',
+    width: widthAdapter(600),
   },
   childTxt: {
-    fontSize: fontscale(20),
+    fontSize: fontscale(15),
     fontFamily: fontFamily.primaryFontFamily,
     // color: 'green',
     fontWeight: 'bold',
@@ -121,6 +122,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
+    width: widthAdapter(50),
+  },
+  faqList: {
+    marginTop: heightAdapter(50),
+    marginBottom: heightAdapter(160),
   },
   regStatus: {
     height: heightAdapter(50),
