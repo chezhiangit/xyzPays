@@ -1,7 +1,7 @@
 import {LOGIN_SUCCESSFUL} from '../ActionTypes';
 
 const loginReducer = (
-  state = {userName: '', passWord: '', userLoggedIn: true},
+  state = {userName: '', userLoggedIn: false, accessToken: ''},
   action,
 ) => {
   switch (action.type) {
@@ -10,6 +10,7 @@ const loginReducer = (
         ...state,
         userName: action.userName,
         passWord: action.passWord,
+        userLoggedIn: action.userLoggedIn,
       };
     default:
       return state;

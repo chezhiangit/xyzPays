@@ -47,6 +47,7 @@ class EmailInputComponent extends React.Component {
           onChangeText={text => {
             this.onEmailChange(text);
           }}
+          onEndEditing={() => this.props.onEmailEntered(this.state.email)}
           onBlur={() => {
             if (this.state.email.length === 0) {
               this.setState({focus: false});

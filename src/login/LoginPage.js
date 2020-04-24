@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
+import {connect} from 'react-redux';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
@@ -10,10 +11,27 @@ import PasswordInputComponent from '../common/UIComponents/PasswordInputComponen
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
 import styles from './styles';
+import {authenticateUser} from '../AppStore/loginActions';
 
 class LoginPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userName: '',
+      password: '',
+      error: '',
+    };
+  }
+
+  
   onSubmitLogin = () => {
-    // this.props.navigation.replace('HomePage');
+    const userCredential = {
+      userName: this.state.userName,
+      password: this.state.password,
+    };
+    console.log('onSubmitLogin....', userCredential);
+   
+    this.props.authenticateUser(userCredential);
   };
 
   onSignUp = () => {
@@ -22,6 +40,19 @@ class LoginPage extends React.Component {
 
   onForgotPassword = () => {
     this.props.navigation.navigate('ForgotPassword');
+  };
+
+  onEmailEntered = userName => {
+    this.setState({
+      userName,
+    });
+  };
+
+  onPassworEntered = password => {
+    console.log('password ...', password);
+    this.setState({
+      password,
+    });
   };
 
   render() {
@@ -38,10 +69,12 @@ class LoginPage extends React.Component {
           <EmailInputComponent
             placeholder={I18n.t('login.emailPlaceHolder')}
             autoFocus={false}
+            onEmailEntered={this.onEmailEntered}
           />
           <PasswordInputComponent
             placeholder={I18n.t('login.passwordPlaceHolder')}
             autoFocus={false}
+            onPassworEntered={this.onPassworEntered}
           />
           <View style={styles.signinContainer}>
             <PrimaryButton
@@ -53,7 +86,10 @@ class LoginPage extends React.Component {
               btnName={I18n.t('login.signUpNow')}
               onClick={this.onSignUp}
             />
-            <LinkBtnComponent btnName={I18n.t('login.forgotPwd')} onClick={this.onForgotPassword}/>
+            <LinkBtnComponent
+              btnName={I18n.t('login.forgotPwd')}
+              onClick={this.onForgotPassword}
+            />
           </View>
         </View>
         <Footer />
@@ -65,4 +101,14 @@ class LoginPage extends React.Component {
   }
 }
 
-export default LoginPage;
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = dispatch => ({
+  authenticateUser: userCredential =>
+    dispatch(authenticateUser(userCredential)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LoginPage);

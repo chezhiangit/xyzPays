@@ -1,19 +1,22 @@
 import {takeLatest, call, put} from 'redux-saga/effects';
-// import {fetchItemDescription} from '../network/TireService';
-import {USER_LOGIN} from '../AppStore/ActionTypes';
+import {SAGA_AUTHENTICATE_USER} from '../AppStore/ActionTypes';
 import {userLoginSuccess} from './SagaActions';
+import {AuthenticateUser} from '../networkServices/loginServices/login';
 
 function* userLogin(action) {
   try {
-    // const description = yield call(
-    //   fetchItemDescription,
-    //   action.itemNumber,
-    //   action.membershipId,
-    // );
-    yield put(userLoginSuccess(/*userName, password*/));
+    console.log('saga user login userinfo...', action.userCredential);
+    const response = yield call(AuthenticateUser, action.userCredential);
+    yield put(
+      userLoginSuccess({
+        userName: action.userCredential.userName,
+        userLoggedIn: response.IsLoginSuccess,
+        accessToken: response.AccessToken,
+      }),
+    );
   } catch (error) {}
 }
 
 export default function* watchuserLoginAction() {
-  yield takeLatest(USER_LOGIN, userLogin);
+  yield takeLatest(SAGA_AUTHENTICATE_USER, userLogin);
 }
