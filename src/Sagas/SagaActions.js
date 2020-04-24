@@ -1,4 +1,4 @@
-import {LOGIN_SUCCESSFUL} from '../appStore/ActionTypes';
+import {LOGIN_SUCCESSFUL} from '../AppStore/ActionTypes';
 
 export const userLoginSuccess = (userName, password) => ({
   type: LOGIN_SUCCESSFUL,

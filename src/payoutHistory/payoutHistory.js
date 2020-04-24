@@ -19,7 +19,7 @@ import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import {heightAdapter, widthAdapter} from '../uttils/adapterUtil';
 import PaymentStatusComponent from '../common/UIComponents/PaymentStatusContainer/PaymentStatusComponent';
 import SliderView from '../common/UIComponents/SliderView';
-import Images from '../assets/index';
+import Images from '../Assets/index';
 import moment from 'moment';
 
 const payoutData = [

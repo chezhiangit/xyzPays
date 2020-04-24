@@ -16,7 +16,7 @@ import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
 import {heightAdapter} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
-import Images from '../assets/index';
+import Images from '../Assets/index';
 // import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const commission = [

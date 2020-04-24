@@ -15,7 +15,7 @@ import LoginPage from './src/login/LoginPage';
 import UserRegistration from './src/login/userRegistration/UserRegistration';
 import ForgotPassword from './src/login/forgotPassword/ForgotPassword';
 import HomePage from './src/home/HomePage';
-import CommissionPage from './src/commission/commissionPage';
+import CommissionPage from './src/Commission/commissionPage';
 import TrendingPage from './src/Trending/TrendingPage';
 import ContactUsPage from './src/contactUs/MapView';
 import MenuIcon from './src/common/UIComponents/DrawerMenu/HamburgerMenu';

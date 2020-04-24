@@ -7,7 +7,7 @@ import TextInputComponent from '../common/UIComponents/TextInputComponent';
 import PasswordInputComponent from '../common/UIComponents/PasswordInputComponent';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import EmailInputComponent from '../common/UIComponents/EmailInputComponent';
-import Images from '../assets/index';
+import Images from '../Assets/index';
 import styles from './styles';
 import {widthAdapter} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
