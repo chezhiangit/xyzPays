@@ -4,27 +4,21 @@ import urlConstants from '../urlConstants';
 
 const TIMEOUT = 30000;
 
-const authenticateUserService = async userCredentials => {
+const fetchProfileInfoService = async accessToken => {
   try {
-    const url = urlConstants.BaseUrl + urlConstants.login;
+    const url =
+      urlConstants.BaseUrl + urlConstants.getProfileInfo + accessToken;
     const headersParams = {};
-    const requestBody = {
-      UserName: userCredentials.userName,
-      Password: userCredentials.password,
-    };
     headersParams['Content-Type'] = 'application/json';
-    const paramsStr = JSON.stringify(requestBody);
-    console.log('login url ...', url);
-    console.log('login paramsStr ...', paramsStr);
-    console.log('login headersParams ...', headersParams);
+    console.log('getProfileInfo url ...', url);
+    console.log('getProfileInfo headersParams ...', headersParams);
 
     const response = await RNFetchBlob.config({timeout: TIMEOUT}).fetch(
-      'POST',
+      'GET',
       url,
       headersParams,
-      paramsStr,
     );
-    console.log('login response ...', response);
+    console.log('getProfileInfo response ...', response);
     const result = response.json();
     if (response.respInfo.status === 200) {
       result.status = 200;
@@ -35,24 +29,20 @@ const authenticateUserService = async userCredentials => {
     }
     return null;
   } catch (e) {
-    console.log('User authentication failed.', e);
+    console.log('fetch profile info failed.', e);
     // throw new Error('User authentication failed.');
   }
 };
 
-const registerNewUserService = async payload => {
+const saveProfileInfoService = async payload => {
   try {
-    const url = urlConstants.BaseUrl + urlConstants.newRegistration;
+    const url = urlConstants.BaseUrl + urlConstants.saveProfileInfo;
     const headersParams = {};
-    // const requestBody = {
-    //   UserName: userCredentials.userName,
-    //   Password: userCredentials.password,
-    // };
-    headersParams['Content-Type'] = 'application/json';
     const paramsStr = JSON.stringify(payload);
-    console.log(' registerNewUser url ...', url);
-    console.log('registerNewUser paramsStr ...', paramsStr);
-    console.log('registerNewUser headersParams ...', headersParams);
+    headersParams['Content-Type'] = 'application/json';
+    console.log('saveProfileInfo url ...', url);
+    console.log('saveProfileInfo paramsStr ...', paramsStr);
+    console.log('saveProfileInfo headersParams ...', headersParams);
 
     const response = await RNFetchBlob.config({timeout: TIMEOUT}).fetch(
       'POST',
@@ -60,7 +50,7 @@ const registerNewUserService = async payload => {
       headersParams,
       paramsStr,
     );
-    console.log('registerNewUser response ...', response);
+    console.log('saveProfileInfo response ...', response);
     const result = response.json();
     if (response.respInfo.status === 200) {
       result.status = 200;
@@ -71,9 +61,9 @@ const registerNewUserService = async payload => {
     }
     return null;
   } catch (e) {
-    console.log('User registration failed.', e);
+    console.log('fetch saveProfileInfo failed.', e);
     // throw new Error('User authentication failed.');
   }
 };
 
-export {authenticateUserService, registerNewUserService};
+export {fetchProfileInfoService, saveProfileInfoService};

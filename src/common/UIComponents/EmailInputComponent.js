@@ -8,18 +8,21 @@ class EmailInputComponent extends React.Component {
     super(props);
     this.state = {
       placeholderText: '',
-      email: '',
-      focus: false,
+      email: this.props.email ? this.props.email : '',
+      focus: this.props.email ? true : false,
       emailValid: true,
     };
   }
 
   onEmailChange = email => {
-    this.setState({
-      email,
-      focus: true,
-      emailValid: checkEmail(email),
-    });
+    this.setState(
+      {
+        email,
+        focus: true,
+        emailValid: checkEmail(email),
+      },
+      () => this.props.onEmailEntered(this.state.email),
+    );
   };
 
   render() {
@@ -46,8 +49,9 @@ class EmailInputComponent extends React.Component {
           }
           onChangeText={text => {
             this.onEmailChange(text);
+            // this.props.onEmailEntered(text);
           }}
-          onEndEditing={() => this.props.onEmailEntered(this.state.email)}
+          // onEndEditing={() => this.props.onEmailEntered(this.state.email)}
           onBlur={() => {
             if (this.state.email.length === 0) {
               this.setState({focus: false});

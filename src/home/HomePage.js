@@ -7,6 +7,8 @@ import {
   FlatList,
   Image,
 } from 'react-native';
+import {connect} from 'react-redux';
+import Spinner from 'react-native-loading-spinner-overlay';
 import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
 import I18n from '../localization/i18n';
@@ -17,6 +19,7 @@ import {heightAdapter, widthAdapter} from '../uttils/adapterUtil';
 import PaymentStatusComponent from '../common/UIComponents/PaymentStatusContainer/PaymentStatusComponent';
 import SliderView from '../common/UIComponents/SliderView';
 import Images from '../Assets';
+import {getDashboardData} from '../AppStore/dashboardActions';
 
 const taskListData = [
   {
@@ -57,6 +60,8 @@ class HomePage extends React.Component {
       pendingAmt: 75,
       deniedAmt: 25,
       visibleTaskIndex: 0,
+      isLoading: false,
+      dashboardServiceDone: false,
     };
 
     this.viewabilityConfig = {
@@ -64,6 +69,33 @@ class HomePage extends React.Component {
       viewAreaCoveragePercentThreshold: 50,
     };
   }
+
+  static getDerivedStateFromProps(props, state) {
+    if (!state.dashboardServiceDone) {
+      return {
+        isLoading: true,
+      };
+    }
+    return {};
+  }
+
+  componentDidMount() {
+    this.props.getDashboardData(
+      this.onGetDashboardDataSuccess,
+      this.onGetDashboardDataFailed,
+    );
+  }
+
+  onGetDashboardDataSuccess = () => {
+    console.log('dashboard success');
+    this.setState({isLoading: false, dashboardServiceDone: true});
+  };
+
+  onGetDashboardDataFailed = errorMsg => {
+    console.log('dashboard failes');
+    this.setState({isLoading: false, dashboardServiceDone: true});
+    console.log(errorMsg);
+  };
 
   onPressTaskButton = () => {
     // this.setState({showTask: true});
@@ -91,12 +123,20 @@ class HomePage extends React.Component {
   };
 
   onViewableItemsChanged = ({viewableItems, changed}) => {
-    console.log("Visible items are", viewableItems);
-    console.log("Changed in this iteration", changed);
+    console.log('Visible items are', viewableItems);
+    console.log('Changed in this iteration', changed);
     this.setState({visibleTaskIndex: viewableItems[0].index});
   };
 
-  renderDots = () => this.state.taskListData.map((e,index) => <View style={[styles.dot, this.state.visibleTaskIndex === index && {backgroundColor: 'gray'}]} />);
+  renderDots = () =>
+    this.state.taskListData.map((e, index) => (
+      <View
+        style={[
+          styles.dot,
+          this.state.visibleTaskIndex === index && {backgroundColor: 'gray'},
+        ]}
+      />
+    ));
 
   renderTaskCard = ({item, index}) => {
     return (
@@ -134,9 +174,11 @@ class HomePage extends React.Component {
               {I18n.t('homePage.hello')}
             </Text>
             <Text style={[styles.logedInUserHelloText, styles.primaryColor]}>
-              {' Harry'}
+              {` ${this.props.dashboardData.repFirstName}`}
             </Text>
-            <Text style={styles.logedInUserHelloText}>{' Harish'}</Text>
+            <Text style={styles.logedInUserHelloText}>
+              {` ${this.props.dashboardData.repLastName}`}
+            </Text>
           </View>
           <View style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]} />
           <PrimaryButton
@@ -173,7 +215,7 @@ class HomePage extends React.Component {
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <PaymentStatusComponent
               onSubmit={this.onPressApprovedButton}
-              btnName={this.state.approvedAmt}
+              btnName={this.props.dashboardData.totalCommissionReceivable}
               btnStyle={styles.approveBtnStyle}
               textStyle={styles.amountText}
               paymentStatus={I18n.t('homePage.paymentApproved')}
@@ -192,7 +234,7 @@ class HomePage extends React.Component {
             />
             <PaymentStatusComponent
               onSubmit={this.onPressPaidButton}
-              btnName={this.state.paidAmt}
+              btnName={this.props.dashboardData.totalPayout}
               btnStyle={styles.paidBtnStyle}
               textStyle={styles.amountText}
               paymentStatus={I18n.t('homePage.paymentPaid')}
@@ -206,7 +248,7 @@ class HomePage extends React.Component {
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <PaymentStatusComponent
               onSubmit={this.onPressPendingButton}
-              btnName={this.state.pendingAmt}
+              btnName={this.props.dashboardData.pendingPayout}
               btnStyle={styles.pendingBtnStyle}
               textStyle={styles.amountText}
               paymentStatus={I18n.t('homePage.paymentPending')}
@@ -225,7 +267,7 @@ class HomePage extends React.Component {
             />
             <PaymentStatusComponent
               onSubmit={this.onPressDeniedButton}
-              btnName={this.state.deniedAmt}
+              btnName={this.props.dashboardData.totalDenied}
               btnStyle={styles.deniedBtnStyle}
               textStyle={styles.amountText}
               paymentStatus={I18n.t('homePage.paymentDenied')}
@@ -237,6 +279,7 @@ class HomePage extends React.Component {
           </View>
         </ScrollView>
         <Footer />
+        <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
         {/* <SliderView
           visible={this.state.showTask}
           animateFrom="right"
@@ -261,4 +304,19 @@ class HomePage extends React.Component {
   }
 }
 
-export default HomePage;
+const mapStateToProps = state => {
+  console.log('state from Home page ....', state);
+  return {
+    dashboardData: state.dashboard.dashboardData,
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  getDashboardData: (onSuccesscallback, onErrocallback) =>
+    dispatch(getDashboardData(onSuccesscallback, onErrocallback)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(HomePage);

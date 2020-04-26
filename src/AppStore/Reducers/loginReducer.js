@@ -9,7 +9,7 @@ const loginReducer = (
       return {
         ...state,
         userName: action.userName,
-        passWord: action.passWord,
+        accessToken: action.accessToken,
         userLoggedIn: action.userLoggedIn,
       };
     default:

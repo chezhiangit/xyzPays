@@ -14,13 +14,15 @@ class TextInputComponent extends React.Component {
     super(props);
     this.state = {
       placeholderText: '',
-      inputValue: '',
-      focus: false,
-      valieInput: true,
+      inputValue: this.props.inputValue ? this.props.inputValue : '',
+      focus: this.props.inputValue ? true : false,
+      validInput: true,
     };
   }
   handleOnChangeText = inputValue => {
-    this.setState({inputValue});
+    this.setState({inputValue}, () =>
+      this.props.onTextChange(this.state.inputValue),
+    );
   };
 
   render() {
@@ -30,9 +32,9 @@ class TextInputComponent extends React.Component {
           style={[
             styles.textInput,
             this.state.focus &&
-              !this.state.valieInput && {borderColor: 'red', borderWidth: 1},
+              !this.state.validInput && {borderColor: 'red', borderWidth: 1},
             this.state.focus &&
-              this.state.valieInput && {borderColor: '#22caff', borderWidth: 1},
+              this.state.validInput && {borderColor: '#22caff', borderWidth: 1},
           ]}
           spellCheck={false}
           autoFocus={false}
@@ -46,6 +48,8 @@ class TextInputComponent extends React.Component {
           }
           onChangeText={text => {
             this.handleOnChangeText(text);
+            // this.setState({inputValue: text});
+            // this.props.onTextChange(this.state.inputValue);
           }}
           onBlur={() => {
             if (this.state.inputValue.length === 0) {

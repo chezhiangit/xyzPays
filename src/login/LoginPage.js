@@ -2,6 +2,7 @@ import * as React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import Spinner from 'react-native-loading-spinner-overlay';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
 import Header from '../common/UIComponents/Header';
@@ -20,18 +21,32 @@ class LoginPage extends React.Component {
       userName: '',
       password: '',
       error: '',
+      isLoading: false,
     };
   }
 
-  
   onSubmitLogin = () => {
+    this.setState({isLoading: true});
     const userCredential = {
       userName: this.state.userName,
       password: this.state.password,
     };
     console.log('onSubmitLogin....', userCredential);
-   
-    this.props.authenticateUser(userCredential);
+
+    this.props.authenticateUser(
+      userCredential,
+      this.onLoginSuccess,
+      this.onLoginFailed,
+    );
+  };
+
+  onLoginSuccess = () => {
+    this.setState({isLoading: false});
+  };
+
+  onLoginFailed = errorMsg => {
+    this.setState({isLoading: false});
+    console.log(errorMsg);
   };
 
   onSignUp = () => {
@@ -96,6 +111,7 @@ class LoginPage extends React.Component {
         {/* <TouchableOpacity onPress={() => navigation.replace('HomePage')}>
           <Text>{I18n.t('loginScreen')}</Text>
         </TouchableOpacity> */}
+        <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
       </View>
     );
   }
@@ -104,8 +120,10 @@ class LoginPage extends React.Component {
 const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
-  authenticateUser: userCredential =>
-    dispatch(authenticateUser(userCredential)),
+  authenticateUser: (userCredential, onSuccessCallback, onErrorCallback) =>
+    dispatch(
+      authenticateUser(userCredential, onSuccessCallback, onErrorCallback),
+    ),
 });
 
 export default connect(

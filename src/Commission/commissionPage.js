@@ -8,6 +8,8 @@ import {
   Easing,
   TouchableOpacity,
 } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
+import {connect} from 'react-redux';
 import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
 import moment from 'moment';
@@ -15,6 +17,7 @@ import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
 import {heightAdapter} from '../uttils/adapterUtil';
 import Images from '../Assets/index';
+import {getDateFilter, getCommissionList} from '../AppStore/commissionActions';
 // import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const commission = [
@@ -161,10 +164,39 @@ class CommissionPage extends React.Component {
       selectedIndex: 4,
       isSegmentVisible: false,
       commissionData: [...commission],
+      dateFilterServiceDone: false,
     };
     // this.show=false;
     this.translate = new Animated.Value(0);
   }
+
+  static getDerivedStateFromProps(props, state) {
+    if (!state.dateFilterServiceDone) {
+      return {
+        isLoading: true,
+      };
+    }
+    return {};
+  }
+
+  componentDidMount() {
+    this.props.getDateFilter(
+      this.onGetDateFilterSuccess,
+      this.onGetDateFilterFailed,
+    );
+  }
+
+  onGetDateFilterSuccess = () => {
+    console.log('getDateFilter success');
+    this.setState({isLoading: false, dateFilterServiceDone: true});
+  };
+
+  onGetDateFilterFailed = errorMsg => {
+    console.log('getDateFilter failed');
+    this.setState({isLoading: false, dateFilterServiceDone: true});
+    console.log(errorMsg);
+  };
+
   onSegmentItemSelected = (item, index) => {
     this.toggleDropdown(false);
     this.setState({
@@ -308,6 +340,7 @@ class CommissionPage extends React.Component {
           />
         </View>
         <Footer />
+        <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
         {/* {this.state.isSegmentVisible && (
           <TouchableOpacity
             style={styles.transparentView}
@@ -320,4 +353,21 @@ class CommissionPage extends React.Component {
   }
 }
 
-export default CommissionPage;
+const mapStateToProps = state => {
+  console.log('state from commission page ....', state);
+  return {
+    // dateFilter: state.commission.dateFilter,
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  getDateFilter: (onSuccesscallback, onErrocallback) =>
+    dispatch(getDateFilter(onSuccesscallback, onErrocallback)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CommissionPage);
+
+// export default CommissionPage;

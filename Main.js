@@ -33,6 +33,7 @@ import Colors from './src/uttils/Colors';
 import FontsSize from './src/uttils/FontsSize';
 import fontFamily from './src/uttils/FontFamily';
 import FontsWeight from './src/uttils/FontsWeight';
+// import Spinner from 'react-native-loading-spinner-overlay';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -123,8 +124,10 @@ const HomeNavigator = ({route, navigation}) => {
 
 class Main extends React.Component {
   render() {
+    // console.log('this.props.isLoading ....', this.props.isLoading);
     return (
       //   <SafeAreaProvider>
+      // <Spinner visible={this.props.isLoading} textContent={'Loading...'} />
       <NavigationContainer>
         {this.props.userLoggedIn === false ? (
           <Stack.Navigator
@@ -213,9 +216,10 @@ class Main extends React.Component {
 }
 
 const mapStateToProps = state => {
-  // console.log('state values from app component....', state);
+  console.log('state values from app component....', state);
   return {
     userLoggedIn: state.login.userLoggedIn,
+    // isLoading: state.loading.isLoading,
   };
 };
 

@@ -8,14 +8,16 @@ import {
   Easing,
   TouchableOpacity,
 } from 'react-native';
+import {connect} from 'react-redux';
 import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
 import moment from 'moment';
+import Spinner from 'react-native-loading-spinner-overlay';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
 import {heightAdapter} from '../uttils/adapterUtil';
 import Images from '../Assets/index';
-// import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {getProductsList} from '../AppStore/productsActions';
 
 const trending = [
   {
@@ -140,10 +142,35 @@ class TrendingPage extends React.Component {
     super(props);
     this.state = {
       trendingData: [...trending],
+      productsServiceDone: false,
+      isLoading: false,
     };
     // this.show=false;
     this.translate = new Animated.Value(0);
   }
+
+  static getDerivedStateFromProps(props, state) {
+    if (!state.productsServiceDone) {
+      return {isLoading: true};
+    }
+    return {};
+  }
+
+  componentDidMount() {
+    this.props.getProductsList(
+      this.onGetProductListSuccess,
+      this.onGetProductListFailed,
+    );
+  }
+
+  onGetProductListSuccess = () => {
+    this.setState({isLoading: false, productsServiceDone: true});
+  };
+
+  onGetProductListFailed = () => {
+    this.setState({isLoading: false, productsServiceDone: true});
+  };
+
   renderTrendingCard = ({item, index}) => {
     return (
       <View style={styles.trendingItemContainer}>
@@ -196,9 +223,25 @@ class TrendingPage extends React.Component {
           />
         </View>
         <Footer />
+        <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
       </View>
     );
   }
 }
 
-export default TrendingPage;
+const mapStateToProps = state => {
+  console.log('state from trending page ... ', state);
+  return {
+    // productsList: state.products.productList,
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  getProductsList: (onSuccesscallback, onErrorcallback) =>
+    dispatch(getProductsList(onSuccesscallback, onErrorcallback)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(TrendingPage);
