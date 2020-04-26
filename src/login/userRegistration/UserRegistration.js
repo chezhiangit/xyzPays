@@ -14,6 +14,7 @@ import EmailInputComponent from '../../common/UIComponents/EmailInputComponent';
 // import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
 import styles from './styles';
 import {registerNewUser} from '../../AppStore/loginActions';
+import WarningDialog from '../../common/UIComponents/warningDialog';
 
 class UserRegistration extends React.Component {
   constructor(props) {
@@ -29,6 +30,8 @@ class UserRegistration extends React.Component {
 
       isLoading: false,
       // RetypePassword: '',
+      showDlg: false,
+      dlgMsg: '',
     };
   }
   onSubmitRegistration = () => {
@@ -55,8 +58,16 @@ class UserRegistration extends React.Component {
   };
 
   onRegistrationFailed = errorMsg => {
-    this.setState({isLoading: false});
+    this.setState({isLoading: false, showDlg: true, dlgMsg: errorMsg});
     console.log(errorMsg);
+  };
+
+  onCancel = () => {
+    this.setState({showDlg: false});
+  };
+
+  onConfirm = () => {
+    this.setState({showDlg: false});
   };
 
   render() {
@@ -117,6 +128,12 @@ class UserRegistration extends React.Component {
           {/* </View> */}
         </ScrollView>
         <Footer />
+        <WarningDialog
+          shouldShowDeleteWarning={this.state.showDlg}
+          // onCancel={this.onCancel}
+          onOK={this.onConfirm}
+          dlgMsg={this.state.dlgMsg}
+        />
         <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
         {/* <TouchableOpacity onPress={() => navigation.replace('HomePage')}>
           <Text>{I18n.t('loginScreen')}</Text>

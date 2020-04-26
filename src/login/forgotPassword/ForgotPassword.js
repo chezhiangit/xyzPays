@@ -10,8 +10,16 @@ import PasswordInputComponent from '../../common/UIComponents/PasswordInputCompo
 import PrimaryButton from '../../common/UIComponents/PrimaryButton';
 // import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
 import styles from './styles';
+import WarningDialog from '../../common/UIComponents/warningDialog';
 
 class ForgotPassword extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showDlg: false,
+      dlgMsg: '',
+    };
+  }
   onStepOneNext = () => {
     this.props.navigation.goBack();
   };
@@ -19,6 +27,13 @@ class ForgotPassword extends React.Component {
   //   onSignUp = () => {
   //     this.props.navigation.navigate('UserRegistration');
   //   };
+  onCancel = () => {
+    this.setState({showDlg: false});
+  };
+
+  onConfirm = () => {
+    this.setState({showDlg: false});
+  };
 
   render() {
     // const {navigation} = this.props;
@@ -59,6 +74,12 @@ class ForgotPassword extends React.Component {
           </View>
         </View>
         <Footer />
+        <WarningDialog
+          shouldShowDeleteWarning={this.state.showDlg}
+          // onCancel={this.onCancel}
+          onOK={this.onConfirm}
+          dlgMsg={this.state.dlgMsg}
+        />
         {/* <TouchableOpacity onPress={() => navigation.replace('HomePage')}>
           <Text>{I18n.t('loginScreen')}</Text>
         </TouchableOpacity> */}

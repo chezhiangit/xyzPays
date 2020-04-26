@@ -12,8 +12,16 @@ import EmailInputComponent from '../common/UIComponents/EmailInputComponent';
 import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
 import styles from './styles';
 import {fontscale} from '../uttils/adapterUtil';
+import WarningDialog from '../common/UIComponents/warningDialog';
 
 class ReferAndEarn extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showDlg: false,
+      dlgMsg: '',
+    };
+  }
   onSendMessage = () => {
     this.props.navigation.goBack();
   };
@@ -22,6 +30,14 @@ class ReferAndEarn extends React.Component {
     this.props.navigation.navigate('MyReferralsPage', {
       headerTitle: 'My Referrals',
     });
+  };
+
+  onCancel = () => {
+    this.setState({showDlg: false});
+  };
+
+  onConfirm = () => {
+    this.setState({showDlg: false});
   };
 
   render() {
@@ -59,6 +75,12 @@ class ReferAndEarn extends React.Component {
           />
         </ScrollView>
         <Footer />
+        <WarningDialog
+          shouldShowDeleteWarning={this.state.showDlg}
+          // onCancel={this.onCancel}
+          onOK={this.onConfirm}
+          dlgMsg={this.state.dlgMsg}
+        />
       </View>
     );
   }

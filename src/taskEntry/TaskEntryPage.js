@@ -11,6 +11,7 @@ import Images from '../Assets/index';
 import styles from './styles';
 import {widthAdapter} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
+import WarningDialog from '../common/UIComponents/warningDialog';
 
 class TaskEntryPage extends React.Component {
   constructor(props) {
@@ -18,6 +19,8 @@ class TaskEntryPage extends React.Component {
     this.state = {
       productName: 'Cable Protal Products',
       selectedIndex: 0,
+      showDlg: false,
+      dlgMsg: '',
     };
   }
   onSave = () => {
@@ -30,6 +33,14 @@ class TaskEntryPage extends React.Component {
 
   onYesPressed = () => {
     this.setState({selectedIndex: 1});
+  };
+
+  onCancel = () => {
+    this.setState({showDlg: false});
+  };
+
+  onConfirm = () => {
+    this.setState({showDlg: false});
   };
 
   render() {
@@ -116,6 +127,12 @@ class TaskEntryPage extends React.Component {
           {/* </View> */}
         </ScrollView>
         <Footer />
+        <WarningDialog
+          shouldShowDeleteWarning={this.state.showDlg}
+          // onCancel={this.onCancel}
+          onOK={this.onConfirm}
+          dlgMsg={this.state.dlgMsg}
+        />
         {/* <TouchableOpacity onPress={() => navigation.replace('HomePage')}>
           <Text>{I18n.t('loginScreen')}</Text>
         </TouchableOpacity> */}

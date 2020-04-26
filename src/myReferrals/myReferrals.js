@@ -17,6 +17,7 @@ import Footer from '../common/UIComponents/Footer';
 import {heightAdapter} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
 import Images from '../Assets/index';
+import WarningDialog from '../common/UIComponents/warningDialog';
 // import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const commission = [
@@ -93,6 +94,8 @@ class MyReferrals extends React.Component {
       isExpandCollapseVisible: false,
       commissionData: [...commission],
       currentIndex: -1,
+      showDlg: false,
+      dlgMsg: '',
     };
     // this.show=false;
     this.dropDownTranslate = new Animated.Value(0);
@@ -296,6 +299,14 @@ class MyReferrals extends React.Component {
     );
   };
 
+  onCancel = () => {
+    this.setState({showDlg: false});
+  };
+
+  onConfirm = () => {
+    this.setState({showDlg: false});
+  };
+
   render() {
     return (
       <View style={BaseStyles.baseContainer}>
@@ -350,6 +361,12 @@ class MyReferrals extends React.Component {
           />
         </View>
         <Footer />
+        <WarningDialog
+          shouldShowDeleteWarning={this.state.showDlg}
+          // onCancel={this.onCancel}
+          onOK={this.onConfirm}
+          dlgMsg={this.state.dlgMsg}
+        />
         {/* {this.state.isSegmentVisible && (
           <TouchableOpacity
             style={styles.transparentView}

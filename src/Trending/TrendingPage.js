@@ -18,6 +18,7 @@ import Footer from '../common/UIComponents/Footer';
 import {heightAdapter} from '../uttils/adapterUtil';
 import Images from '../Assets/index';
 import {getProductsList} from '../AppStore/productsActions';
+import WarningDialog from '../common/UIComponents/warningDialog';
 
 const trending = [
   {
@@ -144,6 +145,8 @@ class TrendingPage extends React.Component {
       trendingData: [...trending],
       productsServiceDone: false,
       isLoading: false,
+      showDlg: false,
+      dlgMsg: '',
     };
     // this.show=false;
     this.translate = new Animated.Value(0);
@@ -167,8 +170,13 @@ class TrendingPage extends React.Component {
     this.setState({isLoading: false, productsServiceDone: true});
   };
 
-  onGetProductListFailed = () => {
-    this.setState({isLoading: false, productsServiceDone: true});
+  onGetProductListFailed = errorMsg => {
+    this.setState({
+      isLoading: false,
+      productsServiceDone: true,
+      showDlg: false,
+      dlgMsg: errorMsg,
+    });
   };
 
   renderTrendingCard = ({item, index}) => {
@@ -206,6 +214,14 @@ class TrendingPage extends React.Component {
     );
   };
 
+  onCancel = () => {
+    this.setState({showDlg: false});
+  };
+
+  onConfirm = () => {
+    this.setState({showDlg: false});
+  };
+
   render() {
     return (
       <View style={BaseStyles.baseContainer}>
@@ -223,6 +239,12 @@ class TrendingPage extends React.Component {
           />
         </View>
         <Footer />
+        <WarningDialog
+          shouldShowDeleteWarning={this.state.showDlg}
+          // onCancel={this.onCancel}
+          onOK={this.onConfirm}
+          dlgMsg={this.state.dlgMsg}
+        />
         <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
       </View>
     );

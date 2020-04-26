@@ -16,6 +16,7 @@ import CheckBoxComponent from '../common/UIComponents/CheckBox/CheckBox';
 import styles from './styles';
 import editStyles from './editProfileStyle';
 import {getProfileInfo, saveProfileInfo} from '../AppStore/profileActions';
+import WarningDialog from '../common/UIComponents/warningDialog';
 
 class EditProfilePage extends React.Component {
   constructor(props) {
@@ -25,6 +26,8 @@ class EditProfilePage extends React.Component {
       profileInfoServiceDone: false,
       saveProfileInfoServiceDone: false,
       isLoading: false,
+      showDlg: false,
+      dlgMsg: '',
 
       RepId: 0,
       AddressLine: '',
@@ -117,8 +120,13 @@ class EditProfilePage extends React.Component {
     this.setState({profileInfoServiceDone: true});
   };
 
-  onGetProfileInfoFailed = () => {
-    this.setState({isLoading: false, profileInfoServiceDone: true});
+  onGetProfileInfoFailed = errorMsg => {
+    this.setState({
+      isLoading: false,
+      profileInfoServiceDone: true,
+      dlgMsg: errorMsg,
+      showDlg: true,
+    });
   };
 
   onSaveProfileInfoSuccess = () => {
@@ -127,8 +135,13 @@ class EditProfilePage extends React.Component {
     );
   };
 
-  onSaveProfileInfoFailed = () => {
-    this.setState({isLoading: false, saveProfileInfoServiceDone: false});
+  onSaveProfileInfoFailed = errorMsg => {
+    this.setState({
+      isLoading: false,
+      saveProfileInfoServiceDone: false,
+      dlgMsg: errorMsg,
+      showDlg: true,
+    });
   };
 
   onUpdate = () => {
@@ -157,6 +170,14 @@ class EditProfilePage extends React.Component {
 
   onCheckBoxSelected = index => {
     this.setState({checkBoxIndex: index});
+  };
+
+  onCancel = () => {
+    this.setState({showDlg: false});
+  };
+
+  onConfirm = () => {
+    this.setState({showDlg: false});
   };
 
   render() {
@@ -272,6 +293,12 @@ class EditProfilePage extends React.Component {
           </View>
         </ScrollView>
         <Footer />
+        <WarningDialog
+          shouldShowDeleteWarning={this.state.showDlg}
+          // onCancel={this.onCancel}
+          onOK={this.onConfirm}
+          dlgMsg={this.state.dlgMsg}
+        />
         <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
       </View>
     );

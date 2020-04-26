@@ -19,6 +19,7 @@ import {heightAdapter} from '../uttils/adapterUtil';
 import Images from '../Assets/index';
 import {getDateFilter, getCommissionList} from '../AppStore/commissionActions';
 // import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import WarningDialog from '../common/UIComponents/warningDialog';
 
 const commission = [
   {
@@ -148,30 +149,33 @@ const commission = [
     AccountNo: 'xxxxxxxx567',
   },
 ];
-const segmentationData = [
-  I18n.t('commission.dropdownAll'),
-  I18n.t('commission.dropdown7Days'),
-  I18n.t('commission.dropdownLast2Weeks'),
-  I18n.t('commission.dropdownLast3Weeks'),
-  I18n.t('commission.dropdownLast1Month'),
-  I18n.t('commission.dropdownLast3Months'),
-];
+// const segmentationData = [
+//   I18n.t('commission.dropdownAll'),
+//   I18n.t('commission.dropdown7Days'),
+//   I18n.t('commission.dropdownLast2Weeks'),
+//   I18n.t('commission.dropdownLast3Weeks'),
+//   I18n.t('commission.dropdownLast1Month'),
+//   I18n.t('commission.dropdownLast3Months'),
+// ];
 class CommissionPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedValue: segmentationData[4],
-      selectedIndex: 4,
+      selectedDateRangeValue: this.props.dateFilter[4]?.Text,
+      selectedDateRangeIndex: 4,
       isSegmentVisible: false,
       commissionData: [...commission],
       dateFilterServiceDone: false,
+      commissionListServiceDone: false,
+      showDlg: false,
+      dlgMsg: '',
     };
     // this.show=false;
     this.translate = new Animated.Value(0);
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (!state.dateFilterServiceDone) {
+    if (!state.dateFilterServiceDone || state.commissionListServiceDone) {
       return {
         isLoading: true,
       };
@@ -188,26 +192,69 @@ class CommissionPage extends React.Component {
 
   onGetDateFilterSuccess = () => {
     console.log('getDateFilter success');
-    this.setState({isLoading: false, dateFilterServiceDone: true});
+    this.setState({
+      isLoading: false,
+      dateFilterServiceDone: true,
+      selectedDateRangeValue: this.props.dateFilter[4]?.Text,
+    });
   };
 
   onGetDateFilterFailed = errorMsg => {
     console.log('getDateFilter failed');
-    this.setState({isLoading: false, dateFilterServiceDone: true});
+    this.setState({
+      isLoading: false,
+      dateFilterServiceDone: true,
+      selectedDateRangeValue: '',
+      showDlg: false,
+      dlgMsg: '',
+    });
     console.log(errorMsg);
+  };
+
+  onGetCommissionLisSuccess = () => {
+    console.log('getDateFilter success');
+    this.setState({isLoading: false, commissionListServiceDone: false});
+  };
+
+  onGetCommissionLisFailed = errorMsg => {
+    console.log('getDateFilter failed');
+    this.setState({
+      isLoading: false,
+      commissionListServiceDone: false,
+      showDlg: false,
+      dlgMsg: errorMsg,
+    });
+    console.log(errorMsg);
+  };
+
+  getCommissionListData = () => {
+    const payload = {
+      SelectedDateRange: this.state.selectedDateRangeValue,
+      TxnStatusType: 'Paid',
+    };
+    this.props.getCommissionList(
+      payload.SelectedDateRange,
+      payload.TxnStatusType,
+      this.onGetCommissionLisSuccess,
+      this.onGetCommissionLisFailed,
+    );
   };
 
   onSegmentItemSelected = (item, index) => {
     this.toggleDropdown(false);
-    this.setState({
-      selectedValue: segmentationData[index],
-      selectedIndex: index,
-    });
+    this.setState(
+      {
+        selectedDateRangeValue: item.Text,
+        selectedDateRangeIndex: index,
+        commissionListServiceDone: true,
+      },
+      () => this.getCommissionListData(),
+    );
   };
   renderSegmentItem = ({item, index}) => (
     <TouchableOpacity onPress={() => this.onSegmentItemSelected(item, index)}>
       <View style={styles.segmentItemRow}>
-        <Text style={styles.segmentItemText}>{item}</Text>
+        <Text style={styles.segmentItemText}>{item.Text}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -286,6 +333,14 @@ class CommissionPage extends React.Component {
     );
   };
 
+  onCancel = () => {
+    this.setState({showDlg: false});
+  };
+
+  onConfirm = () => {
+    this.setState({showDlg: false});
+  };
+
   render() {
     return (
       <View style={BaseStyles.baseContainer}>
@@ -302,7 +357,7 @@ class CommissionPage extends React.Component {
               <View style={styles.selectionBox}>
                 <Image style={styles.image} source={''} />
                 <Text style={styles.selectedValue}>
-                  {this.state.selectedValue}
+                  {this.state.selectedDateRangeValue}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -319,7 +374,8 @@ class CommissionPage extends React.Component {
               ]}>
               <FlatList
                 showsVerticalScrollIndicator={false}
-                data={segmentationData}
+                // data={segmentationData}
+                data={this.props.dateFilter}
                 renderItem={this.renderSegmentItem}
                 keyExtractor={(item, index) => index}
               />
@@ -340,6 +396,12 @@ class CommissionPage extends React.Component {
           />
         </View>
         <Footer />
+        <WarningDialog
+          shouldShowDeleteWarning={this.state.showDlg}
+          // onCancel={this.onCancel}
+          onOK={this.onConfirm}
+          dlgMsg={this.state.dlgMsg}
+        />
         <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
         {/* {this.state.isSegmentVisible && (
           <TouchableOpacity
@@ -356,13 +418,27 @@ class CommissionPage extends React.Component {
 const mapStateToProps = state => {
   console.log('state from commission page ....', state);
   return {
-    // dateFilter: state.commission.dateFilter,
+    dateFilter: state.commission.dateFilter,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   getDateFilter: (onSuccesscallback, onErrocallback) =>
     dispatch(getDateFilter(onSuccesscallback, onErrocallback)),
+  getCommissionList: (
+    SelectedDateRange,
+    TxnStatusType,
+    onSuccesscallback,
+    onErrocallback,
+  ) =>
+    dispatch(
+      getCommissionList(
+        SelectedDateRange,
+        TxnStatusType,
+        onSuccesscallback,
+        onErrocallback,
+      ),
+    ),
 });
 
 export default connect(

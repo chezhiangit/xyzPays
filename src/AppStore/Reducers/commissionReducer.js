@@ -4,12 +4,7 @@ import {
 } from '../ActionTypes';
 
 const dateFilter = {
-  // pendingPayout: 0,
-  // totalDenied: 0,
-  // totalPayout: 0,
-  // totalCommissionReceivable: 0,
-  // repFirstName: '',
-  // repLastName: '',
+  Text: '',
 };
 
 const commissionData = {

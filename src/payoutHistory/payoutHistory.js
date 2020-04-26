@@ -21,6 +21,7 @@ import PaymentStatusComponent from '../common/UIComponents/PaymentStatusContaine
 import SliderView from '../common/UIComponents/SliderView';
 import Images from '../Assets/index';
 import moment from 'moment';
+import WarningDialog from '../common/UIComponents/warningDialog';
 
 const payoutData = [
   {
@@ -50,6 +51,8 @@ class PayoutHistory extends React.Component {
       payoutData: [...payoutData],
       notEnoughAmountTxt:
         'Cannot Tranfer To PayPal Account. Pending Amount is less than Minimum Withdraw Amount',
+      showDlg: false,
+      dlgMsg: '',
     };
     this.translate = new Animated.Value(0);
   }
@@ -89,6 +92,14 @@ class PayoutHistory extends React.Component {
 
   renderPayoutCard = ({item, index}) => {
     return <View />;
+  };
+
+  onCancel = () => {
+    this.setState({showDlg: false});
+  };
+
+  onConfirm = () => {
+    this.setState({showDlg: false});
   };
 
   render() {
@@ -178,6 +189,13 @@ class PayoutHistory extends React.Component {
             keyExtractor={(item, index) => index}
           />
         </View>
+        <Footer />
+        <WarningDialog
+          shouldShowDeleteWarning={this.state.showDlg}
+          // onCancel={this.onCancel}
+          onOK={this.onConfirm}
+          dlgMsg={this.state.dlgMsg}
+        />
       </View>
     );
   }

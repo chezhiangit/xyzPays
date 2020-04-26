@@ -20,6 +20,7 @@ import PaymentStatusComponent from '../common/UIComponents/PaymentStatusContaine
 import SliderView from '../common/UIComponents/SliderView';
 import Images from '../Assets';
 import {getDashboardData} from '../AppStore/dashboardActions';
+import WarningDialog from '../common/UIComponents/warningDialog';
 
 const taskListData = [
   {
@@ -62,6 +63,8 @@ class HomePage extends React.Component {
       visibleTaskIndex: 0,
       isLoading: false,
       dashboardServiceDone: false,
+      showDlg: false,
+      dlgMsg: '',
     };
 
     this.viewabilityConfig = {
@@ -93,7 +96,12 @@ class HomePage extends React.Component {
 
   onGetDashboardDataFailed = errorMsg => {
     console.log('dashboard failes');
-    this.setState({isLoading: false, dashboardServiceDone: true});
+    this.setState({
+      isLoading: false,
+      dashboardServiceDone: true,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
     console.log(errorMsg);
   };
 
@@ -101,7 +109,7 @@ class HomePage extends React.Component {
     // this.setState({showTask: true});
   };
   onPressStartTaskButton = () => {
-    this.props.navigation.navigate('TaskEntryPage');
+    // this.props.navigation.navigate('TaskEntryPage');
   };
   getTaskButtonName = taskCount => {
     const taskBtnPrefix = I18n.t('homePage.taskBtnPrefixText');
@@ -158,6 +166,14 @@ class HomePage extends React.Component {
         />
       </View>
     );
+  };
+
+  onCancel = () => {
+    this.setState({showDlg: false});
+  };
+
+  onConfirm = () => {
+    this.setState({showDlg: false});
   };
 
   render() {
@@ -279,6 +295,12 @@ class HomePage extends React.Component {
           </View>
         </ScrollView>
         <Footer />
+        <WarningDialog
+          shouldShowDeleteWarning={this.state.showDlg}
+          // onCancel={this.onCancel}
+          onOK={this.onConfirm}
+          dlgMsg={this.state.dlgMsg}
+        />
         <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
         {/* <SliderView
           visible={this.state.showTask}

@@ -16,23 +16,14 @@ function* getDateFilterData(action) {
     const accessToken = yield select(getAccessToken);
     const response = yield call(fetchDateFilterDataService, accessToken);
     console.log('saga getDateFilterData api response...', response);
-    if (response !== null && response.status === 200) {
+    if (response !== null && response.status === 200 && response.length > 0) {
       console.log('getDateFilterData data ....', response);
       console.log('getDateFilterData saga action ....', action);
-      //   const dashboardData = {
-      //     pendingPayout: response['Commission Sum'][0].PendingPayout,
-      //     totalDenied: response['Commission Sum'][0].TotalDenied,
-      //     totalPayout: response['Commission Sum'][0].TotalPayout,
-      //     totalCommissionReceivable:
-      //       response['Commission Sum'][0].TotalCommissionReceivable,
-      //     repFirstName: response['Rep Info'][0].FirstName,
-      //     repLastName: response['Rep Info'][0].LastName,
-      //   };
-
-      //   console.log('dashboard data object ....', dashboardData);
+      const dateFilter = [...response];
+      console.log('dateFilter data object ....', dateFilter);
       yield put(
         storeCommissionDateFilter({
-          // dateFilter,
+          dateFilter,
         }),
       );
       action.onSuccesscallback();
@@ -59,17 +50,9 @@ function* getCommissionListData(action) {
     if (response !== null && response.status === 200) {
       console.log('getCommissionListData data ....', response);
       console.log('getCommissionListData saga action ....', action);
-      //   const dashboardData = {
-      //     pendingPayout: response['Commission Sum'][0].PendingPayout,
-      //     totalDenied: response['Commission Sum'][0].TotalDenied,
-      //     totalPayout: response['Commission Sum'][0].TotalPayout,
-      //     totalCommissionReceivable:
-      //       response['Commission Sum'][0].TotalCommissionReceivable,
-      //     repFirstName: response['Rep Info'][0].FirstName,
-      //     repLastName: response['Rep Info'][0].LastName,
-      //   };
+      // const dateFilter = [...response];
 
-      //   console.log('dashboard data object ....', dashboardData);
+      // console.log('dashboard data object ....', dateFilter);
       yield put(
         storeCommissionList({
           // dateFilter,

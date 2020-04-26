@@ -16,6 +16,7 @@ import Footer from '../common/UIComponents/Footer';
 import {heightAdapter} from '../uttils/adapterUtil';
 import Images from '../Assets/index';
 import Colors from '../uttils/Colors';
+import WarningDialog from '../common/UIComponents/warningDialog';
 // import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const commission = [
@@ -85,6 +86,8 @@ class ReferralCommissions extends React.Component {
       isSegmentVisible: false,
       commissionData: [...commission],
       segmentBorder: 0,
+      showDlg: false,
+      dlgMsg: '',
     };
     // this.show=false;
     this.translate = new Animated.Value(0);
@@ -195,6 +198,14 @@ class ReferralCommissions extends React.Component {
     );
   };
 
+  onCancel = () => {
+    this.setState({showDlg: false});
+  };
+
+  onConfirm = () => {
+    this.setState({showDlg: false});
+  };
+
   render() {
     return (
       <View style={BaseStyles.baseContainer}>
@@ -249,6 +260,12 @@ class ReferralCommissions extends React.Component {
           />
         </View>
         <Footer />
+        <WarningDialog
+          shouldShowDeleteWarning={this.state.showDlg}
+          // onCancel={this.onCancel}
+          onOK={this.onConfirm}
+          dlgMsg={this.state.dlgMsg}
+        />
         {/* {this.state.isSegmentVisible && (
           <TouchableOpacity
             style={styles.transparentView}

@@ -13,6 +13,8 @@ import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
 import styles from './styles';
 import {authenticateUser} from '../AppStore/loginActions';
+// import DeleteDialog from '../common/UIComponents/DeleteDialog';
+import WarningDialog from '../common/UIComponents/warningDialog';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -22,6 +24,8 @@ class LoginPage extends React.Component {
       password: '',
       error: '',
       isLoading: false,
+      showDlg: false,
+      dlgMsg: '',
     };
   }
 
@@ -45,7 +49,7 @@ class LoginPage extends React.Component {
   };
 
   onLoginFailed = errorMsg => {
-    this.setState({isLoading: false});
+    this.setState({isLoading: false, dlgMsg: errorMsg, showDlg: true});
     console.log(errorMsg);
   };
 
@@ -68,6 +72,14 @@ class LoginPage extends React.Component {
     this.setState({
       password,
     });
+  };
+
+  onCancel = () => {
+    this.setState({showDlg: false});
+  };
+
+  onConfirm = () => {
+    this.setState({showDlg: false, userName: '', password: ''});
   };
 
   render() {
@@ -108,6 +120,13 @@ class LoginPage extends React.Component {
           </View>
         </View>
         <Footer />
+        <WarningDialog
+          shouldShowDeleteWarning={this.state.showDlg}
+          // onCancel={this.onCancel}
+          onOK={this.onConfirm}
+          dlgMsg={this.state.dlgMsg}
+        />
+        {/* <DeleteDialog visible={true} /> */}
         {/* <TouchableOpacity onPress={() => navigation.replace('HomePage')}>
           <Text>{I18n.t('loginScreen')}</Text>
         </TouchableOpacity> */}

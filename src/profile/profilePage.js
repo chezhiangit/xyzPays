@@ -14,6 +14,7 @@ import ReadOnlyView from '../common/UIComponents/readOnlyView/ReadOnlyView';
 import styles from './styles';
 import Colors from '../uttils/Colors';
 import {getProfileInfo} from '../AppStore/profileActions';
+import WarningDialog from '../common/UIComponents/warningDialog';
 
 class ProfilePage extends React.Component {
   constructor(props) {
@@ -32,6 +33,8 @@ class ProfilePage extends React.Component {
       website: 'www.google.com',
       profileInfoServiceDone: false,
       isLoading: false,
+      showDlg: false,
+      dlgMsg: '',
     };
   }
 
@@ -49,18 +52,29 @@ class ProfilePage extends React.Component {
     );
   }
 
-
   onGetProfileInfoSuccess = () => {
     this.setState({isLoading: false, profileInfoServiceDone: true});
   };
 
-  onGetProfileInfoFailed = () => {
-    this.setState({isLoading: false, profileInfoServiceDone: true});
+  onGetProfileInfoFailed = errorMsg => {
+    this.setState({
+      isLoading: false,
+      profileInfoServiceDone: true,
+      dlgMsg: errorMsg,
+      showDlg: true,
+    });
   };
-
 
   onEditProfile = () => {
     this.props.navigation.navigate('EditProfilePage');
+  };
+
+  onCancel = () => {
+    this.setState({showDlg: false});
+  };
+
+  onConfirm = () => {
+    this.setState({showDlg: false});
   };
 
   render() {
@@ -80,8 +94,13 @@ class ProfilePage extends React.Component {
               <Image source={''} style={styles.photo} />
             </View>
             <View style={styles.nameContainer}>
-    <Text style={styles.firstName}>{` ${this.props.profileInfo.FirstName}`}</Text>
-              <Text style={styles.secondName}> {` ${this.props.profileInfo.LastName}`}</Text>
+              <Text style={styles.firstName}>{` ${
+                this.props.profileInfo.FirstName
+              }`}</Text>
+              <Text style={styles.secondName}>
+                {' '}
+                {` ${this.props.profileInfo.LastName}`}
+              </Text>
             </View>
           </View>
           {/* <View style={styles.profileUserInfo}>
@@ -263,6 +282,12 @@ class ProfilePage extends React.Component {
           </View>
         </ScrollView>
         <Footer />
+        <WarningDialog
+          shouldShowDeleteWarning={this.state.showDlg}
+          // onCancel={this.onCancel}
+          onOK={this.onConfirm}
+          dlgMsg={this.state.dlgMsg}
+        />
         <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
       </View>
     );

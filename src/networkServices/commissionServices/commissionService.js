@@ -42,16 +42,34 @@ const fetchCommissionListDataService = async (
     const url =
       urlConstants.BaseUrl +
       urlConstants.getCommissionList +
-      `AccessToken=${AccessToken}&SelectedDateRange=${SelectedDateRange}&TxnStatusType=${TxnStatusType}`;
+      'AccessToken=' +
+      AccessToken +
+      '&SelectedDateRange="' +
+      SelectedDateRange +
+      '"&TxnStatusType="' +
+      TxnStatusType +
+      '"';
+    // `AccessToken='${AccessToken}'&SelectedDateRange='${SelectedDateRange}'&TxnStatusType='${TxnStatusType}'`;
+    // url.searchParams.append('AccessToken', AccessToken);
+    // url.searchParams.append('SelectedDateRange', SelectedDateRange);
+    // url.searchParams.append('TxnStatusType', TxnStatusType);
     const headersParams = {};
     headersParams['Content-Type'] = 'application/json';
+    // headersParams.AccessToken = AccessToken;
+    // headersParams.SelectedDateRange = SelectedDateRange;
+    // headersParams.TxnStatusType = TxnStatusType;
     console.log('getCommissionList url ...', url);
     console.log('getCommissionList headersParams ...', headersParams);
-
+    // const paramsStr = JSON.stringify({
+    //   AccessToken: AccessToken,
+    //   SelectedDateRange: SelectedDateRange,
+    //   TxnStatusType: TxnStatusType,
+    // });
     const response = await RNFetchBlob.config({timeout: TIMEOUT}).fetch(
       'GET',
       url,
       headersParams,
+      // paramsStr,
     );
     console.log('getCommissionList response ...', response);
     const result = response.json();
