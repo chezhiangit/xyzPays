@@ -4,6 +4,7 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   FlatList,
   Image,
   TextInput,
@@ -25,9 +26,76 @@ import WarningDialog from '../common/UIComponents/warningDialog';
 
 const payoutData = [
   {
-    payoutStatus: 'Success',
+    payoutStatus: 'SUCCESS',
     paymentDate: moment().format('MM/DD/YYYY'),
     paymentTime: moment().format('HH:MM:SS'),
+    amount: '6.00',
+  },
+  {
+    payoutStatus: 'PENDING',
+    paymentDate: moment().format('MM/DD/YYYY'),
+    paymentTime: moment().format('HH:MM:SS'),
+    amount: '6.00',
+  },
+  {
+    payoutStatus: 'SUCCESS',
+    paymentDate: moment().format('MM/DD/YYYY'),
+    paymentTime: moment().format('HH:MM:SS'),
+    amount: '6.00',
+  },
+  {
+    payoutStatus: 'PENDING',
+    paymentDate: moment().format('MM/DD/YYYY'),
+    paymentTime: moment().format('HH:MM:SS'),
+    amount: '6.00',
+  },
+  {
+    payoutStatus: 'SUCCESS',
+    paymentDate: moment().format('MM/DD/YYYY'),
+    paymentTime: moment().format('HH:MM:SS'),
+    amount: '6.00',
+  },
+  {
+    payoutStatus: 'PENDING',
+    paymentDate: moment().format('MM/DD/YYYY'),
+    paymentTime: moment().format('HH:MM:SS'),
+    amount: '6.00',
+  },
+  {
+    payoutStatus: 'SUCCESS',
+    paymentDate: moment().format('MM/DD/YYYY'),
+    paymentTime: moment().format('HH:MM:SS'),
+    amount: '6.00',
+  },
+  {
+    payoutStatus: 'PENDING',
+    paymentDate: moment().format('MM/DD/YYYY'),
+    paymentTime: moment().format('HH:MM:SS'),
+    amount: '6.00',
+  },
+  {
+    payoutStatus: 'SUCCESS',
+    paymentDate: moment().format('MM/DD/YYYY'),
+    paymentTime: moment().format('HH:MM:SS'),
+    amount: '6.00',
+  },
+  {
+    payoutStatus: 'PENDING',
+    paymentDate: moment().format('MM/DD/YYYY'),
+    paymentTime: moment().format('HH:MM:SS'),
+    amount: '6.00',
+  },
+  {
+    payoutStatus: 'SUCCESS',
+    paymentDate: moment().format('MM/DD/YYYY'),
+    paymentTime: moment().format('HH:MM:SS'),
+    amount: '6.00',
+  },
+  {
+    payoutStatus: 'PENDING',
+    paymentDate: moment().format('MM/DD/YYYY'),
+    paymentTime: moment().format('HH:MM:SS'),
+    amount: '6.00',
   },
 ];
 const segmentationData = [
@@ -42,6 +110,10 @@ class PayoutHistory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      payoutStatus: 'SUCCESS',
+      amount: '6.00',
+      payoutDate: moment().format('MM/DD/YYYY'),
+      payoutTime: moment().format('hh:mm:ss'),
       selectedValue: segmentationData[4],
       selectedIndex: 4,
       isSegmentVisible: false,
@@ -82,6 +154,11 @@ class PayoutHistory extends React.Component {
     }
   };
 
+  onSegmentItemSelected = (item, index) => {
+    this.toggleDropdown(false);
+    this.setState({selectedValue: item, selectedIndex: index});
+  };
+
   renderSegmentItem = ({item, index}) => (
     <TouchableOpacity onPress={() => this.onSegmentItemSelected(item, index)}>
       <View style={styles.segmentItemRow}>
@@ -91,7 +168,34 @@ class PayoutHistory extends React.Component {
   );
 
   renderPayoutCard = ({item, index}) => {
-    return <View />;
+    return (
+      <View style={styles.payoutItemContainer}>
+        <View style={styles.payoutStatusRow}>
+          <View style={styles.payoutLeftView}>
+            <Text style={styles.payoutStatusLabel}>Payout Status: </Text>
+            <Text style={styles.payoutStatus}>{item.payoutStatus}</Text>
+          </View>
+          <View style={styles.payoutRightView}>
+            <Text style={[styles.payoutStatusLabel, {color: 'green'}]}>$</Text>
+          </View>
+        </View>
+        <View style={styles.dateTimeAmountRow}>
+          <View style={styles.payoutLeftView}>
+            <View style={styles.dateRow}>
+              <Image style={styles.imageStyle} source={''} />
+              <Text style={styles.dateTimeTxt}>{item.paymentDate}</Text>
+            </View>
+            <View style={[styles.dateRow, {marginLeft: widthAdapter(30)}]}>
+              <Image style={styles.imageStyle} source={''} />
+              <Text style={styles.dateTimeTxt}>{item.paymentTime}</Text>
+            </View>
+          </View>
+          <View style={styles.payoutRightView}>
+            <Text style={styles.payoutStatusLabel}>{item.amount}</Text>
+          </View>
+        </View>
+      </View>
+    );
   };
 
   onCancel = () => {
@@ -121,32 +225,40 @@ class PayoutHistory extends React.Component {
             />
             <TextInput
               style={styles.notEnoughAmountTxt}
-              value={this.state.notEnoughAmountTxt}
+              value={this.state.notEnoughAmountTxt + ' $1'}
               multiline
               editable={false}
             />
           </View>
-          <View style={[BaseStyles.emptyHView, {height: heightAdapter(70)}]} />
-          <PrimaryButton
-            btnStyle={styles.transferBtn}
-            onSubmit={this.onPressTaskButton}
-            btnName={I18n.t('payoutHistory.transferBtnName')}
-          />
-          <View style={[BaseStyles.emptyHView, {height: heightAdapter(70)}]} />
-          <View style={styles.logedInUserInfo}>
-            <Text style={styles.logedInUserHelloText}>
-              {I18n.t('payoutHistory.emailId')}
-            </Text>
-            {/* <Text style={[styles.logedInUserHelloText, styles.primaryColor]}>
+          {this.state.availableAmount > 0 && (
+            <>
+              <View
+                style={[BaseStyles.emptyHView, {height: heightAdapter(70)}]}
+              />
+              <PrimaryButton
+                btnStyle={styles.transferBtn}
+                onSubmit={this.onPressTaskButton}
+                btnName={I18n.t('payoutHistory.transferBtnName')}
+              />
+              <View
+                style={[BaseStyles.emptyHView, {height: heightAdapter(70)}]}
+              />
+              <View style={styles.logedInUserInfo}>
+                <Text style={styles.logedInUserHelloText}>
+                  {I18n.t('payoutHistory.emailId')}
+                </Text>
+                {/* <Text style={[styles.logedInUserHelloText, styles.primaryColor]}>
               {' Harry'}
             </Text> */}
-            <Text style={styles.logedInUserHelloText}>
-              {this.state.emailId}
-            </Text>
-          </View>
+                <Text style={styles.logedInUserHelloText}>
+                  {this.state.emailId}
+                </Text>
+              </View>
+            </>
+          )}
           <View style={[BaseStyles.emptyHView, {height: heightAdapter(70)}]} />
           <View style={styles.dropdownContainer}>
-            <TouchableOpacity
+            <TouchableWithoutFeedback
               style={styles.selectionBox}
               onPress={() => this.toggleDropdown(!this.state.isSegmentVisible)}>
               <View style={styles.selectionBox}>
@@ -155,7 +267,7 @@ class PayoutHistory extends React.Component {
                   {this.state.selectedValue}
                 </Text>
               </View>
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
             <Animated.View
               style={[
                 styles.segmentedView,
@@ -183,6 +295,7 @@ class PayoutHistory extends React.Component {
             </TouchableOpacity>
           )}
           <FlatList
+            showsVerticalScrollIndicator={false}
             style={styles.payoutList}
             data={this.state.payoutData}
             renderItem={this.renderPayoutCard}

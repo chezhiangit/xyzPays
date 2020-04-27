@@ -112,6 +112,11 @@ class DrawerComponent extends Component {
               onPress={this.navigateToScreen('FAQPage')}>
               {I18n.t('hamburgerMenu.FAQs')}
             </Text>
+            <Text
+              style={styles.navItemStyle}
+              onPress={this.navigateToScreen('Login')}>
+              {I18n.t('hamburgerMenu.signOut')}
+            </Text>
           </View>
         </ScrollView>
         {/* <View style={styles.footerContainer}>

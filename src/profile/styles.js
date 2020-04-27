@@ -7,22 +7,15 @@ import Colors from '../uttils/Colors';
 
 export default StyleSheet.create({
   profileViewContainer: {
-    // backgroundColor: Clors.appContainerBgColor,
-    // width: '100%',
-    // height: '75%',
-    // // paddingLeft: widthAdapter(20),
-    // // paddingRight: widthAdapter(20),
-    // alignItems: 'center',
-    // // justifyContent: 'center',
-    // padding: widthAdapter(60),
-    height: '70%',
+    // height: '70%',
     flexDirection: 'column',
     // borderWidth: 1,
     // borderColor: 'red',
     marginLeft: widthAdapter(40),
     marginRight: widthAdapter(40),
-    paddingTop: heightAdapter(50),
+    // paddingTop: heightAdapter(50),
     // paddingBottom: heightAdapter(200),
+    marginBottom: heightAdapter(160),
   },
   profileUserInfo: {
     width: '100%',

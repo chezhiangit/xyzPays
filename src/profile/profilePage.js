@@ -12,9 +12,11 @@ import Footer from '../common/UIComponents/Footer';
 import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
 import ReadOnlyView from '../common/UIComponents/readOnlyView/ReadOnlyView';
 import styles from './styles';
+import editStyles from './editProfileStyle';
 import Colors from '../uttils/Colors';
 import {getProfileInfo} from '../AppStore/profileActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
+import CheckBoxComponent from '../common/UIComponents/CheckBox/CheckBox';
 
 class ProfilePage extends React.Component {
   constructor(props) {
@@ -91,7 +93,18 @@ class ProfilePage extends React.Component {
           showsVerticalScrollIndicator={false}>
           <View style={styles.photoContainer}>
             <View style={styles.photoView}>
-              <Image source={''} style={styles.photo} />
+              <Image
+                source={{
+                  isStatic: true,
+                  uri: this.props.profileInfo.ProfilePicture,
+                  method: 'GET',
+                  // headers: {
+                  //   clubId: NetTool.clubId,
+                  //   'Ocp-Apim-Subscription-Key': NetTool.subscriptionKey,
+                  // },
+                }}
+                style={styles.photo}
+              />
             </View>
             <View style={styles.nameContainer}>
               <Text style={styles.firstName}>{` ${
@@ -278,6 +291,25 @@ class ProfilePage extends React.Component {
             <ReadOnlyView
               label={I18n.t('profile.interest')}
               labelStyle={styles.accountInforLabel}
+            />
+          </View>
+          <View style={editStyles.interestContainer}>
+            <CheckBoxComponent btnName={'Healthcare'} onClick={() => {}} />
+            <CheckBoxComponent
+              btnName={'Indutrial & Business Services'}
+              onClick={() => {}}
+            />
+            <CheckBoxComponent
+              btnName={'Medical & Technology'}
+              onClick={() => {}}
+            />
+            <CheckBoxComponent
+              btnName={'Cable TV Internet & Communications'}
+              onClick={() => {}}
+            />
+            <CheckBoxComponent
+              btnName={'Renewable Energy'}
+              onClick={() => {}}
             />
           </View>
         </ScrollView>

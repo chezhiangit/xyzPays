@@ -19,6 +19,8 @@ const profileInfo = {
   ZipCode: '',
   LoginEmail: '',
   RepKey: '',
+  Phone: 0,
+  ProfilePicture: '',
 };
 
 const profileReducer = (

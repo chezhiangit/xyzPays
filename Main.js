@@ -14,6 +14,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import LoginPage from './src/login/LoginPage';
 import UserRegistration from './src/login/userRegistration/UserRegistration';
 import ForgotPassword from './src/login/forgotPassword/ForgotPassword';
+import ForgotPasswordStep2 from './src/login/forgotPassword/forgotPasswordStep2';
 import HomePage from './src/home/HomePage';
 import CommissionPage from './src/Commission/commissionPage';
 import TrendingPage from './src/Trending/TrendingPage';
@@ -165,6 +166,14 @@ class Main extends React.Component {
                 title: I18n.t('forgotPassword.headerTitle'),
               }}
             />
+            <Stack.Screen
+              name="ForgotPasswordStep2"
+              component={ForgotPasswordStep2}
+              options={{
+                title: I18n.t('forgotPassword.headerTitle'),
+              }}
+            />
+            
           </Stack.Navigator>
         ) : (
           <Stack.Navigator

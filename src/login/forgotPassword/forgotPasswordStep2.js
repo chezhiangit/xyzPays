@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Image} from 'react-native';
 // import {SafeAreaView} from 'react-native-safe-area-context';
 import BaseStyles from '../../common/BaseStyles';
 import I18n from '../../localization/i18n';
@@ -8,11 +8,12 @@ import Footer from '../../common/UIComponents/Footer';
 import EmailInputComponent from '../../common/UIComponents/EmailInputComponent';
 import PasswordInputComponent from '../../common/UIComponents/PasswordInputComponent';
 import PrimaryButton from '../../common/UIComponents/PrimaryButton';
-// import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
+import LinkBtnComponent from '../../common/UIComponents/LinkBtn/LinkBtn';
 import styles from './styles';
 import WarningDialog from '../../common/UIComponents/warningDialog';
+import RadioButton from '../../common/UIComponents/RadioButtom/radioButton';
 
-class ForgotPassword extends React.Component {
+class ForgotPasswordStep2 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,8 +28,12 @@ class ForgotPassword extends React.Component {
       userEmail,
     });
   };
-  onStepOneNext = () => {
-    this.props.navigation.navigate('ForgotPasswordStep2');
+  onStepTwoNext = () => {
+    this.props.navigation.goBack();
+  };
+
+  onMadeMistake = () => {
+    this.props.navigation.goBack();
   };
 
   //   onSignUp = () => {
@@ -55,35 +60,40 @@ class ForgotPassword extends React.Component {
           </View>
           <View style={styles.userInfoStepRow}>
             <Text style={styles.userInfoStep}>
-              {I18n.t('forgotPassword.userInfoStep')}1
+              {I18n.t('forgotPassword.userInfoStep')}2
             </Text>
           </View>
           <View style={styles.forgotPwdUserStep1}>
             <Text style={styles.forgotPwdUserStep1Txt}>
-              {I18n.t('forgotPassword.step1')}
+              {I18n.t('forgotPassword.step2')}
             </Text>
           </View>
-          <View style={BaseStyles.emptyHView} />
-          <EmailInputComponent
+          <RadioButton btnName={'Recovery Mobile Number'} />
+          <View style={styles.mobileNumberView}>
+            <Image style={styles.phoneImage} source={''} />
+            <Text style={styles.mobileNumber}>9123456789</Text>
+          </View>
+          {/* <View style={BaseStyles.emptyHView} /> */}
+          {/* <EmailInputComponent
             placeholder={I18n.t('login.emailPlaceHolder')}
             autoFocus={false}
             onEmailEntered={this.onEmailEntered}
-          />
+          /> */}
           {/* <PasswordInputComponent
             placeholder={I18n.t('login.passwordPlaceHolder')}
             autoFocus={false}
           /> */}
           <View style={styles.forgotStepOneNextContainer}>
             <PrimaryButton
-              btnName={I18n.t('forgotPassword.next')}
-              onSubmit={this.onStepOneNext}
+              btnName={I18n.t('forgotPassword.sendVerification')}
+              onSubmit={this.onStepTwoNext}
             />
-
-            {/* <LinkBtnComponent
-              btnName={I18n.t('login.signUpNow')}
-              onClick={this.onSignUp}
+            <View style={BaseStyles.emptyHView} />
+            <LinkBtnComponent
+              btnName={I18n.t('forgotPassword.madeMistake')}
+              onClick={this.onMadeMistake}
             />
-            <LinkBtnComponent btnName={I18n.t('login.forgotPwd')} /> */}
+            {/* // <LinkBtnComponent btnName={I18n.t('login.forgotPwd')} /> */}
           </View>
         </View>
         <Footer />
@@ -101,4 +111,4 @@ class ForgotPassword extends React.Component {
   }
 }
 
-export default ForgotPassword;
+export default ForgotPasswordStep2;

@@ -62,6 +62,7 @@ class LoginPage extends React.Component {
   };
 
   onEmailEntered = userName => {
+    console.log('userName ...', userName);
     this.setState({
       userName,
     });
@@ -96,6 +97,7 @@ class LoginPage extends React.Component {
           <EmailInputComponent
             placeholder={I18n.t('login.emailPlaceHolder')}
             autoFocus={false}
+            email={this.state.userName}
             onEmailEntered={this.onEmailEntered}
           />
           <PasswordInputComponent

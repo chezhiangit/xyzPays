@@ -14,6 +14,13 @@ class EmailInputComponent extends React.Component {
     };
   }
 
+  static getDerivedStateFromProps(props, state) {
+    if (state.email === '' && props.email) {
+      return {email: props.email ? props.email : ''};
+    }
+    return {};
+  }
+
   onEmailChange = email => {
     this.setState(
       {

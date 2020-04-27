@@ -57,9 +57,13 @@ export default {
   },
   forgotPassword: {
     headerTitle: 'Forgot Password',
-    userInfoStep1: 'XYZPays Password Recovery - Step 1',
+    userInfo: 'XYZPays Password Recovery',
+    userInfoStep: 'Step ',
     step1: 'Enter your registered Email Id',
+    step2: 'Select how would you like to receive password reset instructions',
     next: 'Next',
+    sendVerification: 'Send Verification Code',
+    madeMistake: 'Made an Mistake? Start Fresh',
   },
   commission: {
     headerTitle: 'Commissions',
@@ -187,6 +191,7 @@ export default {
     trendingProducts: 'Trending Products',
     contactUs: 'ContactUs',
     FAQs: 'FAQs',
+    signOut: 'Sign Out',
   },
   common: {
     placeHolder: 'Enter value',

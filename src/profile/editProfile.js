@@ -195,7 +195,18 @@ class EditProfilePage extends React.Component {
           showsVerticalScrollIndicator={false}>
           <View style={styles.photoContainer}>
             <View style={styles.photoView}>
-              <Image source={''} style={styles.photo} />
+              <Image
+                source={{
+                  isStatic: true,
+                  uri: this.props.profileInfo.ProfilePicture,
+                  method: 'GET',
+                  // headers: {
+                  //   clubId: NetTool.clubId,
+                  //   'Ocp-Apim-Subscription-Key': NetTool.subscriptionKey,
+                  // },
+                }}
+                style={styles.photo}
+              />
             </View>
             <TouchableOpacity onPress={() => {}}>
               <View style={editStyles.editPhotoContainer}>

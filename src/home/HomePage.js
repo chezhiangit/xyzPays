@@ -12,12 +12,12 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
 import I18n from '../localization/i18n';
-import Header from '../common/UIComponents/Header';
+// import Header from '../common/UIComponents/Header';
 import Footer from '../common/UIComponents/Footer';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import {heightAdapter, widthAdapter} from '../uttils/adapterUtil';
 import PaymentStatusComponent from '../common/UIComponents/PaymentStatusContainer/PaymentStatusComponent';
-import SliderView from '../common/UIComponents/SliderView';
+// import SliderView from '../common/UIComponents/SliderView';
 import Images from '../Assets';
 import {getDashboardData} from '../AppStore/dashboardActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
@@ -109,7 +109,7 @@ class HomePage extends React.Component {
     // this.setState({showTask: true});
   };
   onPressStartTaskButton = () => {
-    // this.props.navigation.navigate('TaskEntryPage');
+    this.props.navigation.navigate('TaskEntryPage');
   };
   getTaskButtonName = taskCount => {
     const taskBtnPrefix = I18n.t('homePage.taskBtnPrefixText');
@@ -177,7 +177,7 @@ class HomePage extends React.Component {
   };
 
   render() {
-    const {navigation} = this.props;
+    // const {navigation} = this.props;
     const taskBtnName = this.getTaskButtonName(this.state.taskCount);
     return (
       <View style={[BaseStyles.baseContainer]}>

@@ -14,7 +14,7 @@ export default StyleSheet.create({
   container: {
     // paddingTop: 20,
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#f2f2f2', // 'white',
   },
   navItemStyle: {
     padding: widthAdapter(25),
@@ -28,7 +28,7 @@ export default StyleSheet.create({
   sectionHeadingStyle: {
     paddingVertical: widthAdapter(10),
     paddingHorizontal: widthAdapter(5),
-    backgroundColor: Colors.primaryAppColor,
+    backgroundColor: '#a9a9a9', // Colors.primaryAppColor,
     fontFamily: fontFamily.primaryFontFamily,
     fontSize: fontscale(20),
   },

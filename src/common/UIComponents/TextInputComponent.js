@@ -19,7 +19,14 @@ class TextInputComponent extends React.Component {
       validInput: true,
     };
   }
+  static getDerivedStateFromProps(props, state) {
+    if (state.inputValue === '' && props.inputValue) {
+      return {inputValue: props.inputValue ? props.inputValue : ''};
+    }
+    return {};
+  }
   handleOnChangeText = inputValue => {
+    console.log('handleOnChangeText ....', inputValue);
     this.setState({inputValue}, () =>
       this.props.onTextChange(this.state.inputValue),
     );

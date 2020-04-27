@@ -5,6 +5,7 @@ import FontsSize from '../uttils/FontsSize';
 import FontsWeight from '../uttils/FontsWeight';
 import {widthAdapter, fontscale, heightAdapter} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
+import FontFamily from '../uttils/FontFamily';
 
 export default StyleSheet.create({
   scrollContainer: {
@@ -40,7 +41,7 @@ export default StyleSheet.create({
   },
   dropdownContainer: {
     width: '100%',
-    height: heightAdapter(100),
+    height: heightAdapter(70),
     borderWidth: 1,
     borderColor: '#737373',
     alignItems: 'center',
@@ -50,9 +51,9 @@ export default StyleSheet.create({
     zIndex: 100,
   },
   image: {
-    height: heightAdapter(40),
-    width: widthAdapter(40),
-    borderColor: 'gray',
+    height: heightAdapter(30),
+    width: widthAdapter(30),
+    borderColor: 'red',
     borderWidth: 1,
     marginRight: widthAdapter(10),
   },
@@ -62,11 +63,12 @@ export default StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     paddingLeft: widthAdapter(10),
+    backgroundColor: '#333333',
   },
   selectedValue: {
-    fontSize: fontscale(20),
+    fontSize: fontscale(15),
     fontFamily: fontFamily.primaryFontFamily,
-    color: '#737373',
+    color: 'white', // '#737373',
     fontWeight: 'bold',
   },
   transparentView: {
@@ -85,12 +87,12 @@ export default StyleSheet.create({
     height: heightAdapter(75),
     alignItems: 'flex-start',
     justifyContent: 'center',
-    borderColor: 'gray',
-    borderBottomWidth: 1,
-    backgroundColor: Colors.white,
+    borderColor: '#ddd', // 'gray',
+    borderBottomWidth: 2,
+    backgroundColor: '#f2f2f2',
   },
   segmentItemText: {
-    fontSize: fontscale(20),
+    fontSize: fontscale(15),
     fontFamily: fontFamily.primaryFontFamily,
     color: '#737373',
     fontWeight: 'bold',
@@ -98,12 +100,13 @@ export default StyleSheet.create({
   segmentedView: {
     width: '100%',
     position: 'absolute',
-    top: heightAdapter(99),
+    top: heightAdapter(68),
     left: widthAdapter(0),
     borderBottomLeftRadius: widthAdapter(8),
     borderBottomRightRadius: widthAdapter(8),
-    backgroundColor: Colors.white,
+    // backgroundColor: Colors.white,
     borderColor: '#737373',
+    backgroundColor: '#f2f2f2',
   },
   primaryColor: {
     color: Colors.primaryAppColor,
@@ -128,5 +131,72 @@ export default StyleSheet.create({
   payoutList: {
     marginTop: heightAdapter(50),
     marginBottom: heightAdapter(160),
+  },
+  payoutItemContainer: {
+    width: widthAdapter(745),
+    borderColor: '#ddd',
+    borderWidth: 1,
+    borderLeftWidth: widthAdapter(8),
+    borderLeftColor: Colors.pendingAmtBgColor,
+    marginBottom: heightAdapter(15),
+    backgroundColor: '#f2f2f2',
+    padding: widthAdapter(20),
+    paddingLeft: widthAdapter(30),
+    paddingRight: widthAdapter(30),
+  },
+  payoutStatusRow: {
+    flexDirection: 'row',
+    width: '100%',
+    marginBottom: heightAdapter(20),
+  },
+  payoutLeftView: {
+    width: widthAdapter(550),
+    // borderWidth: 1,
+    // borderColor: 'blue',
+    // alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+  },
+  payoutRightView: {
+    width: widthAdapter(150),
+    // borderWidth: 1,
+    // borderColor: 'blue',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  payoutStatusLabel: {
+    fontSize: fontscale(15),
+    color: Colors.primaryAppColor,
+    fontWeight: 'bold',
+    fontFamily: FontFamily.primaryFontFamily,
+  },
+  payoutStatus: {
+    fontSize: fontscale(15),
+    color: '#1b1819',
+    fontWeight: 'bold',
+    fontFamily: FontFamily.primaryFontFamily,
+  },
+  dateTimeAmountRow: {
+    flexDirection: 'row',
+    width: '100%',
+  },
+  dateRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  dateTimeTxt: {
+    fontFamily: FontFamily.primaryFontFamily,
+    fontSize: fontscale(12),
+    color: 'grey',
+    fontWeight: 'bold',
+    // lineHeight: 0.2,
+  },
+  imageStyle: {
+    height: widthAdapter(30),
+    width: widthAdapter(30),
+    borderColor: 'red',
+    borderWidth: 1,
+    marginRight: widthAdapter(10),
   },
 });
