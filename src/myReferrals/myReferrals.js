@@ -110,11 +110,12 @@ class MyReferrals extends React.Component {
     });
   };
   renderSegmentItem = ({item, index}) => (
-    <TouchableOpacity onPress={() => this.onSegmentItemSelected(item, index)}>
+    <TouchableWithoutFeedback
+      onPress={() => this.onSegmentItemSelected(item, index)}>
       <View style={styles.segmentItemRow}>
         <Text style={styles.segmentItemText}>{item}</Text>
       </View>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   );
 
   toggleDropdown = show => {
@@ -317,7 +318,7 @@ class MyReferrals extends React.Component {
             </Text>
           </View>
           <View style={styles.dropdownContainer}>
-            <TouchableOpacity
+            <TouchableWithoutFeedback
               style={styles.selectionBox}
               onPress={() => this.toggleDropdown(!this.state.isSegmentVisible)}>
               <View style={styles.selectionBox}>
@@ -326,7 +327,7 @@ class MyReferrals extends React.Component {
                   {this.state.selectedValue}
                 </Text>
               </View>
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
             <Animated.View
               style={[
                 styles.segmentedView,
@@ -347,11 +348,11 @@ class MyReferrals extends React.Component {
             </Animated.View>
           </View>
           {this.state.isSegmentVisible && (
-            <TouchableOpacity
+            <TouchableWithoutFeedback
               style={styles.transparentView}
               onPress={() => this.toggleDropdown(false)}>
               <View style={styles.transparentView} />
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
           )}
           <FlatList
             style={styles.referralList}

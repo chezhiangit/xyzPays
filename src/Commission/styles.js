@@ -32,11 +32,12 @@ const styles = StyleSheet.create({
     borderRadius: widthAdapter(3),
     borderBottomWidth: widthAdapter(4),
     zIndex: 100,
+    backgroundColor: '#333333',
   },
   image: {
     height: heightAdapter(40),
     width: widthAdapter(40),
-    borderColor: 'gray',
+    borderColor: 'red',
     borderWidth: 1,
     marginRight: widthAdapter(10),
   },
@@ -46,11 +47,12 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     paddingLeft: widthAdapter(10),
+    backgroundColor: '#333333',
   },
   selectedValue: {
     fontSize: fontscale(20),
     fontFamily: fontFamily.primaryFontFamily,
-    color: '#737373',
+    color: 'white', //'#737373',
     fontWeight: 'bold',
   },
   transparentView: {
@@ -71,7 +73,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderColor: 'gray',
     borderBottomWidth: 1,
-    backgroundColor: Colors.white,
+    // backgroundColor: Colors.white,
+    backgroundColor: '#eee',
   },
   segmentItemText: {
     fontSize: fontscale(20),
@@ -86,8 +89,9 @@ const styles = StyleSheet.create({
     left: widthAdapter(0),
     borderBottomLeftRadius: widthAdapter(8),
     borderBottomRightRadius: widthAdapter(8),
-    backgroundColor: Colors.white,
+    // backgroundColor: Colors.white,
     borderColor: '#737373',
+    backgroundColor: '#eee',
   },
   commissionList: {
     marginTop: heightAdapter(50),
