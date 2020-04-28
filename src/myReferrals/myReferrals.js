@@ -14,9 +14,10 @@ import styles from './styles';
 import moment from 'moment';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
-import {heightAdapter} from '../uttils/adapterUtil';
+import {heightAdapter, fontscale} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
 import Images from '../Assets/index';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import WarningDialog from '../common/UIComponents/warningDialog';
 // import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
@@ -240,7 +241,14 @@ class MyReferrals extends React.Component {
                   {item.registrationStatus}
                 </Text>
               </View>
-              <Image source={''} style={styles.dropDownIcon} />
+              {/* <Image source={''} style={styles.dropDownIcon} /> */}
+              <Text>
+                <Icon
+                  name="caret-down"
+                  size={20}
+                  color={Colors.primaryAppColor}
+                />
+              </Text>
             </View>
           </View>
         </TouchableWithoutFeedback>
@@ -322,9 +330,16 @@ class MyReferrals extends React.Component {
               style={styles.selectionBox}
               onPress={() => this.toggleDropdown(!this.state.isSegmentVisible)}>
               <View style={styles.selectionBox}>
-                <Image style={styles.image} source={''} />
+                {/* <Image style={styles.image} source={''} /> */}
                 <Text style={styles.selectedValue}>
                   {this.state.selectedValue}
+                </Text>
+                <Text>
+                  <Icon
+                    name="angle-down"
+                    size={fontscale(20)}
+                    color={'white'}
+                  />
                 </Text>
               </View>
             </TouchableWithoutFeedback>

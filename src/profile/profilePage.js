@@ -3,6 +3,7 @@ import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
@@ -134,6 +135,9 @@ class ProfilePage extends React.Component {
               {I18n.t('login.userInfo')}
             </Text>
           </View> */}
+          {/* <Text>
+            <Icon name="rocket" size={30} color="#900" />;
+          </Text> */}
           <LinkBtnComponent
             containerStyle={styles.editProfileContainer}
             btnName={I18n.t('profile.editProfile')}

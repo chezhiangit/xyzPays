@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {connect} from 'react-redux';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
 import moment from 'moment';

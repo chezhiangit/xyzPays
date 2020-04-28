@@ -7,10 +7,12 @@ import {
   Image,
   Easing,
   TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
 import moment from 'moment';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
 import {heightAdapter} from '../uttils/adapterUtil';
@@ -100,11 +102,12 @@ class ReferralCommissions extends React.Component {
     });
   };
   renderSegmentItem = ({item, index}) => (
-    <TouchableOpacity onPress={() => this.onSegmentItemSelected(item, index)}>
+    <TouchableWithoutFeedback
+      onPress={() => this.onSegmentItemSelected(item, index)}>
       <View style={styles.segmentItemRow}>
         <Text style={styles.segmentItemText}>{item}</Text>
       </View>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   );
 
   toggleDropdown = show => {
@@ -216,16 +219,30 @@ class ReferralCommissions extends React.Component {
             </Text>
           </View>
           <View style={styles.dropdownContainer}>
-            <TouchableOpacity
+            <TouchableWithoutFeedback
               style={styles.selectionBox}
               onPress={() => this.toggleDropdown(!this.state.isSegmentVisible)}>
               <View style={styles.selectionBox}>
-                <Image style={styles.image} source={''} />
-                <Text style={styles.selectedValue}>
-                  {this.state.selectedValue}
-                </Text>
+                {/* <Image style={styles.image} source={''} /> */}
+                <View style={{flexDirection: 'row'}}>
+                  <Text>
+                    <Icon
+                      name="calendar"
+                      size={20}
+                      color={Colors.primaryAppColor}
+                    />
+                  </Text>
+                  <Text style={styles.selectedValue}>
+                    {this.state.selectedValue}
+                  </Text>
+                </View>
+                <View>
+                  <Text>
+                    <Icon name="angle-down" size={20} color={'white'} />
+                  </Text>
+                </View>
               </View>
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
             <Animated.View
               style={[
                 styles.segmentedView,
@@ -246,11 +263,11 @@ class ReferralCommissions extends React.Component {
             </Animated.View>
           </View>
           {this.state.isSegmentVisible && (
-            <TouchableOpacity
+            <TouchableWithoutFeedback
               style={styles.transparentView}
               onPress={() => this.toggleDropdown(false)}>
               <View style={styles.transparentView} />
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
           )}
           <FlatList
             style={styles.commissionList}
