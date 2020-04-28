@@ -7,7 +7,13 @@ const CheckBoxComponent = props => {
   return (
     <TouchableOpacity accessible={false} onPress={props.onClick}>
       <View style={[styles.checkBoxBtnContainer, props.containerStyle]}>
-        <View style={[styles.box, props.checkBoxStyle]} />
+        <View
+          style={[
+            styles.box,
+            props.checkBoxStyle,
+            props.isSelected && {backgroundColor: 'gray'},
+          ]}
+        />
         <Text style={[styles.btnText, props.btnTextStyle]}>
           {props.btnName}
         </Text>

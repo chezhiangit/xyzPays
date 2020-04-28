@@ -37,7 +37,10 @@ class ProfilePage extends React.Component {
       isLoading: false,
       showDlg: false,
       dlgMsg: '',
+
+      checBoxArray: [false, false, false, false, false],
     };
+    // this.checkBoxValue = ['']
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -77,6 +80,16 @@ class ProfilePage extends React.Component {
 
   onConfirm = () => {
     this.setState({showDlg: false});
+  };
+
+  onCheckBoxSelected = (index, value) => {
+    this.setState(state => {
+      const checBoxArray = [...state.checBoxArray];
+      checBoxArray[index] = !state.checBoxArray[index];
+      return {
+        checBoxArray,
+      };
+    });
   };
 
   render() {
@@ -245,7 +258,9 @@ class ProfilePage extends React.Component {
             />
             <ReadOnlyView
               viewStyle={{...styles.viewStyle, backgroundColor: 'white'}}
-              label={this.props.profileInfo.State}
+              label={
+                this.props.profileInfo.State + '/' + this.props.profileInfo.City
+              }
               labelStyle={styles.value}
             />
           </View>
@@ -294,22 +309,30 @@ class ProfilePage extends React.Component {
             />
           </View>
           <View style={editStyles.interestContainer}>
-            <CheckBoxComponent btnName={'Healthcare'} onClick={() => {}} />
+            <CheckBoxComponent
+              btnName={'Healthcare'}
+              onClick={() => this.onCheckBoxSelected(0)}
+              isSelected={this.state.checBoxArray[0]}
+            />
             <CheckBoxComponent
               btnName={'Indutrial & Business Services'}
-              onClick={() => {}}
+              onClick={() => this.onCheckBoxSelected(1)}
+              isSelected={this.state.checBoxArray[1]}
             />
             <CheckBoxComponent
               btnName={'Medical & Technology'}
-              onClick={() => {}}
+              onClick={() => this.onCheckBoxSelected(2)}
+              isSelected={this.state.checBoxArray[2]}
             />
             <CheckBoxComponent
               btnName={'Cable TV Internet & Communications'}
-              onClick={() => {}}
+              onClick={() => this.onCheckBoxSelected(3)}
+              isSelected={this.state.checBoxArray[3]}
             />
             <CheckBoxComponent
               btnName={'Renewable Energy'}
-              onClick={() => {}}
+              onClick={() => this.onCheckBoxSelected(4)}
+              isSelected={this.state.checBoxArray[4]}
             />
           </View>
         </ScrollView>
