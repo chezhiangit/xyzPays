@@ -62,7 +62,9 @@ export default StyleSheet.create({
     width: '100%',
     height: '100%',
     alignItems: 'center',
-    paddingLeft: widthAdapter(10),
+    justifyContent: 'space-between',
+    paddingLeft: widthAdapter(20),
+    paddingRight: widthAdapter(20),
     backgroundColor: '#333333',
   },
   selectedValue: {
@@ -70,6 +72,7 @@ export default StyleSheet.create({
     fontFamily: fontFamily.primaryFontFamily,
     color: 'white', // '#737373',
     fontWeight: 'bold',
+    marginLeft: widthAdapter(20),
   },
   transparentView: {
     flex: 1,
@@ -190,6 +193,7 @@ export default StyleSheet.create({
     fontSize: fontscale(12),
     color: 'grey',
     fontWeight: 'bold',
+    marginLeft: widthAdapter(15),
     // lineHeight: 0.2,
   },
   imageStyle: {

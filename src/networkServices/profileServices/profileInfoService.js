@@ -30,6 +30,7 @@ const fetchProfileInfoService = async accessToken => {
     return null;
   } catch (e) {
     console.log('fetch profile info failed.', e);
+    return null;
     // throw new Error('User authentication failed.');
   }
 };
@@ -62,6 +63,7 @@ const saveProfileInfoService = async payload => {
     return null;
   } catch (e) {
     console.log('fetch saveProfileInfo failed.', e);
+    return null;
     // throw new Error('User authentication failed.');
   }
 };

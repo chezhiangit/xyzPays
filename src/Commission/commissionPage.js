@@ -17,7 +17,8 @@ import styles from './styles';
 import moment from 'moment';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
-import {heightAdapter} from '../uttils/adapterUtil';
+import {heightAdapter, fontscale} from '../uttils/adapterUtil';
+import Colors from '../uttils/Colors';
 import Images from '../Assets/index';
 import {getDateFilter, getCommissionList} from '../AppStore/commissionActions';
 // import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
@@ -207,8 +208,8 @@ class CommissionPage extends React.Component {
       isLoading: false,
       dateFilterServiceDone: true,
       selectedDateRangeValue: '',
-      showDlg: false,
-      dlgMsg: '',
+      showDlg: true,
+      dlgMsg: errorMsg,
     });
     console.log(errorMsg);
   };
@@ -223,7 +224,7 @@ class CommissionPage extends React.Component {
     this.setState({
       isLoading: false,
       commissionListServiceDone: false,
-      showDlg: false,
+      showDlg: true,
       dlgMsg: errorMsg,
     });
     console.log(errorMsg);
@@ -358,10 +359,24 @@ class CommissionPage extends React.Component {
               style={styles.selectionBox}
               onPress={() => this.toggleDropdown(!this.state.isSegmentVisible)}>
               <View style={styles.selectionBox}>
-                <Image style={styles.image} source={''} />
-                <Text style={styles.selectedValue}>
-                  {this.state.selectedDateRangeValue}
-                </Text>
+                {/* <Image style={styles.image} source={''} /> */}
+                <View style={{flexDirection: 'row'}}>
+                  <Text>
+                    <Icon
+                      name="calendar"
+                      size={fontscale(20)}
+                      color={Colors.primaryAppColor}
+                    />
+                  </Text>
+                  <Text style={styles.selectedValue}>
+                    {this.state.selectedDateRangeValue}
+                  </Text>
+                </View>
+                <View>
+                  <Text>
+                    <Icon name="angle-down" size={20} color={'white'} />
+                  </Text>
+                </View>
               </View>
             </TouchableWithoutFeedback>
             <Animated.View

@@ -216,96 +216,107 @@ class MyReferrals extends React.Component {
   };
 
   renderReferralsCard = ({item, index}) => {
-    return (
-      <View style={styles.referralsItemContainer}>
-        <TouchableWithoutFeedback
-          onPress={() =>
-            this.toggleExpandCollapse(
-              !this.state.commissionData[index].Expanded,
-              index,
-            )
-          }>
-          <View style={styles.expandCollapseHeader}>
-            <View style={styles.expandCollapseLeftChild}>
-              <Text style={styles.childTxt}>{item.customerName}</Text>
-            </View>
-            <View style={styles.expandCollapseRightChild}>
-              <View
-                style={[
-                  styles.regStatus,
-                  item.registrationStatus !== 'Registered' && {
-                    backgroundColor: Colors.primaryAppColor,
-                  },
-                ]}>
-                <Text style={styles.regStatusText}>
-                  {item.registrationStatus}
-                </Text>
+    if (
+      this.state.selectedValue === 'All' ||
+      item.registrationStatus === this.state.selectedValue
+    ) {
+      return (
+        <View style={styles.referralsItemContainer}>
+          <TouchableWithoutFeedback
+            onPress={() =>
+              this.toggleExpandCollapse(
+                !this.state.commissionData[index].Expanded,
+                index,
+              )
+            }>
+            <View style={styles.expandCollapseHeader}>
+              <View style={styles.expandCollapseLeftChild}>
+                <Text style={styles.childTxt}>{item.customerName}</Text>
               </View>
-              {/* <Image source={''} style={styles.dropDownIcon} /> */}
-              <Text>
-                <Icon
-                  name="caret-down"
-                  size={20}
-                  color={Colors.primaryAppColor}
-                />
-              </Text>
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-        <Animated.View
-          style={[
-            styles.referralsDetailsContainer,
-            this.state.currentIndex === index && {
-              height: this.expandCollapseTranslate.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, this.expandedViewHeight],
-              }),
-            },
-          ]}>
-          <View style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]} />
-          {this.state.currentIndex === index && (
-            <View style={{width: '100%'}}>
-              <View style={styles.customerDetails}>
-                <Image source={''} style={styles.emailphoneIcon} />
-                <Text style={styles.customerDetailsTxt}>{item.emailId}</Text>
-              </View>
-              <View
-                style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]}
-              />
-              <View style={styles.customerDetails}>
-                <Image source={''} style={styles.emailphoneIcon} />
-                <Text style={styles.customerDetailsTxt}>{item.mobile}</Text>
-              </View>
-              <View
-                style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]}
-              />
-              <View style={styles.customerDetails}>
-                <Text style={styles.customerDetailsLabel}>
-                  {I18n.t('myReferrals.referredOn')}
-                </Text>
-                <Text style={styles.customerDetailsTxt}>{item.referredOn}</Text>
-              </View>
-              <View
-                style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]}
-              />
-              {item.registrationStatus === 'Registered' && (
-                <View style={styles.customerDetails}>
-                  <Text style={styles.customerDetailsLabel}>
-                    {I18n.t('myReferrals.registeredOn')}
-                  </Text>
-                  <Text style={styles.customerDetailsTxt}>
-                    {item.registeredOn}
+              <View style={styles.expandCollapseRightChild}>
+                <View
+                  style={[
+                    styles.regStatus,
+                    item.registrationStatus !== 'Registered' && {
+                      backgroundColor: Colors.primaryAppColor,
+                    },
+                  ]}>
+                  <Text style={styles.regStatusText}>
+                    {item.registrationStatus}
                   </Text>
                 </View>
-              )}
-              <View
-                style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]}
-              />
+                {/* <Image source={''} style={styles.dropDownIcon} /> */}
+                <Text>
+                  <Icon
+                    name="caret-down"
+                    size={20}
+                    color={Colors.primaryAppColor}
+                  />
+                </Text>
+              </View>
             </View>
-          )}
-        </Animated.View>
-      </View>
-    );
+          </TouchableWithoutFeedback>
+          <Animated.View
+            style={[
+              styles.referralsDetailsContainer,
+              this.state.currentIndex === index && {
+                height: this.expandCollapseTranslate.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [0, this.expandedViewHeight],
+                }),
+              },
+            ]}>
+            <View
+              style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]}
+            />
+            {this.state.currentIndex === index && (
+              <View style={{width: '100%'}}>
+                <View style={styles.customerDetails}>
+                  <Image source={''} style={styles.emailphoneIcon} />
+                  <Text style={styles.customerDetailsTxt}>{item.emailId}</Text>
+                </View>
+                <View
+                  style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]}
+                />
+                <View style={styles.customerDetails}>
+                  <Image source={''} style={styles.emailphoneIcon} />
+                  <Text style={styles.customerDetailsTxt}>{item.mobile}</Text>
+                </View>
+                <View
+                  style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]}
+                />
+                <View style={styles.customerDetails}>
+                  <Text style={styles.customerDetailsLabel}>
+                    {I18n.t('myReferrals.referredOn')}
+                  </Text>
+                  <Text style={styles.customerDetailsTxt}>
+                    {item.referredOn}
+                  </Text>
+                </View>
+                <View
+                  style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]}
+                />
+                {item.registrationStatus === 'Registered' && (
+                  <View style={styles.customerDetails}>
+                    <Text style={styles.customerDetailsLabel}>
+                      {I18n.t('myReferrals.registeredOn')}
+                    </Text>
+                    <Text style={styles.customerDetailsTxt}>
+                      {item.registeredOn}
+                    </Text>
+                  </View>
+                )}
+                <View
+                  style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]}
+                />
+              </View>
+            )}
+          </Animated.View>
+        </View>
+      );
+    } else {
+      return null;
+    }
   };
 
   onCancel = () => {

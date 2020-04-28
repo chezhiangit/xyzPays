@@ -13,12 +13,14 @@ import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
 import moment from 'moment';
 import Spinner from 'react-native-loading-spinner-overlay';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
-import {heightAdapter} from '../uttils/adapterUtil';
+import {heightAdapter, fontscale} from '../uttils/adapterUtil';
 import Images from '../Assets/index';
 import {getProductsList} from '../AppStore/productsActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
+import Colors from '../uttils/Colors';
 
 const trending = [
   {
@@ -174,7 +176,7 @@ class TrendingPage extends React.Component {
     this.setState({
       isLoading: false,
       productsServiceDone: true,
-      showDlg: false,
+      showDlg: true,
       dlgMsg: errorMsg,
     });
   };
@@ -184,7 +186,16 @@ class TrendingPage extends React.Component {
       <View style={styles.trendingItemContainer}>
         <View style={styles.trendingDetailsContainer}>
           <View style={styles.trendingProduct}>
-            <View style={styles.dotWithTick} />
+            {/* <View style={styles.dotWithTick} /> */}
+            <View style={styles.dotWithTick}>
+              <Text>
+                <Icon
+                  name="check-circle"
+                  size={fontscale(20)}
+                  color={Colors.primaryAppColor}
+                />
+              </Text>
+            </View>
             <Text style={styles.trendingProductTxt}>{item.productName}</Text>
           </View>
           <View style={styles.amountStatusContainer}>

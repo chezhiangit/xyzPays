@@ -29,6 +29,7 @@ const fetchDateFilterDataService = async accessToken => {
     return null;
   } catch (e) {
     console.log('fetch getDateFilter data failed.', e);
+    return null;
     // throw new Error('User authentication failed.');
   }
 };
@@ -43,11 +44,11 @@ const fetchCommissionListDataService = async (
       urlConstants.BaseUrl +
       urlConstants.getCommissionList +
       'AccessToken=' +
-      AccessToken +
-      '&SelectedDateRange=' +
-      SelectedDateRange +
-      '&TxnStatusType=' +
-      TxnStatusType;
+      AccessToken; //+
+      // '&SelectedDateRange=' +
+      // SelectedDateRange +
+      // '&TxnStatusType=' +
+      // TxnStatusType;
     // `AccessToken='${AccessToken}'&SelectedDateRange='${SelectedDateRange}'&TxnStatusType='${TxnStatusType}'`;
     // url.searchParams.append('AccessToken', AccessToken);
     // url.searchParams.append('SelectedDateRange', SelectedDateRange);
@@ -82,6 +83,7 @@ const fetchCommissionListDataService = async (
     return null;
   } catch (e) {
     console.log('fetch commission list data failed.', e);
+    return null;
     // throw new Error('User authentication failed.');
   }
 };

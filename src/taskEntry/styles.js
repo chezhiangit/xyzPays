@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
   dotWithTick: {
     height: widthAdapter(40),
     width: widthAdapter(40),
-    backgroundColor: Colors.primaryAppColor,
-    borderRadius: 100,
+    // backgroundColor: Colors.primaryAppColor,
+    // borderRadius: 100,
     marginRight: widthAdapter(10),
   },
   activeContainer: {

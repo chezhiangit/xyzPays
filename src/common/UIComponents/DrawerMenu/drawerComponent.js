@@ -1,21 +1,52 @@
 import React, {Component} from 'react';
+import Spinner from 'react-native-loading-spinner-overlay';
 import styles from './styles';
+import {connect} from 'react-redux';
 import {CommonActions} from '@react-navigation/native';
 import {ScrollView, Text, View} from 'react-native';
 import I18n from '../../../localization/i18n';
+import WarningDialog from '../warningDialog';
 
 class DrawerComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedIndex: 0,
+      isLoading: false,
+      showDlg: false,
+      dlgMsg: '',
     };
   }
   navigateToScreen = route => () => {
+    if (route === 'USER_LOGOUT') {
+      // this.setState({isLoading: true});
+      this.setState({
+        showDlg: true,
+        dlgMsg: 'Do you want to logout from Application?',
+      });
+      // this.props.signOut();
+      return;
+    }
     const navigateAction = CommonActions.navigate({
       name: route,
     });
     this.props.navigation.dispatch(navigateAction);
+  };
+
+  onCancel = () => {
+    this.setState({
+      showDlg: false,
+      dlgMsg: '',
+    });
+  };
+
+  onConfirm = () => {
+    this.setState({
+      showDlg: false,
+      dlgMsg: '',
+      isLoading: true,
+    });
+    this.props.signOut();
   };
 
   render() {
@@ -114,11 +145,21 @@ class DrawerComponent extends Component {
             </Text>
             <Text
               style={styles.navItemStyle}
-              onPress={this.navigateToScreen('Login')}>
+              onPress={this.navigateToScreen('USER_LOGOUT')}>
               {I18n.t('hamburgerMenu.signOut')}
             </Text>
           </View>
         </ScrollView>
+        <Spinner
+          visible={this.state.isLoading}
+          textContent={'Signing Out...'}
+        />
+        <WarningDialog
+          shouldShowDeleteWarning={this.state.showDlg}
+          onCancel={this.onCancel}
+          onOK={this.onConfirm}
+          dlgMsg={this.state.dlgMsg}
+        />
         {/* <View style={styles.footerContainer}>
           <Text>This is my fixed footer</Text>
         </View> */}
@@ -127,4 +168,11 @@ class DrawerComponent extends Component {
   }
 }
 
-export default DrawerComponent;
+const mapDispatchToProps = dispatch => ({
+  signOut: () => dispatch({type: 'USER_LOGOUT'}),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(DrawerComponent);

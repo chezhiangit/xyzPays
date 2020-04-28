@@ -12,6 +12,7 @@ import {
 import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
 import moment from 'moment';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
 import {heightAdapter} from '../uttils/adapterUtil';
@@ -258,7 +259,14 @@ class FAQ extends React.Component {
               <Text style={styles.childTxt}>{item.itemTitle}</Text>
             </View>
             <View style={styles.expandCollapseRightChild}>
-              <Image source={''} style={styles.dropDownIcon} />
+              {/* <Image source={''} style={styles.dropDownIcon} /> */}
+              <Text>
+                <Icon
+                  name="caret-down"
+                  size={20}
+                  color={Colors.primaryAppColor}
+                />
+              </Text>
             </View>
           </View>
         </TouchableWithoutFeedback>

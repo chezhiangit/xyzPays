@@ -36,6 +36,7 @@ const authenticateUserService = async userCredentials => {
     return null;
   } catch (e) {
     console.log('User authentication failed.', e);
+    return null;
     // throw new Error('User authentication failed.');
   }
 };
@@ -72,6 +73,7 @@ const registerNewUserService = async payload => {
     return null;
   } catch (e) {
     console.log('User registration failed.', e);
+    return null;
     // throw new Error('User authentication failed.');
   }
 };

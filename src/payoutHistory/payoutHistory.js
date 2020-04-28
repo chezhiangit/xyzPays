@@ -11,13 +11,15 @@ import {
   Animated,
   Easing,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
 import I18n from '../localization/i18n';
 import Header from '../common/UIComponents/Header';
 import Footer from '../common/UIComponents/Footer';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
-import {heightAdapter, widthAdapter} from '../uttils/adapterUtil';
+import {heightAdapter, widthAdapter, fontscale} from '../uttils/adapterUtil';
+import Colors from '../uttils/Colors';
 import PaymentStatusComponent from '../common/UIComponents/PaymentStatusContainer/PaymentStatusComponent';
 import SliderView from '../common/UIComponents/SliderView';
 import Images from '../Assets/index';
@@ -182,11 +184,17 @@ class PayoutHistory extends React.Component {
         <View style={styles.dateTimeAmountRow}>
           <View style={styles.payoutLeftView}>
             <View style={styles.dateRow}>
-              <Image style={styles.imageStyle} source={''} />
+              {/* <Image style={styles.imageStyle} source={''} /> */}
+              <Text>
+                <Icon name="calendar" size={fontscale(12)} color={'gray'} />
+              </Text>
               <Text style={styles.dateTimeTxt}>{item.paymentDate}</Text>
             </View>
             <View style={[styles.dateRow, {marginLeft: widthAdapter(30)}]}>
-              <Image style={styles.imageStyle} source={''} />
+              {/* <Image style={styles.imageStyle} source={''} /> */}
+              <Text>
+                <Icon name="clock-o" size={fontscale(12)} color={'gray'} />
+              </Text>
               <Text style={styles.dateTimeTxt}>{item.paymentTime}</Text>
             </View>
           </View>
@@ -262,10 +270,24 @@ class PayoutHistory extends React.Component {
               style={styles.selectionBox}
               onPress={() => this.toggleDropdown(!this.state.isSegmentVisible)}>
               <View style={styles.selectionBox}>
-                <Image style={styles.image} source={''} />
-                <Text style={styles.selectedValue}>
-                  {this.state.selectedValue}
-                </Text>
+                {/* <Image style={styles.image} source={''} /> */}
+                <View style={{flexDirection: 'row'}}>
+                  <Text>
+                    <Icon
+                      name="calendar"
+                      size={fontscale(20)}
+                      color={Colors.primaryAppColor}
+                    />
+                  </Text>
+                  <Text style={styles.selectedValue}>
+                    {this.state.selectedValue}
+                  </Text>
+                </View>
+                <View>
+                  <Text>
+                    <Icon name="angle-down" size={20} color={'white'} />
+                  </Text>
+                </View>
               </View>
             </TouchableWithoutFeedback>
             <Animated.View

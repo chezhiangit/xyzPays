@@ -29,6 +29,7 @@ const fetchDashboardDataService = async accessToken => {
     return null;
   } catch (e) {
     console.log('fetch dashboard data failed.', e);
+    return null;
     // throw new Error('User authentication failed.');
   }
 };

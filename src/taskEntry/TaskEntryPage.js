@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
@@ -9,7 +10,7 @@ import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import EmailInputComponent from '../common/UIComponents/EmailInputComponent';
 import Images from '../Assets/index';
 import styles from './styles';
-import {widthAdapter} from '../uttils/adapterUtil';
+import {widthAdapter, fontscale} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
 import WarningDialog from '../common/UIComponents/warningDialog';
 
@@ -52,7 +53,15 @@ class TaskEntryPage extends React.Component {
           <View style={styles.taskItemContainer}>
             <View style={styles.taskDetailsContainer}>
               <View style={styles.taskEntryProduct}>
-                <View style={styles.dotWithTick} />
+                <View style={styles.dotWithTick}>
+                  <Text>
+                    <Icon
+                      name="check-circle"
+                      size={fontscale(20)}
+                      color={Colors.primaryAppColor}
+                    />
+                  </Text>
+                </View>
                 <Text style={styles.taskEntryProductTxt}>
                   {this.state.productName}
                 </Text>

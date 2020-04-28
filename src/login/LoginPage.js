@@ -30,13 +30,20 @@ class LoginPage extends React.Component {
   }
 
   onSubmitLogin = () => {
+    if (this.state.userName === '' || this.state.password === '') {
+      this.setState({
+        showDlg: true,
+        dlgMsg: 'User Name or Password can not be empty.',
+      });
+      return;
+    }
+
     this.setState({isLoading: true});
     const userCredential = {
       userName: this.state.userName,
       password: this.state.password,
     };
     console.log('onSubmitLogin....', userCredential);
-
     this.props.authenticateUser(
       userCredential,
       this.onLoginSuccess,
@@ -138,7 +145,10 @@ class LoginPage extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => {
+  console.log('state from login ', state);
+  return {};
+};
 
 const mapDispatchToProps = dispatch => ({
   authenticateUser: (userCredential, onSuccessCallback, onErrorCallback) =>

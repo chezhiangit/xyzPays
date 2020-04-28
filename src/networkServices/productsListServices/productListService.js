@@ -29,6 +29,7 @@ const fetchProductListService = async accessToken => {
     return null;
   } catch (e) {
     console.log('fetch product list data failed.', e);
+    return null;
     // throw new Error('User authentication failed.');
   }
 };
