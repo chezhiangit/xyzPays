@@ -15,7 +15,7 @@ import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
-import {heightAdapter} from '../uttils/adapterUtil';
+import {heightAdapter, fontscale} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
 import Images from '../Assets/index';
 import {TextInput} from 'react-native-gesture-handler';
@@ -178,6 +178,10 @@ class FAQ extends React.Component {
   };
 
   toggleExpandCollapse = (show, index, sectionIndex) => {
+    console.log('toggleExpandCollapse show....', show);
+    console.log('toggleExpandCollapse index....', index);
+    console.log('toggleExpandCollapse sectionIndex....', sectionIndex);
+
     if (show && this.state.currentIndex === -1) {
       this.setState(
         state => {
@@ -210,6 +214,29 @@ class FAQ extends React.Component {
       show &&
       this.state.currentIndex !== -1 &&
       this.state.currentIndex !== index
+    ) {
+      this.collapse(() =>
+        this.setState(
+          state => {
+            const faqTempData = [...state.faqData];
+            faqTempData[sectionIndex].data[index].Expanded = show;
+            faqTempData[state.currentSectionIndex].data[
+              state.currentIndex
+            ].Expanded = false;
+            return {
+              currentIndex: index,
+              currentSectionIndex: sectionIndex,
+              faqData: faqTempData,
+            };
+          },
+          () => this.expand(),
+        ),
+      );
+    } else if (
+      show &&
+      this.state.currentIndex !== -1 &&
+      this.state.currentIndex === index &&
+      this.state.currentSectionIndex !== sectionIndex
     ) {
       this.collapse(() =>
         this.setState(
@@ -263,7 +290,7 @@ class FAQ extends React.Component {
               <Text>
                 <Icon
                   name="caret-down"
-                  size={20}
+                  size={fontscale(20)}
                   color={Colors.primaryAppColor}
                 />
               </Text>
