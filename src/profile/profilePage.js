@@ -18,6 +18,7 @@ import Colors from '../uttils/Colors';
 import {getProfileInfo} from '../AppStore/profileActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
 import CheckBoxComponent from '../common/UIComponents/CheckBox/CheckBox';
+import { widthAdapter } from '../uttils/adapterUtil';
 
 class ProfilePage extends React.Component {
   constructor(props) {
@@ -84,13 +85,13 @@ class ProfilePage extends React.Component {
   };
 
   onCheckBoxSelected = (index, value) => {
-    this.setState(state => {
-      const checBoxArray = [...state.checBoxArray];
-      checBoxArray[index] = !state.checBoxArray[index];
-      return {
-        checBoxArray,
-      };
-    });
+    // this.setState(state => {
+    //   const checBoxArray = [...state.checBoxArray];
+    //   checBoxArray[index] = !state.checBoxArray[index];
+    //   return {
+    //     checBoxArray,
+    //   };
+    // });
   };
 
   render() {
@@ -138,12 +139,17 @@ class ProfilePage extends React.Component {
           {/* <Text>
             <Icon name="rocket" size={30} color="#900" />;
           </Text> */}
-          <LinkBtnComponent
-            containerStyle={styles.editProfileContainer}
-            btnName={I18n.t('profile.editProfile')}
-            onClick={this.onEditProfile}
-            btnTextStyle={{color: Colors.primaryAppColor, fontWeight: 'bold'}}
-          />
+          <View style={styles.profileContainer}>
+            <Text>
+              <Icon name="edit" size={25} color="#ff5722" />
+            </Text>
+            <LinkBtnComponent
+              containerStyle={styles.editProfileContainer}
+              btnName={I18n.t('profile.editProfile')}
+              onClick={this.onEditProfile}
+              btnTextStyle={{color: Colors.primaryAppColor, fontWeight: 'bold'}}
+            />
+          </View>
           <View style={styles.labelContainer}>
             <ReadOnlyView
               label={I18n.t('profile.accountInfoLabel')}
@@ -183,7 +189,7 @@ class ProfilePage extends React.Component {
             <ReadOnlyView
               viewStyle={styles.viewStyle}
               label={this.props.profileInfo.Status}
-              labelStyle={styles.value}
+              labelStyle={styles.activeStatus}
             />
           </View>
           <View style={styles.labelContainer}>

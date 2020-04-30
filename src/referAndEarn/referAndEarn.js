@@ -57,6 +57,7 @@ class ReferAndEarn extends React.Component {
           <EmailInputComponent
             placeholder={I18n.t('referAndEarn.email')}
             autoFocus={false}
+            onEmailEntered={() => {}}
           />
           <TextInputComponent
             placeholder={I18n.t('referAndEarn.mobileNumber')}

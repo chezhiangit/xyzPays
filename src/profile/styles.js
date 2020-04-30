@@ -32,13 +32,22 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: fontFamily.primaryFontFamily,
   },
-  editProfileContainer: {
+  profileContainer: {
+    flexDirection: 'row',
     width: '100%',
-    marginTop: heightAdapter(50),
+    // borderColor: 'red',
+    // borderWidth: 1,
+    marginTop: heightAdapter(30),
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  editProfileContainer: {
+    width: widthAdapter(200),
+    // marginTop: heightAdapter(30),
     alignItems: 'flex-end',
     justifyContent: 'center',
     // height: 300,
-    // borderColor: 'red',
+    // borderColor: 'blue',
     // borderWidth: 1,
   },
   labelContainer: {
@@ -65,6 +74,16 @@ export default StyleSheet.create({
   },
   value: {
     fontSize: fontscale(15),
+  },
+  activeStatus: {
+    backgroundColor: '#5bc0de',
+    padding: 3,
+    borderRadius: widthAdapter(10),
+    borderColor: '#5bc0de',
+    borderWidth: 1,
+    fontSize: fontscale(12),
+    color: 'white',
+    fontWeight: 'bold',
   },
   photoContainer: {
     height: heightAdapter(400),

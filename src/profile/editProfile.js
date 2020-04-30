@@ -46,6 +46,8 @@ class EditProfilePage extends React.Component {
       City: '',
       ZipCode: '',
       LoginEmail: '',
+
+      checBoxArray: [false, false, false, false, false],
     };
   }
 
@@ -180,6 +182,16 @@ class EditProfilePage extends React.Component {
     this.setState({showDlg: false});
   };
 
+  onCheckBoxSelected = (index, value) => {
+    this.setState(state => {
+      const checBoxArray = [...state.checBoxArray];
+      checBoxArray[index] = !state.checBoxArray[index];
+      return {
+        checBoxArray,
+      };
+    });
+  };
+
   render() {
     // const {navigation} = this.props;
     // console.log('this.state values ....', this.state);
@@ -284,22 +296,30 @@ class EditProfilePage extends React.Component {
             />
           </View>
           <View style={editStyles.interestContainer}>
-            <CheckBoxComponent btnName={'Healthcare'} onClick={() => {}} />
+            <CheckBoxComponent
+              btnName={'Healthcare'}
+              onClick={() => this.onCheckBoxSelected(0)}
+              isSelected={this.state.checBoxArray[0]}
+            />
             <CheckBoxComponent
               btnName={'Indutrial & Business Services'}
-              onClick={() => {}}
+              onClick={() => this.onCheckBoxSelected(1)}
+              isSelected={this.state.checBoxArray[1]}
             />
             <CheckBoxComponent
               btnName={'Medical & Technology'}
-              onClick={() => {}}
+              onClick={() => this.onCheckBoxSelected(2)}
+              isSelected={this.state.checBoxArray[2]}
             />
             <CheckBoxComponent
               btnName={'Cable TV Internet & Communications'}
-              onClick={() => {}}
+              onClick={() => this.onCheckBoxSelected(3)}
+              isSelected={this.state.checBoxArray[3]}
             />
             <CheckBoxComponent
               btnName={'Renewable Energy'}
-              onClick={() => {}}
+              onClick={() => this.onCheckBoxSelected(4)}
+              isSelected={this.state.checBoxArray[4]}
             />
           </View>
         </ScrollView>
