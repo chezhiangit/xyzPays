@@ -47,6 +47,7 @@ class EditProfilePage extends React.Component {
       ZipCode: '',
       LoginEmail: '',
 
+      dataLoaded: false,
       checBoxArray: [false, false, false, false, false],
     };
   }
@@ -54,34 +55,35 @@ class EditProfilePage extends React.Component {
   static getDerivedStateFromProps(props, state) {
     if (!state.profileInfoServiceDone && props.profileInfo.FirstName === '') {
       return {isLoading: true};
+    // } else if (
+    //   state.profileInfoServiceDone &&
+    //   !state.saveProfileInfoServiceDone &&
+    //   props.profileInfo.FirstName !== '' &&
+    //   state.isLoading
+    // ) {
+    //   return {
+    //     RepId: props.profileInfo.RepId,
+    //     AddressLine: props.profileInfo.AddressLine,
+    //     Mobile: props.profileInfo.Mobile,
+    //     PaypalEmail: props.profileInfo.PaypalEmail,
+    //     Website: props.profileInfo.Website,
+    //     State: props.profileInfo.State,
+    //     CreatedBy: props.profileInfo.CreatedBy,
+    //     RegId: props.profileInfo.RegId,
+    //     Status: props.profileInfo.Status,
+    //     FirstName: props.profileInfo.FirstName,
+    //     LastName: props.profileInfo.LastName,
+    //     RegistrationType: props.profileInfo.RegistrationType,
+    //     RegisteredOn: props.profileInfo.RegisteredOn,
+    //     ProductAccess: props.profileInfo.ProductAccess,
+    //     City: props.profileInfo.City,
+    //     ZipCode: props.profileInfo.ZipCode,
+    //     LoginEmail: props.profileInfo.LoginEmail,
+    //     isLoading: false,
+    //     dataLoaded: true,
+    //   };
     } else if (
-      state.profileInfoServiceDone &&
-      !state.saveProfileInfoServiceDone &&
-      props.profileInfo.FirstName !== '' &&
-      state.isLoading
-    ) {
-      return {
-        RepId: props.profileInfo.RepId,
-        AddressLine: props.profileInfo.AddressLine,
-        Mobile: props.profileInfo.Mobile,
-        PaypalEmail: props.profileInfo.PaypalEmail,
-        Website: props.profileInfo.Website,
-        State: props.profileInfo.State,
-        CreatedBy: props.profileInfo.CreatedBy,
-        RegId: props.profileInfo.RegId,
-        Status: props.profileInfo.Status,
-        FirstName: props.profileInfo.FirstName,
-        LastName: props.profileInfo.LastName,
-        RegistrationType: props.profileInfo.RegistrationType,
-        RegisteredOn: props.profileInfo.RegisteredOn,
-        ProductAccess: props.profileInfo.ProductAccess,
-        City: props.profileInfo.City,
-        ZipCode: props.profileInfo.ZipCode,
-        LoginEmail: props.profileInfo.LoginEmail,
-        isLoading: false,
-      };
-    } else if (
-      !state.profileInfoServiceDone &&
+      !state.dataLoaded &&
       state.FirstName === '' &&
       props.profileInfo.FirstName !== ''
     ) {
@@ -102,8 +104,14 @@ class EditProfilePage extends React.Component {
         RegisteredOn: props.profileInfo.RegisteredOn,
         ProductAccess: props.profileInfo.ProductAccess,
         City: props.profileInfo.City,
-        ZipCode: props.profileInfo.ZipCode,
+        ZipCode:
+          props.profileInfo.ZipCode === null ||
+          props.profileInfo.ZipCode === undefined
+            ? ''
+            : props.profileInfo.ZipCode,
         LoginEmail: props.profileInfo.LoginEmail,
+        dataLoaded: true,
+        isLoading: false,
       };
     }
     return {};
@@ -115,6 +123,7 @@ class EditProfilePage extends React.Component {
         this.onGetProfileInfoSuccess,
         this.onGetProfileInfoFailed,
       );
+      this.dataLoaded = false;
     }
   }
 
@@ -153,11 +162,25 @@ class EditProfilePage extends React.Component {
       PayPalEmail: this.state.PaypalEmail,
       Mobile: this.state.Mobile,
       Address:
-        this.state.AddressLine == null || '' ? '' : this.state.AddressLine,
-      State: this.state.State == null || '' ? '' : this.state.State,
-      City: this.state.City == null || '' ? '' : this.state.City,
-      ZipCode: this.state.ZipCode == null || '' ? '' : this.state.ZipCode,
-      WebSite: this.state.Website == null || '' ? '' : this.state.Website,
+        this.state.AddressLine == null || this.state.AddressLine === ''
+          ? ''
+          : this.state.AddressLine,
+      State:
+        this.state.State == null || this.state.State === ''
+          ? ''
+          : this.state.State,
+      City:
+        this.state.City == null || this.state.City === ''
+          ? ''
+          : this.state.City,
+      ZipCode:
+        this.state.ZipCode == null || this.state.ZipCode === ''
+          ? ''
+          : this.state.ZipCode,
+      WebSite:
+        this.state.Website == null || this.state.Website === ''
+          ? ''
+          : this.state.Website,
       RepKey: this.props.profileInfo.RepKey,
     };
     console.log('onUpdate payload ...', payload);
@@ -192,9 +215,14 @@ class EditProfilePage extends React.Component {
     });
   };
 
+  onFirnameChanged = FirstName => {
+    console.log('First name.....', FirstName);
+    this.setState({FirstName});
+  };
+
   render() {
     // const {navigation} = this.props;
-    // console.log('this.state values ....', this.state);
+    console.log('this.state.FirstName ....', this.state.FirstName);
     return (
       <View style={[BaseStyles.baseContainer]}>
         <View style={BaseStyles.userInfo}>
@@ -231,7 +259,8 @@ class EditProfilePage extends React.Component {
           <TextInputComponent
             placeholder={I18n.t('editProfile.firstName')}
             autoFocus={false}
-            onTextChange={text => this.setState({FirstName: text})}
+            onTextChange={FirstName => this.setState({FirstName})}
+            // onTextChange={this.onFirnameChanged}
             inputValue={this.state.FirstName}
           />
           <TextInputComponent
@@ -244,7 +273,7 @@ class EditProfilePage extends React.Component {
             placeholder={I18n.t('editProfile.email')}
             autoFocus={false}
             // onTextChange={text => this.setState({PaypalEmail: text})}
-            onEmailEntered={text => this.setState({PaypalEmail: text})}
+            onEmailEntered={PaypalEmail => this.setState({PaypalEmail})}
             email={this.state.PaypalEmail}
           />
           <TextInputComponent

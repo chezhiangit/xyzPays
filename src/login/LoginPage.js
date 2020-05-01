@@ -13,7 +13,6 @@ import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
 import styles from './styles';
 import {authenticateUser} from '../AppStore/loginActions';
-// import DeleteDialog from '../common/UIComponents/DeleteDialog';
 import WarningDialog from '../common/UIComponents/warningDialog';
 
 class LoginPage extends React.Component {
@@ -104,8 +103,8 @@ class LoginPage extends React.Component {
           <EmailInputComponent
             placeholder={I18n.t('login.emailPlaceHolder')}
             autoFocus={false}
-            email={this.state.userName}
             onEmailEntered={this.onEmailEntered}
+            email={this.state.userName}
           />
           <PasswordInputComponent
             placeholder={I18n.t('login.passwordPlaceHolder')}
@@ -135,10 +134,6 @@ class LoginPage extends React.Component {
           onOK={this.onConfirm}
           dlgMsg={this.state.dlgMsg}
         />
-        {/* <DeleteDialog visible={true} /> */}
-        {/* <TouchableOpacity onPress={() => navigation.replace('HomePage')}>
-          <Text>{I18n.t('loginScreen')}</Text>
-        </TouchableOpacity> */}
         <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
       </View>
     );

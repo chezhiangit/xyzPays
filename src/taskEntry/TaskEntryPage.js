@@ -7,7 +7,6 @@ import Footer from '../common/UIComponents/Footer';
 import TextInputComponent from '../common/UIComponents/TextInputComponent';
 // import PasswordInputComponent from '../common/UIComponents/PasswordInputComponent';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
-// import EmailInputComponent from '../common/UIComponents/EmailInputComponent';
 import Images from '../Assets/index';
 import styles from './styles';
 import {widthAdapter, fontscale} from '../uttils/adapterUtil';
@@ -22,6 +21,8 @@ class TaskEntryPage extends React.Component {
       selectedIndex: 0,
       showDlg: false,
       dlgMsg: '',
+      answer1: '',
+      answer2: '',
     };
   }
   onSave = () => {
@@ -88,13 +89,23 @@ class TaskEntryPage extends React.Component {
               {'How often do you use our products?*'}
             </Text>
           </View>
-          <TextInputComponent placeholder="" autoFocus={false} />
+          <TextInputComponent
+            placeholder=""
+            autoFocus={false}
+            inputValue={this.state.answer1}
+            onTextChange={answer1 => this.setState({answer1})}
+          />
           <View style={styles.questionContainer}>
             <Text style={styles.questionTxt}>
               {'What are you trying to solve by using our product?'}
             </Text>
           </View>
-          <TextInputComponent placeholder="" autoFocus={false} />
+          <TextInputComponent
+            placeholder=""
+            autoFocus={false}
+            inputValue={this.state.answer2}
+            onTextChange={answer2 => this.setState({answer2})}
+          />
           <View style={styles.questionContainer}>
             <Text style={styles.questionTxt}>
               {'Are you agree with our terms and conditions?'}

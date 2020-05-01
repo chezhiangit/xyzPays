@@ -20,6 +20,9 @@ class ReferAndEarn extends React.Component {
     this.state = {
       showDlg: false,
       dlgMsg: '',
+      email: '',
+      name: '',
+      mobileNumber: '',
     };
   }
   onSendMessage = () => {
@@ -53,15 +56,20 @@ class ReferAndEarn extends React.Component {
           <TextInputComponent
             placeholder={I18n.t('referAndEarn.name')}
             autoFocus={false}
+            inputValue={this.state.name}
+            onTextChange={name => this.setState({name})}
           />
           <EmailInputComponent
             placeholder={I18n.t('referAndEarn.email')}
             autoFocus={false}
-            onEmailEntered={() => {}}
+            onEmailEntered={email => this.setState({email})}
+            email={this.state.email}
           />
           <TextInputComponent
             placeholder={I18n.t('referAndEarn.mobileNumber')}
             autoFocus={false}
+            inputValue={this.state.mobileNumber}
+            onTextChange={mobileNumber => this.setState({mobileNumber})}
           />
           <View style={BaseStyles.emptyHView} />
           <PrimaryButton

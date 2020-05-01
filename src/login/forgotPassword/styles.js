@@ -69,8 +69,8 @@ export default StyleSheet.create({
   phoneImage: {
     height: heightAdapter(30),
     width: widthAdapter(30),
-    borderWidth: 1,
-    borderColor: 'red',
+    // borderWidth: 1,
+    // borderColor: 'red',
     marginRight: widthAdapter(10),
   },
   mobileNumberView: {

@@ -7,9 +7,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
-// import EmailInputComponent from '../common/UIComponents/EmailInputComponent';
-// import PasswordInputComponent from '../common/UIComponents/PasswordInputComponent';
-// import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
 import ReadOnlyView from '../common/UIComponents/readOnlyView/ReadOnlyView';
 import styles from './styles';
@@ -18,7 +15,7 @@ import Colors from '../uttils/Colors';
 import {getProfileInfo} from '../AppStore/profileActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
 import CheckBoxComponent from '../common/UIComponents/CheckBox/CheckBox';
-import { widthAdapter } from '../uttils/adapterUtil';
+import {widthAdapter} from '../uttils/adapterUtil';
 
 class ProfilePage extends React.Component {
   constructor(props) {
@@ -122,11 +119,10 @@ class ProfilePage extends React.Component {
               />
             </View>
             <View style={styles.nameContainer}>
-              <Text style={styles.firstName}>{` ${
-                this.props.profileInfo.FirstName
-              }`}</Text>
+              <Text style={styles.firstName}>
+                {`${this.props.profileInfo.FirstName}`}
+              </Text>
               <Text style={styles.secondName}>
-                {' '}
                 {` ${this.props.profileInfo.LastName}`}
               </Text>
             </View>

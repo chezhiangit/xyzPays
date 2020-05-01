@@ -20,16 +20,19 @@ class TextInputComponent extends React.Component {
     };
   }
   static getDerivedStateFromProps(props, state) {
-    if (state.inputValue === '' && props.inputValue) {
-      return {inputValue: props.inputValue ? props.inputValue : ''};
+    console.log('state.inputValue .....', state.inputValue);
+    console.log('props.inputValue .....', props.inputValue);
+    if (state.inputValue === '' && props.inputValue !== '') {
+      return {inputValue: props.inputValue, focus: true};
     }
     return {};
   }
   handleOnChangeText = inputValue => {
     console.log('handleOnChangeText ....', inputValue);
-    this.setState({inputValue}, () =>
-      this.props.onTextChange(this.state.inputValue),
-    );
+    // this.setState({inputValue}, () =>
+    //   this.props.onTextChange(this.state.inputValue),
+    // );
+    this.props.onTextChange(inputValue);
   };
 
   render() {
@@ -49,7 +52,7 @@ class TextInputComponent extends React.Component {
           placeholderTextColor="rgb(117, 129, 155)"
           autoCorrect={false}
           placeholder={
-            !this.state.focus && this.state.inputValue.length === 0
+            !this.state.focus && this.props.inputValue.length === 0
               ? this.props.placeholder
               : ''
           }
@@ -59,7 +62,7 @@ class TextInputComponent extends React.Component {
             // this.props.onTextChange(this.state.inputValue);
           }}
           onBlur={() => {
-            if (this.state.inputValue.length === 0) {
+            if (this.props.inputValue.length === 0) {
               this.setState({focus: false});
             }
           }}
@@ -67,7 +70,7 @@ class TextInputComponent extends React.Component {
             this.setState({focus: true});
             this.props.onFieldFocus && this.props.onFieldFocus(1100);
           }}
-          value={this.state.inputValue}
+          value={this.props.inputValue}
         />
         {this.state.focus && this.props.placeholder.length > 0 && (
           <Text style={styles.captionText}>{this.props.placeholder}</Text>

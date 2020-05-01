@@ -68,6 +68,7 @@ class ForgotPassword extends React.Component {
             placeholder={I18n.t('login.emailPlaceHolder')}
             autoFocus={false}
             onEmailEntered={this.onEmailEntered}
+            email={this.state.userEmail}
           />
           {/* <PasswordInputComponent
             placeholder={I18n.t('login.passwordPlaceHolder')}

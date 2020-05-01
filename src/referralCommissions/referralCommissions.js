@@ -9,10 +9,10 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
 import moment from 'moment';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
 import {heightAdapter} from '../uttils/adapterUtil';
@@ -183,14 +183,28 @@ class ReferralCommissions extends React.Component {
           </View>
 
           <View style={styles.customerDetails}>
-            <Image source={''} style={styles.emailphoneIcon} />
+            {/* <Image source={''} style={styles.emailphoneIcon} /> */}
+            <Text style={styles.emailphoneIcon}>
+                    <Icon
+                      name="envelope"
+                      size={15}
+                      color={'gray'}
+                    />
+                  </Text>
             <Text style={styles.customerDetailsLabel}>
               {I18n.t('referralCommissions.email')}
             </Text>
             <Text style={styles.customerDetailsTxt}>{item.email}</Text>
           </View>
           <View style={styles.customerDetails}>
-            <Image source={''} style={styles.emailphoneIcon} />
+          <Text style={styles.emailphoneIcon}>
+                    <Icon
+                      name="phone-square"
+                      size={15}
+                      color={'gray'}
+                    />
+                  </Text>
+            {/* <Image source={''} style={styles.emailphoneIcon} /> */}
             <Text style={styles.customerDetailsLabel}>
               {I18n.t('referralCommissions.phone')}
             </Text>

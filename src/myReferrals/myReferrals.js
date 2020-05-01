@@ -272,14 +272,28 @@ class MyReferrals extends React.Component {
             {this.state.currentIndex === index && (
               <View style={{width: '100%'}}>
                 <View style={styles.customerDetails}>
-                  <Image source={''} style={styles.emailphoneIcon} />
+                  {/* <Image source={''} style={styles.emailphoneIcon} /> */}
+                  <Text style={styles.emailphoneIcon}>
+                    <Icon
+                      name="envelope"
+                      size={15}
+                      color={'gray'}
+                    />
+                  </Text>
                   <Text style={styles.customerDetailsTxt}>{item.emailId}</Text>
                 </View>
                 <View
                   style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]}
                 />
                 <View style={styles.customerDetails}>
-                  <Image source={''} style={styles.emailphoneIcon} />
+                <Text style={styles.emailphoneIcon}>
+                    <Icon
+                      name="phone-square"
+                      size={15}
+                      color={'gray'}
+                    />
+                  </Text>
+                  {/* <Image source={''} style={styles.emailphoneIcon} /> */}
                   <Text style={styles.customerDetailsTxt}>{item.mobile}</Text>
                 </View>
                 <View

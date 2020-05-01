@@ -101,7 +101,7 @@ class UserRegistration extends React.Component {
           <EmailInputComponent
             placeholder={I18n.t('userRegistration.email')}
             autoFocus={false}
-            onEmailEntered={text => this.setState({Email: text})}
+            onEmailEntered={Email => this.setState({Email})}
             email={this.state.Email}
           />
           <PasswordInputComponent
