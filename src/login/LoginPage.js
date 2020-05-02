@@ -86,7 +86,8 @@ class LoginPage extends React.Component {
   };
 
   onConfirm = () => {
-    this.setState({showDlg: false, userName: '', password: ''});
+    // this.setState({showDlg: false, userName: '', password: ''});
+    this.setState({showDlg: false});
   };
 
   render() {
@@ -110,6 +111,7 @@ class LoginPage extends React.Component {
             placeholder={I18n.t('login.passwordPlaceHolder')}
             autoFocus={false}
             onPassworEntered={this.onPassworEntered}
+            password={this.state.password}
           />
           <View style={styles.signinContainer}>
             <PrimaryButton

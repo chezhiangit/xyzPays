@@ -8,25 +8,26 @@ class EmailInputComponent extends React.Component {
     super(props);
     this.state = {
       placeholderText: '',
-      email: this.props.email === undefined ? this.props.email : '',
+      // email: this.props.email === undefined ? this.props.email : '',
       focus: this.props.email ? true : false,
       emailValid: true,
     };
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (state.email === '' && props.email) {
-      return {email: props.email ? props.email : ''};
+    if (props.email.length === 0) {
+      return {emailValid: true};
     }
     return {};
   }
 
   onEmailChange = email => {
+    console.log('onEmailChange ....', email);
     const emailValid = checkEmail(email);
     this.setState(
       {
         // email,
-        focus: true,
+        focus: this.props.email.length > 0 ? true : false,
         emailValid,
       },
       // () => this.props.onEmailEntered(this.state.email),
@@ -71,6 +72,7 @@ class EmailInputComponent extends React.Component {
             this.setState({focus: true});
             // this.props.onFieldFocus(170);
           }}
+          onChange={() => console.log('onChange ......')}
           value={this.props.email}
         />
         {this.state.focus && (

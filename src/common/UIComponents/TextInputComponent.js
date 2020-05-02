@@ -14,18 +14,16 @@ class TextInputComponent extends React.Component {
     super(props);
     this.state = {
       placeholderText: '',
-      inputValue: this.props.inputValue ? this.props.inputValue : '',
+      // inputValue: this.props.inputValue ? this.props.inputValue : '',
       focus: this.props.inputValue ? true : false,
       validInput: true,
     };
   }
   static getDerivedStateFromProps(props, state) {
-    console.log('state.inputValue .....', state.inputValue);
-    console.log('props.inputValue .....', props.inputValue);
-    if (state.inputValue === '' && props.inputValue !== '') {
-      return {inputValue: props.inputValue, focus: true};
-    }
-    return {};
+    // if (props.inputValue.length === 0) {
+    //   return {focus: false};
+    // }
+    // return {focus: true};
   }
   handleOnChangeText = inputValue => {
     console.log('handleOnChangeText ....', inputValue);

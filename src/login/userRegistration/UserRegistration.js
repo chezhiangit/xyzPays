@@ -107,13 +107,13 @@ class UserRegistration extends React.Component {
           <PasswordInputComponent
             placeholder={I18n.t('userRegistration.password')}
             autoFocus={false}
-            Password={this.state.Password}
+            password={this.state.Password}
             onPassworEntered={text => this.setState({Password: text})}
           />
           <PasswordInputComponent
             placeholder={I18n.t('userRegistration.retypePassword')}
             autoFocus={false}
-            Password={this.state.ConfirmPassword}
+            password={this.state.ConfirmPassword}
             onPassworEntered={text => this.setState({ConfirmPassword: text})}
           />
           {/* <View style={styles.signinContainer}> */}

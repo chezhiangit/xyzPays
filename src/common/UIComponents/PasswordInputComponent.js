@@ -7,13 +7,21 @@ class PasswordInputComponent extends React.Component {
     super(props);
     this.state = {
       placeholderText: '',
-      password: '',
+      // password: '',
       focus: false,
       pwdValid: true,
     };
   }
+
+  static getDerivedStateFromProps(props, state) {
+    // if (props.password.length === 0) {
+    //   return {focus: false};
+    // }
+    // return {focus: true};
+  }
   handleOnChangeText = inputValue => {
-    this.setState({password: inputValue});
+    // this.setState({password: inputValue});
+    this.setState({focus: this.props.password.length > 0 ? true : false});
     this.props.onPassworEntered(inputValue);
   };
 
@@ -36,7 +44,7 @@ class PasswordInputComponent extends React.Component {
           placeholderTextColor="rgb(117, 129, 155)"
           autoCorrect={false}
           placeholder={
-            !this.state.focus && this.state.password.length === 0
+            !this.state.focus && this.props.password.length === 0
               ? this.props.placeholder
               : ''
           }
@@ -45,7 +53,7 @@ class PasswordInputComponent extends React.Component {
           }}
           // onEndEditing={() => this.props.onPassworEntered(this.state.password)}
           onBlur={() => {
-            if (this.state.password.length === 0) {
+            if (this.props.password.length === 0) {
               this.setState({focus: false});
             }
           }}
@@ -53,7 +61,7 @@ class PasswordInputComponent extends React.Component {
             this.setState({focus: true});
             // this.props.onFieldFocus(170);
           }}
-          value={this.state.password}
+          value={this.props.password}
         />
         {this.state.focus && (
           <Text style={styles.captionText}>{this.props.placeholder}</Text>
