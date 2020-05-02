@@ -16,6 +16,7 @@ import {getProfileInfo} from '../AppStore/profileActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
 import CheckBoxComponent from '../common/UIComponents/CheckBox/CheckBox';
 import {widthAdapter} from '../uttils/adapterUtil';
+import {displayPhoneNumber} from '../uttils/UtilityFunctions';
 
 class ProfilePage extends React.Component {
   constructor(props) {
@@ -278,7 +279,7 @@ class ProfilePage extends React.Component {
             />
             <ReadOnlyView
               viewStyle={styles.viewStyle}
-              label={this.props.profileInfo.Mobile}
+              label={displayPhoneNumber(this.props.profileInfo.Mobile)}
               labelStyle={styles.value}
             />
           </View>

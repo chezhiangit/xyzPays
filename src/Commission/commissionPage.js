@@ -411,6 +411,7 @@ class CommissionPage extends React.Component {
             data={this.state.commissionData}
             renderItem={this.renderCommissionCard}
             keyExtractor={(item, index) => index}
+            showsVerticalScrollIndicator={false}
           />
         </View>
         <Footer />

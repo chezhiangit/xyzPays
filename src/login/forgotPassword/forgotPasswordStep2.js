@@ -11,6 +11,7 @@ import LinkBtnComponent from '../../common/UIComponents/LinkBtn/LinkBtn';
 import styles from './styles';
 import WarningDialog from '../../common/UIComponents/warningDialog';
 import RadioButton from '../../common/UIComponents/RadioButtom/radioButton';
+import {displayPhoneNumber} from '../../uttils/UtilityFunctions';
 
 class ForgotPasswordStep2 extends React.Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class ForgotPasswordStep2 extends React.Component {
       userEmail: '',
       showDlg: false,
       dlgMsg: '',
+      mobileNumber: '1234567890',
     };
   }
 
@@ -73,7 +75,9 @@ class ForgotPasswordStep2 extends React.Component {
               <Icon name="phone-square" size={15} color={'gray'} />
             </Text>
             {/* <Image style={styles.phoneImage} source={''} /> */}
-            <Text style={styles.mobileNumber}>9123456789</Text>
+            <Text style={styles.mobileNumber}>
+              {displayPhoneNumber(this.state.mobileNumber)}
+            </Text>
           </View>
           <View style={styles.forgotStepOneNextContainer}>
             <PrimaryButton

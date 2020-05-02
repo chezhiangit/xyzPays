@@ -247,6 +247,7 @@ class TrendingPage extends React.Component {
             data={this.state.trendingData}
             renderItem={this.renderTrendingCard}
             keyExtractor={(item, index) => index}
+            showsVerticalScrollIndicator={false}
           />
         </View>
         <Footer />

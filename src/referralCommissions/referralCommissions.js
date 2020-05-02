@@ -20,6 +20,7 @@ import Images from '../Assets/index';
 import Colors from '../uttils/Colors';
 import WarningDialog from '../common/UIComponents/warningDialog';
 // import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {displayPhoneNumber} from '../uttils/UtilityFunctions';
 
 const commission = [
   {
@@ -185,30 +186,24 @@ class ReferralCommissions extends React.Component {
           <View style={styles.customerDetails}>
             {/* <Image source={''} style={styles.emailphoneIcon} /> */}
             <Text style={styles.emailphoneIcon}>
-                    <Icon
-                      name="envelope"
-                      size={15}
-                      color={'gray'}
-                    />
-                  </Text>
+              <Icon name="envelope" size={15} color={'gray'} />
+            </Text>
             <Text style={styles.customerDetailsLabel}>
               {I18n.t('referralCommissions.email')}
             </Text>
             <Text style={styles.customerDetailsTxt}>{item.email}</Text>
           </View>
           <View style={styles.customerDetails}>
-          <Text style={styles.emailphoneIcon}>
-                    <Icon
-                      name="phone-square"
-                      size={15}
-                      color={'gray'}
-                    />
-                  </Text>
+            <Text style={styles.emailphoneIcon}>
+              <Icon name="phone-square" size={15} color={'gray'} />
+            </Text>
             {/* <Image source={''} style={styles.emailphoneIcon} /> */}
             <Text style={styles.customerDetailsLabel}>
               {I18n.t('referralCommissions.phone')}
             </Text>
-            <Text style={styles.customerDetailsTxt}>{item.mobile}</Text>
+            <Text style={styles.customerDetailsTxt}>
+              {displayPhoneNumber(item.mobile)}
+            </Text>
           </View>
         </View>
       </View>
@@ -288,6 +283,7 @@ class ReferralCommissions extends React.Component {
             data={this.state.commissionData}
             renderItem={this.renderCommissionCard}
             keyExtractor={(item, index) => index}
+            showsVerticalScrollIndicator={false}
           />
         </View>
         <Footer />

@@ -17,6 +17,7 @@ import styles from './styles';
 import editStyles from './editProfileStyle';
 import {getProfileInfo, saveProfileInfo} from '../AppStore/profileActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
+import {displayPhoneNumber} from '../uttils/UtilityFunctions';
 
 class EditProfilePage extends React.Component {
   constructor(props) {
@@ -280,7 +281,8 @@ class EditProfilePage extends React.Component {
             placeholder={I18n.t('editProfile.mobileNumber')}
             autoFocus={false}
             onTextChange={text => this.setState({Mobile: text})}
-            inputValue={this.state.Mobile}
+            inputValue={displayPhoneNumber(this.state.Mobile)}
+            phone
           />
           <TextInputComponent
             placeholder={I18n.t('editProfile.address')}

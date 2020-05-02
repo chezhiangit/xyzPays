@@ -19,6 +19,7 @@ import Colors from '../uttils/Colors';
 import Images from '../Assets/index';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import WarningDialog from '../common/UIComponents/warningDialog';
+import {displayPhoneNumber} from '../uttils/UtilityFunctions';
 // import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const commission = [
@@ -274,11 +275,7 @@ class MyReferrals extends React.Component {
                 <View style={styles.customerDetails}>
                   {/* <Image source={''} style={styles.emailphoneIcon} /> */}
                   <Text style={styles.emailphoneIcon}>
-                    <Icon
-                      name="envelope"
-                      size={15}
-                      color={'gray'}
-                    />
+                    <Icon name="envelope" size={15} color={'gray'} />
                   </Text>
                   <Text style={styles.customerDetailsTxt}>{item.emailId}</Text>
                 </View>
@@ -286,15 +283,13 @@ class MyReferrals extends React.Component {
                   style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]}
                 />
                 <View style={styles.customerDetails}>
-                <Text style={styles.emailphoneIcon}>
-                    <Icon
-                      name="phone-square"
-                      size={15}
-                      color={'gray'}
-                    />
+                  <Text style={styles.emailphoneIcon}>
+                    <Icon name="phone-square" size={15} color={'gray'} />
                   </Text>
                   {/* <Image source={''} style={styles.emailphoneIcon} /> */}
-                  <Text style={styles.customerDetailsTxt}>{item.mobile}</Text>
+                  <Text style={styles.customerDetailsTxt}>
+                    {displayPhoneNumber(item.mobile)}
+                  </Text>
                 </View>
                 <View
                   style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]}
@@ -399,6 +394,7 @@ class MyReferrals extends React.Component {
             data={this.state.commissionData}
             renderItem={this.renderReferralsCard}
             keyExtractor={(item, index) => index}
+            showsVerticalScrollIndicator={false}
           />
         </View>
         <Footer />

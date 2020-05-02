@@ -70,6 +70,7 @@ class ReferAndEarn extends React.Component {
             autoFocus={false}
             inputValue={this.state.mobileNumber}
             onTextChange={mobileNumber => this.setState({mobileNumber})}
+            phone
           />
           <View style={BaseStyles.emptyHView} />
           <PrimaryButton

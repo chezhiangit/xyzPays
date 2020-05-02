@@ -97,6 +97,7 @@ class UserRegistration extends React.Component {
             autoFocus={false}
             inputValue={this.state.Mobile}
             onTextChange={text => this.setState({Mobile: text})}
+            phone
           />
           <EmailInputComponent
             placeholder={I18n.t('userRegistration.email')}
