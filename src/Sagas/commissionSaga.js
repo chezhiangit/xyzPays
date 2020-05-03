@@ -50,14 +50,10 @@ function* getCommissionListData(action) {
     if (response !== null && response.status === 200) {
       console.log('getCommissionListData data ....', response);
       console.log('getCommissionListData saga action ....', action);
-      // const dateFilter = [...response];
+      const commissionList = [...response];
 
       // console.log('dashboard data object ....', dateFilter);
-      yield put(
-        storeCommissionList({
-          // dateFilter,
-        }),
-      );
+      yield put(storeCommissionList(commissionList));
       action.onSuccesscallback();
     } else if (response !== null) {
       action.onErrorcallback(response.Message);

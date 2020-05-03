@@ -7,14 +7,12 @@ const dateFilter = {
   Text: '',
 };
 
-const commissionData = {
-
-};
+const commissionList = [];
 
 const commissionReducer = (
   state = {
     dateFilter,
-    commissionData,
+    commissionList,
   },
   action,
 ) => {
@@ -27,7 +25,7 @@ const commissionReducer = (
     case STORE_COMMISSION_LIST:
       return {
         ...state,
-        ...action.commissionList,
+        commissionList: [...action.commissionList],
       };
     default:
       return state;

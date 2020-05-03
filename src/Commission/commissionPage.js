@@ -293,7 +293,7 @@ class CommissionPage extends React.Component {
       <View style={styles.commissionItemContainer}>
         <View style={styles.commissionDetailsContainer}>
           <View style={styles.commissionType}>
-            <Text style={styles.commissionTypeTxt}>{item.commissionName}</Text>
+            <Text style={styles.commissionTypeTxt}>{item.ProductName}</Text>
           </View>
           <View style={styles.amountStatusContainer}>
             <Text style={styles.amountLabel}>
@@ -314,21 +314,23 @@ class CommissionPage extends React.Component {
               {I18n.t('commission.paymentDate')}
             </Text>
             <Text style={styles.paymentDate}>
-              {moment().format('MM/DD/YYYY')}
+              {moment(item['Payment Date']).format('MM/DD/YYYY')}
             </Text>
           </View>
           <View style={styles.accountNoContainer}>
             <Text style={styles.accountNoLabel}>
               {I18n.t('commission.accountNo')}
             </Text>
-            <Text style={styles.accountNo}>xxxxxxxx567</Text>
+            <Text style={styles.accountNo}>{item['Acc No']}</Text>
           </View>
-          <View style={styles.reasonContainer}>
-            <Text style={styles.reasonLabel}>
-              {I18n.t('commission.reason')}
-            </Text>
-            <Text style={styles.reasonLabel}>{'Test reason'}</Text>
-          </View>
+          {item.Status === 'Denied' && (
+            <View style={styles.reasonContainer}>
+              <Text style={styles.reasonLabel}>
+                {I18n.t('commission.reason')}
+              </Text>
+              <Text style={styles.reasonLabel}>{item['Denial Reason']}</Text>
+            </View>
+          )}
         </View>
         <View style={styles.commissionImageContainer}>
           <Image style={styles.commissionImage} source={Images.productBox} />
@@ -408,7 +410,8 @@ class CommissionPage extends React.Component {
           )}
           <FlatList
             style={styles.commissionList}
-            data={this.state.commissionData}
+            // data={this.state.commissionData}
+            data={this.props.commissionList}
             renderItem={this.renderCommissionCard}
             keyExtractor={(item, index) => index}
             showsVerticalScrollIndicator={false}
@@ -438,6 +441,7 @@ const mapStateToProps = state => {
   console.log('state from commission page ....', state);
   return {
     dateFilter: state.commission.dateFilter,
+    commissionList: state.commission.commissionList,
   };
 };
 
