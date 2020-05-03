@@ -9,22 +9,25 @@ import fontFamily from '../../../uttils/FontFamily';
 
 const styles = StyleSheet.create({
   btnText: {
-    fontSize: fontscale(20),
+    fontSize: fontscale(15),
     color: Colors.linkBtnColor,
     fontFamily: fontFamily.primaryFontFamily,
-    height: heightAdapter(50),
+    height: heightAdapter(60),
+    // textAlign: 'center',
   },
   box: {
-    width: widthAdapter(30),
-    height: widthAdapter(30),
-    margin: widthAdapter(10),
+    width: widthAdapter(35),
+    height: widthAdapter(35),
+    marginLeft: widthAdapter(10),
+    marginRight: widthAdapter(20),
     borderWidth: 1,
     borderColor: 'gray',
+    // alignSelf: 'center',
   },
   checkBoxBtnContainer: {
     flexDirection: 'row',
     // width: '100%',
-    height: heightAdapter(50),
+    height: heightAdapter(60),
     alignItems: 'center',
     justifyContent: 'flex-start',
     margin: widthAdapter(10),

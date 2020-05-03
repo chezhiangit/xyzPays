@@ -18,6 +18,8 @@ class ContactUs extends React.Component {
     super(props);
     this.state = {
       showFindUsView: false,
+      findUsSubject: '',
+      findUsMessage: '',
     };
   }
 
@@ -159,11 +161,15 @@ class ContactUs extends React.Component {
                 placeholder={I18n.t('contactUs.subject')}
                 autoFocus={false}
                 onFieldFocus={this.props.onFieldFocus}
+                inputValue={this.state.findUsSubject}
+                onTextChange={findUsSubject => this.setState({findUsSubject})}
               />
               <TextInputComponent
                 placeholder={I18n.t('contactUs.message')}
                 autoFocus={false}
                 onFieldFocus={this.props.onFieldFocus}
+                inputValue={this.state.findUsMessage}
+                onTextChange={findUsMessage => this.setState({findUsMessage})}
               />
               <PrimaryButton
                 btnStyle={styles.submitBtn}

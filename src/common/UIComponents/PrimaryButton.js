@@ -6,7 +6,7 @@ const PrimaryButton = props => {
   return (
     <TouchableOpacity onPress={props.onSubmit}>
       <View style={[styles.primaryBtn, props.btnStyle]}>
-        <Text style={styles.btnName}>{props.btnName}</Text>
+        <Text style={[styles.btnName, props.btnTexStyle]}>{props.btnName}</Text>
       </View>
     </TouchableOpacity>
   );

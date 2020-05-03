@@ -28,6 +28,7 @@ import ReferAndEarnPage from './src/referAndEarn/referAndEarn';
 import MyReferralsPage from './src/myReferrals/myReferrals';
 import ReferralCommissionsPage from './src/referralCommissions/referralCommissions';
 import PayoutHistoryPage from './src/payoutHistory/payoutHistory';
+import ImagePickerComponent from './src/common/UIComponents/ImagePicker/imagePickerComponent';
 import FAQPage from './src/faq/faq';
 import I18n from './src/localization/i18n';
 import Colors from './src/uttils/Colors';
@@ -173,7 +174,6 @@ class Main extends React.Component {
                 title: I18n.t('forgotPassword.headerTitle'),
               }}
             />
-            
           </Stack.Navigator>
         ) : (
           <Stack.Navigator
@@ -202,7 +202,7 @@ class Main extends React.Component {
               name="TaskEntryPage"
               component={TaskEntryPage}
               options={{
-                title: 'Task Entry',
+                title: I18n.t('taskEntryPage.headerTitle'),
                 headerStyle: {
                   backgroundColor: Colors.primaryAppColor,
                 },
@@ -214,6 +214,24 @@ class Main extends React.Component {
                   fontFamily: fontFamily.primaryFontFamily,
                 },
                 headerBackTitle: 'Home',
+              }}
+            />
+            <Stack.Screen
+              name="ImagePicker"
+              component={ImagePickerComponent}
+              options={{
+                title: I18n.t('common.imgPickerTitle'),
+                headerStyle: {
+                  backgroundColor: Colors.primaryAppColor,
+                },
+                headerTintColor: Colors.primaryFontColor,
+                headerTitleStyle: {
+                  fontSize: FontsSize.headerName,
+                  fontWeight: FontsWeight.header,
+                  color: Colors.primaryFontColor,
+                  fontFamily: fontFamily.primaryFontFamily,
+                },
+                headerBackTitle: I18n.t('editProfile.headerTitle'),
               }}
             />
           </Stack.Navigator>

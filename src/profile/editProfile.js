@@ -1,7 +1,17 @@
 import * as React from 'react';
-import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+  Animated,
+  TouchableWithoutFeedback,
+  NativeModules,
+} from 'react-native';
 import {connect} from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
+import Icon from 'react-native-vector-icons/FontAwesome';
 // import {SafeAreaView} from 'react-native-safe-area-context';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
@@ -18,6 +28,10 @@ import editStyles from './editProfileStyle';
 import {getProfileInfo, saveProfileInfo} from '../AppStore/profileActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
 import {displayPhoneNumber} from '../uttils/UtilityFunctions';
+import SliderView from '../common/UIComponents/SliderView';
+import {heightAdapter, widthAdapter} from '../uttils/adapterUtil';
+
+let ImagePicker = NativeModules.ImageCropPicker;
 
 class EditProfilePage extends React.Component {
   constructor(props) {
@@ -50,39 +64,43 @@ class EditProfilePage extends React.Component {
 
       dataLoaded: false,
       checBoxArray: [false, false, false, false, false],
+
+      showPhotoSelectionView: false,
+
+      profileImageUri: '',
     };
   }
 
   static getDerivedStateFromProps(props, state) {
     if (!state.profileInfoServiceDone && props.profileInfo.FirstName === '') {
       return {isLoading: true};
-    // } else if (
-    //   state.profileInfoServiceDone &&
-    //   !state.saveProfileInfoServiceDone &&
-    //   props.profileInfo.FirstName !== '' &&
-    //   state.isLoading
-    // ) {
-    //   return {
-    //     RepId: props.profileInfo.RepId,
-    //     AddressLine: props.profileInfo.AddressLine,
-    //     Mobile: props.profileInfo.Mobile,
-    //     PaypalEmail: props.profileInfo.PaypalEmail,
-    //     Website: props.profileInfo.Website,
-    //     State: props.profileInfo.State,
-    //     CreatedBy: props.profileInfo.CreatedBy,
-    //     RegId: props.profileInfo.RegId,
-    //     Status: props.profileInfo.Status,
-    //     FirstName: props.profileInfo.FirstName,
-    //     LastName: props.profileInfo.LastName,
-    //     RegistrationType: props.profileInfo.RegistrationType,
-    //     RegisteredOn: props.profileInfo.RegisteredOn,
-    //     ProductAccess: props.profileInfo.ProductAccess,
-    //     City: props.profileInfo.City,
-    //     ZipCode: props.profileInfo.ZipCode,
-    //     LoginEmail: props.profileInfo.LoginEmail,
-    //     isLoading: false,
-    //     dataLoaded: true,
-    //   };
+      // } else if (
+      //   state.profileInfoServiceDone &&
+      //   !state.saveProfileInfoServiceDone &&
+      //   props.profileInfo.FirstName !== '' &&
+      //   state.isLoading
+      // ) {
+      //   return {
+      //     RepId: props.profileInfo.RepId,
+      //     AddressLine: props.profileInfo.AddressLine,
+      //     Mobile: props.profileInfo.Mobile,
+      //     PaypalEmail: props.profileInfo.PaypalEmail,
+      //     Website: props.profileInfo.Website,
+      //     State: props.profileInfo.State,
+      //     CreatedBy: props.profileInfo.CreatedBy,
+      //     RegId: props.profileInfo.RegId,
+      //     Status: props.profileInfo.Status,
+      //     FirstName: props.profileInfo.FirstName,
+      //     LastName: props.profileInfo.LastName,
+      //     RegistrationType: props.profileInfo.RegistrationType,
+      //     RegisteredOn: props.profileInfo.RegisteredOn,
+      //     ProductAccess: props.profileInfo.ProductAccess,
+      //     City: props.profileInfo.City,
+      //     ZipCode: props.profileInfo.ZipCode,
+      //     LoginEmail: props.profileInfo.LoginEmail,
+      //     isLoading: false,
+      //     dataLoaded: true,
+      //   };
     } else if (
       !state.dataLoaded &&
       state.FirstName === '' &&
@@ -111,6 +129,11 @@ class EditProfilePage extends React.Component {
             ? ''
             : props.profileInfo.ZipCode,
         LoginEmail: props.profileInfo.LoginEmail,
+        profileImageUri:
+          props.profileInfo.ProfilePicture !== undefined ||
+          props.profileInfo.ProfilePicture !== null
+            ? props.profileInfo.ProfilePicture
+            : '',
         dataLoaded: true,
         isLoading: false,
       };
@@ -221,6 +244,106 @@ class EditProfilePage extends React.Component {
     this.setState({FirstName});
   };
 
+  toggleSlider = value => {
+    this.setState({showPhotoSelectionView: value});
+  };
+
+  cropeImage = () => {
+    this.setState({isLoading: false});
+    ImagePicker.openCropper({
+      path: this.state.image.uri,
+      width: 50, //image.cropRect.width,
+      height: 50, //image.cropRect.height,
+      cropperCircleOverlay: false,
+      cropperToolbarTitle: 'Move and Scale',
+      freeStyleCropEnabled: true,
+      enableRotationGesture: true,
+      borderCornerThickness: 4,
+      guidelinesThickness: 2,
+      snapRadius: 3,
+      initialCropWindowPaddingRatio: 0.5,
+      // fixAspectRatio: true,
+      mediaType: 'photo',
+      showCropFrame: true,
+      // smartAlbums: true,
+      // compressImageQuality: 0.1,
+      showsSelectedCount: true,
+      showCropGuidelines: true,
+      cropperChooseText: 'Save',
+    }).then(imageCroped => {
+      console.log('imageCropped', imageCroped);
+      this.setState({profileImageUri: imageCroped.path});
+    });
+  };
+
+  onTakePhoto = () => {
+    console.log('onTakePhoto .....');
+    this.setState({showPhotoSelectionView: false});
+    ImagePicker.openCamera({
+      width: 300,
+      height: 400,
+      cropping: true,
+      mediaType: 'photo',
+      includeBase64: true,
+      includeExif: true,
+      cropperChooseText: 'Save',
+    })
+      .then(image => {
+        this.setState({isLoading: true});
+        console.log('image taken...', image);
+        this.setState(
+          {
+            image: {
+              uri: image.path,
+              width: image.width,
+              height: image.height,
+              mime: image.mime,
+            },
+            imageBase64: {
+              uri: `data:${image.mime};base64,` + image.data,
+              width: image.width,
+              height: image.height,
+            },
+          },
+          () => this.cropeImage(),
+        );
+      })
+      .catch(e => alert(e));
+  };
+
+  onPickFromGaller = () => {
+    this.setState({showPhotoSelectionView: false});
+    ImagePicker.openPicker({
+      width: 300,
+      height: 300,
+      cropping: true,
+      includeBase64: true,
+      includeExif: true,
+    })
+      .then(image => {
+        this.setState({isLoading: true});
+        // console.log('received base64 image');
+        this.setState(
+          {
+            image: {
+              uri: image.path,
+              width: image.width,
+              height: image.height,
+              mime: image.mime,
+            },
+            imageBase64: {
+              uri: `data:${image.mime};base64,` + image.data,
+              width: image.width,
+              height: image.height,
+            },
+            images: null,
+          },
+          () => this.cropeImage(),
+        );
+      })
+      .catch(e => alert(e));
+  };
+
   render() {
     // const {navigation} = this.props;
     console.log('this.state.FirstName ....', this.state.FirstName);
@@ -239,7 +362,7 @@ class EditProfilePage extends React.Component {
               <Image
                 source={{
                   isStatic: true,
-                  uri: this.props.profileInfo.ProfilePicture,
+                  uri: this.state.profileImageUri, //this.props.profileInfo.ProfilePicture,
                   method: 'GET',
                   // headers: {
                   //   clubId: NetTool.clubId,
@@ -249,7 +372,9 @@ class EditProfilePage extends React.Component {
                 style={styles.photo}
               />
             </View>
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity
+              // onPress={() => this.props.navigation.navigate('ImagePicker')}>
+              onPress={() => this.setState({showPhotoSelectionView: true})}>
               <View style={editStyles.editPhotoContainer}>
                 <Text style={editStyles.choosePhoto}>
                   {I18n.t('editProfile.editPhoto')}
@@ -362,6 +487,63 @@ class EditProfilePage extends React.Component {
           dlgMsg={this.state.dlgMsg}
         />
         <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
+        {this.state.showPhotoSelectionView && (
+          <TouchableWithoutFeedback
+            style={editStyles.transparentView}
+            onPress={() => this.toggleSlider(false)}>
+            <View style={editStyles.transparentView} />
+          </TouchableWithoutFeedback>
+        )}
+
+        <Animated.View style={{width: '100%'}}>
+          <SliderView
+            visible={this.state.showPhotoSelectionView}
+            animateFrom="bottom"
+            height={heightAdapter(300)}
+            width="100%">
+            <View style={editStyles.sliderContainer}>
+              <View style={editStyles.sliderBtnContainer}>
+                <Text>
+                  <Icon name="camera" size={25} color="black" />
+                </Text>
+                <PrimaryButton
+                  btnStyle={editStyles.sliderBtnStyle}
+                  onSubmit={this.onTakePhoto}
+                  btnName={I18n.t('common.cameraBtnName')}
+                  btnTexStyle={editStyles.sliderBtnTxtStyle}
+                />
+              </View>
+              <View
+                style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
+              />
+              <View style={editStyles.sliderBtnContainer}>
+                <Text>
+                  <Icon name="image" size={25} color="black" />
+                </Text>
+                <PrimaryButton
+                  btnStyle={editStyles.sliderBtnStyle}
+                  onSubmit={this.onPickFromGaller}
+                  btnName={I18n.t('common.galleryBtnName')}
+                  btnTexStyle={editStyles.sliderBtnTxtStyle}
+                />
+              </View>
+              <View
+                style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
+              />
+              <View style={editStyles.sliderBtnContainer}>
+                <Text>
+                  <Icon name="window-close" size={25} color="black" />
+                </Text>
+                <PrimaryButton
+                  btnStyle={editStyles.sliderBtnStyle}
+                  onSubmit={() => this.toggleSlider(false)}
+                  btnName={I18n.t('common.cancelBtnName')}
+                  btnTexStyle={editStyles.sliderBtnTxtStyle}
+                />
+              </View>
+            </View>
+          </SliderView>
+        </Animated.View>
       </View>
     );
   }

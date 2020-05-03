@@ -64,6 +64,7 @@ export default {
     next: 'Next',
     sendVerification: 'Send Verification Code',
     madeMistake: 'Made an Mistake? Start Fresh',
+    recoveryMsg: 'Recovery Mobile Number',
   },
   commission: {
     headerTitle: 'Commissions',
@@ -195,5 +196,9 @@ export default {
   },
   common: {
     placeHolder: 'Enter value',
+    imgPickerTitle: 'Image Picker',
+    cameraBtnName: 'Take photo',
+    galleryBtnName: 'Choose from photos',
+    cancelBtnName: 'Cancel',
   },
 };

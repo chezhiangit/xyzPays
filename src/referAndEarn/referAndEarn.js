@@ -81,7 +81,7 @@ class ReferAndEarn extends React.Component {
           <LinkBtnComponent
             onClick={this.onViewReferrals}
             btnName={I18n.t('referAndEarn.linkBtn')}
-            btnTextStyle={{fontSize: fontscale(25)}}
+            btnTextStyle={{fontSize: fontscale(20)}}
           />
         </ScrollView>
         <Footer />

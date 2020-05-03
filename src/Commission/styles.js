@@ -181,19 +181,19 @@ const styles = StyleSheet.create({
   },
   paymentDateContainer: {
     width: '100%',
-    height: heightAdapter(50),
+    height: heightAdapter(65),
     flexDirection: 'row',
     marginTop: heightAdapter(20),
   },
   accountNoContainer: {
     width: '100%',
-    height: heightAdapter(50),
+    height: heightAdapter(65),
     flexDirection: 'row',
     marginTop: heightAdapter(10),
   },
   reasonContainer: {
     width: '100%',
-    height: heightAdapter(50),
+    height: heightAdapter(65),
     flexDirection: 'row',
     marginTop: heightAdapter(10),
   },

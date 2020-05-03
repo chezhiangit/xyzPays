@@ -25,6 +25,7 @@ class TextInputComponent extends React.Component {
     //   return {focus: false};
     // }
     // return {focus: true};
+    return {};
   }
   handleOnChangeText = inputValue => {
     console.log('handleOnChangeText ....', inputValue);

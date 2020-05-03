@@ -69,7 +69,7 @@ class ForgotPasswordStep2 extends React.Component {
               {I18n.t('forgotPassword.step2')}
             </Text>
           </View>
-          <RadioButton btnName={'Recovery Mobile Number'} />
+          <RadioButton btnName={I18n.t('forgotPassword.recoveryMsg')} />
           <View style={styles.mobileNumberView}>
             <Text style={styles.phoneImage}>
               <Icon name="phone-square" size={15} color={'gray'} />

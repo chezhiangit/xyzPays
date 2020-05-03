@@ -11,12 +11,17 @@ const styles = StyleSheet.create({
     paddingTop: heightAdapter(50),
   },
   faqItemContainer: {
-    marginBottom: widthAdapter(30),
+    paddingBottom: widthAdapter(30),
+    paddingTop: widthAdapter(30),
+    marginTop: heightAdapter(20),
+    marginBottom: heightAdapter(20),
     justifyContent: 'flex-start',
     width: '100%',
     borderRadius: widthAdapter(4),
     borderBottomWidth: widthAdapter(1),
     borderBottomColor: '#eee',
+    // borderColor: 'red',
+    // borderWidth: 1,
   },
   expandCollapseHeader: {
     flexDirection: 'row',

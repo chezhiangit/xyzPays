@@ -18,6 +18,7 @@ class PasswordInputComponent extends React.Component {
     //   return {focus: false};
     // }
     // return {focus: true};
+    return {};
   }
   handleOnChangeText = inputValue => {
     // this.setState({password: inputValue});

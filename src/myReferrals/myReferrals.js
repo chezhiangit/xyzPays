@@ -102,7 +102,7 @@ class MyReferrals extends React.Component {
     // this.show=false;
     this.dropDownTranslate = new Animated.Value(0);
     this.expandCollapseTranslate = new Animated.Value(0);
-    this.expandedViewHeight = heightAdapter(350);
+    this.expandedViewHeight = heightAdapter(400);
   }
   onSegmentItemSelected = (item, index) => {
     this.toggleDropdown(false);
@@ -167,7 +167,7 @@ class MyReferrals extends React.Component {
   toggleExpandCollapse = (show, index) => {
     this.expandedViewHeight =
       this.state.commissionData[index].registrationStatus === 'Registered'
-        ? heightAdapter(350)
+        ? heightAdapter(400)
         : heightAdapter(300);
 
     if (show && this.state.currentIndex === -1) {
