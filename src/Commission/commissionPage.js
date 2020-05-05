@@ -23,6 +23,8 @@ import Images from '../Assets/index';
 import {getDateFilter, getCommissionList} from '../AppStore/commissionActions';
 // import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import WarningDialog from '../common/UIComponents/warningDialog';
+import PrimaryButton from '../common/UIComponents/PrimaryButton';
+import SliderView from '../common/UIComponents/SliderView';
 
 const commission = [
   {
@@ -172,6 +174,8 @@ class CommissionPage extends React.Component {
       commissionListServiceDone: false,
       showDlg: false,
       dlgMsg: '',
+      showFilter: false,
+      selectedFilterIndex: 4, // All
     };
     // this.show=false;
     this.translate = new Animated.Value(0);
@@ -232,8 +236,11 @@ class CommissionPage extends React.Component {
 
   getCommissionListData = () => {
     const payload = {
-      SelectedDateRange: this.state.selectedDateRangeValue,
-      TxnStatusType: 'Paid',
+      SelectedDateRange: this.state.selectedDateRangeIndex,
+      TxnStatusType:
+        this.state.selectedFilterIndex === 4
+          ? ''
+          : this.state.selectedFilterIndex,
     };
     this.props.getCommissionList(
       payload.SelectedDateRange,
@@ -347,6 +354,17 @@ class CommissionPage extends React.Component {
     this.setState({showDlg: false});
   };
 
+  onFilterSelected = selectedFilterIndex => {
+    this.setState(
+      {selectedFilterIndex, showFilter: false, commissionListServiceDone: true},
+      () => this.getCommissionListData(),
+    );
+  };
+
+  toggleFilter = show => {
+    this.setState({showFilter: show});
+  };
+
   render() {
     return (
       <View style={BaseStyles.baseContainer}>
@@ -356,58 +374,69 @@ class CommissionPage extends React.Component {
               {I18n.t('commission.userInfo')}
             </Text>
           </View>
-          <View style={styles.dropdownContainer}>
-            <TouchableWithoutFeedback
-              style={styles.selectionBox}
-              onPress={() => this.toggleDropdown(!this.state.isSegmentVisible)}>
-              <View style={styles.selectionBox}>
-                {/* <Image style={styles.image} source={''} /> */}
-                <View style={{flexDirection: 'row'}}>
-                  <Text>
-                    <Icon
-                      name="calendar"
-                      size={fontscale(20)}
-                      color={Colors.primaryAppColor}
-                    />
-                  </Text>
-                  <Text style={styles.selectedValue}>
-                    {this.state.selectedDateRangeValue}
-                  </Text>
+          <View style={styles.dropdownAndFilterContainer}>
+            <View style={styles.dropdownContainer}>
+              <TouchableWithoutFeedback
+                style={styles.selectionBox}
+                onPress={() =>
+                  this.toggleDropdown(!this.state.isSegmentVisible)
+                }>
+                <View style={styles.selectionBox}>
+                  {/* <Image style={styles.image} source={''} /> */}
+                  <View style={{flexDirection: 'row'}}>
+                    <Text>
+                      <Icon
+                        name="calendar"
+                        size={fontscale(20)}
+                        color={Colors.primaryAppColor}
+                      />
+                    </Text>
+                    <Text style={styles.selectedValue}>
+                      {this.state.selectedDateRangeValue}
+                    </Text>
+                  </View>
+                  <View>
+                    <Text>
+                      <Icon name="angle-down" size={20} color={'white'} />
+                    </Text>
+                  </View>
                 </View>
+              </TouchableWithoutFeedback>
+              <Animated.View
+                style={[
+                  styles.segmentedView,
+                  {
+                    height: this.translate.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0, heightAdapter(460)],
+                    }),
+                    borderWidth: this.state.segmentBorder,
+                  },
+                ]}>
+                <FlatList
+                  showsVerticalScrollIndicator={false}
+                  // data={segmentationData}
+                  data={this.props.dateFilter}
+                  renderItem={this.renderSegmentItem}
+                  keyExtractor={(item, index) => index}
+                />
+              </Animated.View>
+            </View>
+            <TouchableWithoutFeedback
+              onPress={() => this.toggleFilter(!this.state.showFilter)}>
+              <View style={styles.statusFilterContainer}>
                 <View>
                   <Text>
-                    <Icon name="angle-down" size={20} color={'white'} />
+                    <Icon
+                      name="filter"
+                      size={30}
+                      color={Colors.primaryAppColor}
+                    />
                   </Text>
                 </View>
               </View>
             </TouchableWithoutFeedback>
-            <Animated.View
-              style={[
-                styles.segmentedView,
-                {
-                  height: this.translate.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, heightAdapter(460)],
-                  }),
-                  borderWidth: this.state.segmentBorder,
-                },
-              ]}>
-              <FlatList
-                showsVerticalScrollIndicator={false}
-                // data={segmentationData}
-                data={this.props.dateFilter}
-                renderItem={this.renderSegmentItem}
-                keyExtractor={(item, index) => index}
-              />
-            </Animated.View>
           </View>
-          {this.state.isSegmentVisible && (
-            <TouchableWithoutFeedback
-              style={styles.transparentView}
-              onPress={() => this.toggleDropdown(false)}>
-              <View style={styles.transparentView} />
-            </TouchableWithoutFeedback>
-          )}
           <FlatList
             style={styles.commissionList}
             // data={this.state.commissionData}
@@ -416,6 +445,17 @@ class CommissionPage extends React.Component {
             keyExtractor={(item, index) => index}
             showsVerticalScrollIndicator={false}
           />
+          {this.state.isSegmentVisible ||
+            (this.state.showFilter && (
+              <TouchableWithoutFeedback
+                style={styles.transparentView}
+                onPress={() => {
+                  this.toggleDropdown(false);
+                  this.toggleFilter(false);
+                }}>
+                <View style={styles.transparentView} />
+              </TouchableWithoutFeedback>
+            ))}
         </View>
         <Footer />
         <WarningDialog
@@ -432,6 +472,70 @@ class CommissionPage extends React.Component {
             <View style={styles.transparentView} />
           </TouchableOpacity>
         )} */}
+        <SliderView
+          visible={this.state.showFilter}
+          animateFrom="bottom"
+          height={heightAdapter(300)}
+          width="100%">
+          <View style={styles.sliderContainer}>
+            <View style={styles.sliderBtnContainer}>
+              {/* <Text>
+                <Icon name="camera" size={25} color="black" />
+              </Text> */}
+              <PrimaryButton
+                btnStyle={styles.sliderBtnStyle}
+                onSubmit={() => this.onFilterSelected(4)}
+                btnName={I18n.t('commission.filterAll')}
+                btnTexStyle={styles.sliderBtnTxtStyle}
+              />
+            </View>
+            <View
+              style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
+            />
+            <View style={styles.sliderBtnContainer}>
+              {/* <Text>
+                <Icon name="camera" size={25} color="black" />
+              </Text> */}
+              <PrimaryButton
+                btnStyle={styles.sliderBtnStyle}
+                onSubmit={() => this.onFilterSelected(2)}
+                btnName={I18n.t('commission.filterPaid')}
+                btnTexStyle={styles.sliderBtnTxtStyle}
+              />
+            </View>
+            <View
+              style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
+            />
+            <View style={styles.sliderBtnContainer}>
+              {/* <Text>
+                <Icon name="image" size={25} color="black" />
+              </Text> */}
+              <PrimaryButton
+                btnStyle={styles.sliderBtnStyle}
+                onSubmit={() => this.onFilterSelected(1)}
+                btnName={I18n.t('commission.filterPending')}
+                btnTexStyle={styles.sliderBtnTxtStyle}
+              />
+            </View>
+            <View
+              style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
+            />
+            <View style={styles.sliderBtnContainer}>
+              {/* <Text>
+                <Icon name="window-close" size={25} color="black" />
+              </Text> */}
+              <PrimaryButton
+                btnStyle={styles.sliderBtnStyle}
+                onSubmit={() => this.onFilterSelected(5)}
+                btnName={I18n.t('commission.filterDenied')}
+                btnTexStyle={styles.sliderBtnTxtStyle}
+              />
+            </View>
+            {/* <View
+              style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
+            /> */}
+          </View>
+        </SliderView>
       </View>
     );
   }

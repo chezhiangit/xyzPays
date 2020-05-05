@@ -21,10 +21,9 @@ class TextInputComponent extends React.Component {
     };
   }
   static getDerivedStateFromProps(props, state) {
-    // if (props.inputValue.length === 0) {
-    //   return {focus: false};
-    // }
-    // return {focus: true};
+    if (props.inputValue.length === 0) {
+      return {emailValid: true};
+    }
     return {};
   }
   handleOnChangeText = inputValue => {

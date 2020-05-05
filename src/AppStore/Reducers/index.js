@@ -4,6 +4,8 @@ import dashboardReducer from './dasboardReducer';
 import productsListReducer from './productsListReducer';
 import profileReducer from './profileReducer';
 import commissionReducer from './commissionReducer';
+import trendingProductsReducer from './trendingProductsReducer';
+import referralReducer from './referralReducers';
 
 const appReducer = combineReducers({
   login: loginReducer,
@@ -11,6 +13,8 @@ const appReducer = combineReducers({
   products: productsListReducer,
   profileInfo: profileReducer,
   commission: commissionReducer,
+  trending: trendingProductsReducer,
+  referral: referralReducer,
 });
 
 const rootReducer = (state, action) => {

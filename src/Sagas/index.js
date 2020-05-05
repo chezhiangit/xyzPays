@@ -4,6 +4,9 @@ import watchDashboarAction from './dashboardSaga';
 import watchProductsListAction from './productListSaga';
 import watchProfileAction from './profileSaga';
 import watchCommissionAction from './commissionSaga';
+import watchForgotPasswordActions from './forgotPasswordSaga';
+import watchTrendingProductActions from './trendingProductsSaga';
+import watchReferralActions from './referralSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -12,5 +15,8 @@ export default function* rootSaga() {
     watchProductsListAction(),
     watchProfileAction(),
     watchCommissionAction(),
+    watchForgotPasswordActions(),
+    watchTrendingProductActions(),
+    watchReferralActions(),
   ]);
 }

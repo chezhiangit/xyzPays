@@ -81,6 +81,10 @@ export default {
     amount: 'Amount:',
     status: 'Status:',
     currencySymbol: '$',
+    filterAll: 'All',
+    filterPaid: 'Paid',
+    filterPending: 'Pending',
+    filterDenied: 'Denied',
   },
   trending: {
     headerTitle: 'Trending',

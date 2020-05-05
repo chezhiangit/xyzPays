@@ -34,11 +34,13 @@ function* userLogin(action) {
       action.onErrorcallback(response.Message);
     } else {
       action.onErrorcallback(
-        'Unable able complete your request. Pls try again.',
+        'Unable to able complete your request. Pls try again.',
       );
     }
   } catch (error) {
-    action.onErrorcallback('Unable able complete your request. Pls try again.');
+    action.onErrorcallback(
+      'Unable to able complete your request. Pls try again.',
+    );
   }
 }
 
@@ -57,11 +59,13 @@ function* registerUser(action) {
       action.onErrorcallback(response.Message);
     } else {
       action.onErrorcallback(
-        'Unable able complete your request. Pls try again.',
+        'Unable to able complete your request. Pls try again.',
       );
     }
   } catch (error) {
-    action.onErrorcallback('Unable able complete your request. Pls try again.');
+    action.onErrorcallback(
+      'Unable to able complete your request. Pls try again.',
+    );
   }
 }
 

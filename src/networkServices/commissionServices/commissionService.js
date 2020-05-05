@@ -45,10 +45,10 @@ const fetchCommissionListDataService = async (
       urlConstants.getCommissionList +
       'AccessToken=' +
       AccessToken +
-      '&SelectedDateRange=0' +
-      // SelectedDateRange +
-      '&TxnStatusType='; // +
-      // TxnStatusType;
+      '&SelectedDateRange=' +
+      SelectedDateRange +
+      '&TxnStatusType=' +
+      TxnStatusType;
     // `AccessToken='${AccessToken}'&SelectedDateRange='${SelectedDateRange}'&TxnStatusType='${TxnStatusType}'`;
     // url.searchParams.append('AccessToken', AccessToken);
     // url.searchParams.append('SelectedDateRange', SelectedDateRange);

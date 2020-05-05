@@ -8,4 +8,11 @@ export default {
   getProfileInfo: 'api/Profile/GetProfileInfo?AccessToken=',
   saveProfileInfo: 'api/Profile/PostProfileInfo',
   getProductsList: 'api/ProductToSell/GetProductToSellLi?AccessToken=',
+  userEmailVerification: 'api/ForgotPassword/CheckUserExists?Email=',
+  getTrendingProducts: 'api/Trending/GetTrendingProducts?AccessToken=',
+  getReferralRegStatusFilter: 'api/Referral/GetRegStatusFilter',
+  getReferralDateFilter: 'api/Referral/GetDateFilter',
+  getRepReferredUsers: 'api/Referral/GetRepReferredUsers?AccessToken=',
+  getReferralCommissionList: 'api/Referral/GetCommissionList?AccessToken=',
+  postReferraluser: 'api/Referral/PostReferraluser',
 };

@@ -5,6 +5,12 @@ import {
   STORE_PROFILE_INFO,
   STORE_COMMISSION_DATE_FILTER,
   STORE_COMMISSION_LIST,
+  STORE_TRENDING_PRODUCTS_LIST,
+  STORE_REFERRAL_COMMISSION_LIST,
+  STORE_REFERRAL_DATE_FILTER,
+  STORE_REFERRAL_REG_STATUS_FILTER,
+  STORE_REFERRAL_USER,
+  STORE_REP_REFERRED_USERS_LIST,
 } from '../AppStore/ActionTypes';
 
 export const userLoginSuccess = ({userName, userLoggedIn, accessToken}) => ({
@@ -38,3 +44,29 @@ export const storeCommissionList = commissionList => ({
   type: STORE_COMMISSION_LIST,
   commissionList,
 });
+
+export const storeTrendingProductsList = trendingProducts => ({
+  type: STORE_TRENDING_PRODUCTS_LIST,
+  trendingProducts,
+});
+
+export const storeReferralDateFilter = dateFilter => ({
+  type: STORE_REFERRAL_DATE_FILTER,
+  dateFilter,
+});
+
+export const storeReferredUsersList = userList => ({
+  type: STORE_REP_REFERRED_USERS_LIST,
+  userList,
+});
+
+export const storeReferralRegFilter = regFilter => ({
+  type: STORE_REFERRAL_REG_STATUS_FILTER,
+  regFilter,
+});
+
+export const storeReferralCommissionList = referralCommissionList => ({
+  type: STORE_REFERRAL_COMMISSION_LIST,
+  referralCommissionList,
+});
+

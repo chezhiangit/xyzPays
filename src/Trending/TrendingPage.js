@@ -18,7 +18,7 @@ import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
 import {heightAdapter, fontscale} from '../uttils/adapterUtil';
 import Images from '../Assets/index';
-import {getProductsList} from '../AppStore/productsActions';
+import {getTrendingProducts} from '../AppStore/trendingProductsActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
 import Colors from '../uttils/Colors';
 
@@ -162,17 +162,17 @@ class TrendingPage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getProductsList(
-      this.onGetProductListSuccess,
-      this.onGetProductListFailed,
+    this.props.getTrendingProducts(
+      this.onGetTrendingProductListSuccess,
+      this.onGetTrendingProductListFailed,
     );
   }
 
-  onGetProductListSuccess = () => {
+  onGetTrendingProductListSuccess = () => {
     this.setState({isLoading: false, productsServiceDone: true});
   };
 
-  onGetProductListFailed = errorMsg => {
+  onGetTrendingProductListFailed = errorMsg => {
     this.setState({
       isLoading: false,
       productsServiceDone: true,
@@ -196,30 +196,42 @@ class TrendingPage extends React.Component {
                 />
               </Text>
             </View>
-            <Text style={styles.trendingProductTxt}>{item.productName}</Text>
+            <Text style={styles.trendingProductTxt}>{item.ProductName}</Text>
           </View>
           <View style={styles.amountStatusContainer}>
             <Text style={styles.amountLabel}>{I18n.t('trending.amount')} </Text>
             <Text style={styles.dollar}>
               {I18n.t('trending.currencySymbol')}
             </Text>
-            <Text style={styles.amount}>{item.Amount}, </Text>
+            <Text style={styles.amount}>{item.ComAmount}</Text>
             {/* <Text style={styles.statusLabel}>{I18n.t('trending.status')} </Text>
             <Text style={styles.status}>{item.Status}</Text> */}
           </View>
           <View style={styles.trendingStatusContainer}>
             <Text style={styles.statusLabel}>{I18n.t('trending.status')} </Text>
-            <Text style={styles.status}>{item.Status}</Text>
+            <Text style={styles.status}>{item.ComStatus}</Text>
           </View>
           <View style={styles.trendingSalesContainer}>
             <Text style={styles.trendingSalesLabel}>
               {I18n.t('trending.sales')}{' '}
             </Text>
-            <Text style={styles.trendingSalesCount}>{item.Sales}</Text>
+            <Text style={styles.trendingSalesCount}>{item.Trending}</Text>
           </View>
         </View>
         <View style={styles.trendingImageContainer}>
-          <Image style={styles.trendingImage} source={Images.productBox} />
+          {/* <Image style={styles.trendingImage} source={Images.productBox} /> */}
+          <Image
+            source={{
+              isStatic: true,
+              uri: item.ProductPicture,
+              method: 'GET',
+              // headers: {
+              //   clubId: NetTool.clubId,
+              //   'Ocp-Apim-Subscription-Key': NetTool.subscriptionKey,
+              // },
+            }}
+            style={styles.trendingImage}
+          />
         </View>
       </View>
     );
@@ -244,7 +256,8 @@ class TrendingPage extends React.Component {
           </View>
           <FlatList
             style={styles.trendingList}
-            data={this.state.trendingData}
+            // data={this.state.trendingData}
+            data={this.props.trendingProductList}
             renderItem={this.renderTrendingCard}
             keyExtractor={(item, index) => index}
             showsVerticalScrollIndicator={false}
@@ -266,13 +279,13 @@ class TrendingPage extends React.Component {
 const mapStateToProps = state => {
   console.log('state from trending page ... ', state);
   return {
-    // productsList: state.products.productList,
+    trendingProductList: state.trending.trendingProductList,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  getProductsList: (onSuccesscallback, onErrorcallback) =>
-    dispatch(getProductsList(onSuccesscallback, onErrorcallback)),
+  getTrendingProducts: (onSuccesscallback, onErrorcallback) =>
+    dispatch(getTrendingProducts(onSuccesscallback, onErrorcallback)),
 });
 
 export default connect(

@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
+import {connect} from 'react-redux';
+import Spinner from 'react-native-loading-spinner-overlay';
 // import {SafeAreaView} from 'react-native-safe-area-context';
 import BaseStyles from '../../common/BaseStyles';
 import I18n from '../../localization/i18n';
@@ -11,6 +13,7 @@ import PrimaryButton from '../../common/UIComponents/PrimaryButton';
 // import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
 import styles from './styles';
 import WarningDialog from '../../common/UIComponents/warningDialog';
+import {verifyUserEmail} from '../../AppStore/forgotPasswordActions';
 
 class ForgotPassword extends React.Component {
   constructor(props) {
@@ -27,8 +30,15 @@ class ForgotPassword extends React.Component {
       userEmail,
     });
   };
+
   onStepOneNext = () => {
-    this.props.navigation.navigate('ForgotPasswordStep2');
+    // this.props.navigation.navigate('ForgotPasswordStep2');
+    this.setState({isLoading: true});
+    this.props.verifyUserEmail(
+      this.state.userEmail,
+      this.onVerifyEmailSuccess,
+      this.onVerifyEmailFailed,
+    );
   };
 
   //   onSignUp = () => {
@@ -40,6 +50,22 @@ class ForgotPassword extends React.Component {
 
   onConfirm = () => {
     this.setState({showDlg: false});
+  };
+
+  onVerifyEmailSuccess = () => {
+    console.log('verify email success');
+    this.setState({isLoading: false});
+    this.props.navigation.navigate('ForgotPasswordStep2');
+  };
+
+  onVerifyEmailFailed = errorMsg => {
+    console.log('verify email failed');
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+    console.log(errorMsg);
   };
 
   render() {
@@ -94,6 +120,7 @@ class ForgotPassword extends React.Component {
           onOK={this.onConfirm}
           dlgMsg={this.state.dlgMsg}
         />
+        <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
         {/* <TouchableOpacity onPress={() => navigation.replace('HomePage')}>
           <Text>{I18n.t('loginScreen')}</Text>
         </TouchableOpacity> */}
@@ -102,4 +129,17 @@ class ForgotPassword extends React.Component {
   }
 }
 
-export default ForgotPassword;
+const mapStateToProps = state => {
+  console.log('state from forgotpassword ', state);
+  return {};
+};
+
+const mapDispatchToProps = dispatch => ({
+  verifyUserEmail: (email, onSuccessCallback, onErrorCallback) =>
+    dispatch(verifyUserEmail(email, onSuccessCallback, onErrorCallback)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ForgotPassword);

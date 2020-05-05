@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
+import {connect} from 'react-redux';
 // import {SafeAreaView} from 'react-native-safe-area-context';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
@@ -13,6 +15,7 @@ import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
 import styles from './styles';
 import {fontscale} from '../uttils/adapterUtil';
 import WarningDialog from '../common/UIComponents/warningDialog';
+import {postReferralUser} from '../AppStore/referralActions';
 
 class ReferAndEarn extends React.Component {
   constructor(props) {
@@ -23,10 +26,37 @@ class ReferAndEarn extends React.Component {
       email: '',
       name: '',
       mobileNumber: '',
+      isLoading: false,
     };
   }
   onSendMessage = () => {
-    this.props.navigation.goBack();
+    // this.props.navigation.goBack();
+
+    if (this.state.name.trimLeft().trimRight() === '') {
+      this.setState({showDlg: true, dlgMsg: 'Pls enter valid Name'});
+      return;
+    }
+    if (this.state.email.trimLeft().trimRight() === '') {
+      this.setState({showDlg: true, dlgMsg: 'Pls enter valid Email'});
+      return;
+    }
+
+    if (this.state.mobileNumber.trimLeft().trimRight() === '') {
+      this.setState({showDlg: true, dlgMsg: 'Pls enter valid Mobile Number'});
+      return;
+    }
+
+    this.setState({isLoading: true});
+    const payload = {
+      Name: this.state.name,
+      Email: this.state.email,
+      Phone: this.state.mobileNumber,
+    };
+    this.props.postReferralUser(
+      payload,
+      this.onPostUserdDataSuccess,
+      this.onPostUserdDataFailed,
+    );
   };
 
   onViewReferrals = () => {
@@ -41,6 +71,21 @@ class ReferAndEarn extends React.Component {
 
   onConfirm = () => {
     this.setState({showDlg: false});
+  };
+
+  onPostUserdDataSuccess = () => {
+    console.log('post user success');
+    this.setState({isLoading: false}, () => this.props.navigation.goBack());
+  };
+
+  onPostUserdDataFailed = errorMsg => {
+    console.log('post user fails');
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+    console.log(errorMsg);
   };
 
   render() {
@@ -91,9 +136,25 @@ class ReferAndEarn extends React.Component {
           onOK={this.onConfirm}
           dlgMsg={this.state.dlgMsg}
         />
+        <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
       </View>
     );
   }
 }
 
-export default ReferAndEarn;
+const mapStateToProps = state => {
+  console.log('state from refer user page ....', state);
+  return {
+    // dashboardData: state.dashboard.dashboardData,
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  postReferralUser: (payload, onSuccesscallback, onErrocallback) =>
+    dispatch(postReferralUser(payload, onSuccesscallback, onErrocallback)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ReferAndEarn);

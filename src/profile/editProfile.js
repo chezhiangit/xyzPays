@@ -495,55 +495,55 @@ class EditProfilePage extends React.Component {
           </TouchableWithoutFeedback>
         )}
 
-        <Animated.View style={{width: '100%'}}>
-          <SliderView
-            visible={this.state.showPhotoSelectionView}
-            animateFrom="bottom"
-            height={heightAdapter(300)}
-            width="100%">
-            <View style={editStyles.sliderContainer}>
-              <View style={editStyles.sliderBtnContainer}>
-                <Text>
-                  <Icon name="camera" size={25} color="black" />
-                </Text>
-                <PrimaryButton
-                  btnStyle={editStyles.sliderBtnStyle}
-                  onSubmit={this.onTakePhoto}
-                  btnName={I18n.t('common.cameraBtnName')}
-                  btnTexStyle={editStyles.sliderBtnTxtStyle}
-                />
-              </View>
-              <View
-                style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
+        {/* <Animated.View style={{width: '100%'}}> */}
+        <SliderView
+          visible={this.state.showPhotoSelectionView}
+          animateFrom="bottom"
+          height={heightAdapter(300)}
+          width="100%">
+          <View style={editStyles.sliderContainer}>
+            <View style={editStyles.sliderBtnContainer}>
+              <Text>
+                <Icon name="camera" size={25} color="black" />
+              </Text>
+              <PrimaryButton
+                btnStyle={editStyles.sliderBtnStyle}
+                onSubmit={this.onTakePhoto}
+                btnName={I18n.t('common.cameraBtnName')}
+                btnTexStyle={editStyles.sliderBtnTxtStyle}
               />
-              <View style={editStyles.sliderBtnContainer}>
-                <Text>
-                  <Icon name="image" size={25} color="black" />
-                </Text>
-                <PrimaryButton
-                  btnStyle={editStyles.sliderBtnStyle}
-                  onSubmit={this.onPickFromGaller}
-                  btnName={I18n.t('common.galleryBtnName')}
-                  btnTexStyle={editStyles.sliderBtnTxtStyle}
-                />
-              </View>
-              <View
-                style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
-              />
-              <View style={editStyles.sliderBtnContainer}>
-                <Text>
-                  <Icon name="window-close" size={25} color="black" />
-                </Text>
-                <PrimaryButton
-                  btnStyle={editStyles.sliderBtnStyle}
-                  onSubmit={() => this.toggleSlider(false)}
-                  btnName={I18n.t('common.cancelBtnName')}
-                  btnTexStyle={editStyles.sliderBtnTxtStyle}
-                />
-              </View>
             </View>
-          </SliderView>
-        </Animated.View>
+            <View
+              style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
+            />
+            <View style={editStyles.sliderBtnContainer}>
+              <Text>
+                <Icon name="image" size={25} color="black" />
+              </Text>
+              <PrimaryButton
+                btnStyle={editStyles.sliderBtnStyle}
+                onSubmit={this.onPickFromGaller}
+                btnName={I18n.t('common.galleryBtnName')}
+                btnTexStyle={editStyles.sliderBtnTxtStyle}
+              />
+            </View>
+            <View
+              style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
+            />
+            <View style={editStyles.sliderBtnContainer}>
+              <Text>
+                <Icon name="window-close" size={25} color="black" />
+              </Text>
+              <PrimaryButton
+                btnStyle={editStyles.sliderBtnStyle}
+                onSubmit={() => this.toggleSlider(false)}
+                btnName={I18n.t('common.cancelBtnName')}
+                btnTexStyle={editStyles.sliderBtnTxtStyle}
+              />
+            </View>
+          </View>
+        </SliderView>
+        {/* </Animated.View> */}
       </View>
     );
   }

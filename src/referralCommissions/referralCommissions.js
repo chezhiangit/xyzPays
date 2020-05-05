@@ -10,6 +10,8 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Spinner from 'react-native-loading-spinner-overlay';
+import {connect} from 'react-redux';
 import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
 import moment from 'moment';
@@ -21,6 +23,11 @@ import Colors from '../uttils/Colors';
 import WarningDialog from '../common/UIComponents/warningDialog';
 // import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {displayPhoneNumber} from '../uttils/UtilityFunctions';
+import {
+  getReferralRegFilter,
+  getReferralCommissionList,
+  getReferralDateFilter,
+} from '../AppStore/referralActions';
 
 const commission = [
   {
@@ -72,41 +79,74 @@ const commission = [
     mobile: '9585058087',
   },
 ];
-const segmentationData = [
-  I18n.t('commission.dropdownAll'),
-  I18n.t('commission.dropdown7Days'),
-  I18n.t('commission.dropdownLast2Weeks'),
-  I18n.t('commission.dropdownLast3Weeks'),
-  I18n.t('commission.dropdownLast1Month'),
-  I18n.t('commission.dropdownLast3Months'),
-];
+// const segmentationData = [
+//   I18n.t('commission.dropdownAll'),
+//   I18n.t('commission.dropdown7Days'),
+//   I18n.t('commission.dropdownLast2Weeks'),
+//   I18n.t('commission.dropdownLast3Weeks'),
+//   I18n.t('commission.dropdownLast1Month'),
+//   I18n.t('commission.dropdownLast3Months'),
+// ];
 class ReferralCommissions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedValue: segmentationData[4],
+      selectedValue: '',
       selectedIndex: 4,
       isSegmentVisible: false,
       commissionData: [...commission],
       segmentBorder: 0,
       showDlg: false,
       dlgMsg: '',
+      isLoading: false,
     };
     // this.show=false;
     this.translate = new Animated.Value(0);
   }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.dateFilter.length === 0) {
+      return {
+        isLoading: true,
+      };
+    }
+    if (state.selectedValue === '') {
+      return {selectedValue: props.dateFilter[4]?.Text};
+    }
+    return {};
+  }
+
+  componentDidMount() {
+    if (this.props.dateFilter.length === 0) {
+      // this.props.getReferralRegFilter(
+      //   this.onRegistationStatusSuccess,
+      //   this.onRegistationStatusFailed,
+      // );
+      this.props.getReferralDateFilter(
+        this.onDateFilterSuccess,
+        this.onDateFilterFailed,
+      );
+    }
+  }
   onSegmentItemSelected = (item, index) => {
     this.toggleDropdown(false);
     this.setState({
-      selectedValue: segmentationData[index],
+      selectedValue: this.props.dateFilter[index].Text,
       selectedIndex: index,
+      isLoading: true,
     });
+    this.props.getReferralCommissionList(
+      index,
+      0,
+      this.onReferralCommissionSuccess,
+      this.onReferralCommissionFailed,
+    );
   };
   renderSegmentItem = ({item, index}) => (
     <TouchableWithoutFeedback
       onPress={() => this.onSegmentItemSelected(item, index)}>
       <View style={styles.segmentItemRow}>
-        <Text style={styles.segmentItemText}>{item}</Text>
+        <Text style={styles.segmentItemText}>{item.Text}</Text>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -144,7 +184,9 @@ class ReferralCommissions extends React.Component {
             <Text style={styles.customerDetailsLabel}>
               {I18n.t('referralCommissions.rferredUser')}
             </Text>
-            <Text style={styles.customerDetailsTxt}>{item.referredUser}</Text>
+            <Text style={styles.customerDetailsTxt}>
+              {item.ReferredUserName}
+            </Text>
           </View>
           <View style={styles.customerDetails}>
             <Text
@@ -158,7 +200,7 @@ class ReferralCommissions extends React.Component {
               $
             </Text>
             <Text style={styles.customerDetailsTxt}>
-              {item.referralCommissions}
+              {item.ReferralCommission}
             </Text>
           </View>
 
@@ -169,10 +211,10 @@ class ReferralCommissions extends React.Component {
             <Text
               style={[
                 styles.customerDetailsTxt,
-                item.status === 'Paid' && {color: 'green'},
-                item.status === 'Pending' && {color: '#dc3545'},
+                item.TxnStatus === 'Paid' && {color: 'green'},
+                item.TxnStatus === 'Not Paid' && {color: '#dc3545'},
               ]}>
-              {item.status}
+              {item.TxnStatus}
             </Text>
           </View>
 
@@ -180,7 +222,7 @@ class ReferralCommissions extends React.Component {
             <Text style={styles.customerDetailsLabel}>
               {I18n.t('referralCommissions.paymentDate')}
             </Text>
-            <Text style={styles.customerDetailsTxt}>{item.paymentDate}</Text>
+            <Text style={styles.customerDetailsTxt}>{moment(item.PaymentDate).format('MM/DD/YYYY')}</Text>
           </View>
 
           <View style={styles.customerDetails}>
@@ -191,7 +233,9 @@ class ReferralCommissions extends React.Component {
             <Text style={styles.customerDetailsLabel}>
               {I18n.t('referralCommissions.email')}
             </Text>
-            <Text style={styles.customerDetailsTxt}>{item.email}</Text>
+            <Text style={styles.customerDetailsTxt}>
+              {item.ReferredUserEmail}
+            </Text>
           </View>
           <View style={styles.customerDetails}>
             <Text style={styles.emailphoneIcon}>
@@ -202,7 +246,7 @@ class ReferralCommissions extends React.Component {
               {I18n.t('referralCommissions.phone')}
             </Text>
             <Text style={styles.customerDetailsTxt}>
-              {displayPhoneNumber(item.mobile)}
+              {displayPhoneNumber(item.ReferredUserMobile)}
             </Text>
           </View>
         </View>
@@ -216,6 +260,36 @@ class ReferralCommissions extends React.Component {
 
   onConfirm = () => {
     this.setState({showDlg: false});
+  };
+
+  onReferralCommissionSuccess = () => {
+    console.log('referral commission list success');
+    this.setState({isLoading: false});
+  };
+
+  onReferralCommissionFailed = errorMsg => {
+    console.log('referral commission list fails');
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+    console.log(errorMsg);
+  };
+
+  onDateFilterSuccess = () => {
+    console.log('registration status success');
+    this.setState({isLoading: false});
+  };
+
+  onDateFilterFailed = errorMsg => {
+    console.log('registration status fails');
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+    console.log(errorMsg);
   };
 
   render() {
@@ -265,7 +339,7 @@ class ReferralCommissions extends React.Component {
               ]}>
               <FlatList
                 showsVerticalScrollIndicator={false}
-                data={segmentationData}
+                data={this.props.dateFilter}
                 renderItem={this.renderSegmentItem}
                 keyExtractor={(item, index) => index}
               />
@@ -280,7 +354,7 @@ class ReferralCommissions extends React.Component {
           )}
           <FlatList
             style={styles.commissionList}
-            data={this.state.commissionData}
+            data={this.props.referralCommissionList}
             renderItem={this.renderCommissionCard}
             keyExtractor={(item, index) => index}
             showsVerticalScrollIndicator={false}
@@ -293,6 +367,7 @@ class ReferralCommissions extends React.Component {
           onOK={this.onConfirm}
           dlgMsg={this.state.dlgMsg}
         />
+        <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
         {/* {this.state.isSegmentVisible && (
           <TouchableOpacity
             style={styles.transparentView}
@@ -305,4 +380,34 @@ class ReferralCommissions extends React.Component {
   }
 }
 
-export default ReferralCommissions;
+const mapStateToProps = state => {
+  console.log('state from referral commission page ....', state);
+  return {
+    referralCommissionList: state.referral.referralCommissionList,
+    dateFilter: state.referral.dateFilter,
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  getReferralCommissionList: (
+    SelectedDateRange,
+    TxnStatusType,
+    onSuccesscallback,
+    onErrocallback,
+  ) =>
+    dispatch(
+      getReferralCommissionList(
+        SelectedDateRange,
+        TxnStatusType,
+        onSuccesscallback,
+        onErrocallback,
+      ),
+    ),
+  getReferralDateFilter: (onSuccesscallback, onErrocallback) =>
+    dispatch(getReferralDateFilter(onSuccesscallback, onErrocallback)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ReferralCommissions);
