@@ -1,4 +1,4 @@
-import {STORE_DASHBOARD_DATA} from '../ActionTypes';
+import {STORE_DASHBOARD_DATA, STORE_PENDING_TASK_DATA} from '../ActionTypes';
 
 const dashboardData = {
   pendingPayout: 0,
@@ -12,6 +12,7 @@ const dashboardData = {
 const dashboardReducer = (
   state = {
     dashboardData,
+    pendingTask: [],
   },
   action,
 ) => {
@@ -20,6 +21,11 @@ const dashboardReducer = (
       return {
         ...state,
         ...action.dashboardData,
+      };
+    case STORE_PENDING_TASK_DATA:
+      return {
+        ...state,
+        pendingTask: [...action.pendingTask],
       };
     default:
       return state;

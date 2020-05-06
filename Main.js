@@ -18,6 +18,7 @@ import ForgotPasswordStep2 from './src/login/forgotPassword/forgotPasswordStep2'
 import HomePage from './src/home/HomePage';
 import CommissionPage from './src/Commission/commissionPage';
 import TrendingPage from './src/Trending/TrendingPage';
+import ProductDetailsPage from './src/Trending/productDetailsPage';
 import ContactUsPage from './src/contactUs/MapView';
 import MenuIcon from './src/common/UIComponents/DrawerMenu/HamburgerMenu';
 import DrawerComponent from './src/common/UIComponents/DrawerMenu/drawerComponent';
@@ -28,7 +29,8 @@ import ReferAndEarnPage from './src/referAndEarn/referAndEarn';
 import MyReferralsPage from './src/myReferrals/myReferrals';
 import ReferralCommissionsPage from './src/referralCommissions/referralCommissions';
 import PayoutHistoryPage from './src/payoutHistory/payoutHistory';
-import ImagePickerComponent from './src/common/UIComponents/ImagePicker/imagePickerComponent';
+import ForgotPasswordStep3 from './src/login/forgotPassword/forgotPasswordStep3';
+import ForgotPasswordStep4 from './src/login/forgotPassword/forgotPasswordStep4';
 import FAQPage from './src/faq/faq';
 import I18n from './src/localization/i18n';
 import Colors from './src/uttils/Colors';
@@ -174,6 +176,20 @@ class Main extends React.Component {
                 title: I18n.t('forgotPassword.headerTitle'),
               }}
             />
+            <Stack.Screen
+              name="ForgotPasswordStep3"
+              component={ForgotPasswordStep3}
+              options={{
+                title: I18n.t('forgotPassword.headerTitle'),
+              }}
+            />
+            <Stack.Screen
+              name="ForgotPasswordStep4"
+              component={ForgotPasswordStep4}
+              options={{
+                title: I18n.t('forgotPassword.headerTitle'),
+              }}
+            />
           </Stack.Navigator>
         ) : (
           <Stack.Navigator
@@ -217,6 +233,24 @@ class Main extends React.Component {
               }}
             />
             <Stack.Screen
+              name="ProductDetailsPage"
+              component={ProductDetailsPage}
+              options={{
+                title: I18n.t('productDetails.headerTitle'),
+                headerStyle: {
+                  backgroundColor: Colors.primaryAppColor,
+                },
+                headerTintColor: Colors.primaryFontColor,
+                headerTitleStyle: {
+                  fontSize: FontsSize.headerName,
+                  fontWeight: FontsWeight.header,
+                  color: Colors.primaryFontColor,
+                  fontFamily: fontFamily.primaryFontFamily,
+                },
+                headerBackTitle: 'Trending Products',
+              }}
+            />
+            {/* <Stack.Screen
               name="ImagePicker"
               component={ImagePickerComponent}
               options={{
@@ -233,7 +267,7 @@ class Main extends React.Component {
                 },
                 headerBackTitle: I18n.t('editProfile.headerTitle'),
               }}
-            />
+            /> */}
           </Stack.Navigator>
         )}
       </NavigationContainer>

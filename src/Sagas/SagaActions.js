@@ -9,12 +9,16 @@ import {
   STORE_REFERRAL_COMMISSION_LIST,
   STORE_REFERRAL_DATE_FILTER,
   STORE_REFERRAL_REG_STATUS_FILTER,
-  STORE_REFERRAL_USER,
   STORE_REP_REFERRED_USERS_LIST,
   STORE_USER_DETAILS,
   STORE_PAYOUT_DATE_FILTER,
   STORE_PAYOUT_HISTORY_LIST,
   STORE_PAYOUT_DETAILS,
+  STORE_PENDING_TASK_DATA,
+  STORE_PENDING_TASK_PRODUCT_DETAILS_DATA,
+  STORE_TRENDING_PRODUCTS_DETAILS,
+  STORE_GOOGLE_MAP_COORDINATES,
+  STORE_SEND_PWD_MOBILE_VERIFICATION_CODE
 } from '../AppStore/ActionTypes';
 
 export const userLoginSuccess = ({userName, userLoggedIn, accessToken}) => ({
@@ -92,4 +96,29 @@ export const storePayoutHistoryList = payoutHistoryList => ({
 export const storePayoutDetails = payoutDetails => ({
   type: STORE_PAYOUT_DETAILS,
   payoutDetails,
+});
+
+export const storePendingTaskData = pendingTask => ({
+  type: STORE_PENDING_TASK_DATA,
+  pendingTask,
+});
+
+export const storePendingTaskProductDetailsData = productDetails => ({
+  type: STORE_PENDING_TASK_PRODUCT_DETAILS_DATA,
+  productDetails,
+});
+
+export const storeTrendingProductDetailsData = productDetails => ({
+  type: STORE_TRENDING_PRODUCTS_DETAILS,
+  productDetails,
+});
+
+export const storeGoogleMapCoordinates = mapCoordinates => ({
+  type: STORE_GOOGLE_MAP_COORDINATES,
+  mapCoordinates,
+});
+
+export const storePwdSendMobileVerificationResponse = sendMobileVerificationRes => ({
+  type: STORE_SEND_PWD_MOBILE_VERIFICATION_CODE,
+  sendMobileVerificationRes,
 });

@@ -1,6 +1,15 @@
 import * as React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, Animated, Keyboard} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Animated,
+  Keyboard,
+} from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import {connect} from 'react-redux';
+import Spinner from 'react-native-loading-spinner-overlay';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
@@ -9,9 +18,8 @@ import SliderView from '../common/UIComponents/SliderView';
 import TextInputComponent from '../common/UIComponents/TextInputComponent';
 import KeyboardAwareComponent from '../common/UIComponents/hoc/KeyboardAwareComponent';
 import Footer from '../common/UIComponents/Footer';
-
-// import Animated from 'react-native-reanimated';
-// import styles from '../myReferrals/styles';
+import {getGoogleMapCoordinates} from '../AppStore/contactUSActions';
+import WarningDialog from '../common/UIComponents/warningDialog';
 
 class ContactUs extends React.Component {
   constructor(props) {
@@ -20,15 +28,38 @@ class ContactUs extends React.Component {
       showFindUsView: false,
       findUsSubject: '',
       findUsMessage: '',
+      showDlg: false,
+      dlgMsg: '',
+      isLoading: false,
     };
   }
 
   componentDidMount() {
     this.props.registerKeyboard();
+    // this.props.getGoogleMapCoordinates(
+    //   this.onGetMapCoordinatesSuccess,
+    //   this.onGetMapCoordinatesFailed,
+    // );
   }
   componentWillUnmount() {
     this.props.deregisterKeyboard();
   }
+
+  onGetMapCoordinatesSuccess = () => {
+    console.log('get map coordinate success');
+    this.setState({isLoading: false});
+  };
+
+  onGetMapCoordinatesFailed = errorMsg => {
+    console.log('get map coordinate failes');
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+    console.log(errorMsg);
+  };
+
   onFindUs = () => {
     this.setState({showFindUsView: true});
   };
@@ -36,6 +67,15 @@ class ContactUs extends React.Component {
     Keyboard.dismiss();
     this.setState({showFindUsView: false});
   };
+
+  onConfirm = () => {
+    this.setState({showDlg: false});
+  };
+
+  onCancel = () => {
+    this.setState({showDlg: false});
+  };
+
   render() {
     const {navigation} = this.props;
     var mapStyle = [
@@ -183,15 +223,15 @@ class ContactUs extends React.Component {
           </SliderView>
         </Animated.View>
         <Footer />
+        <WarningDialog
+          shouldShowDeleteWarning={this.state.showDlg}
+          // onCancel={this.onCancel}
+          onOK={this.onConfirm}
+          dlgMsg={this.state.dlgMsg}
+        />
+        <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
       </View>
     );
-    // return (
-    //   <View style={BaseStyles.baseContainer}>
-    //     <TouchableOpacity onPress={() => navigation.pop()}>
-    //       <Text>{I18n.t('mapView')}</Text>
-    //     </TouchableOpacity>
-    //   </View>
-    // );
   }
 }
 
@@ -246,5 +286,29 @@ const styles = StyleSheet.create({
     borderRadius: widthAdapter(50),
   },
 });
+
+const mapStateToProps = state => {
+  console.log('state from Home page ....', state);
+  return {
+    // dashboardData: state.dashboard.dashboardData,
+    // pendingTask: state.dashboard.pendingTask,
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  getGoogleMapCoordinates: (onSuccesscallback, onErrocallback) =>
+    dispatch(getGoogleMapCoordinates(onSuccesscallback, onErrocallback)),
+  // getPendingTaskData: (onSuccesscallback, onErrocallback) =>
+  //   dispatch(getPendingTaskData(onSuccesscallback, onErrocallback)),
+  // getProductDetailsData: (ProductKey, onSuccesscallback, onErrocallback) =>
+  //   dispatch(
+  //     getProductDetailsData(ProductKey, onSuccesscallback, onErrocallback),
+  //   ),
+});
+
+// const childComp = connect(
+//   mapStateToProps,
+//   mapDispatchToProps,
+// )(ContactUs);
 
 export default KeyboardAwareComponent(ContactUs);

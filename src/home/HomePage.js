@@ -19,35 +19,39 @@ import {heightAdapter, widthAdapter} from '../uttils/adapterUtil';
 import PaymentStatusComponent from '../common/UIComponents/PaymentStatusContainer/PaymentStatusComponent';
 // import SliderView from '../common/UIComponents/SliderView';
 import Images from '../Assets';
-import {getDashboardData} from '../AppStore/dashboardActions';
+import {
+  getDashboardData,
+  getPendingTaskData,
+  getProductDetailsData,
+} from '../AppStore/dashboardActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
 
-const taskListData = [
-  {
-    productName: 'Cable protal',
-  },
-  {
-    productName: 'Customer Lead',
-  },
-  {
-    productName: 'Cable protal',
-  },
-  {
-    productName: 'Customer Lead',
-  },
-  {
-    productName: 'Cable protal',
-  },
-  {
-    productName: 'Customer Lead',
-  },
-  {
-    productName: 'Cable protal',
-  },
-  {
-    productName: 'Customer Lead',
-  },
-];
+// const taskListData = [
+//   {
+//     productName: 'Cable protal',
+//   },
+//   {
+//     productName: 'Customer Lead',
+//   },
+//   {
+//     productName: 'Cable protal',
+//   },
+//   {
+//     productName: 'Customer Lead',
+//   },
+//   {
+//     productName: 'Cable protal',
+//   },
+//   {
+//     productName: 'Customer Lead',
+//   },
+//   {
+//     productName: 'Cable protal',
+//   },
+//   {
+//     productName: 'Customer Lead',
+//   },
+// ];
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -55,7 +59,7 @@ class HomePage extends React.Component {
     this.state = {
       // showTask: false,
       taskCount: 10,
-      taskListData: [...taskListData],
+      // taskListData: [...taskListData],
       approvedAmt: 100,
       paidAmt: 50,
       pendingAmt: 75,
@@ -87,6 +91,10 @@ class HomePage extends React.Component {
       this.onGetDashboardDataSuccess,
       this.onGetDashboardDataFailed,
     );
+    this.props.getPendingTaskData(
+      this.onGetPendingTaskDataSuccess,
+      this.onGetPendingTaskDataFailed,
+    );
   }
 
   onGetDashboardDataSuccess = () => {
@@ -105,12 +113,52 @@ class HomePage extends React.Component {
     console.log(errorMsg);
   };
 
+  onGetPendingTaskDataSuccess = () => {
+    console.log('pending task success');
+    this.setState({isLoading: false, dashboardServiceDone: true});
+  };
+
+  onGetPendingTaskDataFailed = errorMsg => {
+    console.log('pending task failes');
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+    console.log(errorMsg);
+  };
+
   onPressTaskButton = () => {
     // this.setState({showTask: true});
   };
-  onPressStartTaskButton = () => {
-    this.props.navigation.navigate('TaskEntryPage');
+  onPressStartTaskButton = index => {
+    this.setState({isLoading: true}, () =>
+      this.props.getProductDetailsData(
+        this.props.pendingTask[index].ProductKey,
+        this.onGetProductDetailsDataSuccess,
+        this.onGetProductDetailsDataFailed,
+      ),
+    );
+    // this.props.navigation.navigate('TaskEntryPage');
   };
+
+  onGetProductDetailsDataSuccess = () => {
+    console.log('pending task success');
+    this.setState({isLoading: false, dashboardServiceDone: true}, () =>
+      this.props.navigation.navigate('TaskEntryPage'),
+    );
+  };
+
+  onGetProductDetailsDataFailed = errorMsg => {
+    console.log('pending task failes');
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+    console.log(errorMsg);
+  };
+
   getTaskButtonName = taskCount => {
     const taskBtnPrefix = I18n.t('homePage.taskBtnPrefixText');
     const taskBtnPostfix = I18n.t('homePage.taskBtnPostfixText');
@@ -137,7 +185,7 @@ class HomePage extends React.Component {
   };
 
   renderDots = () =>
-    this.state.taskListData.map((e, index) => (
+    this.props.pendingTask.map((e, index) => (
       <View
         style={[
           styles.dot,
@@ -152,16 +200,28 @@ class HomePage extends React.Component {
         <View style={styles.taskItemCardContainer}>
           <View style={styles.taskDetailRow}>
             <View style={styles.taskNameRow}>
-              <Text style={styles.productName}>{item.productName}</Text>
+              <Text style={styles.productName}>{item.ProductName}</Text>
             </View>
             <View style={styles.productImageContainer}>
-              <Image style={styles.productImage} source={Images.productBox} />
+              {/* <Image style={styles.productImage} source={Images.productBox} /> */}
+              <Image
+                source={{
+                  isStatic: true,
+                  uri: item.ProductPicture, //this.props.profileInfo.ProfilePicture,
+                  method: 'GET',
+                  // headers: {
+                  //   clubId: NetTool.clubId,
+                  //   'Ocp-Apim-Subscription-Key': NetTool.subscriptionKey,
+                  // },
+                }}
+                style={styles.productImage}
+              />
             </View>
           </View>
         </View>
         <PrimaryButton
           btnStyle={styles.taskStartBtn}
-          onSubmit={this.onPressStartTaskButton}
+          onSubmit={() => this.onPressStartTaskButton(index)}
           btnName={I18n.t('homePage.taskBtnName')}
         />
       </View>
@@ -203,30 +263,38 @@ class HomePage extends React.Component {
             btnName={taskBtnName}
           />
 
-          <View style={[BaseStyles.emptyHView, {height: heightAdapter(70)}]} />
+          {this.props.pendingTask.length > 0 && (
+            <>
+              <View
+                style={[BaseStyles.emptyHView, {height: heightAdapter(70)}]}
+              />
 
-          <View style={styles.taskListContainer}>
-            <FlatList
-              pagingEnabled={true}
-              onViewableItemsChanged={this.onViewableItemsChanged}
-              viewabilityConfig={this.viewabilityConfig}
-              showsHorizontalScrollIndicator={false}
-              horizontal={true}
-              style={styles.taskList}
-              data={this.state.taskListData}
-              renderItem={this.renderTaskCard}
-              keyExtractor={(item, index) => index}
-            />
-            <View style={styles.scrollIndicator}>
-              {this.renderDots()}
-              {/* <View style={styles.dot} />
+              <View style={styles.taskListContainer}>
+                <FlatList
+                  pagingEnabled={true}
+                  onViewableItemsChanged={this.onViewableItemsChanged}
+                  viewabilityConfig={this.viewabilityConfig}
+                  showsHorizontalScrollIndicator={false}
+                  horizontal={true}
+                  style={styles.taskList}
+                  data={this.props.pendingTask}
+                  renderItem={this.renderTaskCard}
+                  keyExtractor={(item, index) => index}
+                />
+                <View style={styles.scrollIndicator}>
+                  {this.renderDots()}
+                  {/* <View style={styles.dot} />
               <View style={styles.dot} />
               <View style={styles.dot} />
               <View style={styles.dot} /> */}
-            </View>
-          </View>
+                </View>
+              </View>
 
-          <View style={[BaseStyles.emptyHView, {height: heightAdapter(140)}]} />
+              <View
+                style={[BaseStyles.emptyHView, {height: heightAdapter(140)}]}
+              />
+            </>
+          )}
 
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <PaymentStatusComponent
@@ -330,12 +398,19 @@ const mapStateToProps = state => {
   console.log('state from Home page ....', state);
   return {
     dashboardData: state.dashboard.dashboardData,
+    pendingTask: state.dashboard.pendingTask,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   getDashboardData: (onSuccesscallback, onErrocallback) =>
     dispatch(getDashboardData(onSuccesscallback, onErrocallback)),
+  getPendingTaskData: (onSuccesscallback, onErrocallback) =>
+    dispatch(getPendingTaskData(onSuccesscallback, onErrocallback)),
+  getProductDetailsData: (ProductKey, onSuccesscallback, onErrocallback) =>
+    dispatch(
+      getProductDetailsData(ProductKey, onSuccesscallback, onErrocallback),
+    ),
 });
 
 export default connect(

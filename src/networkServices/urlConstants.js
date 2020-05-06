@@ -8,14 +8,30 @@ export default {
   getProfileInfo: 'api/Profile/GetProfileInfo?AccessToken=',
   saveProfileInfo: 'api/Profile/PostProfileInfo',
   getProductsList: 'api/ProductToSell/GetProductToSellLi?AccessToken=',
-  userEmailVerification: 'api/ForgotPassword/CheckUserExists?Email=',
   getTrendingProducts: 'api/Trending/GetTrendingProducts?AccessToken=',
   getReferralRegStatusFilter: 'api/Referral/GetRegStatusFilter',
   getReferralDateFilter: 'api/Referral/GetDateFilter',
   getRepReferredUsers: 'api/Referral/GetRepReferredUsers?AccessToken=',
   getReferralCommissionList: 'api/Referral/GetCommissionList?AccessToken=',
   postReferraluser: 'api/Referral/PostReferraluser',
-  sendMobileVerificaionCode: 'api/ForgotPassword/SendMobileVerificaionCode?ChangePasswordToken=',
+
+  forgotPwdSendMobileVerificaionCode: 'api/ForgotPassword/SendMobileVerificaionCode?ChangePasswordToken=',
+  forgotPwdUserEmailVerification: 'api/ForgotPassword/CheckUserExists?Email=',
+  forgotPwdVerifiMobileVerificationCode: 'api/ForgotPassword/VerifiMobileVerificationCode?ChangePasswordToken=',
+  changePassword: 'api/ForgotPassword/ChangePassword',
+
   getPayoutHistory: 'api/Payout/GetPayoutHistory?AccessToken=',
   getPayoutDetails: 'api/Payout/GetPayoutDetails?AccessToken=',
+
+  getMobileDetails: 'api/Mobile/GetMobileDetails?AccessToken=',
+  sendMobileVerificaionCode: 'api/Mobile/SendMobileVerificaionCode?AccessToken=',
+  verifiMobileVerificationCode: 'api/Mobile/VerifiMobileVerificationCode?AccessToken=',
+
+  getEmailDetails: 'api/Email/GetEmailDetails?AccessToken=',
+  sendEmailVerificaionCode: 'api/Email/SendEmailVerificaionCode?AccessToken=',
+  verifiEmailVerificationCode: 'api/Email/VerifiEmailVerificationCode?AccessToken=',
+  pendingTask: 'api/TaskBased/GetTasks?AccessToken=',
+  getProductDetails: 'api/Product/GetProductDetail?AccessToken=',
+  getXyziesGoogleMapCoordinates: 'api/Contact/GetXyziesGoogleMapCoordinates',
+  saveSuggestion: 'api/Contact/SaveSuggestion',
 };

@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {widthAdapter, heightAdapter} from '../uttils/adapterUtil';
+import {widthAdapter, heightAdapter, fontscale} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
 import fontFamily from '../uttils/FontFamily';
 
@@ -132,52 +132,99 @@ const styles = StyleSheet.create({
     color: Colors.black,
     fontWeight: '500',
   },
-  // paymentDateContainer: {
-  //   width: '100%',
-  //   height: heightAdapter(50),
-  //   flexDirection: 'row',
-  // },
-  // accountNoContainer: {
-  //   width: '100%',
-  //   height: heightAdapter(50),
-  //   flexDirection: 'row',
-  // },
-  // reasonContainer: {
-  //   width: '100%',
-  //   height: heightAdapter(50),
-  //   flexDirection: 'row',
-  // },
-  // paymentDateLabel: {
-  //   fontSize: widthAdapter(40),
-  //   fontFamily: fontFamily.primaryFontFamily,
-  //   color: '#737373',
-  // },
-  // paymentDate: {
-  //   fontSize: widthAdapter(40),
-  //   fontFamily: fontFamily.primaryFontFamily,
-  //   color: '#737373',
-  // },
-  // accountNoLabel: {
-  //   fontSize: widthAdapter(40),
-  //   fontFamily: fontFamily.primaryFontFamily,
-  //   color: '#737373',
-  // },
-  // accountNo: {
-  //   fontSize: widthAdapter(40),
-  //   fontFamily: fontFamily.primaryFontFamily,
-  //   color: '#737373',
-  // },
-  // reasonLabel: {
-  //   fontSize: widthAdapter(40),
-  //   fontFamily: fontFamily.primaryFontFamily,
-  //   color: '#737373',
-  // },
-  // reason: {
-  //   fontSize: widthAdapter(40),
-  //   fontFamily: fontFamily.primaryFontFamily,
-  //   color: '#737373',
-  //   fontWeight: 'bold',
-  // },
+
+  productDetailsContainer: {
+    flex: 1,
+    marginLeft: widthAdapter(40),
+    marginRight: widthAdapter(40),
+    paddingTop: heightAdapter(50),
+    // borderColor: 'red',
+    // borderWidth: 1,
+  },
+  productNameLabel: {
+    fontFamily: fontFamily.primaryFontFamily,
+    fontSize: fontscale(15),
+    color: '#737373',
+    // lineHeight: 1,
+  },
+  productName: {
+    fontFamily: fontFamily.primaryFontFamily,
+    fontSize: fontscale(25),
+    // color: '#737373',
+  },
+  amountContainer: {
+    flexDirection: 'row',
+    // borderColor: 'red',
+    // borderWidth: 1,
+    justifyContent: 'flex-end',
+  },
+  commissionAmountLabel: {
+    fontFamily: fontFamily.primaryFontFamily,
+    fontSize: fontscale(15),
+    color: '#737373',
+    // lineHeight: 1,
+  },
+  commissionAmount: {
+    fontSize: fontscale(21),
+    fontFamily: fontFamily.primaryFontFamily,
+    color: Colors.primaryAppColor,
+    fontWeight: '500',
+  },
+  commissionStatusContainer: {
+    flexDirection: 'row',
+    // borderColor: 'red',
+    // borderWidth: 1,
+    justifyContent: 'flex-end',
+  },
+  imageContainer: {
+    flexDirection: 'row',
+    borderColor: '#ccc',
+    borderWidth: 0.3,
+    justifyContent: 'center',
+    padding: widthAdapter(20),
+  },
+  productImage: {
+    height: heightAdapter(150),
+    width: widthAdapter(200),
+  },
+  addWishListBtn: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    width: widthAdapter(300),
+    height: heightAdapter(75),
+    borderRadius: heightAdapter(5),
+    backgroundColor: '#fff',
+  },
+  addWishListBtnText: {
+    color: '#333',
+    fontSize: fontscale(13),
+    fontFamily: fontFamily.primaryFontFamily,
+  },
+  labelContainer: {
+    flexDirection: 'row',
+    width: '100%',
+  },
+  viewStyle: {
+    width: '50%',
+    backgroundColor: '#f9f9f9',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    paddingLeft: widthAdapter(20),
+    paddingRight: widthAdapter(20),
+  },
+  label: {
+    fontSize: fontscale(15),
+    fontWeight: 'bold',
+    fontFamily: fontFamily.primaryFontFamily,
+  },
+  value: {
+    fontSize: fontscale(15),
+    fontFamily: fontFamily.primaryFontFamily,
+  },
+  productInfoContainer: {
+    borderColor: '#ccc',
+    borderWidth: 0.3,
+  },
 });
 
 export default styles;

@@ -4,19 +4,19 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {connect} from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
 // import {SafeAreaView} from 'react-native-safe-area-context';
-import BaseStyles from '../../common/BaseStyles';
-import I18n from '../../localization/i18n';
+import BaseStyles from '../common/BaseStyles';
+import I18n from '../localization/i18n';
 // import Header from '../../common/UIComponents/Header';
-import Footer from '../../common/UIComponents/Footer';
+import Footer from '../common/UIComponents/Footer';
 import PrimaryButton from '../../common/UIComponents/PrimaryButton';
-import LinkBtnComponent from '../../common/UIComponents/LinkBtn/LinkBtn';
+import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
 import styles from './styles';
-import WarningDialog from '../../common/UIComponents/warningDialog';
-import RadioButton from '../../common/UIComponents/RadioButtom/radioButton';
-import {displayPhoneNumber} from '../../uttils/UtilityFunctions';
-import {sendMobileVerificationCode} from '../../AppStore/forgotPasswordActions';
+import WarningDialog from '../common/UIComponents/warningDialog';
+import RadioButton from '../common/UIComponents/RadioButtom/radioButton';
+import {displayPhoneNumber} from '../uttils/UtilityFunctions';
+import {sendEmailVerificationCode} from '../AppStore/userVerificationActions';
 
-class ForgotPasswordStep2 extends React.Component {
+class EmailVerificationStep1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -142,28 +142,28 @@ class ForgotPasswordStep2 extends React.Component {
 const mapStateToProps = state => {
   console.log('state from forgotpassword2 ', state);
   return {
-    mobileNumber: state.forgotPassword.userDetails.MobileNumber,
-    changePasswordToken: state.forgotPassword.userDetails.ChangePasswordToken,
+    // mobileNumber: state.forgotPassword.userDetails.MobileNumber,
+    // changePasswordToken: state.forgotPassword.userDetails.ChangePasswordToken,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  sendMobileVerificationCode: (
-    ChangePasswordToken,
-    onSuccessCallback,
-    onErrorCallback,
-  ) =>
-    dispatch(
-      sendMobileVerificationCode(
-        ChangePasswordToken,
-        onSuccessCallback,
-        onErrorCallback,
-      ),
-    ),
+//   sendMobileVerificationCode: (
+//     ChangePasswordToken,
+//     onSuccessCallback,
+//     onErrorCallback,
+//   ) =>
+//     dispatch(
+//       sendMobileVerificationCode(
+//         ChangePasswordToken,
+//         onSuccessCallback,
+//         onErrorCallback,
+//       ),
+//     ),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ForgotPasswordStep2);
+)(EmailVerificationStep1);
 // export default ForgotPasswordStep2;

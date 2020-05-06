@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {connect} from 'react-redux';
+import Spinner from 'react-native-loading-spinner-overlay';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
@@ -161,4 +163,26 @@ class TaskEntryPage extends React.Component {
   }
 }
 
-export default TaskEntryPage;
+const mapStateToProps = state => {
+  console.log('state from Home page ....', state);
+  return {
+    // dashboardData: state.dashboard.dashboardData,
+    productDetails: state.taskEntry.productDetails,
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  // getDashboardData: (onSuccesscallback, onErrocallback) =>
+  //   dispatch(getDashboardData(onSuccesscallback, onErrocallback)),
+  // getPendingTaskData: (onSuccesscallback, onErrocallback) =>
+  //   dispatch(getPendingTaskData(onSuccesscallback, onErrocallback)),
+  // getProductDetailsData: (onSuccesscallback, onErrocallback) =>
+  //   dispatch(getProductDetailsData(onSuccesscallback, onErrocallback)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(TaskEntryPage);
+
+// export default TaskEntryPage;

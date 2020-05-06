@@ -8,6 +8,8 @@ import trendingProductsReducer from './trendingProductsReducer';
 import referralReducer from './referralReducers';
 import forgotPasswordReducer from './forgotPasswordReducer';
 import payoutReducer from './payoutReducer';
+import taskEntryReducer from './taskEntryReducer';
+import contactUSReducer from './contactUSReducer';
 
 const appReducer = combineReducers({
   login: loginReducer,
@@ -19,6 +21,8 @@ const appReducer = combineReducers({
   referral: referralReducer,
   forgotPassword: forgotPasswordReducer,
   payout: payoutReducer,
+  taskEntry: taskEntryReducer,
+  contactUS: contactUSReducer,
 });
 
 const rootReducer = (state, action) => {

@@ -7,7 +7,7 @@ const TIMEOUT = 30000;
 const userEmailVerificationService = async email => {
   try {
     const url =
-      urlConstants.BaseUrl + urlConstants.userEmailVerification + email;
+      urlConstants.BaseUrl + urlConstants.forgotPwdUserEmailVerification + email;
     const headersParams = {};
     headersParams['Content-Type'] = 'application/json';
     console.log('useremail verfication service url ...', url);
@@ -38,11 +38,11 @@ const userEmailVerificationService = async email => {
   }
 };
 
-const sendVerificationCodeService = async ChangePasswordToken => {
+const sendMobileVerificationCodeService = async ChangePasswordToken => {
   try {
     const url =
       urlConstants.BaseUrl +
-      urlConstants.sendMobileVerificaionCode +
+      urlConstants.forgotPwdSendMobileVerificaionCode +
       ChangePasswordToken;
     const headersParams = {};
     headersParams['Content-Type'] = 'application/json';
@@ -67,8 +67,83 @@ const sendVerificationCodeService = async ChangePasswordToken => {
   } catch (e) {
     console.log('sendVerificationCodeService failed.', e);
     return null;
-    // throw new Error('User authentication failed.');
   }
 };
 
-export {userEmailVerificationService, sendVerificationCodeService};
+const verifiMobileVerificationCodeService = async (
+  ChangePasswordToken,
+  ServiceToken,
+  VerificationCode,
+) => {
+  try {
+    const url =
+      urlConstants.BaseUrl +
+      urlConstants.forgotPwdVerifiMobileVerificationCode +
+      ChangePasswordToken +
+      '&ServiceToken=' +
+      ServiceToken +
+      '&VerificationCode=' +
+      VerificationCode;
+    const headersParams = {};
+    headersParams['Content-Type'] = 'application/json';
+    console.log('getCommissionList url ...', url);
+    console.log('getCommissionList headersParams ...', headersParams);
+    const response = await RNFetchBlob.config({timeout: TIMEOUT}).fetch(
+      'GET',
+      url,
+      headersParams,
+    );
+    console.log('getCommissionList response ...', response);
+    const result = response.json();
+    if (response.respInfo.status === 200) {
+      result.status = 200;
+      return result;
+    } else if (response.respInfo.status === 500) {
+      result.status = 500;
+      return result;
+    }
+    return null;
+  } catch (e) {
+    console.log('fetch commission list data failed.', e);
+    return null;
+  }
+};
+
+const changePasswordService = async payload => {
+  try {
+    const url = urlConstants.BaseUrl + urlConstants.changePassword;
+    const headersParams = {};
+    const paramsStr = JSON.stringify(payload);
+    headersParams['Content-Type'] = 'application/json';
+    console.log('changePasswordService url ...', url);
+    console.log('changePasswordService paramsStr ...', paramsStr);
+    console.log('changePasswordService headersParams ...', headersParams);
+
+    const response = await RNFetchBlob.config({timeout: TIMEOUT}).fetch(
+      'POST',
+      url,
+      headersParams,
+      paramsStr,
+    );
+    console.log('changePasswordService response ...', response);
+    const result = response.json();
+    if (response.respInfo.status === 200) {
+      result.status = 200;
+      return result;
+    } else if (response.respInfo.status === 500) {
+      result.status = 500;
+      return result;
+    }
+    return null;
+  } catch (e) {
+    console.log('changePasswordService failed.', e);
+    return null;
+  }
+};
+
+export {
+  userEmailVerificationService,
+  sendMobileVerificationCodeService,
+  verifiMobileVerificationCodeService,
+  changePasswordService,
+};

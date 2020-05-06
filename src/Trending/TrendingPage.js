@@ -7,6 +7,7 @@ import {
   Image,
   Easing,
   TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {connect} from 'react-redux';
 import BaseStyles from '../common/BaseStyles';
@@ -18,120 +19,123 @@ import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
 import {heightAdapter, fontscale} from '../uttils/adapterUtil';
 import Images from '../Assets/index';
-import {getTrendingProducts} from '../AppStore/trendingProductsActions';
+import {
+  getTrendingProducts,
+  getProductDetailsData,
+} from '../AppStore/trendingProductsActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
 import Colors from '../uttils/Colors';
 
-const trending = [
-  {
-    productName: 'Spectrum - TV - Installed',
-    Amount: '6.00',
-    Status: 'InAction Commission',
-    Sales: 3,
-  },
-  {
-    productName: 'Spectrum - TV - Installed',
-    Amount: '6.00',
-    Status: 'InAction Commission',
-    Sales: 3,
-  },
-  {
-    productName: 'Spectrum - TV - Installed',
-    Amount: '6.00',
-    Status: 'InAction Commission',
-    Sales: 3,
-  },
-  {
-    productName: 'Spectrum - TV - Installed',
-    Amount: '6.00',
-    Status: 'InAction Commission',
-    Sales: 3,
-  },
-  {
-    productName: 'Spectrum - TV - Installed',
-    Amount: '6.00',
-    Status: 'InAction Commission',
-    Sales: 3,
-  },
-  {
-    productName: 'Spectrum - TV - Installed',
-    Amount: '6.00',
-    Status: 'InAction Commission',
-    Sales: 3,
-  },
-  {
-    productName: 'Spectrum - TV - Installed',
-    Amount: '6.00',
-    Status: 'InAction Commission',
-    Sales: 3,
-  },
-  {
-    productName: 'Spectrum - TV - Installed',
-    Amount: '6.00',
-    Status: 'InAction Commission',
-    Sales: 3,
-  },
-  {
-    productName: 'Spectrum - TV - Installed',
-    Amount: '6.00',
-    Status: 'InAction Commission',
-    Sales: 3,
-  },
-  {
-    productName: 'Spectrum - TV - Installed',
-    Amount: '6.00',
-    Status: 'InAction Commission',
-    Sales: 3,
-  },
-  {
-    productName: 'Spectrum - TV - Installed',
-    Amount: '6.00',
-    Status: 'InAction Commission',
-    Sales: 3,
-  },
-  {
-    productName: 'Spectrum - TV - Installed',
-    Amount: '6.00',
-    Status: 'InAction Commission',
-    Sales: 3,
-  },
-  {
-    productName: 'Spectrum - TV - Installed',
-    Amount: '6.00',
-    Status: 'InAction Commission',
-    Sales: 3,
-  },
-  {
-    productName: 'Spectrum - TV - Installed',
-    Amount: '6.00',
-    Status: 'InAction Commission',
-    Sales: 3,
-  },
-  {
-    productName: 'Spectrum - TV - Installed',
-    Amount: '6.00',
-    Status: 'InAction Commission',
-    Sales: 3,
-  },
-  {
-    productName: 'Spectrum - TV - Installed',
-    Amount: '6.00',
-    Status: 'InAction Commission',
-    Sales: 3,
-  },
-  {
-    productName: 'Spectrum - TV - Installed',
-    Amount: '6.00',
-    Status: 'InAction Commission',
-    Sales: 3,
-  },
-  {
-    productName: 'Spectrum - TV - Installed',
-    Amount: '6.00',
-    Status: 'InAction Commission',
-    Sales: 3,
-  },
-];
+// const trending = [
+//   {
+//     productName: 'Spectrum - TV - Installed',
+//     Amount: '6.00',
+//     Status: 'InAction Commission',
+//     Sales: 3,
+//   },
+//   {
+//     productName: 'Spectrum - TV - Installed',
+//     Amount: '6.00',
+//     Status: 'InAction Commission',
+//     Sales: 3,
+//   },
+//   {
+//     productName: 'Spectrum - TV - Installed',
+//     Amount: '6.00',
+//     Status: 'InAction Commission',
+//     Sales: 3,
+//   },
+//   {
+//     productName: 'Spectrum - TV - Installed',
+//     Amount: '6.00',
+//     Status: 'InAction Commission',
+//     Sales: 3,
+//   },
+//   {
+//     productName: 'Spectrum - TV - Installed',
+//     Amount: '6.00',
+//     Status: 'InAction Commission',
+//     Sales: 3,
+//   },
+//   {
+//     productName: 'Spectrum - TV - Installed',
+//     Amount: '6.00',
+//     Status: 'InAction Commission',
+//     Sales: 3,
+//   },
+//   {
+//     productName: 'Spectrum - TV - Installed',
+//     Amount: '6.00',
+//     Status: 'InAction Commission',
+//     Sales: 3,
+//   },
+//   {
+//     productName: 'Spectrum - TV - Installed',
+//     Amount: '6.00',
+//     Status: 'InAction Commission',
+//     Sales: 3,
+//   },
+//   {
+//     productName: 'Spectrum - TV - Installed',
+//     Amount: '6.00',
+//     Status: 'InAction Commission',
+//     Sales: 3,
+//   },
+//   {
+//     productName: 'Spectrum - TV - Installed',
+//     Amount: '6.00',
+//     Status: 'InAction Commission',
+//     Sales: 3,
+//   },
+//   {
+//     productName: 'Spectrum - TV - Installed',
+//     Amount: '6.00',
+//     Status: 'InAction Commission',
+//     Sales: 3,
+//   },
+//   {
+//     productName: 'Spectrum - TV - Installed',
+//     Amount: '6.00',
+//     Status: 'InAction Commission',
+//     Sales: 3,
+//   },
+//   {
+//     productName: 'Spectrum - TV - Installed',
+//     Amount: '6.00',
+//     Status: 'InAction Commission',
+//     Sales: 3,
+//   },
+//   {
+//     productName: 'Spectrum - TV - Installed',
+//     Amount: '6.00',
+//     Status: 'InAction Commission',
+//     Sales: 3,
+//   },
+//   {
+//     productName: 'Spectrum - TV - Installed',
+//     Amount: '6.00',
+//     Status: 'InAction Commission',
+//     Sales: 3,
+//   },
+//   {
+//     productName: 'Spectrum - TV - Installed',
+//     Amount: '6.00',
+//     Status: 'InAction Commission',
+//     Sales: 3,
+//   },
+//   {
+//     productName: 'Spectrum - TV - Installed',
+//     Amount: '6.00',
+//     Status: 'InAction Commission',
+//     Sales: 3,
+//   },
+//   {
+//     productName: 'Spectrum - TV - Installed',
+//     Amount: '6.00',
+//     Status: 'InAction Commission',
+//     Sales: 3,
+//   },
+// ];
 // const segmentationData = [
 //   I18n.t('commission.dropdownAll'),
 //   I18n.t('commission.dropdown7Days'),
@@ -144,7 +148,7 @@ class TrendingPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      trendingData: [...trending],
+      // trendingData: [...trending],
       productsServiceDone: false,
       isLoading: false,
       showDlg: false,
@@ -181,59 +185,93 @@ class TrendingPage extends React.Component {
     });
   };
 
+  onProductCardSelected = index => {
+    this.setState({isLoading: true}, () =>
+      this.props.getProductDetailsData(
+        this.props.trendingProductList[index].ProductKey,
+        this.onGetProductDetailsDataSuccess,
+        this.onGetProductDetailsDataFailed,
+      ),
+    );
+  };
+
+  onGetProductDetailsDataSuccess = () => {
+    console.log('pending task success');
+    this.setState({isLoading: false}, () =>
+      this.props.navigation.navigate('ProductDetailsPage'),
+    );
+  };
+
+  onGetProductDetailsDataFailed = errorMsg => {
+    console.log('pending task failes');
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+    console.log(errorMsg);
+  };
+
   renderTrendingCard = ({item, index}) => {
     return (
-      <View style={styles.trendingItemContainer}>
-        <View style={styles.trendingDetailsContainer}>
-          <View style={styles.trendingProduct}>
-            {/* <View style={styles.dotWithTick} /> */}
-            <View style={styles.dotWithTick}>
-              <Text>
-                <Icon
-                  name="check-circle"
-                  size={fontscale(20)}
-                  color={Colors.primaryAppColor}
-                />
-              </Text>
+      <TouchableWithoutFeedback
+        onPress={() => this.onProductCardSelected(index)}>
+        <View style={styles.trendingItemContainer}>
+          <View style={styles.trendingDetailsContainer}>
+            <View style={styles.trendingProduct}>
+              {/* <View style={styles.dotWithTick} /> */}
+              <View style={styles.dotWithTick}>
+                <Text>
+                  <Icon
+                    name="check-circle"
+                    size={fontscale(20)}
+                    color={Colors.primaryAppColor}
+                  />
+                </Text>
+              </View>
+              <Text style={styles.trendingProductTxt}>{item.ProductName}</Text>
             </View>
-            <Text style={styles.trendingProductTxt}>{item.ProductName}</Text>
-          </View>
-          <View style={styles.amountStatusContainer}>
-            <Text style={styles.amountLabel}>{I18n.t('trending.amount')} </Text>
-            <Text style={styles.dollar}>
-              {I18n.t('trending.currencySymbol')}
-            </Text>
-            <Text style={styles.amount}>{item.ComAmount}</Text>
-            {/* <Text style={styles.statusLabel}>{I18n.t('trending.status')} </Text>
+            <View style={styles.amountStatusContainer}>
+              <Text style={styles.amountLabel}>
+                {I18n.t('trending.amount')}{' '}
+              </Text>
+              <Text style={styles.dollar}>
+                {I18n.t('trending.currencySymbol')}
+              </Text>
+              <Text style={styles.amount}>{item.ComAmount}</Text>
+              {/* <Text style={styles.statusLabel}>{I18n.t('trending.status')} </Text>
             <Text style={styles.status}>{item.Status}</Text> */}
+            </View>
+            <View style={styles.trendingStatusContainer}>
+              <Text style={styles.statusLabel}>
+                {I18n.t('trending.status')}{' '}
+              </Text>
+              <Text style={styles.status}>{item.ComStatus}</Text>
+            </View>
+            <View style={styles.trendingSalesContainer}>
+              <Text style={styles.trendingSalesLabel}>
+                {I18n.t('trending.sales')}{' '}
+              </Text>
+              <Text style={styles.trendingSalesCount}>{item.Trending}</Text>
+            </View>
           </View>
-          <View style={styles.trendingStatusContainer}>
-            <Text style={styles.statusLabel}>{I18n.t('trending.status')} </Text>
-            <Text style={styles.status}>{item.ComStatus}</Text>
-          </View>
-          <View style={styles.trendingSalesContainer}>
-            <Text style={styles.trendingSalesLabel}>
-              {I18n.t('trending.sales')}{' '}
-            </Text>
-            <Text style={styles.trendingSalesCount}>{item.Trending}</Text>
+          <View style={styles.trendingImageContainer}>
+            {/* <Image style={styles.trendingImage} source={Images.productBox} /> */}
+            <Image
+              source={{
+                isStatic: true,
+                uri: item.ProductPicture,
+                method: 'GET',
+                // headers: {
+                //   clubId: NetTool.clubId,
+                //   'Ocp-Apim-Subscription-Key': NetTool.subscriptionKey,
+                // },
+              }}
+              style={styles.trendingImage}
+            />
           </View>
         </View>
-        <View style={styles.trendingImageContainer}>
-          {/* <Image style={styles.trendingImage} source={Images.productBox} /> */}
-          <Image
-            source={{
-              isStatic: true,
-              uri: item.ProductPicture,
-              method: 'GET',
-              // headers: {
-              //   clubId: NetTool.clubId,
-              //   'Ocp-Apim-Subscription-Key': NetTool.subscriptionKey,
-              // },
-            }}
-            style={styles.trendingImage}
-          />
-        </View>
-      </View>
+      </TouchableWithoutFeedback>
     );
   };
 
@@ -286,6 +324,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   getTrendingProducts: (onSuccesscallback, onErrorcallback) =>
     dispatch(getTrendingProducts(onSuccesscallback, onErrorcallback)),
+  getProductDetailsData: (ProductKey, onSuccesscallback, onErrorcallback) =>
+    dispatch(
+      getProductDetailsData(ProductKey, onSuccesscallback, onErrorcallback),
+    ),
 });
 
 export default connect(

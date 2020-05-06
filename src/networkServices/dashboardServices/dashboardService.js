@@ -30,8 +30,74 @@ const fetchDashboardDataService = async accessToken => {
   } catch (e) {
     console.log('fetch dashboard data failed.', e);
     return null;
-    // throw new Error('User authentication failed.');
   }
 };
 
-export {fetchDashboardDataService};
+const getPendingTaskService = async accessToken => {
+  try {
+    const url = urlConstants.BaseUrl + urlConstants.pendingTask + accessToken;
+    const headersParams = {};
+    headersParams['Content-Type'] = 'application/json';
+    console.log('getPendingTaskService url ...', url);
+    console.log('getPendingTaskService headersParams ...', headersParams);
+
+    const response = await RNFetchBlob.config({timeout: TIMEOUT}).fetch(
+      'GET',
+      url,
+      headersParams,
+    );
+    console.log('getPendingTaskService response ...', response);
+    const result = response.json();
+    if (response.respInfo.status === 200) {
+      result.status = 200;
+      return result;
+    } else if (response.respInfo.status === 500) {
+      result.status = 500;
+      return result;
+    }
+    return null;
+  } catch (e) {
+    console.log('getPendingTaskService data failed.', e);
+    return null;
+  }
+};
+
+const getProductDetailsService = async (accessToken, ProductKey) => {
+  try {
+    const url =
+      urlConstants.BaseUrl +
+      urlConstants.getProductDetails +
+      accessToken +
+      '&ProductKey=' +
+      ProductKey;
+    const headersParams = {};
+    headersParams['Content-Type'] = 'application/json';
+    console.log('getProductDetailsService url ...', url);
+    console.log('getProductDetailsService headersParams ...', headersParams);
+
+    const response = await RNFetchBlob.config({timeout: TIMEOUT}).fetch(
+      'GET',
+      url,
+      headersParams,
+    );
+    console.log('getProductDetailsService response ...', response);
+    const result = response.json();
+    if (response.respInfo.status === 200) {
+      result.status = 200;
+      return result;
+    } else if (response.respInfo.status === 500) {
+      result.status = 500;
+      return result;
+    }
+    return null;
+  } catch (e) {
+    console.log('getProductDetailsService data failed.', e);
+    return null;
+  }
+};
+
+export {
+  fetchDashboardDataService,
+  getPendingTaskService,
+  getProductDetailsService,
+};
