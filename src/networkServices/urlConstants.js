@@ -15,4 +15,7 @@ export default {
   getRepReferredUsers: 'api/Referral/GetRepReferredUsers?AccessToken=',
   getReferralCommissionList: 'api/Referral/GetCommissionList?AccessToken=',
   postReferraluser: 'api/Referral/PostReferraluser',
+  sendMobileVerificaionCode: 'api/ForgotPassword/SendMobileVerificaionCode?ChangePasswordToken=',
+  getPayoutHistory: 'api/Payout/GetPayoutHistory?AccessToken=',
+  getPayoutDetails: 'api/Payout/GetPayoutDetails?AccessToken=',
 };

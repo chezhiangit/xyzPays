@@ -11,6 +11,10 @@ import {
   STORE_REFERRAL_REG_STATUS_FILTER,
   STORE_REFERRAL_USER,
   STORE_REP_REFERRED_USERS_LIST,
+  STORE_USER_DETAILS,
+  STORE_PAYOUT_DATE_FILTER,
+  STORE_PAYOUT_HISTORY_LIST,
+  STORE_PAYOUT_DETAILS,
 } from '../AppStore/ActionTypes';
 
 export const userLoginSuccess = ({userName, userLoggedIn, accessToken}) => ({
@@ -70,3 +74,22 @@ export const storeReferralCommissionList = referralCommissionList => ({
   referralCommissionList,
 });
 
+export const storeUserDetails = userDetails => ({
+  type: STORE_USER_DETAILS,
+  userDetails,
+});
+
+export const storePayoutDateFilter = dateFilter => ({
+  type: STORE_PAYOUT_DATE_FILTER,
+  dateFilter,
+});
+
+export const storePayoutHistoryList = payoutHistoryList => ({
+  type: STORE_PAYOUT_HISTORY_LIST,
+  payoutHistoryList,
+});
+
+export const storePayoutDetails = payoutDetails => ({
+  type: STORE_PAYOUT_DETAILS,
+  payoutDetails,
+});

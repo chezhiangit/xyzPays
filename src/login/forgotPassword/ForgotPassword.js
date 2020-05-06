@@ -22,6 +22,7 @@ class ForgotPassword extends React.Component {
       userEmail: '',
       showDlg: false,
       dlgMsg: '',
+      isLoading: false,
     };
   }
 

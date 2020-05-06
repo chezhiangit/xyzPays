@@ -12,124 +12,119 @@ import {
   Easing,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Spinner from 'react-native-loading-spinner-overlay';
+import {connect} from 'react-redux';
 import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
 import I18n from '../localization/i18n';
-import Header from '../common/UIComponents/Header';
+// import Header from '../common/UIComponents/Header';
 import Footer from '../common/UIComponents/Footer';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import {heightAdapter, widthAdapter, fontscale} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
-import PaymentStatusComponent from '../common/UIComponents/PaymentStatusContainer/PaymentStatusComponent';
-import SliderView from '../common/UIComponents/SliderView';
-import Images from '../Assets/index';
-import moment from 'moment';
+// import PaymentStatusComponent from '../common/UIComponents/PaymentStatusContainer/PaymentStatusComponent';
+// import SliderView from '../common/UIComponents/SliderView';
+// import Images from '../Assets/index';
+// import moment from 'moment';
 import WarningDialog from '../common/UIComponents/warningDialog';
+import {
+  getPayoutDateFilter,
+  getPayoutHistoryList,
+  getPayoutDetails,
+} from '../AppStore/payoutActions';
 
-const payoutData = [
-  {
-    payoutStatus: 'SUCCESS',
-    paymentDate: moment().format('MM/DD/YYYY'),
-    paymentTime: moment().format('HH:MM:SS'),
-    amount: '6.00',
-  },
-  {
-    payoutStatus: 'PENDING',
-    paymentDate: moment().format('MM/DD/YYYY'),
-    paymentTime: moment().format('HH:MM:SS'),
-    amount: '6.00',
-  },
-  {
-    payoutStatus: 'SUCCESS',
-    paymentDate: moment().format('MM/DD/YYYY'),
-    paymentTime: moment().format('HH:MM:SS'),
-    amount: '6.00',
-  },
-  {
-    payoutStatus: 'PENDING',
-    paymentDate: moment().format('MM/DD/YYYY'),
-    paymentTime: moment().format('HH:MM:SS'),
-    amount: '6.00',
-  },
-  {
-    payoutStatus: 'SUCCESS',
-    paymentDate: moment().format('MM/DD/YYYY'),
-    paymentTime: moment().format('HH:MM:SS'),
-    amount: '6.00',
-  },
-  {
-    payoutStatus: 'PENDING',
-    paymentDate: moment().format('MM/DD/YYYY'),
-    paymentTime: moment().format('HH:MM:SS'),
-    amount: '6.00',
-  },
-  {
-    payoutStatus: 'SUCCESS',
-    paymentDate: moment().format('MM/DD/YYYY'),
-    paymentTime: moment().format('HH:MM:SS'),
-    amount: '6.00',
-  },
-  {
-    payoutStatus: 'PENDING',
-    paymentDate: moment().format('MM/DD/YYYY'),
-    paymentTime: moment().format('HH:MM:SS'),
-    amount: '6.00',
-  },
-  {
-    payoutStatus: 'SUCCESS',
-    paymentDate: moment().format('MM/DD/YYYY'),
-    paymentTime: moment().format('HH:MM:SS'),
-    amount: '6.00',
-  },
-  {
-    payoutStatus: 'PENDING',
-    paymentDate: moment().format('MM/DD/YYYY'),
-    paymentTime: moment().format('HH:MM:SS'),
-    amount: '6.00',
-  },
-  {
-    payoutStatus: 'SUCCESS',
-    paymentDate: moment().format('MM/DD/YYYY'),
-    paymentTime: moment().format('HH:MM:SS'),
-    amount: '6.00',
-  },
-  {
-    payoutStatus: 'PENDING',
-    paymentDate: moment().format('MM/DD/YYYY'),
-    paymentTime: moment().format('HH:MM:SS'),
-    amount: '6.00',
-  },
-];
-const segmentationData = [
-  I18n.t('commission.dropdownAll'),
-  I18n.t('commission.dropdown7Days'),
-  I18n.t('commission.dropdownLast2Weeks'),
-  I18n.t('commission.dropdownLast3Weeks'),
-  I18n.t('commission.dropdownLast1Month'),
-  I18n.t('commission.dropdownLast3Months'),
-];
 class PayoutHistory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       payoutStatus: 'SUCCESS',
       amount: '6.00',
-      payoutDate: moment().format('MM/DD/YYYY'),
-      payoutTime: moment().format('hh:mm:ss'),
-      selectedValue: segmentationData[4],
+      selectedValue: '',
       selectedIndex: 4,
       isSegmentVisible: false,
       segmentBorder: 0,
       availableAmount: 0,
-      emailId: 'chezhian.p@gmail.com',
-      payoutData: [...payoutData],
-      notEnoughAmountTxt:
-        'Cannot Tranfer To PayPal Account. Pending Amount is less than Minimum Withdraw Amount',
+      notEnoughAmountTxt: I18n.t('payoutHistory.notEnoughAmountTxt'),
       showDlg: false,
       dlgMsg: '',
+      isLoading: false,
     };
     this.translate = new Animated.Value(0);
   }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.dateFilter.length === 0) {
+      return {
+        isLoading: true,
+      };
+    } else if (state.selectedValue === '') {
+      return {selectedValue: props.dateFilter[4]?.Text};
+    }
+    return {};
+  }
+
+  componentDidMount() {
+    if (this.props.dateFilter.length === 0) {
+      this.props.getPayoutDateFilter(
+        this.onPayoutDateFilterSuccess,
+        this.onPayoutDateFilterFailed,
+      );
+      this.props.getPayoutHistoryList(
+        0,
+        this.onPayoutHistoryListSuccess,
+        this.onPayoutHistoryListFailed,
+      );
+      this.props.getPayoutDetails(
+        this.onPayoutDetailsSuccess,
+        this.onPayoutDetailsFailed,
+      );
+    }
+  }
+
+  onPayoutDetailsSuccess = () => {
+    console.log('PayoutDetails success');
+    this.setState({isLoading: false});
+  };
+
+  onPayoutDetailsFailed = errorMsg => {
+    console.log('PayoutDetails failed');
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+    console.log(errorMsg);
+  };
+
+  onPayoutHistoryListSuccess = () => {
+    console.log('PayoutHistoryList success');
+    this.setState({isLoading: false});
+  };
+
+  onPayoutHistoryListFailed = errorMsg => {
+    console.log('PayoutHistoryList failed');
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+    console.log(errorMsg);
+  };
+
+  onPayoutDateFilterSuccess = () => {
+    console.log('payout date filter success');
+    this.setState({isLoading: false});
+  };
+
+  onPayoutDateFilterFailed = errorMsg => {
+    console.log('payout date filter failed');
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+    console.log(errorMsg);
+  };
 
   toggleDropdown = show => {
     if (this.state.isSegmentVisible === show) {
@@ -143,28 +138,34 @@ class PayoutHistory extends React.Component {
         toValue: 1,
         duration: 400,
         overshootClamping: true,
-        // useNativeDriver: true,
       }).start();
     } else {
-      // this.segmentBorder = 0;
       Animated.timing(this.translate, {
         toValue: 0,
         duration: 400,
         easing: Easing.linear,
-        // useNativeDriver: true,
       }).start(() => this.setState({segmentBorder: 0}));
     }
   };
 
   onSegmentItemSelected = (item, index) => {
+    console.log('selected item ...', item);
     this.toggleDropdown(false);
-    this.setState({selectedValue: item, selectedIndex: index});
+    this.setState(
+      {selectedValue: item.Text, selectedIndex: item.Value, isLoading: true},
+      () =>
+        this.props.getPayoutHistoryList(
+          item.Value,
+          this.onPayoutHistoryListSuccess,
+          this.onPayoutHistoryListFailed,
+        ),
+    );
   };
 
   renderSegmentItem = ({item, index}) => (
     <TouchableOpacity onPress={() => this.onSegmentItemSelected(item, index)}>
       <View style={styles.segmentItemRow}>
-        <Text style={styles.segmentItemText}>{item}</Text>
+        <Text style={styles.segmentItemText}>{item.Text}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -174,8 +175,10 @@ class PayoutHistory extends React.Component {
       <View style={styles.payoutItemContainer}>
         <View style={styles.payoutStatusRow}>
           <View style={styles.payoutLeftView}>
-            <Text style={styles.payoutStatusLabel}>Payout Status: </Text>
-            <Text style={styles.payoutStatus}>{item.payoutStatus}</Text>
+            <Text style={styles.payoutStatusLabel}>
+              {I18n.t('payoutHistory.payoutStatus')}{' '}
+            </Text>
+            <Text style={styles.payoutStatus}>{item.PayoutStatus}</Text>
           </View>
           <View style={styles.payoutRightView}>
             <Text style={[styles.payoutStatusLabel, {color: 'green'}]}>$</Text>
@@ -188,18 +191,18 @@ class PayoutHistory extends React.Component {
               <Text>
                 <Icon name="calendar" size={fontscale(12)} color={'gray'} />
               </Text>
-              <Text style={styles.dateTimeTxt}>{item.paymentDate}</Text>
+              <Text style={styles.dateTimeTxt}>{item.PayoutDate}</Text>
             </View>
             <View style={[styles.dateRow, {marginLeft: widthAdapter(30)}]}>
               {/* <Image style={styles.imageStyle} source={''} /> */}
               <Text>
                 <Icon name="clock-o" size={fontscale(12)} color={'gray'} />
               </Text>
-              <Text style={styles.dateTimeTxt}>{item.paymentTime}</Text>
+              <Text style={styles.dateTimeTxt}>{item.PayoutTime}</Text>
             </View>
           </View>
           <View style={styles.payoutRightView}>
-            <Text style={styles.payoutStatusLabel}>{item.amount}</Text>
+            <Text style={styles.payoutStatusLabel}>{item.PayoutAmount}</Text>
           </View>
         </View>
       </View>
@@ -226,19 +229,24 @@ class PayoutHistory extends React.Component {
           <View style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]} />
           <View style={styles.availableAmount}>
             <Text style={styles.availableAmountTxt}>
-              {`$ ${this.state.availableAmount}`}
+              {`$ ${this.props.payoutDetails.TotalPayoutAmount}`}
             </Text>
-            <View
-              style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
-            />
-            <TextInput
-              style={styles.notEnoughAmountTxt}
-              value={this.state.notEnoughAmountTxt + ' $1'}
-              multiline
-              editable={false}
-            />
+            {Number(this.props.payoutDetails.TotalPayoutAmount) === 0 && (
+              <>
+                <View
+                  style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
+                />
+
+                <TextInput
+                  style={styles.notEnoughAmountTxt}
+                  value={this.state.notEnoughAmountTxt + ' $1'}
+                  multiline
+                  editable={false}
+                />
+              </>
+            )}
           </View>
-          {this.state.availableAmount > 0 && (
+          {Number(this.props.payoutDetails.TotalPayoutAmount) > 0 && (
             <>
               <View
                 style={[BaseStyles.emptyHView, {height: heightAdapter(70)}]}
@@ -248,18 +256,15 @@ class PayoutHistory extends React.Component {
                 onSubmit={this.onPressTaskButton}
                 btnName={I18n.t('payoutHistory.transferBtnName')}
               />
-              <View
+              {/* <View
                 style={[BaseStyles.emptyHView, {height: heightAdapter(70)}]}
-              />
+              /> */}
               <View style={styles.logedInUserInfo}>
                 <Text style={styles.logedInUserHelloText}>
                   {I18n.t('payoutHistory.emailId')}
                 </Text>
-                {/* <Text style={[styles.logedInUserHelloText, styles.primaryColor]}>
-              {' Harry'}
-            </Text> */}
                 <Text style={styles.logedInUserHelloText}>
-                  {this.state.emailId}
+                  {this.props.payoutDetails.PayPalEmail}
                 </Text>
               </View>
             </>
@@ -303,7 +308,7 @@ class PayoutHistory extends React.Component {
               ]}>
               <FlatList
                 showsVerticalScrollIndicator={false}
-                data={segmentationData}
+                data={this.props.dateFilter}
                 renderItem={this.renderSegmentItem}
                 keyExtractor={(item, index) => index}
               />
@@ -319,7 +324,7 @@ class PayoutHistory extends React.Component {
           <FlatList
             showsVerticalScrollIndicator={false}
             style={styles.payoutList}
-            data={this.state.payoutData}
+            data={this.props.payoutHistoryList}
             renderItem={this.renderPayoutCard}
             keyExtractor={(item, index) => index}
           />
@@ -331,9 +336,43 @@ class PayoutHistory extends React.Component {
           onOK={this.onConfirm}
           dlgMsg={this.state.dlgMsg}
         />
+        <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
       </View>
     );
   }
 }
 
-export default PayoutHistory;
+const mapStateToProps = state => {
+  console.log('state from payout page ....', state);
+  return {
+    dateFilter: state.payout.dateFilter,
+    payoutHistoryList: state.payout.payoutHistoryList,
+    payoutDetails: state.payout.payoutDetails,
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  getPayoutDetails: (onSuccesscallback, onErrocallback) =>
+    dispatch(getPayoutDetails(onSuccesscallback, onErrocallback)),
+  getPayoutDateFilter: (onSuccesscallback, onErrocallback) =>
+    dispatch(getPayoutDateFilter(onSuccesscallback, onErrocallback)),
+  getPayoutHistoryList: (
+    SelectedDateRange,
+    onSuccesscallback,
+    onErrocallback,
+  ) =>
+    dispatch(
+      getPayoutHistoryList(
+        SelectedDateRange,
+        onSuccesscallback,
+        onErrocallback,
+      ),
+    ),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(PayoutHistory);
+
+// export default PayoutHistory;

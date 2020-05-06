@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {connect} from 'react-redux';
+import Spinner from 'react-native-loading-spinner-overlay';
 // import {SafeAreaView} from 'react-native-safe-area-context';
 import BaseStyles from '../../common/BaseStyles';
 import I18n from '../../localization/i18n';
@@ -12,6 +14,7 @@ import styles from './styles';
 import WarningDialog from '../../common/UIComponents/warningDialog';
 import RadioButton from '../../common/UIComponents/RadioButtom/radioButton';
 import {displayPhoneNumber} from '../../uttils/UtilityFunctions';
+import {sendVerificationCode} from '../../AppStore/forgotPasswordActions';
 
 class ForgotPasswordStep2 extends React.Component {
   constructor(props) {
@@ -21,6 +24,7 @@ class ForgotPasswordStep2 extends React.Component {
       showDlg: false,
       dlgMsg: '',
       mobileNumber: '1234567890',
+      isLoading: false,
     };
   }
 
@@ -30,7 +34,14 @@ class ForgotPasswordStep2 extends React.Component {
     });
   };
   onStepTwoNext = () => {
-    this.props.navigation.goBack();
+    this.setState({isLoading: true}, () =>
+      this.props.sendVerificationCode(
+        this.props.ChangePasswordToken,
+        this.onSendVerificationCodeSuccess,
+        this.onSendVerificationCodeFailed,
+      ),
+    );
+    // this.props.navigation.goBack();
   };
 
   onMadeMistake = () => {
@@ -46,6 +57,29 @@ class ForgotPasswordStep2 extends React.Component {
 
   onConfirm = () => {
     this.setState({showDlg: false});
+  };
+
+  onSendVerificationCodeSuccess = message => {
+    console.log('send verification code success');
+    // this.setState({isLoading: false});
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: message,
+      sendVerificationCodeStatus: true,
+    });
+    // this.props.navigation.navigate('ForgotPasswordStep2');
+  };
+
+  onSendVerificationCodeFailed = errorMsg => {
+    console.log('send verification code failed');
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+      sendVerificationCodeStatus: true,
+    });
+    console.log(errorMsg);
   };
 
   render() {
@@ -76,7 +110,7 @@ class ForgotPasswordStep2 extends React.Component {
             </Text>
             {/* <Image style={styles.phoneImage} source={''} /> */}
             <Text style={styles.mobileNumber}>
-              {displayPhoneNumber(this.state.mobileNumber)}
+              {displayPhoneNumber(this.props.mobileNumber)}
             </Text>
           </View>
           <View style={styles.forgotStepOneNextContainer}>
@@ -98,9 +132,37 @@ class ForgotPasswordStep2 extends React.Component {
           onOK={this.onConfirm}
           dlgMsg={this.state.dlgMsg}
         />
+        <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
       </View>
     );
   }
 }
 
-export default ForgotPasswordStep2;
+const mapStateToProps = state => {
+  console.log('state from forgotpassword ', state);
+  return {
+    mobileNumber: state.forgotPassword.userDetails.MobileNumber,
+    ChangePasswordToken: state.forgotPassword.userDetails.ChangePasswordToken,
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  sendVerificationCode: (
+    ChangePasswordToken,
+    onSuccessCallback,
+    onErrorCallback,
+  ) =>
+    dispatch(
+      sendVerificationCode(
+        ChangePasswordToken,
+        onSuccessCallback,
+        onErrorCallback,
+      ),
+    ),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ForgotPasswordStep2);
+// export default ForgotPasswordStep2;

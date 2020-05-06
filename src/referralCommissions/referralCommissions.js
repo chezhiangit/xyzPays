@@ -28,6 +28,8 @@ import {
   getReferralCommissionList,
   getReferralDateFilter,
 } from '../AppStore/referralActions';
+import PrimaryButton from '../common/UIComponents/PrimaryButton';
+import SliderView from '../common/UIComponents/SliderView';
 
 const commission = [
   {
@@ -99,6 +101,8 @@ class ReferralCommissions extends React.Component {
       showDlg: false,
       dlgMsg: '',
       isLoading: false,
+      showFilter: false,
+      selectedFilterIndex: 0,
     };
     // this.show=false;
     this.translate = new Animated.Value(0);
@@ -126,6 +130,12 @@ class ReferralCommissions extends React.Component {
         this.onDateFilterSuccess,
         this.onDateFilterFailed,
       );
+      this.props.getReferralCommissionList(
+        4,
+        0,
+        this.onReferralCommissionSuccess,
+        this.onReferralCommissionFailed,
+      );
     }
   }
   onSegmentItemSelected = (item, index) => {
@@ -137,7 +147,7 @@ class ReferralCommissions extends React.Component {
     });
     this.props.getReferralCommissionList(
       index,
-      0,
+      this.state.selectedFilterIndex,
       this.onReferralCommissionSuccess,
       this.onReferralCommissionFailed,
     );
@@ -222,7 +232,9 @@ class ReferralCommissions extends React.Component {
             <Text style={styles.customerDetailsLabel}>
               {I18n.t('referralCommissions.paymentDate')}
             </Text>
-            <Text style={styles.customerDetailsTxt}>{moment(item.PaymentDate).format('MM/DD/YYYY')}</Text>
+            <Text style={styles.customerDetailsTxt}>
+              {moment(item.PaymentDate).format('MM/DD/YYYY')}
+            </Text>
           </View>
 
           <View style={styles.customerDetails}>
@@ -292,6 +304,28 @@ class ReferralCommissions extends React.Component {
     console.log(errorMsg);
   };
 
+  onFilterSelected = selectedFilterIndex => {
+    this.setState(
+      {
+        selectedFilterIndex,
+        showFilter: false,
+        // commissionListServiceDone: true,
+        isLoading: true,
+      },
+      () =>
+        this.props.getReferralCommissionList(
+          this.state.selectedIndex,
+          selectedFilterIndex,
+          this.onReferralCommissionSuccess,
+          this.onReferralCommissionFailed,
+        ),
+    );
+  };
+
+  toggleFilter = show => {
+    this.setState({showFilter: show});
+  };
+
   render() {
     return (
       <View style={BaseStyles.baseContainer}>
@@ -301,54 +335,75 @@ class ReferralCommissions extends React.Component {
               {I18n.t('referralCommissions.userInfo')}
             </Text>
           </View>
-          <View style={styles.dropdownContainer}>
-            <TouchableWithoutFeedback
-              style={styles.selectionBox}
-              onPress={() => this.toggleDropdown(!this.state.isSegmentVisible)}>
-              <View style={styles.selectionBox}>
-                {/* <Image style={styles.image} source={''} /> */}
-                <View style={{flexDirection: 'row'}}>
-                  <Text>
-                    <Icon
-                      name="calendar"
-                      size={20}
-                      color={Colors.primaryAppColor}
-                    />
-                  </Text>
-                  <Text style={styles.selectedValue}>
-                    {this.state.selectedValue}
-                  </Text>
+          <View style={styles.dropdownAndFilterContainer}>
+            <View style={styles.dropdownContainer}>
+              <TouchableWithoutFeedback
+                style={styles.selectionBox}
+                onPress={() =>
+                  this.toggleDropdown(!this.state.isSegmentVisible)
+                }>
+                <View style={styles.selectionBox}>
+                  {/* <Image style={styles.image} source={''} /> */}
+                  <View style={{flexDirection: 'row'}}>
+                    <Text>
+                      <Icon
+                        name="calendar"
+                        size={20}
+                        color={Colors.primaryAppColor}
+                      />
+                    </Text>
+                    <Text style={styles.selectedValue}>
+                      {this.state.selectedValue}
+                    </Text>
+                  </View>
+                  <View>
+                    <Text>
+                      <Icon name="angle-down" size={20} color={'white'} />
+                    </Text>
+                  </View>
                 </View>
+              </TouchableWithoutFeedback>
+              <Animated.View
+                style={[
+                  styles.segmentedView,
+                  {
+                    height: this.translate.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0, heightAdapter(460)],
+                    }),
+                    borderWidth: this.state.segmentBorder,
+                  },
+                ]}>
+                <FlatList
+                  showsVerticalScrollIndicator={false}
+                  data={this.props.dateFilter}
+                  renderItem={this.renderSegmentItem}
+                  keyExtractor={(item, index) => index}
+                />
+              </Animated.View>
+            </View>
+            <TouchableWithoutFeedback
+              onPress={() => this.toggleFilter(!this.state.showFilter)}>
+              <View style={styles.statusFilterContainer}>
                 <View>
                   <Text>
-                    <Icon name="angle-down" size={20} color={'white'} />
+                    <Icon
+                      name="filter"
+                      size={30}
+                      color={Colors.primaryAppColor}
+                    />
                   </Text>
                 </View>
               </View>
             </TouchableWithoutFeedback>
-            <Animated.View
-              style={[
-                styles.segmentedView,
-                {
-                  height: this.translate.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, heightAdapter(460)],
-                  }),
-                  borderWidth: this.state.segmentBorder,
-                },
-              ]}>
-              <FlatList
-                showsVerticalScrollIndicator={false}
-                data={this.props.dateFilter}
-                renderItem={this.renderSegmentItem}
-                keyExtractor={(item, index) => index}
-              />
-            </Animated.View>
           </View>
-          {this.state.isSegmentVisible && (
+          {(this.state.isSegmentVisible || this.state.showFilter) && (
             <TouchableWithoutFeedback
               style={styles.transparentView}
-              onPress={() => this.toggleDropdown(false)}>
+              onPress={() => {
+                this.toggleDropdown(false);
+                this.setState({showFilter: false});
+              }}>
               <View style={styles.transparentView} />
             </TouchableWithoutFeedback>
           )}
@@ -368,6 +423,70 @@ class ReferralCommissions extends React.Component {
           dlgMsg={this.state.dlgMsg}
         />
         <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
+        <SliderView
+          visible={this.state.showFilter}
+          animateFrom="bottom"
+          height={heightAdapter(300)}
+          width="100%">
+          <View style={styles.sliderContainer}>
+            <View style={styles.sliderBtnContainer}>
+              {/* <Text>
+                <Icon name="camera" size={25} color="black" />
+              </Text> */}
+              <PrimaryButton
+                btnStyle={styles.sliderBtnStyle}
+                onSubmit={() => this.onFilterSelected(4)}
+                btnName={I18n.t('commission.filterAll')}
+                btnTexStyle={styles.sliderBtnTxtStyle}
+              />
+            </View>
+            <View
+              style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
+            />
+            <View style={styles.sliderBtnContainer}>
+              {/* <Text>
+                <Icon name="camera" size={25} color="black" />
+              </Text> */}
+              <PrimaryButton
+                btnStyle={styles.sliderBtnStyle}
+                onSubmit={() => this.onFilterSelected(2)}
+                btnName={I18n.t('commission.filterPaid')}
+                btnTexStyle={styles.sliderBtnTxtStyle}
+              />
+            </View>
+            <View
+              style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
+            />
+            <View style={styles.sliderBtnContainer}>
+              {/* <Text>
+                <Icon name="image" size={25} color="black" />
+              </Text> */}
+              <PrimaryButton
+                btnStyle={styles.sliderBtnStyle}
+                onSubmit={() => this.onFilterSelected(1)}
+                btnName={I18n.t('commission.filterPending')}
+                btnTexStyle={styles.sliderBtnTxtStyle}
+              />
+            </View>
+            <View
+              style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
+            />
+            <View style={styles.sliderBtnContainer}>
+              {/* <Text>
+                <Icon name="window-close" size={25} color="black" />
+              </Text> */}
+              <PrimaryButton
+                btnStyle={styles.sliderBtnStyle}
+                onSubmit={() => this.onFilterSelected(5)}
+                btnName={I18n.t('commission.filterDenied')}
+                btnTexStyle={styles.sliderBtnTxtStyle}
+              />
+            </View>
+            {/* <View
+              style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
+            /> */}
+          </View>
+        </SliderView>
         {/* {this.state.isSegmentVisible && (
           <TouchableOpacity
             style={styles.transparentView}

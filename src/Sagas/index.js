@@ -7,6 +7,7 @@ import watchCommissionAction from './commissionSaga';
 import watchForgotPasswordActions from './forgotPasswordSaga';
 import watchTrendingProductActions from './trendingProductsSaga';
 import watchReferralActions from './referralSaga';
+import watchPayoutAction from './payoutSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -18,5 +19,6 @@ export default function* rootSaga() {
     watchForgotPasswordActions(),
     watchTrendingProductActions(),
     watchReferralActions(),
+    watchPayoutAction(),
   ]);
 }

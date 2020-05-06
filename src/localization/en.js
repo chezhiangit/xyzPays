@@ -175,6 +175,9 @@ export default {
     userInfo: 'Transfer Money & View Payout History',
     transferBtnName: 'Transfer to you Paypal Account',
     emailId: 'Your Paypal email Id: ',
+    payoutStatus: 'Payout Status:',
+    notEnoughAmountTxt:
+      'Cannot Tranfer To PayPal Account. Pending Amount is less than Minimum Withdraw Amount',
   },
   faq: {
     headerTitle: 'FAQ',

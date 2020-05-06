@@ -1,4 +1,4 @@
-import {takeLatest, call, put, select} from 'redux-saga/effects';
+import {takeLatest, call, put, select, takeEvery} from 'redux-saga/effects';
 import {
   SAGA_GET_REFERRAL_REG_STATUS_FILTER,
   SAGA_GET_REFERRAL_DATE_FILTER,
@@ -157,7 +157,7 @@ export default function* watchReferralActions() {
     getRegistrationStatusFilter,
   );
   yield takeLatest(SAGA_GET_REFERRAL_DATE_FILTER, getReferralDateFilterData);
-  yield takeLatest(SAGA_GET_REP_REFERRED_USERS_LIST, getRepReferredUsers);
+  yield takeEvery(SAGA_GET_REP_REFERRED_USERS_LIST, getRepReferredUsers);
   yield takeLatest(
     SAGA_GET_REFERRAL_COMMISSION_LIST,
     getReferralCommissionList,

@@ -169,7 +169,7 @@ class CommissionPage extends React.Component {
       selectedDateRangeValue: this.props.dateFilter[4]?.Text,
       selectedDateRangeIndex: 4,
       isSegmentVisible: false,
-      commissionData: [...commission],
+      // commissionData: [],
       dateFilterServiceDone: false,
       commissionListServiceDone: false,
       showDlg: false,
@@ -194,6 +194,16 @@ class CommissionPage extends React.Component {
     this.props.getDateFilter(
       this.onGetDateFilterSuccess,
       this.onGetDateFilterFailed,
+    );
+    const payload = {
+      SelectedDateRange: 4,
+      TxnStatusType: '',
+    };
+    this.props.getCommissionList(
+      payload.SelectedDateRange,
+      payload.TxnStatusType,
+      this.onGetCommissionLisSuccess,
+      this.onGetCommissionLisFailed,
     );
   }
 
@@ -445,17 +455,16 @@ class CommissionPage extends React.Component {
             keyExtractor={(item, index) => index}
             showsVerticalScrollIndicator={false}
           />
-          {this.state.isSegmentVisible ||
-            (this.state.showFilter && (
-              <TouchableWithoutFeedback
-                style={styles.transparentView}
-                onPress={() => {
-                  this.toggleDropdown(false);
-                  this.toggleFilter(false);
-                }}>
-                <View style={styles.transparentView} />
-              </TouchableWithoutFeedback>
-            ))}
+          {(this.state.isSegmentVisible || this.state.showFilter) && (
+            <TouchableWithoutFeedback
+              style={styles.transparentView}
+              onPress={() => {
+                this.toggleDropdown(false);
+                this.toggleFilter(false);
+              }}>
+              <View style={styles.transparentView} />
+            </TouchableWithoutFeedback>
+          )}
         </View>
         <Footer />
         <WarningDialog
