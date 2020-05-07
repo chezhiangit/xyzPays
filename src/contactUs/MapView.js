@@ -200,14 +200,14 @@ class ContactUs extends React.Component {
               <TextInputComponent
                 placeholder={I18n.t('contactUs.subject')}
                 autoFocus={false}
-                onFieldFocus={this.props.onFieldFocus}
+                // onFieldFocus={this.props.onFieldFocus}
                 inputValue={this.state.findUsSubject}
-                onTextChange={findUsSubject => this.setState({findUsSubject})}
+                onTextChange={text => this.setState({findUsSubject: text})}
               />
               <TextInputComponent
                 placeholder={I18n.t('contactUs.message')}
                 autoFocus={false}
-                onFieldFocus={this.props.onFieldFocus}
+                // onFieldFocus={this.props.onFieldFocus}
                 inputValue={this.state.findUsMessage}
                 onTextChange={findUsMessage => this.setState({findUsMessage})}
               />

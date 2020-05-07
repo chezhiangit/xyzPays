@@ -28,10 +28,10 @@ class TextInputComponent extends React.Component {
   }
   handleOnChangeText = inputValue => {
     console.log('handleOnChangeText ....', inputValue);
-    if (this.props.phone) {
-      const validInput = checkPhone(inputValue);
-      this.setState({validInput});
-    }
+    // if (this.props.phone) {
+    //   const validInput = checkPhone(inputValue);
+    //   this.setState({validInput});
+    // }
     this.props.onTextChange(inputValue);
   };
 
@@ -70,11 +70,12 @@ class TextInputComponent extends React.Component {
             this.setState({focus: true});
             this.props.onFieldFocus && this.props.onFieldFocus(1100);
           }}
-          value={
-            this.props.phone
-              ? displayPhoneNumber(this.props.inputValue)
-              : this.props.inputValue
-          }
+          // value={
+          //   this.props.phone
+          //     ? displayPhoneNumber(this.props.inputValue)
+          //     : this.props.inputValue
+          // }
+          value={this.props.inputValue}
         />
         {this.state.focus && this.props.placeholder.length > 0 && (
           <Text style={styles.captionText}>{this.props.placeholder}</Text>

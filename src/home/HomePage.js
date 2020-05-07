@@ -135,6 +135,7 @@ class HomePage extends React.Component {
     this.setState({isLoading: true}, () =>
       this.props.getProductDetailsData(
         this.props.pendingTask[index].ProductKey,
+        this.props.pendingTask[index].FormKey,
         this.onGetProductDetailsDataSuccess,
         this.onGetProductDetailsDataFailed,
       ),
@@ -407,9 +408,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(getDashboardData(onSuccesscallback, onErrocallback)),
   getPendingTaskData: (onSuccesscallback, onErrocallback) =>
     dispatch(getPendingTaskData(onSuccesscallback, onErrocallback)),
-  getProductDetailsData: (ProductKey, onSuccesscallback, onErrocallback) =>
+  getProductDetailsData: (ProductKey, FormKey, onSuccesscallback, onErrocallback) =>
     dispatch(
-      getProductDetailsData(ProductKey, onSuccesscallback, onErrocallback),
+      getProductDetailsData(ProductKey, FormKey, onSuccesscallback, onErrocallback),
     ),
 });
 

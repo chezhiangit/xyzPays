@@ -13,7 +13,7 @@ import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
 import styles from './styles';
 import WarningDialog from '../common/UIComponents/warningDialog';
 import RadioButton from '../common/UIComponents/RadioButtom/radioButton';
-import {displayPhoneNumber} from '../uttils/UtilityFunctions';
+// import {displayPhoneNumber} from '../uttils/UtilityFunctions';
 import {
   sendEmailVerificationCode,
   getUserEmailDetails,

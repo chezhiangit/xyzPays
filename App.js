@@ -14,6 +14,7 @@ import {configureStore} from './src/AppStore/ConfigureStore';
 const store = configureStore();
 
 const App: () => React$Node = () => {
+  console.disableYellowBox = true;
   return (
     <Provider store={store}>
       <Main />

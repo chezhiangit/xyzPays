@@ -1,8 +1,12 @@
-import {STORE_PENDING_TASK_PRODUCT_DETAILS_DATA} from '../ActionTypes';
+import {
+  STORE_PENDING_TASK_PRODUCT_DETAILS_DATA,
+  STORE_FORM_DEFENITION_DETAILS_DATA,
+} from '../ActionTypes';
 
 const taskEntryReducer = (
   state = {
     productDetails: {},
+    formDefenition: [],
   },
   action,
 ) => {
@@ -10,7 +14,12 @@ const taskEntryReducer = (
     case STORE_PENDING_TASK_PRODUCT_DETAILS_DATA:
       return {
         ...state,
-        productDetails: {...action.productDetails},
+        productDetails: {...action.productDetails, FormKey: action.FormKey},
+      };
+    case STORE_FORM_DEFENITION_DETAILS_DATA:
+      return {
+        ...state,
+        formDefenition: {...action.formDefenition},
       };
     default:
       return state;

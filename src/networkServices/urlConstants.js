@@ -35,4 +35,5 @@ export default {
   getXyziesGoogleMapCoordinates: 'api/Contact/GetXyziesGoogleMapCoordinates',
   saveSuggestion: 'api/Contact/SaveSuggestion',
   getProductInfo: 'api/TaskBased/GetProductInfo?AccessToken=',
+  getFormDefinition: 'api/TaskBased/GetFormDefinition?AccessToken=',
 };

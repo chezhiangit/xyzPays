@@ -21,7 +21,7 @@ import Colors from '../uttils/Colors';
 import Images from '../Assets/index';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import WarningDialog from '../common/UIComponents/warningDialog';
-import {displayPhoneNumber} from '../uttils/UtilityFunctions';
+// import {displayPhoneNumber} from '../uttils/UtilityFunctions';
 // import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {
   getReferralRegFilter,
@@ -375,9 +375,7 @@ class MyReferrals extends React.Component {
                   <Icon name="phone-square" size={15} color={'gray'} />
                 </Text>
                 {/* <Image source={''} style={styles.emailphoneIcon} /> */}
-                <Text style={styles.customerDetailsTxt}>
-                  {displayPhoneNumber(item.Phone)}
-                </Text>
+                <Text style={styles.customerDetailsTxt}>{item.Phone}</Text>
               </View>
               <View
                 style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]}

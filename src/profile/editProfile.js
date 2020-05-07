@@ -27,7 +27,7 @@ import styles from './styles';
 import editStyles from './editProfileStyle';
 import {getProfileInfo, saveProfileInfo} from '../AppStore/profileActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
-import {displayPhoneNumber} from '../uttils/UtilityFunctions';
+// import {displayPhoneNumber} from '../uttils/UtilityFunctions';
 import SliderView from '../common/UIComponents/SliderView';
 import {heightAdapter, widthAdapter} from '../uttils/adapterUtil';
 
@@ -406,7 +406,7 @@ class EditProfilePage extends React.Component {
             placeholder={I18n.t('editProfile.mobileNumber')}
             autoFocus={false}
             onTextChange={text => this.setState({Mobile: text})}
-            inputValue={displayPhoneNumber(this.state.Mobile)}
+            inputValue={this.state.Mobile}
             phone
           />
           <TextInputComponent

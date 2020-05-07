@@ -22,7 +22,7 @@ import Images from '../Assets/index';
 import Colors from '../uttils/Colors';
 import WarningDialog from '../common/UIComponents/warningDialog';
 // import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import {displayPhoneNumber} from '../uttils/UtilityFunctions';
+// import {displayPhoneNumber} from '../uttils/UtilityFunctions';
 import {
   getReferralRegFilter,
   getReferralCommissionList,
@@ -258,7 +258,7 @@ class ReferralCommissions extends React.Component {
               {I18n.t('referralCommissions.phone')}
             </Text>
             <Text style={styles.customerDetailsTxt}>
-              {displayPhoneNumber(item.ReferredUserMobile)}
+              {item.ReferredUserMobile}
             </Text>
           </View>
         </View>

@@ -96,8 +96,43 @@ const getProductDetailsService = async (accessToken, ProductKey) => {
   }
 };
 
+const getFormDefenitionService = async (accessToken, FormKey) => {
+  try {
+    const url =
+      urlConstants.BaseUrl +
+      urlConstants.getFormDefinition +
+      accessToken +
+      '&FormKey=' +
+      FormKey;
+    const headersParams = {};
+    headersParams['Content-Type'] = 'application/json';
+    console.log('getFormDefenitionService url ...', url);
+    console.log('getFormDefenitionService headersParams ...', headersParams);
+
+    const response = await RNFetchBlob.config({timeout: TIMEOUT}).fetch(
+      'GET',
+      url,
+      headersParams,
+    );
+    console.log('getFormDefenitionService response ...', response);
+    const result = response.json();
+    if (response.respInfo.status === 200) {
+      result.status = 200;
+      return result;
+    } else if (response.respInfo.status === 500) {
+      result.status = 500;
+      return result;
+    }
+    return null;
+  } catch (e) {
+    console.log('getFormDefenitionService data failed.', e);
+    return null;
+  }
+};
+
 export {
   fetchDashboardDataService,
   getPendingTaskService,
   getProductDetailsService,
+  getFormDefenitionService,
 };

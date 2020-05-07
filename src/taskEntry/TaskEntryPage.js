@@ -14,6 +14,7 @@ import styles from './styles';
 import {widthAdapter, fontscale} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
 import WarningDialog from '../common/UIComponents/warningDialog';
+import {getFormDefenitionDetailsData} from '../AppStore/taskEntryActions';
 
 class TaskEntryPage extends React.Component {
   constructor(props) {
@@ -37,7 +38,25 @@ class TaskEntryPage extends React.Component {
         this.setState({width, height});
       },
     );
+
+    this.props.getFormDefenitionDetailsData(
+      this.props.FormKey,
+      this.getFormDefenitionDetailsSuccess,
+      this.getFormDefenitionDetailsFailed,
+    );
   }
+
+  getFormDefenitionDetailsSuccess = () => {
+    this.setState({isLoading: false});
+  };
+
+  getFormDefenitionDetailsFailed = errorMsg => {
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+  };
 
   onSave = () => {
     this.props.navigation.goBack();
@@ -180,6 +199,7 @@ class TaskEntryPage extends React.Component {
           onOK={this.onConfirm}
           dlgMsg={this.state.dlgMsg}
         />
+        <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
         {/* <TouchableOpacity onPress={() => navigation.replace('HomePage')}>
           <Text>{I18n.t('loginScreen')}</Text>
         </TouchableOpacity> */}
@@ -193,12 +213,15 @@ const mapStateToProps = state => {
   return {
     // dashboardData: state.dashboard.dashboardData,
     productDetails: state.taskEntry.productDetails[0],
+    FormKey: state.taskEntry.productDetails.FormKey,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  // getDashboardData: (onSuccesscallback, onErrocallback) =>
-  //   dispatch(getDashboardData(onSuccesscallback, onErrocallback)),
+  getFormDefenitionDetailsData: (FormKey, onSuccesscallback, onErrocallback) =>
+    dispatch(
+      getFormDefenitionDetailsData(FormKey, onSuccesscallback, onErrocallback),
+    ),
   // getPendingTaskData: (onSuccesscallback, onErrocallback) =>
   //   dispatch(getPendingTaskData(onSuccesscallback, onErrocallback)),
   // getProductDetailsData: (onSuccesscallback, onErrocallback) =>

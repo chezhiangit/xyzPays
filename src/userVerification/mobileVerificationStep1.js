@@ -13,7 +13,7 @@ import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
 import styles from './styles';
 import WarningDialog from '../common/UIComponents/warningDialog';
 import RadioButton from '../common/UIComponents/RadioButtom/radioButton';
-import {displayPhoneNumber} from '../uttils/UtilityFunctions';
+// import {displayPhoneNumber} from '../uttils/UtilityFunctions';
 import {
   sendMobileVerificationCode,
   getUserMobileDetails,
@@ -107,9 +107,7 @@ class MobileVerificationStep1 extends React.Component {
             <Text style={styles.phoneImage}>
               <Icon name="phone-square" size={15} color={'gray'} />
             </Text>
-            <Text style={styles.mobileNumber}>
-              {displayPhoneNumber(this.props.mobileNumber)}
-            </Text>
+            <Text style={styles.mobileNumber}>{this.props.mobileNumber}</Text>
           </View>
           <View style={styles.forgotStepOneNextContainer}>
             <PrimaryButton

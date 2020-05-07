@@ -25,6 +25,7 @@ import {
   STORE_USER_MOBILE_VERIFIED,
   STORE_USER_EMAIL_DETAILS,
   STORE_USER_MOBILE_DETAILS,
+  STORE_FORM_DEFENITION_DETAILS_DATA,
 } from '../AppStore/ActionTypes';
 
 export const userLoginSuccess = ({
@@ -117,9 +118,10 @@ export const storePendingTaskData = pendingTask => ({
   pendingTask,
 });
 
-export const storePendingTaskProductDetailsData = productDetails => ({
+export const storePendingTaskProductDetailsData = (productDetails, FormKey) => ({
   type: STORE_PENDING_TASK_PRODUCT_DETAILS_DATA,
   productDetails,
+  FormKey,
 });
 
 export const storeTrendingProductDetailsData = productDetails => ({
@@ -165,4 +167,9 @@ export const storeUserEmailDetails = emailDetails => ({
 export const storeUserMobileDetails = mobileDetails => ({
   type: STORE_USER_MOBILE_DETAILS,
   mobileDetails,
+});
+
+export const storeFormDefenitionDetails = formDefenition => ({
+  type: STORE_FORM_DEFENITION_DETAILS_DATA,
+  formDefenition,
 });
