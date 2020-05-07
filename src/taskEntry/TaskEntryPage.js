@@ -25,8 +25,20 @@ class TaskEntryPage extends React.Component {
       dlgMsg: '',
       answer1: '',
       answer2: '',
+      width: 100,
+      height: 100,
     };
   }
+
+  componentDidMount() {
+    Image.getSize(
+      this.props.productDetails?.ProductPicture,
+      (width, height) => {
+        this.setState({width, height});
+      },
+    );
+  }
+
   onSave = () => {
     this.props.navigation.goBack();
   };
@@ -66,12 +78,12 @@ class TaskEntryPage extends React.Component {
                   </Text>
                 </View>
                 <Text style={styles.taskEntryProductTxt}>
-                  {this.state.productName}
+                  {this.props.productDetails.ProductName}
                 </Text>
               </View>
               <View style={styles.activeContainer}>
                 <Text style={styles.statusTxt}>
-                  {I18n.t('taskEntryPage.active')}
+                  {this.props.productDetails['Product Status']}
                 </Text>
               </View>
               <View style={styles.skuContainer}>
@@ -79,11 +91,24 @@ class TaskEntryPage extends React.Component {
                   {I18n.t('taskEntryPage.sku')}
                   {': '}
                 </Text>
-                <Text style={styles.skuTxt}>{this.state.productName}</Text>
+                <Text style={styles.skuTxt}>
+                  {this.props.productDetails.SKU}
+                </Text>
               </View>
             </View>
             <View style={styles.taskEntryImageContainer}>
-              <Image style={styles.taskEntryImage} source={Images.xyfavIcon} />
+              {/* <Image style={styles.taskEntryImage} source={Images.xyfavIcon} /> */}
+              <Image
+                source={{
+                  isStatic: true,
+                  uri: this.props.productDetails?.ProductPicture,
+                  method: 'GET',
+                }}
+                style={[
+                  styles.productImage,
+                  // {width: this.state.width, height: this.state.height},
+                ]}
+              />
             </View>
           </View>
           <View style={styles.questionContainer}>
@@ -167,7 +192,7 @@ const mapStateToProps = state => {
   console.log('state from Home page ....', state);
   return {
     // dashboardData: state.dashboard.dashboardData,
-    productDetails: state.taskEntry.productDetails,
+    productDetails: state.taskEntry.productDetails[0],
   };
 };
 

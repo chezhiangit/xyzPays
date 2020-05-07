@@ -221,6 +221,21 @@ export default {
     prodStatus: 'Status',
     wishBtnName: 'ADD TO WISH LIST',
   },
+  userVerification: {
+    headerTitleEmail: 'Email Verification',
+    headerTitleMobile: 'Mobile Verification',
+    userInfo: 'Please verify your Email',
+    userInfoStep: 'Your Registered email is',
+    sendVerification: 'Send Verification Code',
+    emailStep2: 'Verification Code sent to your registered email',
+    emailPlaceHolder: 'Enter your Email verification code',
+
+    userInfoMobile: 'Please verify your Mobile',
+    userInfoStepMobile: 'Your Registered Mobile is',
+    mobileStep2: 'Verification Code sent to your registered Mobile',
+    mobilePlaceHolder: 'Enter your Mobile verification code',
+    step2Next: 'Verify Code',
+  },
   common: {
     placeHolder: 'Enter value',
     imgPickerTitle: 'Image Picker',

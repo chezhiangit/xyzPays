@@ -137,18 +137,24 @@ class MyReferrals extends React.Component {
         this.onRegistationStatusSuccess,
         this.onRegistationStatusFailed,
       );
-      this.setState({getUserListService: true});
-      this.props.getReferredUsersList(
-        0,
-        this.onReferralUserListSuccess,
-        this.onReferralUserListFailed,
-      );
+      // this.setState({getUserListService: true});
+      // this.props.getReferredUsersList(
+      //   0,
+      //   this.onReferralUserListSuccess,
+      //   this.onReferralUserListFailed,
+      // );
     }
   }
 
   onRegistationStatusSuccess = () => {
     console.log('registration status success');
-    this.setState({isLoading: false});
+    // this.setState({isLoading: false});
+    this.setState({getUserListService: true});
+    this.props.getReferredUsersList(
+      0,
+      this.onReferralUserListSuccess,
+      this.onReferralUserListFailed,
+    );
   };
 
   onRegistationStatusFailed = errorMsg => {

@@ -34,4 +34,5 @@ export default {
   getProductDetails: 'api/Product/GetProductDetail?AccessToken=',
   getXyziesGoogleMapCoordinates: 'api/Contact/GetXyziesGoogleMapCoordinates',
   saveSuggestion: 'api/Contact/SaveSuggestion',
+  getProductInfo: 'api/TaskBased/GetProductInfo?AccessToken=',
 };

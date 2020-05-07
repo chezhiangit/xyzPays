@@ -27,6 +27,8 @@ function* userLogin(action) {
           userName: action.userCredential.userName,
           userLoggedIn: response.IsLoginSuccess,
           accessToken: response.AccessToken,
+          IsMobileVerificationDone: response.IsMobileVerificationDone,
+          IsEmailVerificationDone: response.IsEmailVerificationDone,
         }),
       );
       action.onSuccesscallback();

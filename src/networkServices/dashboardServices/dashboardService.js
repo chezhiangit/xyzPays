@@ -66,7 +66,7 @@ const getProductDetailsService = async (accessToken, ProductKey) => {
   try {
     const url =
       urlConstants.BaseUrl +
-      urlConstants.getProductDetails +
+      urlConstants.getProductInfo +
       accessToken +
       '&ProductKey=' +
       ProductKey;

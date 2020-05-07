@@ -7,7 +7,14 @@ import {
   SAGA_SEND_USER_EMAIL_VERIFICATION_CODE,
   SAGA_VERIFY_USER_EMAIL_VERIFICATION_CODE,
 } from '../AppStore/ActionTypes';
-import {storeUserMobileDetails, storeUserEmailDetails} from './SagaActions';
+import {
+  storeUserMobileDetails,
+  storeUserEmailDetails,
+  storeEmailVerificationDetails,
+  userEmailVerified,
+  userMobileVerified,
+  storeMobileVerificationDetails,
+} from './SagaActions';
 import {
   getUserMobileDetailService,
   sendMobileVerificationCodeService,
@@ -24,7 +31,7 @@ function* getUserMobileDetail(action) {
     const accessToken = yield select(getAccessToken);
     const response = yield call(getUserMobileDetailService, accessToken);
     console.log('saga getUserMobileDetail api response...', response);
-    if (response !== null && response.status === 200 && response.IsUserExists) {
+    if (response !== null && response.status === 200) {
       console.log('getUserMobileDetail data ....', response);
       console.log('getUserMobileDetail saga action ....', action);
       const mobileDetails = {...response};
@@ -50,10 +57,10 @@ function* sendMobileVerificationCode(action) {
     if (response !== null && response.status === 200 && response.IsSuccess) {
       console.log('sendVerificationCode data ....', response);
       console.log('sendVerificationCode saga action ....', action);
-      // const userExists = {...response};
+      const mobileVerification = {...response};
 
-      // console.log('sendVerificationCode data object ....', userExists);
-      // yield put(storeUserDetails(userExists));
+      console.log('sendMobileVerificationCode data object ....', mobileVerification);
+      yield put(storeMobileVerificationDetails(mobileVerification));
       action.onSuccesscallback(response.Message);
     } else if (response !== null) {
       action.onErrorcallback(response.Message);
@@ -78,10 +85,8 @@ function* verifiMobileVerificationCode(action) {
     if (response !== null && response.status === 200 && response.IsSuccess) {
       console.log('verifiMobileVerificationCode data ....', response);
       console.log('verifiMobileVerificationCode saga action ....', action);
-      // const userExists = {...response};
 
-      // console.log('verifiMobileVerificationCode data object ....', userExists);
-      // yield put(storeUserDetails(userExists));
+      yield put(userMobileVerified(response.IsSuccess));
       action.onSuccesscallback();
     } else if (response !== null) {
       action.onErrorcallback(response.Message);
@@ -98,7 +103,7 @@ function* getUserEmailDetail(action) {
     const accessToken = yield select(getAccessToken);
     const response = yield call(getUserEmailDetailService, accessToken);
     console.log('saga getUserEmailDetail api response...', response);
-    if (response !== null && response.status === 200 && response.IsUserExists) {
+    if (response !== null && response.status === 200) {
       console.log('getUserEmailDetail data ....', response);
       console.log('getUserEmailDetail saga action ....', action);
       const emailDetails = {...response};
@@ -124,10 +129,13 @@ function* sendEmailVerificationCode(action) {
     if (response !== null && response.status === 200 && response.IsSuccess) {
       console.log('sendEmailVerificationCode data ....', response);
       console.log('sendEmailVerificationCode saga action ....', action);
-      // const userExists = {...response};
+      const emailVeification = {...response};
 
-      // console.log('sendVerificationCode data object ....', userExists);
-      // yield put(storeUserDetails(userExists));
+      console.log(
+        'sendEmailVerificationCode data object ....',
+        emailVeification,
+      );
+      yield put(storeEmailVerificationDetails(emailVeification));
       action.onSuccesscallback(response.Message);
     } else if (response !== null) {
       action.onErrorcallback(response.Message);
@@ -155,7 +163,7 @@ function* verifiEmailVerificationCode(action) {
       // const userExists = {...response};
 
       // console.log('verifiMobileVerificationCode data object ....', userExists);
-      // yield put(storeUserDetails(userExists));
+      yield put(userEmailVerified(response.IsSuccess));
       action.onSuccesscallback();
     } else if (response !== null) {
       action.onErrorcallback(response.Message);

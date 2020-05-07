@@ -70,7 +70,9 @@ class ProductDetailsPage extends React.Component {
           <View style={[BaseStyles.emptyHView, {height: heightAdapter(10)}]} />
           <View style={styles.commissionStatusContainer}>
             <Text style={[styles.commissionAmount, {color: '#3c763d'}]}>$</Text>
-            <Text style={styles.commissionAmount}>10, </Text>
+            <Text style={styles.commissionAmount}>
+              {this.props.productDetails['Commission Amount']},{' '}
+            </Text>
             {/* <Text style={styles.commissionStatusLabel}>
               {I18n.t('productDetails.status')}
             </Text> */}
@@ -86,7 +88,10 @@ class ProductDetailsPage extends React.Component {
                 uri: this.props.productDetails?.ProductPicture,
                 method: 'GET',
               }}
-              style={[styles.productImage, {width: this.state.width, height: this.state.height}]}
+              style={[
+                styles.productImage,
+                {width: this.state.width, height: this.state.height},
+              ]}
             />
           </View>
           <View style={BaseStyles.emptyHView} />

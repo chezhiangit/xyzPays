@@ -135,6 +135,10 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.primaryFontFamily,
     color: '#737373',
   },
+  productImage: {
+    height: heightAdapter(150),
+    width: widthAdapter(200),
+  },
 });
 
 export default styles;

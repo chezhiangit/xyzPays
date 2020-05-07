@@ -18,14 +18,28 @@ import {
   STORE_PENDING_TASK_PRODUCT_DETAILS_DATA,
   STORE_TRENDING_PRODUCTS_DETAILS,
   STORE_GOOGLE_MAP_COORDINATES,
-  STORE_SEND_PWD_MOBILE_VERIFICATION_CODE
+  STORE_SEND_PWD_MOBILE_VERIFICATION_CODE,
+  STORE_SEND_USER_EMAIL_VERIFICATION_CODE,
+  STORE_SEND_USER_MOBILE_VERIFICATION_CODE,
+  STORE_USER_EMAIL_VERIFIED,
+  STORE_USER_MOBILE_VERIFIED,
+  STORE_USER_EMAIL_DETAILS,
+  STORE_USER_MOBILE_DETAILS,
 } from '../AppStore/ActionTypes';
 
-export const userLoginSuccess = ({userName, userLoggedIn, accessToken}) => ({
+export const userLoginSuccess = ({
+  userName,
+  userLoggedIn,
+  accessToken,
+  IsMobileVerificationDone,
+  IsEmailVerificationDone,
+}) => ({
   type: LOGIN_SUCCESSFUL,
   userName,
   userLoggedIn,
   accessToken,
+  IsMobileVerificationDone,
+  IsEmailVerificationDone,
 });
 
 export const storeDashboardData = dashboardData => ({
@@ -121,4 +135,34 @@ export const storeGoogleMapCoordinates = mapCoordinates => ({
 export const storePwdSendMobileVerificationResponse = sendMobileVerificationRes => ({
   type: STORE_SEND_PWD_MOBILE_VERIFICATION_CODE,
   sendMobileVerificationRes,
+});
+
+export const storeEmailVerificationDetails = emailVeification => ({
+  type: STORE_SEND_USER_EMAIL_VERIFICATION_CODE,
+  emailVeification,
+});
+
+export const storeMobileVerificationDetails = mobileVeification => ({
+  type: STORE_SEND_USER_MOBILE_VERIFICATION_CODE,
+  mobileVeification,
+});
+
+export const userEmailVerified = status => ({
+  type: STORE_USER_EMAIL_VERIFIED,
+  status,
+});
+
+export const userMobileVerified = status => ({
+  type: STORE_USER_MOBILE_VERIFIED,
+  status,
+});
+
+export const storeUserEmailDetails = emailDetails => ({
+  type: STORE_USER_EMAIL_DETAILS,
+  emailDetails,
+});
+
+export const storeUserMobileDetails = mobileDetails => ({
+  type: STORE_USER_MOBILE_DETAILS,
+  mobileDetails,
 });

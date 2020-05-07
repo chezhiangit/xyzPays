@@ -15,31 +15,47 @@ import WarningDialog from '../common/UIComponents/warningDialog';
 import RadioButton from '../common/UIComponents/RadioButtom/radioButton';
 import {displayPhoneNumber} from '../uttils/UtilityFunctions';
 import {
-  sendEmailVerificationCode,
-  getUserEmailDetails,
+  sendMobileVerificationCode,
+  getUserMobileDetails,
 } from '../AppStore/userVerificationActions';
 
-class EmailVerificationStep1 extends React.Component {
+class MobileVerificationStep1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userEmail: '',
       showDlg: false,
       dlgMsg: '',
+      mobileNumber: '1234567890',
       isLoading: false,
     };
   }
 
   componentDidMount() {
-    this.props.getUserEmailDetails(
-      this.onGetUserEmailSuccess,
-      this.onGetUserEmailFailed,
+    this.props.getUserMobileDetails(
+      this.onGetMobileDetailsSuccess,
+      this.onGetMobileDetailsFailed,
     );
   }
-  onStepNext = () => {
+
+  onGetMobileDetailsSuccess = () => {
+    this.setState({isLoading: false});
+  };
+
+  onGetMobileDetailsFailed = errorMsg => {
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+    console.log(errorMsg);
+  };
+
+  onStepTwoNext = () => {
     this.setState({isLoading: true}, () =>
-      this.props.sendEmailVerificationCode(
-        this.onsendEmailVerificationCodeSuccess,
-        this.onsendEmailVerificationCodeFailed,
+      this.props.sendMobileVerificationCode(
+        this.onSendVerificationCodeSuccess,
+        this.onSendVerificationCodeFailed,
       ),
     );
   };
@@ -52,26 +68,12 @@ class EmailVerificationStep1 extends React.Component {
     this.setState({showDlg: false});
   };
 
-  onGetUserEmailSuccess = () => {
-    this.setState({isLoading: false});
-  };
-
-  onGetUserEmailFailed = errorMsg => {
-    this.setState({
-      isLoading: false,
-      showDlg: true,
-      dlgMsg: errorMsg,
-    });
-    console.log(errorMsg);
-  };
-
-  onsendEmailVerificationCodeSuccess = () => {
+  onSendVerificationCodeSuccess = () => {
     console.log('send verification code success');
     this.setState({isLoading: false});
-    // this.props.navigation.navigate('ForgotPasswordStep3');
   };
 
-  onsendEmailVerificationCodeFailed = errorMsg => {
+  onSendVerificationCodeFailed = errorMsg => {
     console.log('send verification code failed');
     this.setState({
       isLoading: false,
@@ -82,28 +84,37 @@ class EmailVerificationStep1 extends React.Component {
   };
 
   render() {
-    // const {navigation} = this.props;
     return (
       <View style={[BaseStyles.baseContainer]}>
         <View style={styles.verificationContainer}>
           <View style={styles.userInfo}>
             <Text style={styles.userInfoTxt}>
-              {I18n.t('userVerification.userInfo')}
+              {I18n.t('userVerification.userInfoMobile')}
             </Text>
           </View>
-          <View style={styles.userInfoStepRow}>
+          {/* <View style={styles.userInfoStepRow}>
             <Text style={styles.userInfoStep}>
-              {I18n.t('userVerification.userInfoStep')}
+              {I18n.t('userVerification.userInfoStepMobile')}
+            </Text>
+          </View> */}
+          <View style={styles.forgotPwdUserStep1}>
+            <Text style={styles.forgotPwdUserStep1Txt}>
+              {I18n.t('userVerification.userInfoStepMobile')}
             </Text>
           </View>
-          <View style={styles.forgotPwdUserStep1}>
-            <Text style={styles.forgotPwdUserStep1Txt}>{this.props.email}</Text>
+          {/* <RadioButton btnName={I18n.t('userVerification.recoveryMsg')} /> */}
+          <View style={styles.mobileNumberView}>
+            <Text style={styles.phoneImage}>
+              <Icon name="phone-square" size={15} color={'gray'} />
+            </Text>
+            <Text style={styles.mobileNumber}>
+              {displayPhoneNumber(this.props.mobileNumber)}
+            </Text>
           </View>
-
           <View style={styles.forgotStepOneNextContainer}>
             <PrimaryButton
               btnName={I18n.t('userVerification.sendVerification')}
-              onSubmit={this.onStepNext}
+              onSubmit={this.onStepTwoNext}
             />
           </View>
         </View>
@@ -120,20 +131,20 @@ class EmailVerificationStep1 extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log('state from EmailVerificationStep1 ', state);
+  console.log('state from mobileverification step 1 ', state);
   return {
-    email: state.userVerification?.emailDetails?.Email,
+    mobileNumber: state.userVerification?.mobileDetails?.Mobile,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  sendEmailVerificationCode: (onSuccessCallback, onErrorCallback) =>
-    dispatch(sendEmailVerificationCode(onSuccessCallback, onErrorCallback)),
-  getUserEmailDetails: (onSuccessCallback, onErrorCallback) =>
-    dispatch(getUserEmailDetails(onSuccessCallback, onErrorCallback)),
+  sendMobileVerificationCode: (onSuccessCallback, onErrorCallback) =>
+    dispatch(sendMobileVerificationCode(onSuccessCallback, onErrorCallback)),
+  getUserMobileDetails: (onSuccessCallback, onErrorCallback) =>
+    dispatch(getUserMobileDetails(onSuccessCallback, onErrorCallback)),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(EmailVerificationStep1);
+)(MobileVerificationStep1);

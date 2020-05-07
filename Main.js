@@ -31,6 +31,10 @@ import ReferralCommissionsPage from './src/referralCommissions/referralCommissio
 import PayoutHistoryPage from './src/payoutHistory/payoutHistory';
 import ForgotPasswordStep3 from './src/login/forgotPassword/forgotPasswordStep3';
 import ForgotPasswordStep4 from './src/login/forgotPassword/forgotPasswordStep4';
+import EmailVerificationStep1 from './src/userVerification/emailVerificationStep1';
+import EmailVerificationStep2 from './src/userVerification/emailVerificationStep2';
+import MobileVerificationStep1 from './src/userVerification/mobileVerificationStep1';
+import MobileVerificationStep2 from './src/userVerification/mobileVerificationStep2';
 import FAQPage from './src/faq/faq';
 import I18n from './src/localization/i18n';
 import Colors from './src/uttils/Colors';
@@ -127,11 +131,186 @@ const HomeNavigator = ({route, navigation}) => {
 };
 
 class Main extends React.Component {
-  render() {
-    // console.log('this.props.isLoading ....', this.props.isLoading);
+  renderPage = () => {
+    if (
+      this.props.IsEmailVerificationDone === false &&
+      this.props.userEmailVerification?.IsSuccess === true
+    ) {
+      return (
+        <Stack.Navigator
+          initialRouteName="EmailVerificationStep2"
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: Colors.primaryAppColor,
+            },
+            headerTintColor: Colors.primaryFontColor,
+            headerTitleStyle: {
+              fontSize: FontsSize.headerName,
+              fontWeight: FontsWeight.header,
+              color: Colors.primaryFontColor,
+              fontFamily: fontFamily.primaryFontFamily,
+            },
+          }}>
+          <Stack.Screen
+            name="EmailVerificationStep2"
+            component={EmailVerificationStep2}
+            options={{
+              title: I18n.t('userVerification.headerTitleEmail'),
+            }}
+          />
+        </Stack.Navigator>
+      );
+    }
+
+    if (this.props.IsEmailVerificationDone === false) {
+      return (
+        <Stack.Navigator
+          initialRouteName="EmailVerificationStep1"
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: Colors.primaryAppColor,
+            },
+            headerTintColor: Colors.primaryFontColor,
+            headerTitleStyle: {
+              fontSize: FontsSize.headerName,
+              fontWeight: FontsWeight.header,
+              color: Colors.primaryFontColor,
+              fontFamily: fontFamily.primaryFontFamily,
+            },
+          }}>
+          <Stack.Screen
+            name="EmailVerificationStep1"
+            component={EmailVerificationStep1}
+            options={{
+              title: I18n.t('userVerification.headerTitleEmail'),
+            }}
+          />
+        </Stack.Navigator>
+      );
+    }
+
+    if (
+      this.props.IsMobileVerificationDone === false &&
+      this.props.userMobileVerification?.IsSuccess === true
+    ) {
+      return (
+        <Stack.Navigator
+          initialRouteName="MobileVerificationStep2"
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: Colors.primaryAppColor,
+            },
+            headerTintColor: Colors.primaryFontColor,
+            headerTitleStyle: {
+              fontSize: FontsSize.headerName,
+              fontWeight: FontsWeight.header,
+              color: Colors.primaryFontColor,
+              fontFamily: fontFamily.primaryFontFamily,
+            },
+          }}>
+          <Stack.Screen
+            name="MobileVerificationStep2"
+            component={MobileVerificationStep2}
+            options={{
+              title: I18n.t('userVerification.headerTitleMobile'),
+            }}
+          />
+        </Stack.Navigator>
+      );
+    }
+
+    if (this.props.IsMobileVerificationDone === false) {
+      return (
+        <Stack.Navigator
+          initialRouteName="MobileVerificationStep1"
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: Colors.primaryAppColor,
+            },
+            headerTintColor: Colors.primaryFontColor,
+            headerTitleStyle: {
+              fontSize: FontsSize.headerName,
+              fontWeight: FontsWeight.header,
+              color: Colors.primaryFontColor,
+              fontFamily: fontFamily.primaryFontFamily,
+            },
+          }}>
+          <Stack.Screen
+            name="MobileVerificationStep1"
+            component={MobileVerificationStep1}
+            options={{
+              title: I18n.t('userVerification.headerTitleMobile'),
+            }}
+          />
+        </Stack.Navigator>
+      );
+    }
+
     return (
-      //   <SafeAreaProvider>
-      // <Spinner visible={this.props.isLoading} textContent={'Loading...'} />
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: Colors.primaryAppColor,
+          },
+          headerTintColor: Colors.primaryFontColor,
+          headerTitleStyle: {
+            fontSize: FontsSize.headerName,
+            fontWeight: FontsWeight.header,
+            color: Colors.primaryFontColor,
+            fontFamily: fontFamily.primaryFontFamily,
+          },
+        }}>
+        <Stack.Screen
+          name="HomePage"
+          component={HomeNavigator}
+          options={({route, navigation}) => ({
+            title: I18n.t('homePage.headerTitle'),
+            headerRight: ({}) => <MenuIcon navigation={navigation} />,
+          })}
+        />
+        <Stack.Screen
+          name="TaskEntryPage"
+          component={TaskEntryPage}
+          options={{
+            title: I18n.t('taskEntryPage.headerTitle'),
+            headerStyle: {
+              backgroundColor: Colors.primaryAppColor,
+            },
+            headerTintColor: Colors.primaryFontColor,
+            headerTitleStyle: {
+              fontSize: FontsSize.headerName,
+              fontWeight: FontsWeight.header,
+              color: Colors.primaryFontColor,
+              fontFamily: fontFamily.primaryFontFamily,
+            },
+            headerBackTitle: 'Home',
+          }}
+        />
+        <Stack.Screen
+          name="ProductDetailsPage"
+          component={ProductDetailsPage}
+          options={{
+            title: I18n.t('productDetails.headerTitle'),
+            headerStyle: {
+              backgroundColor: Colors.primaryAppColor,
+            },
+            headerTintColor: Colors.primaryFontColor,
+            headerTitleStyle: {
+              fontSize: FontsSize.headerName,
+              fontWeight: FontsWeight.header,
+              color: Colors.primaryFontColor,
+              fontFamily: fontFamily.primaryFontFamily,
+            },
+            headerBackTitle: 'Trending Products',
+          }}
+        />
+      </Stack.Navigator>
+    );
+  };
+
+  render() {
+    return (
       <NavigationContainer>
         {this.props.userLoggedIn === false ? (
           <Stack.Navigator
@@ -192,86 +371,9 @@ class Main extends React.Component {
             />
           </Stack.Navigator>
         ) : (
-          <Stack.Navigator
-            initialRouteName="Home"
-            screenOptions={{
-              headerStyle: {
-                backgroundColor: Colors.primaryAppColor,
-              },
-              headerTintColor: Colors.primaryFontColor,
-              headerTitleStyle: {
-                fontSize: FontsSize.headerName,
-                fontWeight: FontsWeight.header,
-                color: Colors.primaryFontColor,
-                fontFamily: fontFamily.primaryFontFamily,
-              },
-            }}>
-            <Stack.Screen
-              name="HomePage"
-              component={HomeNavigator}
-              options={({route, navigation}) => ({
-                title: I18n.t('homePage.headerTitle'),
-                headerRight: ({}) => <MenuIcon navigation={navigation} />,
-              })}
-            />
-            <Stack.Screen
-              name="TaskEntryPage"
-              component={TaskEntryPage}
-              options={{
-                title: I18n.t('taskEntryPage.headerTitle'),
-                headerStyle: {
-                  backgroundColor: Colors.primaryAppColor,
-                },
-                headerTintColor: Colors.primaryFontColor,
-                headerTitleStyle: {
-                  fontSize: FontsSize.headerName,
-                  fontWeight: FontsWeight.header,
-                  color: Colors.primaryFontColor,
-                  fontFamily: fontFamily.primaryFontFamily,
-                },
-                headerBackTitle: 'Home',
-              }}
-            />
-            <Stack.Screen
-              name="ProductDetailsPage"
-              component={ProductDetailsPage}
-              options={{
-                title: I18n.t('productDetails.headerTitle'),
-                headerStyle: {
-                  backgroundColor: Colors.primaryAppColor,
-                },
-                headerTintColor: Colors.primaryFontColor,
-                headerTitleStyle: {
-                  fontSize: FontsSize.headerName,
-                  fontWeight: FontsWeight.header,
-                  color: Colors.primaryFontColor,
-                  fontFamily: fontFamily.primaryFontFamily,
-                },
-                headerBackTitle: 'Trending Products',
-              }}
-            />
-            {/* <Stack.Screen
-              name="ImagePicker"
-              component={ImagePickerComponent}
-              options={{
-                title: I18n.t('common.imgPickerTitle'),
-                headerStyle: {
-                  backgroundColor: Colors.primaryAppColor,
-                },
-                headerTintColor: Colors.primaryFontColor,
-                headerTitleStyle: {
-                  fontSize: FontsSize.headerName,
-                  fontWeight: FontsWeight.header,
-                  color: Colors.primaryFontColor,
-                  fontFamily: fontFamily.primaryFontFamily,
-                },
-                headerBackTitle: I18n.t('editProfile.headerTitle'),
-              }}
-            /> */}
-          </Stack.Navigator>
+          this.renderPage()
         )}
       </NavigationContainer>
-      //   </SafeAreaProvider>
     );
   }
 }
@@ -281,6 +383,10 @@ const mapStateToProps = state => {
   return {
     userLoggedIn: state.login.userLoggedIn,
     // isLoading: state.loading.isLoading,
+    IsEmailVerificationDone: state.login.IsEmailVerificationDone,
+    IsMobileVerificationDone: state.login.IsMobileVerificationDone,
+    userEmailVerification: state.userVerification.emailVeification,
+    userMobileVerification: state.userVerification.mobileVeification,
   };
 };
 

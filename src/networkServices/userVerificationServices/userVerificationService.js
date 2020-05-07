@@ -111,7 +111,7 @@ const verifiMobileVerificationCodeService = async (
 const getUserEmailDetailService = async accessToken => {
   try {
     const url =
-      urlConstants.BaseUrl + urlConstants.getMobileDetails + accessToken;
+      urlConstants.BaseUrl + urlConstants.getEmailDetails + accessToken;
     const headersParams = {};
     headersParams['Content-Type'] = 'application/json';
     console.log('getUserEmailDetailService url ...', url);
@@ -142,7 +142,7 @@ const sendEmailVerificationCodeService = async accessToken => {
   try {
     const url =
       urlConstants.BaseUrl +
-      urlConstants.sendMobileVerificaionCode +
+      urlConstants.sendEmailVerificaionCode +
       accessToken;
     const headersParams = {};
     headersParams['Content-Type'] = 'application/json';
@@ -181,7 +181,7 @@ const verifiEmailVerificationCodeService = async (
   try {
     const url =
       urlConstants.BaseUrl +
-      urlConstants.verifiMobileVerificationCode +
+      urlConstants.verifiEmailVerificationCode +
       accessToken +
       '&ServiceToken=' +
       ServiceToken +

@@ -10,6 +10,7 @@ import forgotPasswordReducer from './forgotPasswordReducer';
 import payoutReducer from './payoutReducer';
 import taskEntryReducer from './taskEntryReducer';
 import contactUSReducer from './contactUSReducer';
+import userVerificationReducer from './userVerificationReducer';
 
 const appReducer = combineReducers({
   login: loginReducer,
@@ -23,6 +24,7 @@ const appReducer = combineReducers({
   payout: payoutReducer,
   taskEntry: taskEntryReducer,
   contactUS: contactUSReducer,
+  userVerification: userVerificationReducer,
 });
 
 const rootReducer = (state, action) => {
