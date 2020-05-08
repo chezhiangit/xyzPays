@@ -445,13 +445,13 @@ class EditProfilePage extends React.Component {
             onSubmit={this.onUpdate}
           />
           <View style={BaseStyles.emptyHView} />
-          <View style={styles.labelContainer}>
+          {/* <View style={styles.labelContainer}>
             <ReadOnlyView
               label={I18n.t('editProfile.interest')}
               labelStyle={styles.accountInforLabel}
             />
-          </View>
-          <View style={editStyles.interestContainer}>
+          </View> */}
+          {/* <View style={editStyles.interestContainer}>
             <CheckBoxComponent
               btnName={'Healthcare'}
               onClick={() => this.onCheckBoxSelected(0)}
@@ -477,7 +477,7 @@ class EditProfilePage extends React.Component {
               onClick={() => this.onCheckBoxSelected(4)}
               isSelected={this.state.checBoxArray[4]}
             />
-          </View>
+          </View> */}
         </ScrollView>
         <Footer />
         <WarningDialog

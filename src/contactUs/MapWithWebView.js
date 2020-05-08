@@ -40,6 +40,7 @@ class ContactUs extends React.Component {
       this.onGetMapCoordinatesSuccess,
       this.onGetMapCoordinatesFailed,
     );
+    this.setState({isLoading: false});
   }
   componentWillUnmount() {
     // this.props.deregisterKeyboard();
@@ -88,6 +89,7 @@ class ContactUs extends React.Component {
               this.props.XyziesGoogleMapCoordinates
             } frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`,
           }}
+          onLoadEnd={() => this.setState({isLoading: false})}
         />
         <View style={styles.bottomContainer}>
           <PrimaryButton

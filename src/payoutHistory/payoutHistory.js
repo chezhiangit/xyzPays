@@ -4,7 +4,7 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  TouchableWithoutFeedback,
+  // TouchableWithoutFeedback,
   FlatList,
   Image,
   TextInput,
@@ -14,6 +14,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {connect} from 'react-redux';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
 import I18n from '../localization/i18n';
@@ -163,11 +164,12 @@ class PayoutHistory extends React.Component {
   };
 
   renderSegmentItem = ({item, index}) => (
-    <TouchableOpacity onPress={() => this.onSegmentItemSelected(item, index)}>
+    <TouchableWithoutFeedback
+      onPress={() => this.onSegmentItemSelected(item, index)}>
       <View style={styles.segmentItemRow}>
         <Text style={styles.segmentItemText}>{item.Text}</Text>
       </View>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   );
 
   renderPayoutCard = ({item, index}) => {

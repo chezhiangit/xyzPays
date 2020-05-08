@@ -7,7 +7,7 @@ import {
   Image,
   Easing,
   TouchableOpacity,
-  TouchableWithoutFeedback,
+  // TouchableWithoutFeedback,
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {connect} from 'react-redux';
@@ -21,7 +21,7 @@ import {heightAdapter, fontscale} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
 import Images from '../Assets/index';
 import {getDateFilter, getCommissionList} from '../AppStore/commissionActions';
-// import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import WarningDialog from '../common/UIComponents/warningDialog';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import SliderView from '../common/UIComponents/SliderView';

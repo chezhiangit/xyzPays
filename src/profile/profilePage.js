@@ -309,13 +309,13 @@ class ProfilePage extends React.Component {
           </View>
           <View style={BaseStyles.emptyHView} />
           <View style={BaseStyles.emptyHView} />
-          <View style={styles.labelContainer}>
+          {/* <View style={styles.labelContainer}>
             <ReadOnlyView
               label={I18n.t('profile.interest')}
               labelStyle={styles.accountInforLabel}
             />
-          </View>
-          <View style={editStyles.interestContainer}>
+          </View> */}
+          {/* <View style={editStyles.interestContainer}>
             <CheckBoxComponent
               btnName={'Healthcare'}
               onClick={() => this.onCheckBoxSelected(0)}
@@ -341,7 +341,7 @@ class ProfilePage extends React.Component {
               onClick={() => this.onCheckBoxSelected(4)}
               isSelected={this.state.checBoxArray[4]}
             />
-          </View>
+          </View> */}
         </ScrollView>
         <Footer />
         <WarningDialog

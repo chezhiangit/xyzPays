@@ -7,7 +7,7 @@ import {
   Image,
   Easing,
   TouchableOpacity,
-  TouchableWithoutFeedback,
+  // TouchableWithoutFeedback,
 } from 'react-native';
 import BaseStyles from '../common/BaseStyles';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -22,7 +22,7 @@ import Images from '../Assets/index';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import WarningDialog from '../common/UIComponents/warningDialog';
 // import {displayPhoneNumber} from '../uttils/UtilityFunctions';
-// import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {
   getReferralRegFilter,
   getReferredUsersList,
