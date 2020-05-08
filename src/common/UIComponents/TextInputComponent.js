@@ -73,7 +73,7 @@ class TextInputComponent extends React.Component {
           }}
           onFocus={() => {
             this.setState({focus: true});
-            this.props.onFieldFocus && this.props.onFieldFocus(1100);
+            this.props.onFieldFocus && this.props.onFieldFocus(800);
           }}
           // value={
           //   this.props.phone
