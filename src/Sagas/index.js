@@ -9,6 +9,7 @@ import watchTrendingProductActions from './trendingProductsSaga';
 import watchReferralActions from './referralSaga';
 import watchPayoutAction from './payoutSaga';
 import watchUserVerificationActions from './userVerificationSaga';
+import watchContactsUsActions from './contactUSSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -22,5 +23,6 @@ export default function* rootSaga() {
     watchReferralActions(),
     watchPayoutAction(),
     watchUserVerificationActions(),
+    watchContactsUsActions(),
   ]);
 }

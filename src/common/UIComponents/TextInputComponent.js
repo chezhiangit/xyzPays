@@ -15,13 +15,13 @@ class TextInputComponent extends React.Component {
     super(props);
     this.state = {
       placeholderText: '',
-      // inputValue: this.props.inputValue ? this.props.inputValue : '',
+      inputValue: '',
       focus: this.props.inputValue ? true : false,
       validInput: true,
     };
   }
   static getDerivedStateFromProps(props, state) {
-    if (props.inputValue.length === 0) {
+    if (props.inputValue?.length === 0) {
       return {emailValid: true};
     }
     return {};
@@ -33,6 +33,11 @@ class TextInputComponent extends React.Component {
     //   this.setState({validInput});
     // }
     this.props.onTextChange(inputValue);
+
+    if (this.props.inputValue === undefined) {
+      this.setState({inputValue});
+    }
+
   };
 
   render() {
@@ -52,7 +57,7 @@ class TextInputComponent extends React.Component {
           placeholderTextColor="rgb(117, 129, 155)"
           autoCorrect={false}
           placeholder={
-            !this.state.focus && this.props.inputValue.length === 0
+            !this.state.focus && this.props.inputValue?.length === 0 || (!this.state.focus && this.state.inputValue?.length !== undefined && this.state.inputValue?.length === 0)
               ? this.props.placeholder
               : ''
           }
@@ -62,7 +67,7 @@ class TextInputComponent extends React.Component {
             // this.props.onTextChange(this.state.inputValue);
           }}
           onBlur={() => {
-            if (this.props.inputValue.length === 0) {
+            if (this.props.inputValue?.length === 0 || (this.state.inputValue?.length !== undefined && this.state.inputValue?.length === 0)) {
               this.setState({focus: false});
             }
           }}
@@ -77,7 +82,7 @@ class TextInputComponent extends React.Component {
           // }
           value={this.props.inputValue}
         />
-        {this.state.focus && this.props.placeholder.length > 0 && (
+        {this.state.focus && (this.props.placeholder.length > 0 || this.state.inputValue?.length) && (
           <Text style={styles.captionText}>{this.props.placeholder}</Text>
         )}
       </View>

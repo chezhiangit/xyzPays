@@ -36,10 +36,10 @@ class ContactUs extends React.Component {
 
   componentDidMount() {
     this.props.registerKeyboard();
-    // this.props.getGoogleMapCoordinates(
-    //   this.onGetMapCoordinatesSuccess,
-    //   this.onGetMapCoordinatesFailed,
-    // );
+    this.props.getGoogleMapCoordinates(
+      this.onGetMapCoordinatesSuccess,
+      this.onGetMapCoordinatesFailed,
+    );
   }
   componentWillUnmount() {
     this.props.deregisterKeyboard();
@@ -200,15 +200,15 @@ class ContactUs extends React.Component {
               <TextInputComponent
                 placeholder={I18n.t('contactUs.subject')}
                 autoFocus={false}
-                // onFieldFocus={this.props.onFieldFocus}
-                inputValue={this.state.findUsSubject}
+                onFieldFocus={this.props.onFieldFocus}
+                // inputValue={this.state.findUsSubject}
                 onTextChange={text => this.setState({findUsSubject: text})}
               />
               <TextInputComponent
                 placeholder={I18n.t('contactUs.message')}
                 autoFocus={false}
-                // onFieldFocus={this.props.onFieldFocus}
-                inputValue={this.state.findUsMessage}
+                onFieldFocus={this.props.onFieldFocus}
+                // inputValue={this.state.findUsMessage}
                 onTextChange={findUsMessage => this.setState({findUsMessage})}
               />
               <PrimaryButton
@@ -298,17 +298,13 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   getGoogleMapCoordinates: (onSuccesscallback, onErrocallback) =>
     dispatch(getGoogleMapCoordinates(onSuccesscallback, onErrocallback)),
-  // getPendingTaskData: (onSuccesscallback, onErrocallback) =>
-  //   dispatch(getPendingTaskData(onSuccesscallback, onErrocallback)),
-  // getProductDetailsData: (ProductKey, onSuccesscallback, onErrocallback) =>
-  //   dispatch(
-  //     getProductDetailsData(ProductKey, onSuccesscallback, onErrocallback),
-  //   ),
 });
 
-// const childComp = connect(
-//   mapStateToProps,
-//   mapDispatchToProps,
-// )(ContactUs);
+const childComp = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ContactUs);
 
-export default KeyboardAwareComponent(ContactUs);
+export default KeyboardAwareComponent(childComp);
+
+// export default ContactUs;

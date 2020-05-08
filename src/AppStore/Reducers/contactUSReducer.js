@@ -10,7 +10,7 @@ const contactUsReducer = (
     case SAGA_GET_GOOGLE_MAP_COORDINATES:
       return {
         ...state,
-        mapCoordinates: [...action.mapCoordinates],
+        mapCoordinates: {...action.mapCoordinates},
       };
     default:
       return state;

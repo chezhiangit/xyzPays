@@ -22,6 +22,11 @@ const getGoogleMapCoordinatesService = async () => {
     const result = response.json();
     if (response.respInfo.status === 200) {
       result.status = 200;
+      // console.log('XyziesGoogleMapCoordinates.....', result[0]);
+      // const XyziesGoogleMapCoordinates = await RNFetchBlob.config({
+      //   timeout: TIMEOUT,
+      // }).fetch('GET', result[0].XyziesGoogleMapCoordinates, headersParams);
+      // console.log('XyziesGoogleMapCoordinates response ', XyziesGoogleMapCoordinates);
       return result;
     } else if (response.respInfo.status === 500) {
       result.status = 500;
