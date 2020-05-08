@@ -96,7 +96,7 @@ class ReferralCommissions extends React.Component {
       selectedValue: '',
       selectedIndex: 4,
       isSegmentVisible: false,
-      commissionData: [...commission],
+      commissionData: [],
       segmentBorder: 0,
       showDlg: false,
       dlgMsg: '',
@@ -121,11 +121,9 @@ class ReferralCommissions extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.dateFilter.length === 0) {
-      // this.props.getReferralRegFilter(
-      //   this.onRegistationStatusSuccess,
-      //   this.onRegistationStatusFailed,
-      // );
+
+    this.props.navigation.addListener('focus', () => {
+      this.setState({isLoading: true});
       this.props.getReferralDateFilter(
         this.onDateFilterSuccess,
         this.onDateFilterFailed,
@@ -136,7 +134,20 @@ class ReferralCommissions extends React.Component {
         this.onReferralCommissionSuccess,
         this.onReferralCommissionFailed,
       );
-    }
+    });
+
+    // if (this.props.dateFilter.length === 0) {
+    //   this.props.getReferralDateFilter(
+    //     this.onDateFilterSuccess,
+    //     this.onDateFilterFailed,
+    //   );
+    //   this.props.getReferralCommissionList(
+    //     4,
+    //     0,
+    //     this.onReferralCommissionSuccess,
+    //     this.onReferralCommissionFailed,
+    //   );
+    // }
   }
   onSegmentItemSelected = (item, index) => {
     this.toggleDropdown(false);

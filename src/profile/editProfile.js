@@ -74,38 +74,7 @@ class EditProfilePage extends React.Component {
   static getDerivedStateFromProps(props, state) {
     if (!state.profileInfoServiceDone && props.profileInfo.FirstName === '') {
       return {isLoading: true};
-      // } else if (
-      //   state.profileInfoServiceDone &&
-      //   !state.saveProfileInfoServiceDone &&
-      //   props.profileInfo.FirstName !== '' &&
-      //   state.isLoading
-      // ) {
-      //   return {
-      //     RepId: props.profileInfo.RepId,
-      //     AddressLine: props.profileInfo.AddressLine,
-      //     Mobile: props.profileInfo.Mobile,
-      //     PaypalEmail: props.profileInfo.PaypalEmail,
-      //     Website: props.profileInfo.Website,
-      //     State: props.profileInfo.State,
-      //     CreatedBy: props.profileInfo.CreatedBy,
-      //     RegId: props.profileInfo.RegId,
-      //     Status: props.profileInfo.Status,
-      //     FirstName: props.profileInfo.FirstName,
-      //     LastName: props.profileInfo.LastName,
-      //     RegistrationType: props.profileInfo.RegistrationType,
-      //     RegisteredOn: props.profileInfo.RegisteredOn,
-      //     ProductAccess: props.profileInfo.ProductAccess,
-      //     City: props.profileInfo.City,
-      //     ZipCode: props.profileInfo.ZipCode,
-      //     LoginEmail: props.profileInfo.LoginEmail,
-      //     isLoading: false,
-      //     dataLoaded: true,
-      //   };
-    } else if (
-      !state.dataLoaded &&
-      state.FirstName === '' &&
-      props.profileInfo.FirstName !== ''
-    ) {
+    } else if (!state.dataLoaded && !state.isLoading) {
       console.log('assign values from props to state variable', props);
       return {
         RepId: props.profileInfo.RepId,
@@ -135,24 +104,24 @@ class EditProfilePage extends React.Component {
             ? props.profileInfo.ProfilePicture
             : '',
         dataLoaded: true,
-        isLoading: false,
       };
     }
     return {};
   }
 
   componentDidMount() {
-    if (this.props.profileInfo.FirstName === '') {
+    this.props.navigation.addListener('focus', () => {
+      this.setState({isLoading: true});
       this.props.getProfileInfo(
         this.onGetProfileInfoSuccess,
         this.onGetProfileInfoFailed,
       );
-      this.dataLoaded = false;
-    }
+      this.setState({dataLoaded: false});
+    });
   }
 
   onGetProfileInfoSuccess = () => {
-    this.setState({profileInfoServiceDone: true});
+    this.setState({profileInfoServiceDone: true, isLoading: false});
   };
 
   onGetProfileInfoFailed = errorMsg => {

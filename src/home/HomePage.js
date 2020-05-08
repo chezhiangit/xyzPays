@@ -87,19 +87,30 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getDashboardData(
-      this.onGetDashboardDataSuccess,
-      this.onGetDashboardDataFailed,
-    );
-    this.props.getPendingTaskData(
-      this.onGetPendingTaskDataSuccess,
-      this.onGetPendingTaskDataFailed,
-    );
+    this.props.navigation.addListener('focus', () => {
+      this.setState({isLoading: true});
+      this.props.getDashboardData(
+        this.onGetDashboardDataSuccess,
+        this.onGetDashboardDataFailed,
+      );
+    });
+    // this.props.getDashboardData(
+    //   this.onGetDashboardDataSuccess,
+    //   this.onGetDashboardDataFailed,
+    // );
+    // this.props.getPendingTaskData(
+    //   this.onGetPendingTaskDataSuccess,
+    //   this.onGetPendingTaskDataFailed,
+    // );
   }
 
   onGetDashboardDataSuccess = () => {
     console.log('dashboard success');
-    this.setState({isLoading: false, dashboardServiceDone: true});
+    this.setState({dashboardServiceDone: true});
+    this.props.getPendingTaskData(
+      this.onGetPendingTaskDataSuccess,
+      this.onGetPendingTaskDataFailed,
+    );
   };
 
   onGetDashboardDataFailed = errorMsg => {
@@ -258,14 +269,24 @@ class HomePage extends React.Component {
             </Text>
           </View>
           <View style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]} />
-          <PrimaryButton
+          {/* <PrimaryButton
             btnStyle={styles.taskBtn}
             onSubmit={this.onPressTaskButton}
             btnName={taskBtnName}
-          />
+          /> */}
+          {this.props.pendingTask.length === 0 && (
+            <View
+              style={[BaseStyles.emptyHView, {height: heightAdapter(100)}]}
+            />
+          )}
 
           {this.props.pendingTask.length > 0 && (
             <>
+              <PrimaryButton
+                btnStyle={styles.taskBtn}
+                onSubmit={this.onPressTaskButton}
+                btnName={taskBtnName}
+              />
               <View
                 style={[BaseStyles.emptyHView, {height: heightAdapter(70)}]}
               />
@@ -408,9 +429,19 @@ const mapDispatchToProps = dispatch => ({
     dispatch(getDashboardData(onSuccesscallback, onErrocallback)),
   getPendingTaskData: (onSuccesscallback, onErrocallback) =>
     dispatch(getPendingTaskData(onSuccesscallback, onErrocallback)),
-  getProductDetailsData: (ProductKey, FormKey, onSuccesscallback, onErrocallback) =>
+  getProductDetailsData: (
+    ProductKey,
+    FormKey,
+    onSuccesscallback,
+    onErrocallback,
+  ) =>
     dispatch(
-      getProductDetailsData(ProductKey, FormKey, onSuccesscallback, onErrocallback),
+      getProductDetailsData(
+        ProductKey,
+        FormKey,
+        onSuccesscallback,
+        onErrocallback,
+      ),
     ),
 });
 

@@ -32,8 +32,12 @@ export default {
   verifiEmailVerificationCode: 'api/Email/VerifiEmailVerificationCode?AccessToken=',
   pendingTask: 'api/TaskBased/GetTasks?AccessToken=',
   getProductDetails: 'api/Product/GetProductDetail?AccessToken=',
+
   getXyziesGoogleMapCoordinates: 'api/Contact/GetXyziesGoogleMapCoordinates',
   saveSuggestion: 'api/Contact/SaveSuggestion',
+
   getProductInfo: 'api/TaskBased/GetProductInfo?AccessToken=',
   getFormDefinition: 'api/TaskBased/GetFormDefinition?AccessToken=',
+
+
 };

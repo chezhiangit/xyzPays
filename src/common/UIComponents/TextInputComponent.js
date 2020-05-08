@@ -22,7 +22,7 @@ class TextInputComponent extends React.Component {
   }
   static getDerivedStateFromProps(props, state) {
     if (props.inputValue?.length === 0) {
-      return {emailValid: true};
+      return {validInput: true};
     }
     return {};
   }

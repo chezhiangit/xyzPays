@@ -51,10 +51,17 @@ class ProfilePage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getProfileInfo(
-      this.onGetProfileInfoSuccess,
-      this.onGetProfileInfoFailed,
-    );
+    this.props.navigation.addListener('focus', () => {
+      this.setState({isLoading: true});
+      this.props.getProfileInfo(
+        this.onGetProfileInfoSuccess,
+        this.onGetProfileInfoFailed,
+      );
+    });
+    // this.props.getProfileInfo(
+    //   this.onGetProfileInfoSuccess,
+    //   this.onGetProfileInfoFailed,
+    // );
   }
 
   onGetProfileInfoSuccess = () => {

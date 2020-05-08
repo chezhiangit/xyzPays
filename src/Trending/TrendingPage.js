@@ -26,124 +26,6 @@ import {
 import WarningDialog from '../common/UIComponents/warningDialog';
 import Colors from '../uttils/Colors';
 
-// const trending = [
-//   {
-//     productName: 'Spectrum - TV - Installed',
-//     Amount: '6.00',
-//     Status: 'InAction Commission',
-//     Sales: 3,
-//   },
-//   {
-//     productName: 'Spectrum - TV - Installed',
-//     Amount: '6.00',
-//     Status: 'InAction Commission',
-//     Sales: 3,
-//   },
-//   {
-//     productName: 'Spectrum - TV - Installed',
-//     Amount: '6.00',
-//     Status: 'InAction Commission',
-//     Sales: 3,
-//   },
-//   {
-//     productName: 'Spectrum - TV - Installed',
-//     Amount: '6.00',
-//     Status: 'InAction Commission',
-//     Sales: 3,
-//   },
-//   {
-//     productName: 'Spectrum - TV - Installed',
-//     Amount: '6.00',
-//     Status: 'InAction Commission',
-//     Sales: 3,
-//   },
-//   {
-//     productName: 'Spectrum - TV - Installed',
-//     Amount: '6.00',
-//     Status: 'InAction Commission',
-//     Sales: 3,
-//   },
-//   {
-//     productName: 'Spectrum - TV - Installed',
-//     Amount: '6.00',
-//     Status: 'InAction Commission',
-//     Sales: 3,
-//   },
-//   {
-//     productName: 'Spectrum - TV - Installed',
-//     Amount: '6.00',
-//     Status: 'InAction Commission',
-//     Sales: 3,
-//   },
-//   {
-//     productName: 'Spectrum - TV - Installed',
-//     Amount: '6.00',
-//     Status: 'InAction Commission',
-//     Sales: 3,
-//   },
-//   {
-//     productName: 'Spectrum - TV - Installed',
-//     Amount: '6.00',
-//     Status: 'InAction Commission',
-//     Sales: 3,
-//   },
-//   {
-//     productName: 'Spectrum - TV - Installed',
-//     Amount: '6.00',
-//     Status: 'InAction Commission',
-//     Sales: 3,
-//   },
-//   {
-//     productName: 'Spectrum - TV - Installed',
-//     Amount: '6.00',
-//     Status: 'InAction Commission',
-//     Sales: 3,
-//   },
-//   {
-//     productName: 'Spectrum - TV - Installed',
-//     Amount: '6.00',
-//     Status: 'InAction Commission',
-//     Sales: 3,
-//   },
-//   {
-//     productName: 'Spectrum - TV - Installed',
-//     Amount: '6.00',
-//     Status: 'InAction Commission',
-//     Sales: 3,
-//   },
-//   {
-//     productName: 'Spectrum - TV - Installed',
-//     Amount: '6.00',
-//     Status: 'InAction Commission',
-//     Sales: 3,
-//   },
-//   {
-//     productName: 'Spectrum - TV - Installed',
-//     Amount: '6.00',
-//     Status: 'InAction Commission',
-//     Sales: 3,
-//   },
-//   {
-//     productName: 'Spectrum - TV - Installed',
-//     Amount: '6.00',
-//     Status: 'InAction Commission',
-//     Sales: 3,
-//   },
-//   {
-//     productName: 'Spectrum - TV - Installed',
-//     Amount: '6.00',
-//     Status: 'InAction Commission',
-//     Sales: 3,
-//   },
-// ];
-// const segmentationData = [
-//   I18n.t('commission.dropdownAll'),
-//   I18n.t('commission.dropdown7Days'),
-//   I18n.t('commission.dropdownLast2Weeks'),
-//   I18n.t('commission.dropdownLast3Weeks'),
-//   I18n.t('commission.dropdownLast1Month'),
-//   I18n.t('commission.dropdownLast3Months'),
-// ];
 class TrendingPage extends React.Component {
   constructor(props) {
     super(props);
@@ -166,10 +48,13 @@ class TrendingPage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getTrendingProducts(
-      this.onGetTrendingProductListSuccess,
-      this.onGetTrendingProductListFailed,
-    );
+    this.props.navigation.addListener('focus', () => {
+      this.setState({isLoading: true});
+      this.props.getTrendingProducts(
+        this.onGetTrendingProductListSuccess,
+        this.onGetTrendingProductListFailed,
+      );
+    });
   }
 
   onGetTrendingProductListSuccess = () => {

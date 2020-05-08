@@ -40,4 +40,41 @@ const getGoogleMapCoordinatesService = async () => {
   }
 };
 
-export {getGoogleMapCoordinatesService};
+const saveSuggestionService = async payload => {
+  try {
+    const url = urlConstants.BaseUrl + urlConstants.saveSuggestion;
+    const headersParams = {};
+    const paramsStr = JSON.stringify(payload);
+    headersParams['Content-Type'] = 'application/json';
+    console.log('saveSuggestionService url ...', url);
+    console.log('saveSuggestionService paramsStr ...', paramsStr);
+    console.log('saveSuggestionService headersParams ...', headersParams);
+
+    const response = await RNFetchBlob.config({timeout: TIMEOUT}).fetch(
+      'POST',
+      url,
+      headersParams,
+      paramsStr,
+    );
+    console.log('saveSuggestionService response ...', response);
+    const result = response.json();
+    console.log('saveSuggestionService result ...', result);
+    if (result.HttpStatusCode === 200 || result.HttpStatusCode === '200') {
+      result.status = 200;
+      return result;
+    } else if (response.respInfo.status === 500) {
+      result.status = 500;
+      return result;
+    }
+    // if (result !== null && result !== '') {
+    //   return result;
+    // }
+    return null;
+  } catch (e) {
+    console.log('saveSuggestionService failed.', e);
+    return null;
+  }
+};
+
+
+export {getGoogleMapCoordinatesService, saveSuggestionService};

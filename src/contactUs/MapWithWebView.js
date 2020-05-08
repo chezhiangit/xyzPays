@@ -18,7 +18,10 @@ import SliderView from '../common/UIComponents/SliderView';
 import TextInputComponent from '../common/UIComponents/TextInputComponent';
 import KeyboardAwareComponent from '../common/UIComponents/hoc/KeyboardAwareComponent';
 import Footer from '../common/UIComponents/Footer';
-import {getGoogleMapCoordinates} from '../AppStore/contactUSActions';
+import {
+  getGoogleMapCoordinates,
+  saveSuggestion,
+} from '../AppStore/contactUSActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
 
 class ContactUs extends React.Component {
@@ -62,13 +65,55 @@ class ContactUs extends React.Component {
   };
 
   onFindUs = () => {
-    this.setState({showFindUsView: true});
-    this.props.registerKeyboard();
+    this.setState(
+      {
+        showFindUsView: true,
+        findUsMessage: '',
+        findUsSubject: '',
+      },
+      () => this.props.registerKeyboard(),
+    );
   };
+
   onSubmit = () => {
     Keyboard.dismiss();
-    this.setState({showFindUsView: false});
-    this.props.deregisterKeyboard();
+    this.setState(
+      {
+        showFindUsView: false,
+        isLoading: true,
+      },
+      () => {
+        this.props.deregisterKeyboard();
+        const payload = {
+          Subject: this.state.findUsSubject,
+          Message: this.state.findUsMessage,
+        };
+
+        this.props.saveSuggestion(
+          payload,
+          this.saveSuggestionSuccess,
+          this.saveSuggestionFailed,
+        );
+      },
+    );
+  };
+
+  saveSuggestionSuccess = msg => {
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: msg,
+    });
+    console.log(msg);
+  };
+
+  saveSuggestionFailed = errorMsg => {
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+    console.log(errorMsg);
   };
 
   onConfirm = () => {
@@ -212,6 +257,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   getGoogleMapCoordinates: (onSuccesscallback, onErrocallback) =>
     dispatch(getGoogleMapCoordinates(onSuccesscallback, onErrocallback)),
+  saveSuggestion: (payload, onSuccesscallback, onErrocallback) =>
+    dispatch(saveSuggestion(payload, onSuccesscallback, onErrocallback)),
 });
 
 const childComp = connect(

@@ -65,7 +65,8 @@ class PayoutHistory extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.dateFilter.length === 0) {
+    this.props.navigation.addListener('focus', () => {
+      this.setState({isLoading: true});
       this.props.getPayoutDateFilter(
         this.onPayoutDateFilterSuccess,
         this.onPayoutDateFilterFailed,
@@ -79,7 +80,7 @@ class PayoutHistory extends React.Component {
         this.onPayoutDetailsSuccess,
         this.onPayoutDetailsFailed,
       );
-    }
+    });
   }
 
   onPayoutDetailsSuccess = () => {

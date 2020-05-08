@@ -28,70 +28,6 @@ import {
   getReferredUsersList,
 } from '../AppStore/referralActions';
 
-const commission = [
-  {
-    customerName: 'Jimkim',
-    emailId: 'chezhian.p@gmail.com',
-    mobile: '9585058087',
-    referredOn: moment().format('MM/DD/YY'),
-    registeredOn: moment().format('MM/DD/YY'),
-    registrationStatus: 'Registered',
-    Expanded: false,
-  },
-  {
-    customerName: 'Chezhian',
-    emailId: 'chezhian.p@gmail.com',
-    mobile: '9585058087',
-    referredOn: moment().format('MM/DD/YY'),
-    registeredOn: moment().format('MM/DD/YY'),
-    registrationStatus: 'Not Registered',
-    Expanded: false,
-  },
-  {
-    customerName: 'Jimkim',
-    emailId: 'chezhian.p@gmail.com',
-    mobile: '9585058087',
-    referredOn: moment().format('MM/DD/YY'),
-    registeredOn: moment().format('MM/DD/YY'),
-    registrationStatus: 'Registered',
-    Expanded: false,
-  },
-  {
-    customerName: 'Chezhian',
-    emailId: 'chezhian.p@gmail.com',
-    mobile: '9585058087',
-    referredOn: moment().format('MM/DD/YY'),
-    registeredOn: moment().format('MM/DD/YY'),
-    registrationStatus: 'Not Registered',
-    Expanded: false,
-  },
-  {
-    customerName: 'Jimkim',
-    emailId: 'chezhian.p@gmail.com',
-    mobile: '9585058087',
-    referredOn: moment().format('MM/DD/YY'),
-    registeredOn: moment().format('MM/DD/YY'),
-    registrationStatus: 'Registered',
-    Expanded: false,
-  },
-  {
-    customerName: 'Chezhian',
-    emailId: 'chezhian.p@gmail.com',
-    mobile: '9585058087',
-    referredOn: moment().format('MM/DD/YY'),
-    registeredOn: moment().format('MM/DD/YY'),
-    registrationStatus: 'Not Registered',
-    Expanded: false,
-  },
-];
-const segmentationData = [
-  I18n.t('myReferrals.dropdownAll'),
-  I18n.t('myReferrals.registered'),
-  I18n.t('myReferrals.notRegistered'),
-  // I18n.t('commission.dropdownLast3Weeks'),
-  // I18n.t('commission.dropdownLast1Month'),
-  // I18n.t('commission.dropdownLast3Months'),
-];
 class MyReferrals extends React.Component {
   constructor(props) {
     super(props);
@@ -132,18 +68,13 @@ class MyReferrals extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.registrationStatus.length === 0) {
+    this.props.navigation.addListener('focus', () => {
+      this.setState({isLoading: true});
       this.props.getReferralRegFilter(
         this.onRegistationStatusSuccess,
         this.onRegistationStatusFailed,
       );
-      // this.setState({getUserListService: true});
-      // this.props.getReferredUsersList(
-      //   0,
-      //   this.onReferralUserListSuccess,
-      //   this.onReferralUserListFailed,
-      // );
-    }
+    });
   }
 
   onRegistationStatusSuccess = () => {

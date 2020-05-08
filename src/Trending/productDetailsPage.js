@@ -71,13 +71,16 @@ class ProductDetailsPage extends React.Component {
           <View style={styles.commissionStatusContainer}>
             <Text style={[styles.commissionAmount, {color: '#3c763d'}]}>$</Text>
             <Text style={styles.commissionAmount}>
-              {this.props.productDetails['Commission Amount']},{' '}
+              {this.props.productDetails &&
+                this.props.productDetails['Commission Amount']}
+              ,{' '}
             </Text>
             {/* <Text style={styles.commissionStatusLabel}>
               {I18n.t('productDetails.status')}
             </Text> */}
             <Text style={styles.commissionAmount}>
-              {this.props.productDetails['Commission Status']}
+              {this.props.productDetails &&
+                this.props.productDetails['Commission Status']}
             </Text>
           </View>
           <View style={BaseStyles.emptyHView} />
@@ -122,7 +125,10 @@ class ProductDetailsPage extends React.Component {
               />
               <ReadOnlyView
                 viewStyle={{...styles.viewStyle, backgroundColor: 'white'}}
-                label={this.props.productDetails['Product Type']}
+                label={
+                  this.props.productDetails &&
+                  this.props.productDetails['Product Type']
+                }
                 labelStyle={[
                   styles.value,
                   {
@@ -154,7 +160,10 @@ class ProductDetailsPage extends React.Component {
               />
               <ReadOnlyView
                 viewStyle={{...styles.viewStyle, backgroundColor: 'white'}}
-                label={this.props.productDetails['Product Status']}
+                label={
+                  this.props.productDetails &&
+                  this.props.productDetails['Product Status']
+                }
                 labelStyle={[
                   styles.value,
                   {

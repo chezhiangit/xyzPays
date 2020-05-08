@@ -28,22 +28,39 @@ class TaskEntryPage extends React.Component {
       answer2: '',
       width: 100,
       height: 100,
+      components: [],
     };
   }
 
   componentDidMount() {
-    Image.getSize(
-      this.props.productDetails?.ProductPicture,
-      (width, height) => {
-        this.setState({width, height});
-      },
-    );
+    this.props.navigation.addListener('focus', () => {
+      this.setState({isLoading: true});
+      Image.getSize(
+        this.props.productDetails?.ProductPicture,
+        (width, height) => {
+          this.setState({width, height});
+        },
+      );
 
-    this.props.getFormDefenitionDetailsData(
-      this.props.FormKey,
-      this.getFormDefenitionDetailsSuccess,
-      this.getFormDefenitionDetailsFailed,
-    );
+      this.props.getFormDefenitionDetailsData(
+        this.props.FormKey,
+        this.getFormDefenitionDetailsSuccess,
+        this.getFormDefenitionDetailsFailed,
+      );
+    });
+
+    // Image.getSize(
+    //   this.props.productDetails?.ProductPicture,
+    //   (width, height) => {
+    //     this.setState({width, height});
+    //   },
+    // );
+
+    // this.props.getFormDefenitionDetailsData(
+    //   this.props.FormKey,
+    //   this.getFormDefenitionDetailsSuccess,
+    //   this.getFormDefenitionDetailsFailed,
+    // );
   }
 
   getFormDefenitionDetailsSuccess = () => {
@@ -76,6 +93,62 @@ class TaskEntryPage extends React.Component {
 
   onConfirm = () => {
     this.setState({showDlg: false});
+  };
+
+  onTextChange = (text, controlType, index) => {
+    console.log('Control Type ...', controlType);
+    console.log('Control index ...', index);
+  };
+
+  renderDynamicComponents = () =>
+    this.createComponentsDynamically().map(x => x);
+
+  createComponentsDynamically = () => {
+    const FormView = this.props.formDefenition?.FormDefinition?.map(
+      (componentObject, index) => {
+        if (componentObject.ControlType === 'text') {
+          let components = {
+            inputValue:
+              componentObject.DefaultValue === null
+                ? ''
+                : componentObject.DefaultValue,
+          };
+          const tempComponents = [...this.state.components, {...components}];
+          this.setState({components: [...tempComponents]});
+          return (
+            <TextInputComponent
+              placeholder={'Dynamic component ' + index}
+              autoFocus={false}
+              // inputValue={this.state.components[index]?.inputValue}
+              onTextChange={text => this.onTextChange(text, 'text', index)}
+            />
+          );
+        }
+
+        if (componentObject.ControlType === 'textarea') {
+          let components = {
+            inputValue:
+              componentObject.DefaultValue === null
+                ? ''
+                : componentObject.DefaultValue,
+          };
+          const tempComponents = [...this.state.components, {...components}];
+          this.setState({components: [...tempComponents]});
+          return (
+            <TextInputComponent
+              placeholder={'Dynamic component ' + index}
+              autoFocus={false}
+              // inputValue={this.state.components[index].inputValue}
+              onTextChange={text => this.onTextChange(text, 'text', index)}
+            />
+          );
+        }
+      },
+    );
+
+    console.log('components ....', FormView);
+
+    return FormView;
   };
 
   render() {
@@ -130,7 +203,8 @@ class TaskEntryPage extends React.Component {
               />
             </View>
           </View>
-          <View style={styles.questionContainer}>
+          {/* {this.renderDynamicComponents()} */}
+          {/* <View style={styles.questionContainer}>
             <Text style={styles.questionTxt}>
               {'How often do you use our products?*'}
             </Text>
@@ -181,7 +255,7 @@ class TaskEntryPage extends React.Component {
                 ]}
               />
             </TouchableOpacity>
-          </View>
+          </View> */}
           <View style={BaseStyles.emptyHView} />
           <PrimaryButton
             btnName={I18n.t('taskEntryPage.saveBtnName')}
@@ -214,6 +288,7 @@ const mapStateToProps = state => {
     // dashboardData: state.dashboard.dashboardData,
     productDetails: state.taskEntry.productDetails[0],
     FormKey: state.taskEntry.productDetails.FormKey,
+    formDefenition: state.taskEntry.formDefenition,
   };
 };
 
