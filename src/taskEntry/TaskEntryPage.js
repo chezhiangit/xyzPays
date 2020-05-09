@@ -98,7 +98,7 @@ class TaskEntryPage extends React.Component {
           if (item.ControlReq === true && isFilled === false) {
             throw {};
           }
-        } else if (item.controlType === 'select') {
+        } else if (item.controlType === 'radio') {
           let isFilled = false;
           const selectObj = {};
           item.radioButtomGroup.forEach(el => {
@@ -272,22 +272,22 @@ class TaskEntryPage extends React.Component {
         };
         // console.log('returnObj checkbox....', returnObj);
         components.push(returnObj);
-      } else if (el.ControlType === 'select') {
-        // console.log('select element');
+      } else if (el.ControlType === 'radio') {
+        // console.log('radio element');
         const radioButtomGroup = this.props.formDefenition[
           el.ControlColumn
         ].map((selectionObj, selectionObjIndex) =>
           this.parseSelectionControl(selectionObj, selectionObjIndex, index),
         );
         returnObj = {
-          controlType: 'select',
+          controlType: 'radio',
           ControlColumn: el.ControlColumn,
           ControlReq: el.ControlReq,
           FormControlKey: el.FormControlKey,
           FormKey: el.FormKey,
           radioButtomGroup: [...radioButtomGroup],
         };
-        // console.log('returnObj select....', returnObj);
+        // console.log('returnObj radio....', returnObj);
         components.push(returnObj);
       }
     });
@@ -331,7 +331,7 @@ class TaskEntryPage extends React.Component {
           </View>
         );
       }
-      if (item.controlType === 'select') {
+      if (item.controlType === 'radio') {
         const RadioBtn = () =>
           item.radioButtomGroup.map((el, id) => {
             return (
