@@ -10,9 +10,9 @@ import fontFamily from '../../../uttils/FontFamily';
 const styles = StyleSheet.create({
   btnText: {
     fontSize: fontscale(15),
-    color: Colors.linkBtnColor,
+    // color: Colors.linkBtnColor,
     fontFamily: fontFamily.primaryFontFamily,
-    height: heightAdapter(60),
+    // height: heightAdapter(60),
     // textAlign: 'center',
   },
   box: {
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     // width: '100%',
     height: heightAdapter(60),
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     margin: widthAdapter(10),
     // borderWidth: 1,
     // borderColor: 'red',

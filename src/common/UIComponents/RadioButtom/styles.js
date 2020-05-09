@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     fontSize: fontscale(15),
     // color: Colors.linkBtnColor,
     fontFamily: fontFamily.primaryFontFamily,
-    height: heightAdapter(50),
+    // height: heightAdapter(50),
     // alignSelf: 'center',
   },
   box: {

@@ -14,7 +14,11 @@ const taskEntryReducer = (
     case STORE_PENDING_TASK_PRODUCT_DETAILS_DATA:
       return {
         ...state,
-        productDetails: {...action.productDetails, FormKey: action.FormKey},
+        productDetails: {
+          ...action.productDetails,
+          FormKey: action.FormKey,
+          TaskKey: action.TaskKey,
+        },
       };
     case STORE_FORM_DEFENITION_DETAILS_DATA:
       return {

@@ -25,6 +25,7 @@ const getPendingTaskData = (
 const getProductDetailsData = (
   ProductKey,
   FormKey,
+  TaskKey,
   onSuccesscallback = () => {},
   onErrorcallback = () => {},
   calledFrom = 'StartPendingTask',
@@ -32,6 +33,7 @@ const getProductDetailsData = (
   type: SAGA_GET_PRODUCT_DETAILS_DATA,
   ProductKey,
   FormKey,
+  TaskKey,
   onSuccesscallback,
   onErrorcallback,
   calledFrom,

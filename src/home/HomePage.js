@@ -147,6 +147,7 @@ class HomePage extends React.Component {
       this.props.getProductDetailsData(
         this.props.pendingTask[index].ProductKey,
         this.props.pendingTask[index].FormKey,
+        this.props.pendingTask[index].TaskKey,
         this.onGetProductDetailsDataSuccess,
         this.onGetProductDetailsDataFailed,
       ),
@@ -432,6 +433,7 @@ const mapDispatchToProps = dispatch => ({
   getProductDetailsData: (
     ProductKey,
     FormKey,
+    TaskKey,
     onSuccesscallback,
     onErrocallback,
   ) =>
@@ -439,6 +441,7 @@ const mapDispatchToProps = dispatch => ({
       getProductDetailsData(
         ProductKey,
         FormKey,
+        TaskKey,
         onSuccesscallback,
         onErrocallback,
       ),

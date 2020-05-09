@@ -15,29 +15,23 @@ class TextInputComponent extends React.Component {
     super(props);
     this.state = {
       placeholderText: '',
-      inputValue: '',
+      // inputValue: '',
       focus: this.props.inputValue ? true : false,
       validInput: true,
     };
   }
   static getDerivedStateFromProps(props, state) {
-    if (props.inputValue?.length === 0) {
-      return {validInput: true};
+    // if (props.inputValue?.length === 0) {
+    //   return {validInput: true};
+    // }
+    if (props.inputValue.length > 0) {
+      return {focus: true};
     }
     return {};
   }
   handleOnChangeText = inputValue => {
     console.log('handleOnChangeText ....', inputValue);
-    // if (this.props.phone) {
-    //   const validInput = checkPhone(inputValue);
-    //   this.setState({validInput});
-    // }
     this.props.onTextChange(inputValue);
-
-    if (this.props.inputValue === undefined) {
-      this.setState({inputValue});
-    }
-
   };
 
   render() {
@@ -57,17 +51,15 @@ class TextInputComponent extends React.Component {
           placeholderTextColor="rgb(117, 129, 155)"
           autoCorrect={false}
           placeholder={
-            !this.state.focus && this.props.inputValue?.length === 0 || (!this.state.focus && this.state.inputValue?.length !== undefined && this.state.inputValue?.length === 0)
+            !this.state.focus && this.props.inputValue?.length === 0
               ? this.props.placeholder
               : ''
           }
           onChangeText={text => {
             this.handleOnChangeText(text);
-            // this.setState({inputValue: text});
-            // this.props.onTextChange(this.state.inputValue);
           }}
           onBlur={() => {
-            if (this.props.inputValue?.length === 0 || (this.state.inputValue?.length !== undefined && this.state.inputValue?.length === 0)) {
+            if (this.props.inputValue?.length === 0) {
               this.setState({focus: false});
             }
           }}
@@ -75,14 +67,9 @@ class TextInputComponent extends React.Component {
             this.setState({focus: true});
             this.props.onFieldFocus && this.props.onFieldFocus(800);
           }}
-          // value={
-          //   this.props.phone
-          //     ? displayPhoneNumber(this.props.inputValue)
-          //     : this.props.inputValue
-          // }
           value={this.props.inputValue}
         />
-        {this.state.focus && (this.props.placeholder.length > 0 || this.state.inputValue?.length) && (
+        {this.state.focus && this.props.placeholder.length > 0 && (
           <Text style={styles.captionText}>{this.props.placeholder}</Text>
         )}
       </View>

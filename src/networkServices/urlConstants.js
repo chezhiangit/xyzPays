@@ -38,6 +38,7 @@ export default {
 
   getProductInfo: 'api/TaskBased/GetProductInfo?AccessToken=',
   getFormDefinition: 'api/TaskBased/GetFormDefinition?AccessToken=',
+  postEntry: 'api/TaskBased/PostEntry?AccessToken=',
 
 
 };

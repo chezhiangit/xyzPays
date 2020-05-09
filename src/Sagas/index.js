@@ -10,6 +10,7 @@ import watchReferralActions from './referralSaga';
 import watchPayoutAction from './payoutSaga';
 import watchUserVerificationActions from './userVerificationSaga';
 import watchContactsUsActions from './contactUSSaga';
+import watchTaskEntryAction from './taskEntrySaga';
 
 export default function* rootSaga() {
   yield all([
@@ -24,5 +25,6 @@ export default function* rootSaga() {
     watchPayoutAction(),
     watchUserVerificationActions(),
     watchContactsUsActions(),
+    watchTaskEntryAction(),
   ]);
 }

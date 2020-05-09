@@ -14,10 +14,9 @@ class PasswordInputComponent extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    // if (props.password.length === 0) {
-    //   return {focus: false};
-    // }
-    // return {focus: true};
+    if (props.password.length > 0) {
+      return {focus: true};
+    }
     return {};
   }
   handleOnChangeText = inputValue => {

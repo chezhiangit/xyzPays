@@ -18,6 +18,9 @@ class EmailInputComponent extends React.Component {
     if (props.email.length === 0) {
       return {emailValid: true};
     }
+    if (props.email.length > 0) {
+      return {focus: true};
+    }
     return {};
   }
 
@@ -27,7 +30,7 @@ class EmailInputComponent extends React.Component {
     this.setState(
       {
         // email,
-        focus: this.props.email.length > 0 ? true : false,
+        // focus: this.props.email.length > 0 ? true : false,
         emailValid,
       },
       // () => this.props.onEmailEntered(this.state.email),

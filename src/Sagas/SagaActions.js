@@ -118,10 +118,15 @@ export const storePendingTaskData = pendingTask => ({
   pendingTask,
 });
 
-export const storePendingTaskProductDetailsData = (productDetails, FormKey) => ({
+export const storePendingTaskProductDetailsData = (
+  productDetails,
+  FormKey,
+  TaskKey,
+) => ({
   type: STORE_PENDING_TASK_PRODUCT_DETAILS_DATA,
   productDetails,
   FormKey,
+  TaskKey,
 });
 
 export const storeTrendingProductDetailsData = productDetails => ({
