@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {connect} from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { Dropdown } from 'react-native-material-dropdown';
+import {Dropdown} from 'react-native-material-dropdown';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
@@ -36,6 +36,7 @@ class TaskEntryPage extends React.Component {
       width: 100,
       height: 100,
       components: [],
+      postEntry: false,
     };
   }
 
@@ -78,7 +79,7 @@ class TaskEntryPage extends React.Component {
       this.state.components.forEach(item => {
         if (item.ControlType === 'text' || item.ControlType === 'textarea') {
           if (item.ControlReq === true && item.inputValue.length === 0) {
-            throw {};
+            throw {msg: 'Pls enter ' + item.ControlLabel};
           }
           const textObj = {
             ControlColumn: item.ControlColumn,
@@ -97,7 +98,7 @@ class TaskEntryPage extends React.Component {
             }
           });
           if (item.ControlReq === true && isFilled === false) {
-            throw {};
+            throw {msg: 'Pls select ' + item.ControlLabel};
           }
         } else if (item.ControlType === 'radio') {
           let isFilled = false;
@@ -111,15 +112,27 @@ class TaskEntryPage extends React.Component {
             }
           });
           if (item.ControlReq === true && isFilled === false) {
-            throw {};
+            throw {msg: 'Pls select ' + item.ControlLabel};
           }
+        } else if (item.ControlType === 'select') {
+          const selectObj = {};
+
+          if (
+            item.ControlReq === true &&
+            (item.selectedValue === undefined ||
+              item.selectedValue?.length === 0)
+          ) {
+            throw {msg: 'Pls select ' + item.ControlLabel};
+          }
+          selectObj.ControlColumn = item.ControlColumn;
+          selectObj.ControlValue = item.selectedValue;
         }
       });
       return payload;
     } catch (e) {
       this.setState({
         showDlg: true,
-        dlgMsg: 'Fill all the mandatory fields.',
+        dlgMsg: e.msg,
       });
       return null;
     }
@@ -129,17 +142,25 @@ class TaskEntryPage extends React.Component {
   onSave = () => {
     const payload = this.constructPayload();
     console.log('payload .........', payload);
-    this.props.postEntry(
-      payload,
-      this.props.FormKey,
-      this.props.TaskKey,
-      this.onPostEntrySuccess,
-      this.onPostEntryFailed,
-    );
+    payload &&
+      this.props.postEntry(
+        payload,
+        this.props.FormKey,
+        this.props.TaskKey,
+        this.onPostEntrySuccess,
+        this.onPostEntryFailed,
+      );
+    payload && this.setState({isLoading: true});
   };
 
-  onPostEntrySuccess = () => {
-    this.setState({isLoading: false});
+  onPostEntrySuccess = msg => {
+    // this.setState({isLoading: false, postEntry: true});
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: msg,
+      postEntry: true,
+    });
   };
 
   onPostEntryFailed = errorMsg => {
@@ -163,83 +184,75 @@ class TaskEntryPage extends React.Component {
   };
 
   onConfirm = () => {
+    if (this.state.postEntry === true) {
+      this.props.navigation.goBack();
+    }
     this.setState({showDlg: false});
   };
 
   onTextChange = (text, index) => {
-    // console.log('Control Type ...', controlType);
-    // console.log('Control index ...', index);
     const components = this.state.components;
     components[index].inputValue = text;
     this.setState({components});
   };
 
   onChecBoxSelected = (itemId, groupIndex) => {
-    // console.log('Selected check box index .....', itemId);
-    // console.log('selecte check box gropup index....', groupIndex);
-    // console.log(
-    //   'selecte checkbox item....',
-    //   this.state.components[groupIndex].checkBoxGroup[itemId],
-    // );
     const components = this.state.components;
     components[groupIndex].checkBoxGroup[itemId].status = !components[
       groupIndex
-    ].checkBoxGroup[itemId].status; //true;
-
-    // console.log('onChecBoxSelected components .....', components);
-
+    ].checkBoxGroup[itemId].status;
     this.setState({components: components});
   };
 
+  onDropDownChanges(value, selectedIndex, data, groupIndex) {
+    const components = [...this.state.components];
+    components[groupIndex].selecteIndex = selectedIndex;
+    components[groupIndex].selectedValue = value;
+
+    // components[groupIndex].dropDownGroup.forEach(item => {
+    //   if (item.itemId === selectedIndex) {
+    //     components[groupIndex].dropDownGroup[item.itemId].status = true;
+    //   } else {
+    //     components[groupIndex].dropDownGroup[item.itemId].status = false;
+    //   }
+    // });
+
+    this.setState({components: components});
+  }
+
   onRadioOptionSelected = (itemId, groupIndex) => {
-    // console.log('Selected radio box index .....', itemId);
-    // console.log('selecte readio box gropup index....', groupIndex);
-    // console.log(
-    //   'selecte radio item....',
-    //   this.state.components[groupIndex].radioButtomGroup[itemId],
-    // );
     const components = [...this.state.components];
     components[groupIndex].radioButtomGroup.forEach(item => {
-      // console.log('item ..........', item);
       if (item.itemId === itemId) {
-        // console.log('matched item ..........', item);
         components[groupIndex].radioButtomGroup[item.itemId].status = true;
       } else {
-        // console.log(' not matched item ..........', item);
         components[groupIndex].radioButtomGroup[item.itemId].status = false;
       }
     });
-    // console.log('onRadioOptionSelected components .....', components);
     this.setState({components: components});
   };
 
   parseCheckBox = (el, itemId, groupIndex) => {
-    // console.log('parseCheckBox ......');
     return {
       label: el.Text,
       value: el.Value,
       itemId,
-      // onSelected: {() => this.onChecBoxSelected(itemId, groupIndex)},
       status: false,
     };
   };
 
   parseSelectionControl = (el, itemId, groupIndex) => {
-    // console.log('parseSelectionControl ......');
     return {
       label: el.Text,
       value: el.Value,
       itemId,
-      // onSelected: {() => this.onRadioOptionSelected(itemId, groupIndex)},
       status: false,
     };
   };
 
   parseFormDefenition = () => {
-    // console.log('parseFormDefenition ......');
     const components = [];
     this.props.formDefenition?.FormDefinition?.forEach((el, index) => {
-      // console.log('element .....', el);
       let returnObj = {
         ...el,
       };
@@ -250,10 +263,8 @@ class TaskEntryPage extends React.Component {
           placeholder: el.HelpText === null ? '' : el.HelpText,
           ...returnObj,
         };
-        // console.log('returnObj text....', returnObj);
         components.push({...returnObj});
       } else if (el.ControlType === 'checkbox') {
-        // console.log('checkbox element');
         const checkBoxGroup = this.props.formDefenition[el.ControlColumn].map(
           (checkboxObj, checkboxObjIndex) =>
             this.parseCheckBox(checkboxObj, checkboxObjIndex, index),
@@ -262,10 +273,8 @@ class TaskEntryPage extends React.Component {
           checkBoxGroup: [...checkBoxGroup],
           ...returnObj,
         };
-        // console.log('returnObj checkbox....', returnObj);
         components.push(returnObj);
       } else if (el.ControlType === 'radio') {
-        // console.log('radio element');
         const radioButtomGroup = this.props.formDefenition[
           el.ControlColumn
         ].map((selectionObj, selectionObjIndex) =>
@@ -275,7 +284,16 @@ class TaskEntryPage extends React.Component {
           radioButtomGroup: [...radioButtomGroup],
           ...returnObj,
         };
-        // console.log('returnObj radio....', returnObj);
+        components.push(returnObj);
+      } else if (el.ControlType === 'select') {
+        const dropDownGroup = this.props.formDefenition[el.ControlColumn].map(
+          (dropDownObj, dropDownObjIndex) =>
+            this.parseSelectionControl(dropDownObj, dropDownObjIndex, index),
+        );
+        returnObj = {
+          dropDownGroup: [...dropDownGroup],
+          ...returnObj,
+        };
         components.push(returnObj);
       }
     });
@@ -302,7 +320,7 @@ class TaskEntryPage extends React.Component {
               )}
             </View>
             <TextInputComponent
-              placeholder={item.placeholder + index}
+              placeholder={item.placeholder}
               autoFocus={false}
               inputValue={this.state.components[index].inputValue}
               onTextChange={text => this.onTextChange(text, index)}
@@ -383,6 +401,71 @@ class TaskEntryPage extends React.Component {
           </View>
         );
       }
+      if (item.ControlType === 'select') {
+        return (
+          <View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+              }}
+            />
+            <Dropdown
+              label={
+                item.ControlLabel +
+                (item.ControlReq === false ? '' : '(Mandatory)')
+              }
+              data={item.dropDownGroup}
+              inputContainerStyle={{width: widthAdapter(700)}}
+              dropdownOffset={{
+                top: heightAdapter(10),
+                // borderWidth: 1,
+                width: widthAdapter(700),
+              }}
+              // dropdownMargins={{
+              //   width: widthAdapter(300),
+              //   height: heightAdapter(100),
+              // }}
+              itemTextStyle={
+                {
+                  // borderColor: 'green',
+                  // borderWidth: 1,
+                }
+              }
+              pickerStyle={{
+                flexDirection: 'row',
+                // borderColor: 'blue',
+                // borderWidth: 1,
+                // height: heightAdapter(100),
+                // width: widthAdapter(300),
+              }}
+              overlayStyle={
+                {
+                  // flexDirection: 'row',
+                  // borderColor: 'blue',
+                  // borderWidth: 1,
+                  // height: heightAdapter(100),
+                  // width: '100%',
+                }
+              }
+              containerStyle={
+                {
+                  // flexDirection: 'row',
+                  // borderColor: 'red',
+                  // borderWidth: 1,
+                  // height: heightAdapter(100),
+                }
+              }
+              onChangeText={(value, selectedIndex, data) =>
+                this.onDropDownChanges(value, selectedIndex, data, index)
+              }
+            />
+
+            {/* </View> */}
+          </View>
+        );
+      }
     });
     return FormView;
   };
@@ -390,62 +473,64 @@ class TaskEntryPage extends React.Component {
   render() {
     return (
       <View style={[BaseStyles.baseContainer]}>
-        <ScrollView style={styles.scrollContainer}>
-          <View style={BaseStyles.emptyHView} />
-          <View style={styles.taskItemContainer}>
-            <View style={styles.taskDetailsContainer}>
-              <View style={styles.taskEntryProduct}>
-                <View style={styles.dotWithTick}>
-                  <Text>
-                    <Icon
-                      name="check-circle"
-                      size={fontscale(20)}
-                      color={Colors.primaryAppColor}
-                    />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.scrollContainer}>
+            <View style={BaseStyles.emptyHView} />
+            <View style={styles.taskItemContainer}>
+              <View style={styles.taskDetailsContainer}>
+                <View style={styles.taskEntryProduct}>
+                  <View style={styles.dotWithTick}>
+                    <Text>
+                      <Icon
+                        name="check-circle"
+                        size={fontscale(20)}
+                        color={Colors.primaryAppColor}
+                      />
+                    </Text>
+                  </View>
+                  <Text style={styles.taskEntryProductTxt}>
+                    {this.props.productDetails.ProductName}
                   </Text>
                 </View>
-                <Text style={styles.taskEntryProductTxt}>
-                  {this.props.productDetails.ProductName}
-                </Text>
+                <View style={styles.activeContainer}>
+                  <Text style={styles.statusTxt}>
+                    {this.props.productDetails['Product Status']}
+                  </Text>
+                </View>
+                <View style={styles.skuContainer}>
+                  <Text style={styles.skuLabel}>
+                    {I18n.t('taskEntryPage.sku')}
+                    {': '}
+                  </Text>
+                  <Text style={styles.skuTxt}>
+                    {this.props.productDetails.SKU}
+                  </Text>
+                </View>
               </View>
-              <View style={styles.activeContainer}>
-                <Text style={styles.statusTxt}>
-                  {this.props.productDetails['Product Status']}
-                </Text>
-              </View>
-              <View style={styles.skuContainer}>
-                <Text style={styles.skuLabel}>
-                  {I18n.t('taskEntryPage.sku')}
-                  {': '}
-                </Text>
-                <Text style={styles.skuTxt}>
-                  {this.props.productDetails.SKU}
-                </Text>
+              <View style={styles.taskEntryImageContainer}>
+                <Image
+                  source={{
+                    isStatic: true,
+                    uri: this.props.productDetails?.ProductPicture,
+                    method: 'GET',
+                  }}
+                  style={[
+                    styles.productImage,
+                    // {width: this.state.width, height: this.state.height},
+                  ]}
+                />
               </View>
             </View>
-            <View style={styles.taskEntryImageContainer}>
-              <Image
-                source={{
-                  isStatic: true,
-                  uri: this.props.productDetails?.ProductPicture,
-                  method: 'GET',
-                }}
-                style={[
-                  styles.productImage,
-                  // {width: this.state.width, height: this.state.height},
-                ]}
-              />
-            </View>
-          </View>
 
-          {this.createComponentsDynamically()}
-          <View style={BaseStyles.emptyHView} />
-          {this.state.components.length > 0 && (
-            <PrimaryButton
-              btnName={I18n.t('taskEntryPage.saveBtnName')}
-              onSubmit={this.onSave}
-            />
-          )}
+            {this.createComponentsDynamically()}
+            <View style={BaseStyles.emptyHView} />
+            {this.state.components.length > 0 && (
+              <PrimaryButton
+                btnName={I18n.t('taskEntryPage.saveBtnName')}
+                onSubmit={this.onSave}
+              />
+            )}
+          </View>
         </ScrollView>
         <Footer />
         <WarningDialog

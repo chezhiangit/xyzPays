@@ -99,19 +99,20 @@ class ReferAndEarn extends React.Component {
             </Text>
           </View>
           <TextInputComponent
-            placeholder={I18n.t('referAndEarn.name')}
+            placeholder={I18n.t('referAndEarn.name') + '(Madatory)'}
+            madatory
             autoFocus={false}
             inputValue={this.state.name}
             onTextChange={name => this.setState({name})}
           />
           <EmailInputComponent
-            placeholder={I18n.t('referAndEarn.email')}
+            placeholder={I18n.t('referAndEarn.email') + '(Madatory)'}
             autoFocus={false}
             onEmailEntered={email => this.setState({email})}
             email={this.state.email}
           />
           <TextInputComponent
-            placeholder={I18n.t('referAndEarn.mobileNumber')}
+            placeholder={I18n.t('referAndEarn.mobileNumber') + '(Madatory)'}
             autoFocus={false}
             inputValue={this.state.mobileNumber}
             onTextChange={mobileNumber => this.setState({mobileNumber})}

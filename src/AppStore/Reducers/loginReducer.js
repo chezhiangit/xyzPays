@@ -2,10 +2,11 @@ import {
   LOGIN_SUCCESSFUL,
   STORE_USER_EMAIL_VERIFIED,
   STORE_USER_MOBILE_VERIFIED,
+  SAGA_STORE_PROVIDERS,
 } from '../ActionTypes';
 
 const loginReducer = (
-  state = {userName: '', userLoggedIn: false, accessToken: ''},
+  state = {userName: '', userLoggedIn: false, accessToken: '', providers: []},
   action,
 ) => {
   switch (action.type) {
@@ -27,6 +28,12 @@ const loginReducer = (
       return {
         ...state,
         IsMobileVerificationDone: action.status,
+      };
+    case SAGA_STORE_PROVIDERS:
+      console.log('action.providers ....', action.providers);
+      return {
+        ...state,
+        providers: [...action.providers],
       };
     default:
       return state;

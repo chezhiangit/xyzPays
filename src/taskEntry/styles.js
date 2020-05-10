@@ -6,12 +6,13 @@ import fontFamily from '../uttils/FontFamily';
 const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
-    flexDirection: 'column',
+    // flexDirection: 'column',
     // borderWidth: 1,
     // borderColor: 'red',
     marginLeft: widthAdapter(40),
     marginRight: widthAdapter(40),
     paddingTop: heightAdapter(50),
+    marginBottom: widthAdapter(175),
   },
   taskItemContainer: {
     flexDirection: 'row',

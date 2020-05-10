@@ -2,11 +2,13 @@ import {takeLatest, call, put} from 'redux-saga/effects';
 import {
   SAGA_AUTHENTICATE_USER,
   SAGA_REGISTER_USER,
+  SAGA_GET_PROVIDERS,
 } from '../AppStore/ActionTypes';
-import {userLoginSuccess} from './SagaActions';
+import {userLoginSuccess, storeProviders} from './SagaActions';
 import {
   authenticateUserService,
   registerNewUserService,
+  getProvidersService,
 } from '../networkServices/loginServices/login';
 // import {startLoading, stopLoading} from '../AppStore/loadingActions';
 
@@ -71,7 +73,30 @@ function* registerUser(action) {
   }
 }
 
+function* getProviders(action) {
+  try {
+    const response = yield call(getProvidersService);
+    console.log('saga getProviders info api response...', response);
+    if (response !== null && response.status === 200) {
+      console.log('getProviders info data ....', response);
+      console.log('getProviders info saga action ....', action);
+      const providers = [...response];
+
+      console.log('getProviders info object ....', providers);
+      yield put(storeProviders(providers));
+      action.onSuccesscallback();
+    } else if (response !== null) {
+      action.onErrorcallback(response.Message);
+    } else {
+      action.onErrorcallback('Unable to complete your request. Pls try again.');
+    }
+  } catch (error) {
+    action.onErrorcallback('Unable to complete your request. Pls try again.');
+  }
+}
+
 export default function* watchuserLoginAction() {
   yield takeLatest(SAGA_AUTHENTICATE_USER, userLogin);
   yield takeLatest(SAGA_REGISTER_USER, registerUser);
+  yield takeLatest(SAGA_GET_PROVIDERS, getProviders);
 }

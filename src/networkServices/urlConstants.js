@@ -15,21 +15,26 @@ export default {
   getReferralCommissionList: 'api/Referral/GetCommissionList?AccessToken=',
   postReferraluser: 'api/Referral/PostReferraluser',
 
-  forgotPwdSendMobileVerificaionCode: 'api/ForgotPassword/SendMobileVerificaionCode?ChangePasswordToken=',
+  forgotPwdSendMobileVerificaionCode:
+    'api/ForgotPassword/SendMobileVerificaionCode?ChangePasswordToken=',
   forgotPwdUserEmailVerification: 'api/ForgotPassword/CheckUserExists?Email=',
-  forgotPwdVerifiMobileVerificationCode: 'api/ForgotPassword/VerifiMobileVerificationCode?ChangePasswordToken=',
+  forgotPwdVerifiMobileVerificationCode:
+    'api/ForgotPassword/VerifiMobileVerificationCode?ChangePasswordToken=',
   changePassword: 'api/ForgotPassword/ChangePassword',
 
   getPayoutHistory: 'api/Payout/GetPayoutHistory?AccessToken=',
   getPayoutDetails: 'api/Payout/GetPayoutDetails?AccessToken=',
 
   getMobileDetails: 'api/Mobile/GetMobileDetails?AccessToken=',
-  sendMobileVerificaionCode: 'api/Mobile/SendMobileVerificaionCode?AccessToken=',
-  verifiMobileVerificationCode: 'api/Mobile/VerifiMobileVerificationCode?AccessToken=',
+  sendMobileVerificaionCode:
+    'api/Mobile/SendMobileVerificaionCode?AccessToken=',
+  verifiMobileVerificationCode:
+    'api/Mobile/VerifiMobileVerificationCode?AccessToken=',
 
   getEmailDetails: 'api/Email/GetEmailDetails?AccessToken=',
   sendEmailVerificaionCode: 'api/Email/SendEmailVerificaionCode?AccessToken=',
-  verifiEmailVerificationCode: 'api/Email/VerifiEmailVerificationCode?AccessToken=',
+  verifiEmailVerificationCode:
+    'api/Email/VerifiEmailVerificationCode?AccessToken=',
   pendingTask: 'api/TaskBased/GetTasks?AccessToken=',
   getProductDetails: 'api/Product/GetProductDetail?AccessToken=',
 
@@ -39,6 +44,5 @@ export default {
   getProductInfo: 'api/TaskBased/GetProductInfo?AccessToken=',
   getFormDefinition: 'api/TaskBased/GetFormDefinition?AccessToken=',
   postEntry: 'api/TaskBased/PostEntry?AccessToken=',
-
-
+  getProviders: 'api/Registration/GetProviders',
 };

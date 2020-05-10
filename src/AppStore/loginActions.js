@@ -1,4 +1,8 @@
-import {SAGA_AUTHENTICATE_USER, SAGA_REGISTER_USER} from './ActionTypes';
+import {
+  SAGA_AUTHENTICATE_USER,
+  SAGA_REGISTER_USER,
+  SAGA_GET_PROVIDERS,
+} from './ActionTypes';
 
 const authenticateUser = (
   userCredential,
@@ -22,4 +26,13 @@ const registerNewUser = (
   onErrorcallback,
 });
 
-export {authenticateUser, registerNewUser};
+const getProviders = (
+  onSuccesscallback = () => {},
+  onErrorcallback = () => {},
+) => ({
+  type: SAGA_GET_PROVIDERS,
+  onSuccesscallback,
+  onErrorcallback,
+});
+
+export {authenticateUser, registerNewUser, getProviders};

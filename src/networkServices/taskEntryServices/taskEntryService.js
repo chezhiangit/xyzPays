@@ -76,7 +76,12 @@ const postEntryService = async (payload, accessToken, FormKey, TaskKey) => {
   try {
     const url =
       urlConstants.BaseUrl +
-      urlConstants.postEntry+accessToken+'&FormKey='+FormKey+'&TaskKey='+TaskKey;
+      urlConstants.postEntry +
+      accessToken +
+      '&FormKey=' +
+      FormKey +
+      '&TaskKey=' +
+      TaskKey;
     const headersParams = {};
     const paramsStr = JSON.stringify(payload);
     headersParams['Content-Type'] = 'application/json';
@@ -92,11 +97,10 @@ const postEntryService = async (payload, accessToken, FormKey, TaskKey) => {
     );
     console.log('postEntryService response ...', response);
     const result = response.json();
-    if (response.respInfo.status === 200) {
-      result.status = 200;
+    console.log('postEntryService result ...', result);
+    if (result.HttpStatusCode === 200 || result.HttpStatusCode === '200') {
       return result;
-    } else if (response.respInfo.status === 500) {
-      result.status = 500;
+    } else if (result.HttpStatusCode === 500) {
       return result;
     }
     return null;

@@ -54,6 +54,7 @@ export default {
     password: 'Password',
     retypePassword: 'Retype Password',
     registerBtnName: 'Register',
+    providers: 'Providers',
   },
   forgotPassword: {
     headerTitle: 'Forgot Password',
@@ -146,9 +147,9 @@ export default {
   referAndEarn: {
     headerTitle: 'Refer & Earn',
     userInfo: 'Refer User & Earn Money',
-    name: '* Name',
-    mobileNumber: '* Mobile Number',
-    email: '* Email',
+    name: 'Name',
+    mobileNumber: 'Mobile Number',
+    email: 'Email',
     sendBtnName: 'Send Message',
     linkBtn: 'Click here to view your Referrals',
   },

@@ -109,13 +109,12 @@ function* postTaskEntry(action) {
     );
     console.log('saga postTaskEntry api response...', response);
     if (
-      response !== null &&
-      response.status === 200 &&
-      response.IsProfileEditSuccess
+      (response !== null && response.HttpStatusCode === 200) ||
+      response.HttpStatusCode === '200'
     ) {
       console.log('postTaskEntry data ....', response);
       console.log('postTaskEntry saga action ....', action);
-      action.onSuccesscallback();
+      action.onSuccesscallback(response.Message);
     } else if (response !== null) {
       action.onErrorcallback(response.Message);
     } else {

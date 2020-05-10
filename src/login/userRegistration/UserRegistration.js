@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {connect} from 'react-redux';
 // import {SafeAreaView} from 'react-native-safe-area-context';
@@ -13,8 +13,10 @@ import PrimaryButton from '../../common/UIComponents/PrimaryButton';
 import EmailInputComponent from '../../common/UIComponents/EmailInputComponent';
 // import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
 import styles from './styles';
-import {registerNewUser} from '../../AppStore/loginActions';
+import {registerNewUser, getProviders} from '../../AppStore/loginActions';
 import WarningDialog from '../../common/UIComponents/warningDialog';
+import CheckBoxComponent from '../../common/UIComponents/CheckBox/CheckBox';
+import ReadOnlyView from '../../common/UIComponents/readOnlyView/ReadOnlyView';
 
 class UserRegistration extends React.Component {
   constructor(props) {
@@ -28,29 +30,69 @@ class UserRegistration extends React.Component {
       Password: '',
       ConfirmPassword: '',
 
-      isLoading: false,
+      isLoading: true,
       // RetypePassword: '',
       showDlg: false,
       dlgMsg: '',
+      checkBoxesStatus: [],
     };
   }
-  onSubmitRegistration = () => {
-    this.setState({isLoading: true});
-    const payload = {
-      FirstName: this.state.FirstName,
-      LastName: this.state.LastName,
-      Email: this.state.Email,
-      Mobile: this.state.Mobile,
-      Password: this.state.Password,
-      ConfirmPassword: this.state.ConfirmPassword,
-    };
-    console.log('onSubmitRegistration payload....', payload);
 
-    this.props.registerNewUser(
-      payload,
-      this.onRegistrationSuccess,
-      this.onRegistrationFailed,
+  componentDidMount() {
+    this.props.getProviders(
+      this.onGetProvidersSuccess,
+      this.onGetProvidersFailed,
     );
+  }
+
+  onGetProvidersSuccess = () => {
+    this.setState({
+      isLoading: false,
+      checkBoxesStatus: Array(this.props.providers.length).fill(false),
+    });
+  };
+
+  onGetProvidersFailed = errorMsg => {
+    this.setState({isLoading: false, showDlg: true, dlgMsg: errorMsg});
+    console.log(errorMsg);
+  };
+
+  onSubmitRegistration = () => {
+    try {
+      if (this.state.FirstName.length === 0) {
+        throw {msg: 'Pls enter Frist Name'};
+      } else if (this.state.LastName.length === 0) {
+        throw {msg: 'Pls enter Last Name'};
+      } else if (this.state.Mobile.length === 0) {
+        throw {msg: 'Pls enter Mobile Number'};
+      } else if (this.state.Email.length === 0) {
+        throw {msg: 'Pls enter Login Email'};
+      } else if (this.state.Password.length === 0) {
+        throw {msg: 'Pls enter Password'};
+      } else if (this.state.ConfirmPassword.length === 0) {
+        throw {msg: 'Pls enter Confirm Password'};
+      } else if (this.state.Password !== this.state.ConfirmPassword) {
+        throw {msg: 'Password and Confirm Password mismatch.'};
+      }
+      this.setState({isLoading: true});
+      const payload = {
+        FirstName: this.state.FirstName,
+        LastName: this.state.LastName,
+        Email: this.state.Email,
+        Mobile: this.state.Mobile,
+        Password: this.state.Password,
+        ConfirmPassword: this.state.ConfirmPassword,
+      };
+      console.log('onSubmitRegistration payload....', payload);
+
+      this.props.registerNewUser(
+        payload,
+        this.onRegistrationSuccess,
+        this.onRegistrationFailed,
+      );
+    } catch (e) {
+      this.setState({showDlg: true, dlgMsg: e.msg});
+    }
   };
 
   onRegistrationSuccess = () => {
@@ -68,6 +110,44 @@ class UserRegistration extends React.Component {
 
   onConfirm = () => {
     this.setState({showDlg: false});
+  };
+
+  onCheckBoxSelected = index => {
+    const checkBoxesStatus = this.state.checkBoxesStatus;
+    checkBoxesStatus[index] = !checkBoxesStatus[index];
+    this.setState({checkBoxesStatus});
+  };
+
+  renderProviders = () => {
+    // const checkBoxesStatus = [];
+    const checkBoxes = this.props.providers?.map((el, index) => {
+      // checkBoxesStatus.push(false);
+      return (
+        <View style={styles.provider}>
+          <Image
+            source={{
+              isStatic: true,
+              uri: el.ProviderIconImage,
+              method: 'GET',
+              // headers: {
+              //   clubId: NetTool.clubId,
+              //   'Ocp-Apim-Subscription-Key': NetTool.subscriptionKey,
+              // },
+            }}
+            style={styles.providerImage}
+            defaultSource={4}
+          />
+          <CheckBoxComponent
+            btnName={el.ProviderName}
+            onClick={() => this.onCheckBoxSelected(index)}
+            isSelected={this.state.checkBoxesStatus[index]}
+            btnTextStyle={{fontWeight: 'bold'}}
+          />
+        </View>
+      );
+    });
+    // checkBoxesStatus.length === this.props.providers.length && this.setState({checkBoxesStatus});
+    return checkBoxes;
   };
 
   render() {
@@ -117,7 +197,15 @@ class UserRegistration extends React.Component {
             password={this.state.ConfirmPassword}
             onPassworEntered={text => this.setState({ConfirmPassword: text})}
           />
-          {/* <View style={styles.signinContainer}> */}
+          <View style={styles.labelContainer}>
+            <ReadOnlyView
+              label={I18n.t('userRegistration.providers')}
+              labelStyle={styles.providersLabel}
+            />
+          </View>
+          <View style={styles.providersContainer}>
+            {this.renderProviders()}
+          </View>
           <View style={BaseStyles.emptyHView} />
           <PrimaryButton
             btnName={I18n.t('userRegistration.registerBtnName')}
@@ -144,11 +232,15 @@ class UserRegistration extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  providers: state.login?.providers,
+});
 
 const mapDispatchToProps = dispatch => ({
   registerNewUser: (payload, onSuccessCallback, onErrorCallback) =>
     dispatch(registerNewUser(payload, onSuccessCallback, onErrorCallback)),
+  getProviders: (onSuccessCallback, onErrorCallback) =>
+    dispatch(getProviders(onSuccessCallback, onErrorCallback)),
 });
 
 export default connect(
