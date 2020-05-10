@@ -3,6 +3,7 @@ import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {connect} from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { Dropdown } from 'react-native-material-dropdown';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
@@ -75,7 +76,7 @@ class TaskEntryPage extends React.Component {
     const payload = [];
     try {
       this.state.components.forEach(item => {
-        if (item.controlType === 'inputText') {
+        if (item.ControlType === 'text' || item.ControlType === 'textarea') {
           if (item.ControlReq === true && item.inputValue.length === 0) {
             throw {};
           }
@@ -84,7 +85,7 @@ class TaskEntryPage extends React.Component {
             ControlValue: item.inputValue,
           };
           payload.push(textObj);
-        } else if (item.controlType === 'checkbox') {
+        } else if (item.ControlType === 'checkbox') {
           let isFilled = false;
           const checkboxObj = {};
           item.checkBoxGroup.forEach(el => {
@@ -98,7 +99,7 @@ class TaskEntryPage extends React.Component {
           if (item.ControlReq === true && isFilled === false) {
             throw {};
           }
-        } else if (item.controlType === 'radio') {
+        } else if (item.ControlType === 'radio') {
           let isFilled = false;
           const selectObj = {};
           item.radioButtomGroup.forEach(el => {
@@ -239,20 +240,15 @@ class TaskEntryPage extends React.Component {
     const components = [];
     this.props.formDefenition?.FormDefinition?.forEach((el, index) => {
       // console.log('element .....', el);
-      let returnObj = {};
+      let returnObj = {
+        ...el,
+      };
       if (el.ControlType === 'text' || el.ControlType === 'textarea') {
-        // console.log('text element');
         returnObj = {
-          controlType: 'inputText',
           inputValue: el.DefaultValue === null ? '' : el.DefaultValue,
-          // onTextChange: (text, itmeId) => this.onTextChange(text, itmeId),
           index,
-          multiline: 5,
-          ControlColumn: el.ControlColumn,
-          ControlReq: el.ControlReq,
-          placeholder: el.HelpText === null ? 'Enter value' : el.HelpText,
-          FormControlKey: el.FormControlKey,
-          FormKey: el.FormKey,
+          placeholder: el.HelpText === null ? '' : el.HelpText,
+          ...returnObj,
         };
         // console.log('returnObj text....', returnObj);
         components.push({...returnObj});
@@ -263,12 +259,8 @@ class TaskEntryPage extends React.Component {
             this.parseCheckBox(checkboxObj, checkboxObjIndex, index),
         );
         returnObj = {
-          controlType: 'checkbox',
-          ControlColumn: el.ControlColumn,
-          ControlReq: el.ControlReq,
-          FormControlKey: el.FormControlKey,
-          FormKey: el.FormKey,
           checkBoxGroup: [...checkBoxGroup],
+          ...returnObj,
         };
         // console.log('returnObj checkbox....', returnObj);
         components.push(returnObj);
@@ -280,12 +272,8 @@ class TaskEntryPage extends React.Component {
           this.parseSelectionControl(selectionObj, selectionObjIndex, index),
         );
         returnObj = {
-          controlType: 'radio',
-          ControlColumn: el.ControlColumn,
-          ControlReq: el.ControlReq,
-          FormControlKey: el.FormControlKey,
-          FormKey: el.FormKey,
           radioButtomGroup: [...radioButtomGroup],
+          ...returnObj,
         };
         // console.log('returnObj radio....', returnObj);
         components.push(returnObj);
@@ -297,17 +285,32 @@ class TaskEntryPage extends React.Component {
 
   createComponentsDynamically = () => {
     const FormView = this.state.components.map((item, index) => {
-      if (item.controlType === 'inputText') {
+      if (item.ControlType === 'text' || item.ControlType === 'textarea') {
         return (
-          <TextInputComponent
-            placeholder={item.placeholder + index}
-            autoFocus={false}
-            inputValue={this.state.components[index].inputValue}
-            onTextChange={text => this.onTextChange(text, index)}
-          />
+          <View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+              }}>
+              <Text style={{fontSize: fontscale(16)}}>{item.ControlLabel}</Text>
+              {item.ControlReq && (
+                <Text style={{fontSize: fontscale(12), color: 'red'}}>
+                  (Mandatory)
+                </Text>
+              )}
+            </View>
+            <TextInputComponent
+              placeholder={item.placeholder + index}
+              autoFocus={false}
+              inputValue={this.state.components[index].inputValue}
+              onTextChange={text => this.onTextChange(text, index)}
+            />
+          </View>
         );
       }
-      if (item.controlType === 'checkbox') {
+      if (item.ControlType === 'checkbox') {
         const CheckBox = () =>
           item.checkBoxGroup.map((el, id) => {
             return (
@@ -320,18 +323,33 @@ class TaskEntryPage extends React.Component {
             );
           });
         return (
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'flex-start',
-              height: heightAdapter(100),
-            }}>
-            {CheckBox()}
+          <View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+              }}>
+              <Text style={{fontSize: fontscale(16)}}>{item.ControlLabel}</Text>
+              {item.ControlReq && (
+                <Text style={{fontSize: fontscale(12), color: 'red'}}>
+                  (Mandatory)
+                </Text>
+              )}
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+                height: heightAdapter(100),
+              }}>
+              {CheckBox()}
+            </View>
           </View>
         );
       }
-      if (item.controlType === 'radio') {
+      if (item.ControlType === 'radio') {
         const RadioBtn = () =>
           item.radioButtomGroup.map((el, id) => {
             return (
@@ -343,14 +361,25 @@ class TaskEntryPage extends React.Component {
             );
           });
         return (
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'flex-start',
-              height: heightAdapter(100),
-            }}>
-            {RadioBtn()}
+          <View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+              }}>
+              <Text>{item.ControlLabel}</Text>
+              {item.ControlReq && <Text>(Mandatory)</Text>}
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+                height: heightAdapter(100),
+              }}>
+              {RadioBtn()}
+            </View>
           </View>
         );
       }
