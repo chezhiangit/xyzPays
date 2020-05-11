@@ -121,19 +121,18 @@ class ReferralCommissions extends React.Component {
   }
 
   componentDidMount() {
-
     this.props.navigation.addListener('focus', () => {
       this.setState({isLoading: true});
       this.props.getReferralDateFilter(
         this.onDateFilterSuccess,
         this.onDateFilterFailed,
       );
-      this.props.getReferralCommissionList(
-        4,
-        0,
-        this.onReferralCommissionSuccess,
-        this.onReferralCommissionFailed,
-      );
+      // this.props.getReferralCommissionList(
+      //   4,
+      //   0,
+      //   this.onReferralCommissionSuccess,
+      //   this.onReferralCommissionFailed,
+      // );
     });
 
     // if (this.props.dateFilter.length === 0) {
@@ -302,7 +301,13 @@ class ReferralCommissions extends React.Component {
 
   onDateFilterSuccess = () => {
     console.log('registration status success');
-    this.setState({isLoading: false});
+    // this.setState({isLoading: false});
+    this.props.getReferralCommissionList(
+      4,
+      0,
+      this.onReferralCommissionSuccess,
+      this.onReferralCommissionFailed,
+    );
   };
 
   onDateFilterFailed = errorMsg => {
@@ -409,14 +414,14 @@ class ReferralCommissions extends React.Component {
             </TouchableWithoutFeedback>
           </View>
           {(this.state.isSegmentVisible || this.state.showFilter) && (
-            <TouchableWithoutFeedback
+            <TouchableOpacity
               style={styles.transparentView}
               onPress={() => {
                 this.toggleDropdown(false);
                 this.setState({showFilter: false});
               }}>
               <View style={styles.transparentView} />
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
           )}
           <FlatList
             style={styles.commissionList}

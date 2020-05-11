@@ -43,7 +43,18 @@ export default StyleSheet.create({
     color: Colors.primaryAppColor,
   },
   taskBtn: {
-    height: heightAdapter(70),
+    height: heightAdapter(50),
+    width: widthAdapter(400),
+    backgroundColor: Colors.primaryAppColor,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // borderWidth: 1,
+    borderRadius: 5,
+  },
+  taskText: {
+    fontFamily: fontFamily.primaryFontFamily,
+    color: Clors.white,
+    fontWeight: 'bold',
   },
   approveBtnStyle: {
     backgroundColor: Clors.approvedAmtBgColor,
@@ -89,8 +100,8 @@ export default StyleSheet.create({
     // borderRightWidth: 3,
     // borderTopWidth: 2,
     // borderRadius: 3,
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   scrollIndicator: {
     flexDirection: 'row',

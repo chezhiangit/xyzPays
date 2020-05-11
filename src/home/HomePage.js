@@ -58,7 +58,7 @@ class HomePage extends React.Component {
     super(props);
     this.state = {
       // showTask: false,
-      taskCount: 10,
+      // taskCount: 10,
       // taskListData: [...taskListData],
       approvedAmt: 100,
       paidAmt: 50,
@@ -172,10 +172,12 @@ class HomePage extends React.Component {
     console.log(errorMsg);
   };
 
-  getTaskButtonName = taskCount => {
+  getTaskButtonName = () => {
     const taskBtnPrefix = I18n.t('homePage.taskBtnPrefixText');
     const taskBtnPostfix = I18n.t('homePage.taskBtnPostfixText');
-    const taskBtnText = `${taskBtnPrefix} ${taskCount} ${taskBtnPostfix}`;
+    const taskBtnText = `${taskBtnPrefix} ${
+      this.props.pendingTask?.length
+    } ${taskBtnPostfix}`;
     return taskBtnText;
   };
   onPressApprovedButton = () => {
@@ -283,13 +285,16 @@ class HomePage extends React.Component {
 
           {this.props.pendingTask.length > 0 && (
             <>
-              <PrimaryButton
+              {/* <PrimaryButton
                 btnStyle={styles.taskBtn}
                 onSubmit={this.onPressTaskButton}
                 btnName={taskBtnName}
-              />
+              /> */}
+              <View style={styles.taskBtn}>
+                <Text style={styles.taskText}>{taskBtnName}</Text>
+              </View>
               <View
-                style={[BaseStyles.emptyHView, {height: heightAdapter(70)}]}
+                style={[BaseStyles.emptyHView, {height: heightAdapter(30)}]}
               />
 
               <View style={styles.taskListContainer}>

@@ -73,9 +73,15 @@ class ReferAndEarn extends React.Component {
     this.setState({showDlg: false});
   };
 
-  onPostUserdDataSuccess = () => {
+  onPostUserdDataSuccess = msg => {
     console.log('post user success');
-    this.setState({isLoading: false}, () => this.props.navigation.goBack());
+    // this.setState({isLoading: false}, () => this.props.navigation.goBack());
+    // this.setState({isLoading: false});
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: msg,
+    });
   };
 
   onPostUserdDataFailed = errorMsg => {

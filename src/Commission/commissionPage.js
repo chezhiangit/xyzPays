@@ -456,14 +456,14 @@ class CommissionPage extends React.Component {
             showsVerticalScrollIndicator={false}
           />
           {(this.state.isSegmentVisible || this.state.showFilter) && (
-            <TouchableWithoutFeedback
+            <TouchableOpacity
               style={styles.transparentView}
               onPress={() => {
                 this.toggleDropdown(false);
                 this.toggleFilter(false);
               }}>
               <View style={styles.transparentView} />
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
           )}
         </View>
         <Footer />

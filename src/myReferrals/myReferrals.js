@@ -399,11 +399,11 @@ class MyReferrals extends React.Component {
             </Animated.View>
           </View>
           {this.state.isSegmentVisible && (
-            <TouchableWithoutFeedback
+            <TouchableOpacity
               style={styles.transparentView}
               onPress={() => this.toggleDropdown(false)}>
               <View style={styles.transparentView} />
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
           )}
           <FlatList
             style={styles.referralList}

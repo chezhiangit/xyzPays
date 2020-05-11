@@ -38,15 +38,15 @@ class ContactUs extends React.Component {
   }
 
   componentDidMount() {
-    // this.props.registerKeyboard();
+    this.props.registerKeyboard();
     this.props.getGoogleMapCoordinates(
       this.onGetMapCoordinatesSuccess,
       this.onGetMapCoordinatesFailed,
     );
-    this.setState({isLoading: false});
+    this.setState({isLoading: true});
   }
   componentWillUnmount() {
-    // this.props.deregisterKeyboard();
+    this.props.deregisterKeyboard();
   }
 
   onGetMapCoordinatesSuccess = () => {
@@ -71,7 +71,7 @@ class ContactUs extends React.Component {
         findUsMessage: '',
         findUsSubject: '',
       },
-      () => this.props.registerKeyboard(),
+      // () => this.props.registerKeyboard(),
     );
   };
 
@@ -83,7 +83,7 @@ class ContactUs extends React.Component {
         isLoading: true,
       },
       () => {
-        this.props.deregisterKeyboard();
+        // this.props.deregisterKeyboard();
         const payload = {
           Subject: this.state.findUsSubject,
           Message: this.state.findUsMessage,
@@ -103,6 +103,8 @@ class ContactUs extends React.Component {
       isLoading: false,
       showDlg: true,
       dlgMsg: msg,
+      findUsMessage: '',
+      findUsSubject: '',
     });
     console.log(msg);
   };
@@ -130,41 +132,41 @@ class ContactUs extends React.Component {
         {/* <WebView source={{uri: 'https://reactnative.dev/'}} /> */}
         <WebView
           source={{
-            html: `<iframe width="100%" height="100%" src=${
+            html: `<iframe width="100%" height="75%" src=${
               this.props.XyziesGoogleMapCoordinates
             } frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`,
           }}
           onLoadEnd={() => this.setState({isLoading: false})}
         />
-        <View style={styles.bottomContainer}>
+        {/* <View style={styles.bottomContainer}>
           <PrimaryButton
             btnStyle={styles.findUsBtn}
             onSubmit={this.onFindUs}
             btnName={I18n.t('contactUs.findUsBtnName')}
           />
-        </View>
-        <Footer />
-        {/* <Animated.View
-          style={{width: '100%', transform: [{translateY: this.props.shift}]}}> */}
-        <SliderView
+        </View> */}
+        {/* <Footer /> */}
+        <Animated.View
+          style={{width: '100%', transform: [{translateY: this.props.shift}]}}>
+          {/* <SliderView
           // containerStyle={{transform: [{translateY: this.props.shift}]}}
           visible={this.state.showFindUsView}
           animateFrom="bottom"
           height={heightAdapter(500)}
-          width="100%">
+          width="100%"> */}
           <View style={styles.contactUsContainer}>
             <TextInputComponent
               placeholder={I18n.t('contactUs.subject')}
               autoFocus={false}
               onFieldFocus={this.props.onFieldFocus}
-              // inputValue={this.state.findUsSubject}
+              inputValue={this.state.findUsSubject}
               onTextChange={text => this.setState({findUsSubject: text})}
             />
             <TextInputComponent
               placeholder={I18n.t('contactUs.message')}
               autoFocus={false}
               onFieldFocus={this.props.onFieldFocus}
-              // inputValue={this.state.findUsMessage}
+              inputValue={this.state.findUsMessage}
               onTextChange={findUsMessage => this.setState({findUsMessage})}
             />
             <PrimaryButton
@@ -176,8 +178,9 @@ class ContactUs extends React.Component {
                 style={[BaseStyles.emptyHView, {height: heightAdapter(100)}]}
               /> */}
           </View>
-        </SliderView>
-        {/* </Animated.View> */}
+          {/* </SliderView> */}
+        </Animated.View>
+        {/* <Footer /> */}
         <WarningDialog
           shouldShowDeleteWarning={this.state.showDlg}
           // onCancel={this.onCancel}
@@ -228,13 +231,15 @@ const styles = StyleSheet.create({
     // zIndex: 0,
   },
   contactUsContainer: {
-    flex: 1,
+    // flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     padding: widthAdapter(30),
     zIndex: 100,
     borderWidth: 1,
-    borderColor: 'red',
+    borderColor: 'gray',
+    backfaceVisibility: 'hidden',
+    backgroundColor: 'white',
   },
   submitBtn: {
     height: heightAdapter(100),
