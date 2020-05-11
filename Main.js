@@ -15,6 +15,7 @@ import LoginPage from './src/login/LoginPage';
 import UserRegistration from './src/login/userRegistration/UserRegistration';
 import ForgotPassword from './src/login/forgotPassword/ForgotPassword';
 import ForgotPasswordStep2 from './src/login/forgotPassword/forgotPasswordStep2';
+import AppLandingPage from './src/landingPage/landingPage';
 import HomePage from './src/home/HomePage';
 import CommissionPage from './src/Commission/commissionPage';
 import TrendingPage from './src/Trending/TrendingPage';
@@ -47,91 +48,173 @@ import FontsWeight from './src/uttils/FontsWeight';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const HomeNavigator = ({route, navigation}) => {
-  return (
-    <Drawer.Navigator
-      drawerContent={() => <DrawerComponent navigation={navigation} />}
-      drawerPosition={'right'}
-      initialRouteName="Home"
-      hideStatusBar={false}
-      overlayColor
-      cont>
-      <Drawer.Screen name="Home" component={HomePage} />
-      <Drawer.Screen
-        name="ProfilePage"
-        component={ProfilePage}
-        options={{
-          title: I18n.t('profile.headerTitle'),
-        }}
-      />
-      <Drawer.Screen
-        name="EditProfilePage"
-        component={EditProfilePage}
-        options={{
-          title: I18n.t('editProfile.headerTitle'),
-        }}
-      />
-      <Drawer.Screen
-        name="CommissionPage"
-        component={CommissionPage}
-        options={{
-          title: I18n.t('commission.headerTitle'),
-        }}
-      />
-      <Drawer.Screen
-        name="PayoutHistoryPage"
-        component={PayoutHistoryPage}
-        options={{
-          title: I18n.t('payoutHistory.headerTitle'),
-        }}
-      />
-      <Drawer.Screen
-        name="ReferAndEarnPage"
-        component={ReferAndEarnPage}
-        options={{
-          title: I18n.t('referAndEarn.headerTitle'),
-        }}
-      />
-      <Drawer.Screen
-        name="MyReferralsPage"
-        component={MyReferralsPage}
-        options={{
-          title: I18n.t('myReferrals.headerTitle'),
-        }}
-      />
-      <Drawer.Screen
-        name="ReferralCommissionsPage"
-        component={ReferralCommissionsPage}
-        options={{
-          title: I18n.t('referralCommissions.headerTitle'),
-        }}
-      />
-      <Drawer.Screen
-        name="TrendingPage"
-        component={TrendingPage}
-        options={{
-          title: I18n.t('trending.headerTitle'),
-        }}
-      />
-      <Stack.Screen
-        name="ContactUsPage"
-        component={ContactUsPage}
-        options={{
-          title: I18n.t('contactUs.headerTitle'),
-        }}
-      />
-      <Stack.Screen
-        name="FAQPage"
-        component={FAQPage}
-        options={{
-          title: I18n.t('faq.headerTitle'),
-        }}
-      />
-    </Drawer.Navigator>
-  );
-};
+// const HomeNavigator = ({route, navigation}) => {
+//   return (
+//     <Drawer.Navigator
+//       drawerContent={() => <DrawerComponent navigation={navigation} />}
+//       drawerPosition={'right'}
+//       initialRouteName={this.props.initialRoute} //"Home"
+//       hideStatusBar={false}
+//       overlayColor>
+//       <Drawer.Screen name="Home" component={HomePage} />
+//       <Drawer.Screen
+//         name="ProfilePage"
+//         component={ProfilePage}
+//         options={{
+//           title: I18n.t('profile.headerTitle'),
+//         }}
+//       />
+//       <Drawer.Screen
+//         name="EditProfilePage"
+//         component={EditProfilePage}
+//         options={{
+//           title: I18n.t('editProfile.headerTitle'),
+//         }}
+//       />
+//       <Drawer.Screen
+//         name="CommissionPage"
+//         component={CommissionPage}
+//         options={{
+//           title: I18n.t('commission.headerTitle'),
+//         }}
+//       />
+//       <Drawer.Screen
+//         name="PayoutHistoryPage"
+//         component={PayoutHistoryPage}
+//         options={{
+//           title: I18n.t('payoutHistory.headerTitle'),
+//         }}
+//       />
+//       <Drawer.Screen
+//         name="ReferAndEarnPage"
+//         component={ReferAndEarnPage}
+//         options={{
+//           title: I18n.t('referAndEarn.headerTitle'),
+//         }}
+//       />
+//       <Drawer.Screen
+//         name="MyReferralsPage"
+//         component={MyReferralsPage}
+//         options={{
+//           title: I18n.t('myReferrals.headerTitle'),
+//         }}
+//       />
+//       <Drawer.Screen
+//         name="ReferralCommissionsPage"
+//         component={ReferralCommissionsPage}
+//         options={{
+//           title: I18n.t('referralCommissions.headerTitle'),
+//         }}
+//       />
+//       <Drawer.Screen
+//         name="TrendingPage"
+//         component={TrendingPage}
+//         options={{
+//           title: I18n.t('trending.headerTitle'),
+//         }}
+//       />
+//       <Stack.Screen
+//         name="ContactUsPage"
+//         component={ContactUsPage}
+//         options={{
+//           title: I18n.t('contactUs.headerTitle'),
+//         }}
+//       />
+//       <Stack.Screen
+//         name="FAQPage"
+//         component={FAQPage}
+//         options={{
+//           title: I18n.t('faq.headerTitle'),
+//         }}
+//       />
+//     </Drawer.Navigator>
+//   );
+// };
 
 class Main extends React.Component {
+  HomeNavigator = ({route, navigation}) => {
+    return (
+      <Drawer.Navigator
+        drawerContent={() => <DrawerComponent navigation={navigation} />}
+        drawerPosition={'right'}
+        initialRouteName={this.props.initialRoute} //"Home"
+        hideStatusBar={false}
+        overlayColor>
+        <Drawer.Screen name="Home" component={HomePage} />
+        <Drawer.Screen
+          name="ProfilePage"
+          component={ProfilePage}
+          options={{
+            title: I18n.t('profile.headerTitle'),
+          }}
+        />
+        <Drawer.Screen
+          name="EditProfilePage"
+          component={EditProfilePage}
+          options={{
+            title: I18n.t('editProfile.headerTitle'),
+          }}
+        />
+        <Drawer.Screen
+          name="CommissionPage"
+          component={CommissionPage}
+          options={{
+            title: I18n.t('commission.headerTitle'),
+          }}
+        />
+        <Drawer.Screen
+          name="PayoutHistoryPage"
+          component={PayoutHistoryPage}
+          options={{
+            title: I18n.t('payoutHistory.headerTitle'),
+          }}
+        />
+        <Drawer.Screen
+          name="ReferAndEarnPage"
+          component={ReferAndEarnPage}
+          options={{
+            title: I18n.t('referAndEarn.headerTitle'),
+          }}
+        />
+        <Drawer.Screen
+          name="MyReferralsPage"
+          component={MyReferralsPage}
+          options={{
+            title: I18n.t('myReferrals.headerTitle'),
+          }}
+        />
+        <Drawer.Screen
+          name="ReferralCommissionsPage"
+          component={ReferralCommissionsPage}
+          options={{
+            title: I18n.t('referralCommissions.headerTitle'),
+          }}
+        />
+        <Drawer.Screen
+          name="TrendingPage"
+          component={TrendingPage}
+          options={{
+            title: I18n.t('trending.headerTitle'),
+          }}
+        />
+        <Stack.Screen
+          name="ContactUsPage"
+          component={ContactUsPage}
+          options={{
+            title: I18n.t('contactUs.headerTitle'),
+          }}
+        />
+        <Stack.Screen
+          name="FAQPage"
+          component={FAQPage}
+          options={{
+            title: I18n.t('faq.headerTitle'),
+          }}
+        />
+      </Drawer.Navigator>
+    );
+  };
+
   renderPage = () => {
     if (
       this.props.IsEmailVerificationDone === false &&
@@ -247,9 +330,31 @@ class Main extends React.Component {
       );
     }
 
+    if (
+      this.props.IsEmailVerificationDone &&
+      this.props.IsMobileVerificationDone &&
+      this.props.userLoggedIn &&
+      this.props.initialRoute === ''
+    ) {
+      return (
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}>
+          <Stack.Screen
+            name="AppLandingPage"
+            component={AppLandingPage}
+            // options={{
+            //   title: I18n.t('userVerification.headerTitleMobile'),
+            // }}
+          />
+        </Stack.Navigator>
+      );
+    }
+
     return (
       <Stack.Navigator
-        initialRouteName="Home"
+        // initialRouteName={this.props.initialRoute} //"Home"
         screenOptions={{
           headerStyle: {
             backgroundColor: Colors.primaryAppColor,
@@ -264,7 +369,7 @@ class Main extends React.Component {
         }}>
         <Stack.Screen
           name="HomePage"
-          component={HomeNavigator}
+          component={this.HomeNavigator}
           options={({route, navigation}) => ({
             title: I18n.t('homePage.headerTitle'),
             headerRight: ({}) => <MenuIcon navigation={navigation} />,
@@ -388,6 +493,7 @@ const mapStateToProps = state => {
     IsMobileVerificationDone: state.login.IsMobileVerificationDone,
     userEmailVerification: state.userVerification.emailVeification,
     userMobileVerification: state.userVerification.mobileVeification,
+    initialRoute: state.landingPage.initialRoute,
   };
 };
 

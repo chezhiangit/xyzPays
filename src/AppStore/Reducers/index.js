@@ -11,6 +11,7 @@ import payoutReducer from './payoutReducer';
 import taskEntryReducer from './taskEntryReducer';
 import contactUSReducer from './contactUSReducer';
 import userVerificationReducer from './userVerificationReducer';
+import landingPageReducer from './landingPageReducer';
 
 const appReducer = combineReducers({
   login: loginReducer,
@@ -25,6 +26,7 @@ const appReducer = combineReducers({
   taskEntry: taskEntryReducer,
   contactUS: contactUSReducer,
   userVerification: userVerificationReducer,
+  landingPage: landingPageReducer,
 });
 
 const rootReducer = (state, action) => {

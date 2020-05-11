@@ -8,7 +8,8 @@ const RadioButton = props => {
     <TouchableOpacity accessible={false} onPress={props.onClick}>
       <View style={[styles.checkBoxBtnContainer, props.containerStyle]}>
         <View style={[styles.box, props.checkBoxStyle]}>
-          {props.status !== undefined && props.status === true && (
+          {((props.status !== undefined && props.status === true) ||
+            props.status === undefined) && (
             <View style={[styles.innerCircle, props.innerCircleStyle]} />
           )}
         </View>

@@ -12,6 +12,14 @@ export default {
     signUpNow: 'Sign up now',
     forgotPwd: 'Forgot your password?',
   },
+  landingPage: {
+    hi: 'Hi, ',
+    userMsg: 'Choose what do you want to do from the following.',
+    clickHere: 'Click Here',
+    make: 'Make',
+    my: 'My',
+    money: 'Money',
+  },
   homePage: {
     headerTitle: 'XYZ Pays',
     hello: 'Hello,',
