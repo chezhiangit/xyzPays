@@ -1,15 +1,5 @@
 import * as React from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  //   Animated,
-  Image,
-  //   Easing,
-  //   TouchableOpacity,
-  //   TouchableWithoutFeedback,
-  ScrollView,
-} from 'react-native';
+import {View, Text, Image, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
@@ -20,114 +10,45 @@ import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
 import {heightAdapter, fontscale, widthAdapter} from '../uttils/adapterUtil';
 // import Images from '../Assets/index';
-// import {
-//   getTrendingProducts,
-//   getProductDetailsData,
-// } from '../AppStore/trendingProductsActions';
+import {getProductsList} from '../AppStore/productsActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
-// import Colors from '../uttils/Colors';
-
-const productDetails = [
-  {
-    imageUrl: '',
-    ProductName: 'Vonage Lead',
-    ProductDescription:
-      'Add new customer to Vonage and get commission on confirmation.',
-    leadCommission: 10,
-    confirmationCommission: 20,
-  },
-  {
-    imageUrl: '',
-    ProductName: 'AT & T',
-    ProductDescription:
-      'Add new customer to AT & T and get commission on confirmation.',
-    leadCommission: 30,
-    confirmationCommission: 60,
-  },
-  {
-    imageUrl: '',
-    ProductName: 'Review Lead',
-    ProductDescription: 'Review Lead',
-    leadCommission: 5,
-    confirmationCommission: 10,
-  },
-];
 
 class ProductsListPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // trendingData: [...trending],
-      //   productsServiceDone: false,
       isLoading: false,
       showDlg: false,
       dlgMsg: '',
     };
-    // // this.show=false;
-    // this.translate = new Animated.Value(0);
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    // if (!state.productsServiceDone) {
-    //   return {isLoading: true};
-    // }
-    return {};
   }
 
   componentDidMount() {
-    // this.props.navigation.addListener('focus', () => {
-    //   this.setState({isLoading: true});
-    //   this.props.getTrendingProducts(
-    //     this.onGetTrendingProductListSuccess,
-    //     this.onGetTrendingProductListFailed,
-    //   );
-    // });
-  }
-
-  onGetTrendingProductListSuccess = () => {
-    this.setState({isLoading: false, productsServiceDone: true});
-  };
-
-  onGetTrendingProductListFailed = errorMsg => {
-    this.setState({
-      isLoading: false,
-      productsServiceDone: true,
-      showDlg: true,
-      dlgMsg: errorMsg,
+    this.props.navigation.addListener('focus', () => {
+      this.setState({isLoading: true});
+      this.props.getProductsList(this.onSuccess, this.onFailed);
     });
-  };
+  }
 
   onStartEarning = () => {
     console.log('On start earning');
   };
 
-  //   onProductCardSelected = index => {
-  //     this.setState({isLoading: true}, () =>
-  //       this.props.getProductDetailsData(
-  //         this.props.trendingProductList[index].ProductKey,
-  //         this.onGetProductDetailsDataSuccess,
-  //         this.onGetProductDetailsDataFailed,
-  //       ),
-  //     );
-  //   };
+  onSuccess = () => {
+    console.log('GetProductsList success');
+    this.setState({isLoading: false});
+  };
 
-  //   onGetProductDetailsDataSuccess = () => {
-  //     console.log('pending task success');
-  //     this.setState({isLoading: false}, () =>
-  //       this.props.navigation.navigate('ProductDetailsPage'),
-  //     );
-  //   };
-
-  //   onGetProductDetailsDataFailed = errorMsg => {
-  //     console.log('pending task failes');
-  //     this.setState({
-  //       isLoading: false,
-  //       showDlg: true,
-  //       dlgMsg: errorMsg,
-  //     });
-  //     console.log(errorMsg);
-  //   };
+  onFailed = errorMsg => {
+    console.log('GetProductsList failes');
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+    console.log(errorMsg);
+  };
 
   renderTrendingCard = (item, index) => {
     return (
@@ -149,16 +70,14 @@ class ProductsListPage extends React.Component {
             <Text style={styles.trendingProductTxt}>{item?.ProductName}</Text>
           </View>
           <PrimaryButton
-            btnName={I18n.t('login.loginBtnName')}
+            btnName={I18n.t('productsList.earningBtnName')}
             onSubmit={this.onStartEarning}
             btnStyle={styles.btnStyle}
           />
         </View>
         <View style={styles.taskInfo}>
           <View style={styles.taskDescription}>
-            <Text style={styles.taskDescriptionTxt}>
-              {item?.ProductDescription}
-            </Text>
+            <Text style={styles.taskDescriptionTxt}>{item?.ProductDesc}</Text>
           </View>
           <View style={styles.leadCommission}>
             <Text>{`$${item?.leadCommission} `}</Text>
@@ -192,18 +111,10 @@ class ProductsListPage extends React.Component {
               {I18n.t('trending.userInfo')}
             </Text>
           </View>
-          {/* <FlatList
-            style={styles.trendingList}
-            data={productDetails}
-            // data={this.props.productList}
-            renderItem={this.renderTrendingCard}
-            keyExtractor={(item, index) => index}
-            showsVerticalScrollIndicator={false}
-          /> */}
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={styles.trendingList}>
-            {productDetails.map((item, index) =>
+            {this.props.productsList?.map((item, index) =>
               this.renderTrendingCard(item, index),
             )}
             <View style={styles.referEarnContainer}>
@@ -225,7 +136,7 @@ class ProductsListPage extends React.Component {
               </View>
               <View style={BaseStyles.emptyHView} />
               <PrimaryButton
-                btnName={I18n.t('login.loginBtnName')}
+                btnName={I18n.t('productsList.referBtnName')}
                 onSubmit={this.onStartEarning}
                 btnStyle={styles.btnStyle}
               />
@@ -246,19 +157,14 @@ class ProductsListPage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log('state from product list page ... ', state);
+  console.log('state from products list page ... ', state);
   return {
-    // trendingProductList: state.trending.trendingProductList,
+    productsList: state.products.productsList,
   };
 };
-
 const mapDispatchToProps = dispatch => ({
-  //   getTrendingProducts: (onSuccesscallback, onErrorcallback) =>
-  //     dispatch(getTrendingProducts(onSuccesscallback, onErrorcallback)),
-  //   getProductDetailsData: (ProductKey, onSuccesscallback, onErrorcallback) =>
-  //     dispatch(
-  //       getProductDetailsData(ProductKey, onSuccesscallback, onErrorcallback),
-  //     ),
+  getProductsList: (onSuccesscallback, onErrorcallback) =>
+    dispatch(getProductsList(onSuccesscallback, onErrorcallback)),
 });
 
 export default connect(

@@ -2,29 +2,29 @@ import * as React from 'react';
 import {
   View,
   Text,
-  FlatList,
-  Animated,
+  // FlatList,
+  // Animated,
   Image,
-  Easing,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
+  // Easing,
+  // TouchableOpacity,
+  // TouchableWithoutFeedback,
 } from 'react-native';
 import {connect} from 'react-redux';
 import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
-import moment from 'moment';
-import Spinner from 'react-native-loading-spinner-overlay';
-import Icon from 'react-native-vector-icons/FontAwesome';
+// import moment from 'moment';
+// import Spinner from 'react-native-loading-spinner-overlay';
+// import Icon from 'react-native-vector-icons/FontAwesome';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
 import {heightAdapter, fontscale, widthAdapter} from '../uttils/adapterUtil';
-import Images from '../Assets/index';
-import {
-  getTrendingProducts,
-  getProductDetailsData,
-} from '../AppStore/trendingProductsActions';
-import WarningDialog from '../common/UIComponents/warningDialog';
-import Colors from '../uttils/Colors';
+// import Images from '../Assets/index';
+// import {
+//   getTrendingProducts,
+//   getProductDetailsData,
+// } from '../AppStore/trendingProductsActions';
+// import WarningDialog from '../common/UIComponents/warningDialog';
+// import Colors from '../uttils/Colors';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import ReadOnlyView from '../common/UIComponents/readOnlyView/ReadOnlyView';
 
@@ -184,7 +184,7 @@ class ProductDetailsPage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log('state from trending page ... ', state);
+  console.log('state from trending product details page page ... ', state);
   return {
     productDetails: state.trending.productDetails[0],
   };

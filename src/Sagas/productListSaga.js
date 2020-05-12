@@ -1,34 +1,24 @@
 import {takeLatest, call, put, select} from 'redux-saga/effects';
 import {SAGA_GET_PRODUCTS_LIST} from '../AppStore/ActionTypes';
 import {storeProductsList} from './SagaActions';
-import {fetchProductListService} from '../networkServices/productsListServices/productListService';
+import {getProductListService} from '../networkServices/productsListServices/productListService';
 
 const getAccessToken = state => state.login.accessToken;
 
-function* fetchProductsList(action) {
+function* getProductsList(action) {
   try {
+    console.log('getProductsList saga action ....', action);
     const accessToken = yield select(getAccessToken);
-    const response = yield call(fetchProductListService, accessToken);
+    const response = yield call(getProductListService, accessToken);
     console.log('saga prdocucts list api response...', response);
     if (response !== null && response.status === 200) {
       console.log('products list data ....', response);
       console.log('products list saga action ....', action);
-      const productsList = {
-        // pendingPayout: response['Commission Sum'][0].PendingPayout,
-        // totalDenied: response['Commission Sum'][0].TotalDenied,
-        // totalPayout: response['Commission Sum'][0].TotalPayout,
-        // totalCommissionReceivable:
-        //   response['Commission Sum'][0].TotalCommissionReceivable,
-        // repFirstName: response['Rep Info'][0].FirstName,
-        // repLastName: response['Rep Info'][0].LastName,
-      };
+      const productsList = [...response];
 
       console.log('productsList object ....', productsList);
-      yield put(
-        storeProductsList({
-          productsList,
-        }),
-      );
+      yield put(storeProductsList(productsList));
+      console.log('getProductsList saga action ....', action);
       action.onSuccesscallback();
     } else if (response !== null) {
       action.onErrorcallback(response.Message);
@@ -41,5 +31,5 @@ function* fetchProductsList(action) {
 }
 
 export default function* watchProductsListAction() {
-  yield takeLatest(SAGA_GET_PRODUCTS_LIST, fetchProductsList);
+  yield takeLatest(SAGA_GET_PRODUCTS_LIST, getProductsList);
 }

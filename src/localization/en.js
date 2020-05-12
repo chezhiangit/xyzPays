@@ -252,4 +252,8 @@ export default {
     galleryBtnName: 'Choose from photos',
     cancelBtnName: 'Cancel',
   },
+  productsList: {
+    earningBtnName: 'Start Earning',
+    referBtnName: 'Start Refer',
+  },
 };

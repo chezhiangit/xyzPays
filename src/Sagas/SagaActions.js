@@ -49,9 +49,9 @@ export const storeDashboardData = dashboardData => ({
   dashboardData,
 });
 
-export const storeProductsList = productList => ({
+export const storeProductsList = productsList => ({
   type: STORE_PRODUCTS_LIST,
-  productList,
+  productsList,
 });
 
 export const storeProfileInfo = profileInfo => ({

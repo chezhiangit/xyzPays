@@ -1,10 +1,10 @@
 import RNFetchBlob from 'rn-fetch-blob';
-import moment from 'moment';
+// import moment from 'moment';
 import urlConstants from '../urlConstants';
 
 const TIMEOUT = 30000;
 
-const fetchProductListService = async accessToken => {
+const getProductListService = async accessToken => {
   try {
     const url = urlConstants.BaseUrl + urlConstants.getProductsList + accessToken;
     const headersParams = {};
@@ -34,4 +34,4 @@ const fetchProductListService = async accessToken => {
   }
 };
 
-export {fetchProductListService};
+export {getProductListService};

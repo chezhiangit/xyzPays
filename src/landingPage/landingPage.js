@@ -37,7 +37,7 @@ class AppLandingPage extends React.Component {
 
   onBannerLeftViewPressed = () => {
     console.log('Left banner selected');
-    this.props.setIntialRoute('ProfilePage');
+    this.props.setIntialRoute('ProductsListPage');
   };
 
   onBannerRightViewPressed = () => {
@@ -128,9 +128,9 @@ class AppLandingPage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log('state from login ', state);
+  console.log('state from landing page ', state);
   return {
-    dashboardData: state.dashboard.dashboardData,
+    // dashboardData: state.dashboard.dashboardData,
   };
 };
 

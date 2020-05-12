@@ -150,6 +150,13 @@ class Main extends React.Component {
           }}
         />
         <Drawer.Screen
+          name="ProductsListPage"
+          component={ProductsListPage}
+          // options={{
+          //   title: I18n.t('profile.headerTitle'),
+          // }}
+        />
+        <Drawer.Screen
           name="EditProfilePage"
           component={EditProfilePage}
           options={{
@@ -355,7 +362,7 @@ class Main extends React.Component {
 
     return (
       <Stack.Navigator
-        // initialRouteName={this.props.initialRoute} //"Home"
+        initialRouteName={this.props.initialRoute} //"Home"
         screenOptions={{
           headerStyle: {
             backgroundColor: Colors.primaryAppColor,
