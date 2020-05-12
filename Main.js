@@ -16,6 +16,7 @@ import UserRegistration from './src/login/userRegistration/UserRegistration';
 import ForgotPassword from './src/login/forgotPassword/ForgotPassword';
 import ForgotPasswordStep2 from './src/login/forgotPassword/forgotPasswordStep2';
 import AppLandingPage from './src/landingPage/landingPage';
+import ProductsListPage from './src/productList/productListPage';
 import HomePage from './src/home/HomePage';
 import CommissionPage from './src/Commission/commissionPage';
 import TrendingPage from './src/Trending/TrendingPage';
