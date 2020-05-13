@@ -253,7 +253,12 @@ export default {
     cancelBtnName: 'Cancel',
   },
   productsList: {
-    earningBtnName: 'Start Earning',
-    referBtnName: 'Start Refer',
+    earningBtnName: 'START EARNING',
+    referBtnName: 'Start Referring',
+  },
+  LeadTaskEntry: {
+    videlink: 'How to sell? Watch here!',
+    viewAll: 'View All Entries',
+    submitBtnName: 'Submit',
   },
 };

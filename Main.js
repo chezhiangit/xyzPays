@@ -17,6 +17,7 @@ import ForgotPassword from './src/login/forgotPassword/ForgotPassword';
 import ForgotPasswordStep2 from './src/login/forgotPassword/forgotPasswordStep2';
 import AppLandingPage from './src/landingPage/landingPage';
 import ProductsListPage from './src/productList/productListPage';
+import CustomerDetailsPage from './src/startEarning/customerDetailsPage';
 import HomePage from './src/home/HomePage';
 import CommissionPage from './src/Commission/commissionPage';
 import TrendingPage from './src/Trending/TrendingPage';
@@ -152,6 +153,13 @@ class Main extends React.Component {
         <Drawer.Screen
           name="ProductsListPage"
           component={ProductsListPage}
+          // options={{
+          //   title: I18n.t('profile.headerTitle'),
+          // }}
+        />
+        <Drawer.Screen
+          name="CustomerDetailsPage"
+          component={CustomerDetailsPage}
           // options={{
           //   title: I18n.t('profile.headerTitle'),
           // }}

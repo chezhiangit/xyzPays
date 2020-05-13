@@ -27,6 +27,7 @@ import {
   STORE_USER_MOBILE_DETAILS,
   STORE_FORM_DEFENITION_DETAILS_DATA,
   SAGA_STORE_PROVIDERS,
+  STORE_PRODUCTS_FORM_DEFENITION_LIST,
 } from '../AppStore/ActionTypes';
 
 export const userLoginSuccess = ({
@@ -183,4 +184,17 @@ export const storeFormDefenitionDetails = formDefenition => ({
 export const storeProviders = providers => ({
   type: SAGA_STORE_PROVIDERS,
   providers,
+});
+
+export const storeProductsFormDefenitionDetails = (
+  formDefenition,
+  FormKey,
+  LeadKey,
+  ProductName,
+) => ({
+  type: STORE_PRODUCTS_FORM_DEFENITION_LIST,
+  formDefenition,
+  FormKey,
+  LeadKey,
+  ProductName,
 });

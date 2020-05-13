@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
   btnStyle: {
     height: heightAdapter(60),
     width: widthAdapter(250),
+    fontSize: fontscale(12),
   },
   taskInfo: {
     marginLeft: widthAdapter(70),

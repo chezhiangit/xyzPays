@@ -19,6 +19,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: widthAdapter(10),
     // marginTop: heightAdapter(50),
+    // borderWidth: 2,
+    // borderColor: 'red',
   },
 });
 

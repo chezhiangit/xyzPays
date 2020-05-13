@@ -45,4 +45,8 @@ export default {
   getFormDefinition: 'api/TaskBased/GetFormDefinition?AccessToken=',
   postEntry: 'api/TaskBased/PostEntry?AccessToken=',
   getProviders: 'api/Registration/GetProviders',
+
+  getProductsFormDefinition: 'api/EventBased/GetFormDefinition?AccessToken=',
+
+  postCustomerDetails: 'api/EventBased/PostEntry?AccessToken=',
 };

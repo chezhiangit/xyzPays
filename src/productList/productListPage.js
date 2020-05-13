@@ -10,7 +10,10 @@ import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
 import {heightAdapter, fontscale, widthAdapter} from '../uttils/adapterUtil';
 // import Images from '../Assets/index';
-import {getProductsList} from '../AppStore/productsActions';
+import {
+  getProductsList,
+  getProductsFormDefenitionDetailsData,
+} from '../AppStore/productsActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
 
@@ -31,10 +34,6 @@ class ProductsListPage extends React.Component {
     });
   }
 
-  onStartEarning = () => {
-    console.log('On start earning');
-  };
-
   onSuccess = () => {
     console.log('GetProductsList success');
     this.setState({isLoading: false});
@@ -49,6 +48,37 @@ class ProductsListPage extends React.Component {
     });
     console.log(errorMsg);
   };
+
+  onStartEarning = (FormKey, LeadKey, ProductName) => {
+    console.log('On start earning');
+    this.setState({isLoading: true});
+    this.props.getProductsFormDefenitionDetailsData(
+      FormKey,
+      LeadKey,
+      ProductName,
+      this.onGetProductsFormDefenitionDetailsSuccess,
+      this.onGetProductsFormDefenitionDetailsFailed,
+    );
+  };
+
+  onGetProductsFormDefenitionDetailsSuccess = () => {
+    console.log('onGetProductsFormDefenitionDetailsSuccess success');
+    this.setState({isLoading: false}, () =>
+      this.props.navigation.navigate('CustomerDetailsPage'),
+    );
+  };
+
+  onGetProductsFormDefenitionDetailsFailed = errorMsg => {
+    console.log('onGetProductsFormDefenitionDetails failes');
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+    console.log(errorMsg);
+  };
+
+  onStartReferring = () => {};
 
   renderTrendingCard = (item, index) => {
     return (
@@ -71,8 +101,9 @@ class ProductsListPage extends React.Component {
           </View>
           <PrimaryButton
             btnName={I18n.t('productsList.earningBtnName')}
-            onSubmit={this.onStartEarning}
+            onSubmit={() => this.onStartEarning(item.FormKey, item.ProductKey, item?.ProductName)}
             btnStyle={styles.btnStyle}
+            btnTexStyle={{fontSize: fontscale(13)}}
           />
         </View>
         <View style={styles.taskInfo}>
@@ -137,7 +168,7 @@ class ProductsListPage extends React.Component {
               <View style={BaseStyles.emptyHView} />
               <PrimaryButton
                 btnName={I18n.t('productsList.referBtnName')}
-                onSubmit={this.onStartEarning}
+                onSubmit={this.onStartReferring}
                 btnStyle={styles.btnStyle}
               />
             </View>
@@ -165,6 +196,22 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   getProductsList: (onSuccesscallback, onErrorcallback) =>
     dispatch(getProductsList(onSuccesscallback, onErrorcallback)),
+  getProductsFormDefenitionDetailsData: (
+    FormKey,
+    LeadKey,
+    ProductName,
+    onSuccesscallback,
+    onErrorcallback,
+  ) =>
+    dispatch(
+      getProductsFormDefenitionDetailsData(
+        FormKey,
+        LeadKey,
+        ProductName,
+        onSuccesscallback,
+        onErrorcallback,
+      ),
+    ),
 });
 
 export default connect(
