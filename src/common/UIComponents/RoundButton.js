@@ -20,7 +20,7 @@ const RoundButton = props => {
           props.btnStyle,
           {transform: [{rotate: props.spin}]},
         ]}>
-        <Text style={[styles.btnName, props.textStyle]}>${props.btnName}</Text>
+        <Text style={[styles.btnName, props.textStyle]}>{props.btnName}</Text>
       </Animated.View>
     </TouchableWithoutFeedback>
   );

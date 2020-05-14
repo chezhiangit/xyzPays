@@ -17,6 +17,8 @@ import ForgotPassword from './src/login/forgotPassword/ForgotPassword';
 import ForgotPasswordStep2 from './src/login/forgotPassword/forgotPasswordStep2';
 import AppLandingPage from './src/landingPage/landingPage';
 import ProductsListPage from './src/productList/productListPage';
+import TaskSummaryPage from './src/taskSummary/taskSummary';
+import TaskTransactionList from './src/taskSummary/taskTransaction';
 import CustomerDetailsPage from './src/startEarning/customerDetailsPage';
 import HomePage from './src/home/HomePage';
 import CommissionPage from './src/Commission/commissionPage';
@@ -350,7 +352,7 @@ class Main extends React.Component {
       this.props.IsEmailVerificationDone &&
       this.props.IsMobileVerificationDone &&
       this.props.userLoggedIn &&
-      this.props.initialRoute === ''
+      this.props.initialRoute === 'AppLandingPage'
     ) {
       return (
         <Stack.Navigator
@@ -427,6 +429,43 @@ class Main extends React.Component {
             headerBackTitle: 'Trending Products',
           }}
         />
+        <Stack.Screen
+          name="TaskSummaryPage"
+          component={TaskSummaryPage}
+          options={{
+            title: I18n.t('TaskSummaryPage.headerTitle'),
+            headerStyle: {
+              backgroundColor: Colors.primaryAppColor,
+            },
+            headerTintColor: Colors.primaryFontColor,
+            headerTitleStyle: {
+              fontSize: FontsSize.headerName,
+              fontWeight: FontsWeight.header,
+              color: Colors.primaryFontColor,
+              fontFamily: fontFamily.primaryFontFamily,
+            },
+            // headerBackTitle: 'Trending Products',
+          }}
+        />
+        <Stack.Screen
+          name="TaskTransactionList"
+          component={TaskTransactionList}
+          options={{
+            title: I18n.t('TaskSummaryPage.headerTitle'),
+            headerStyle: {
+              backgroundColor: Colors.primaryAppColor,
+            },
+            headerTintColor: Colors.primaryFontColor,
+            headerTitleStyle: {
+              fontSize: FontsSize.headerName,
+              fontWeight: FontsWeight.header,
+              color: Colors.primaryFontColor,
+              fontFamily: fontFamily.primaryFontFamily,
+            },
+            // headerBackTitle: 'Trending Products',
+          }}
+        />
+        
       </Stack.Navigator>
     );
   };

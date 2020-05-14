@@ -31,6 +31,7 @@ function* userLogin(action) {
           accessToken: response.AccessToken,
           IsMobileVerificationDone: response.IsMobileVerificationDone,
           IsEmailVerificationDone: response.IsEmailVerificationDone,
+          RepName: response.RepName,
         }),
       );
       action.onSuccesscallback();

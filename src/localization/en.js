@@ -201,7 +201,8 @@ export default {
     userInfo: 'Frequently Asked Questions',
   },
   hamburgerMenu: {
-    home: 'Home',
+    dashboard: 'Home',
+    home: 'Dashboard',
     profile: 'Profile',
     viewProfile: 'View Profile',
     editProfile: 'Edit Profile',
@@ -260,5 +261,10 @@ export default {
     videlink: 'How to sell? Watch here!',
     viewAll: 'View All Entries',
     submitBtnName: 'Submit',
+  },
+  TaskSummaryPage: {
+    headerTitle: 'Task Summary',
+    totalEntries: 'Total Entries',
+    addBtn: 'Add',
   },
 };

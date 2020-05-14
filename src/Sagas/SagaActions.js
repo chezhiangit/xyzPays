@@ -28,6 +28,10 @@ import {
   STORE_FORM_DEFENITION_DETAILS_DATA,
   SAGA_STORE_PROVIDERS,
   STORE_PRODUCTS_FORM_DEFENITION_LIST,
+  STORE_LANDING_PAGE_DETAILS,
+  STORE_EVENTBASED_TASK_SUMMARY,
+  STORE_EVENTBASED_TASK_LIST,
+  STORE_EVENTBASED_TASK_LIST_FILTER,
 } from '../AppStore/ActionTypes';
 
 export const userLoginSuccess = ({
@@ -36,6 +40,7 @@ export const userLoginSuccess = ({
   accessToken,
   IsMobileVerificationDone,
   IsEmailVerificationDone,
+  RepName,
 }) => ({
   type: LOGIN_SUCCESSFUL,
   userName,
@@ -43,6 +48,7 @@ export const userLoginSuccess = ({
   accessToken,
   IsMobileVerificationDone,
   IsEmailVerificationDone,
+  RepName,
 });
 
 export const storeDashboardData = dashboardData => ({
@@ -198,3 +204,24 @@ export const storeProductsFormDefenitionDetails = (
   LeadKey,
   ProductName,
 });
+
+export const storeLandingPageDetails = landingPageDetails => ({
+  type: STORE_LANDING_PAGE_DETAILS,
+  landingPageDetails,
+});
+
+export const storeEventBasedTaskSummary = taskSummary => ({
+  type: STORE_EVENTBASED_TASK_SUMMARY,
+  taskSummary,
+});
+
+export const storeEventBasedTaskList = taskList => ({
+  type: STORE_EVENTBASED_TASK_LIST,
+  taskList,
+});
+
+export const storeFilterForEventBasedTaskList = taskListFilter => ({
+  type: STORE_EVENTBASED_TASK_LIST_FILTER,
+  taskListFilter,
+});
+

@@ -6,6 +6,7 @@ import {CommonActions} from '@react-navigation/native';
 import {ScrollView, Text, View} from 'react-native';
 import I18n from '../../../localization/i18n';
 import WarningDialog from '../warningDialog';
+import {setIntialRoute} from '../../../AppStore/landingPageActions';
 
 class DrawerComponent extends Component {
   constructor(props) {
@@ -18,19 +19,30 @@ class DrawerComponent extends Component {
     };
   }
   navigateToScreen = route => () => {
-    if (route === 'USER_LOGOUT') {
-      // this.setState({isLoading: true});
+    try {
+      if (route === 'USER_LOGOUT') {
+        // this.setState({isLoading: true});
+        this.setState({
+          showDlg: true,
+          dlgMsg: 'Do you want to logout from Application?',
+        });
+        // this.props.signOut();
+        return;
+      }
+      if (route === 'AppLandingPage') {
+        this.props.setIntialRoute();
+        return;
+      }
+      const navigateAction = CommonActions.navigate({
+        name: route,
+      });
+      this.props.navigation.dispatch(navigateAction);
+    } catch (e) {
       this.setState({
         showDlg: true,
-        dlgMsg: 'Do you want to logout from Application?',
+        dlgMsg: 'Could not complete your request. Pls trye again.',
       });
-      // this.props.signOut();
-      return;
     }
-    const navigateAction = CommonActions.navigate({
-      name: route,
-    });
-    this.props.navigation.dispatch(navigateAction);
   };
 
   onCancel = () => {
@@ -55,6 +67,13 @@ class DrawerComponent extends Component {
         <ScrollView>
           <View>
             {/* <Text style={styles.sectionHeadingStyle}>Section 1</Text> */}
+            <View style={styles.navSectionStyle}>
+              <Text
+                style={styles.navItemStyle}
+                onPress={this.navigateToScreen('AppLandingPage')}>
+                {I18n.t('hamburgerMenu.dashboard')}
+              </Text>
+            </View>
             <View style={styles.navSectionStyle}>
               <Text
                 style={styles.navItemStyle}
@@ -168,11 +187,16 @@ class DrawerComponent extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  initialRoute: state.landingPage.initialRoute,
+});
+
 const mapDispatchToProps = dispatch => ({
   signOut: () => dispatch({type: 'USER_LOGOUT'}),
+  setIntialRoute: () => dispatch(setIntialRoute('AppLandingPage')),
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(DrawerComponent);

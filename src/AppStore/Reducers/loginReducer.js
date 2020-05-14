@@ -18,6 +18,7 @@ const loginReducer = (
         userLoggedIn: action.userLoggedIn,
         IsEmailVerificationDone: action.IsEmailVerificationDone,
         IsMobileVerificationDone: action.IsMobileVerificationDone,
+        RepName: action.RepName,
       };
     case STORE_USER_EMAIL_VERIFIED:
       return {

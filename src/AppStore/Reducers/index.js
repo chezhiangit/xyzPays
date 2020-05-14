@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 import loginReducer from './loginReducer';
 import dashboardReducer from './dasboardReducer';
-import productsListReducer from './productsListReducer';
+import eventBasedTaskReducer from './eventBasedTaskReducer';
 import profileReducer from './profileReducer';
 import commissionReducer from './commissionReducer';
 import trendingProductsReducer from './trendingProductsReducer';
@@ -16,7 +16,7 @@ import landingPageReducer from './landingPageReducer';
 const appReducer = combineReducers({
   login: loginReducer,
   dashboard: dashboardReducer,
-  products: productsListReducer,
+  products: eventBasedTaskReducer,
   profileInfo: profileReducer,
   commission: commissionReducer,
   trending: trendingProductsReducer,

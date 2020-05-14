@@ -93,6 +93,8 @@ export default StyleSheet.create({
     width: '100%',
     // borderColor: 'white',
     // borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   bannerTextView: {
     // flexDirection: 'row',

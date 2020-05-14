@@ -54,13 +54,13 @@ class PayoutHistory extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (props.dateFilter.length === 0) {
-      return {
-        isLoading: true,
-      };
-    } else if (state.selectedValue === '') {
-      return {selectedValue: props.dateFilter[4]?.Text};
-    }
+    // if (props.dateFilter.length === 0) {
+    //   return {
+    //     isLoading: true,
+    //   };
+    // } else if (state.selectedValue === '') {
+    //   return {selectedValue: props.dateFilter[4]?.Text};
+    // }
     return {};
   }
 
@@ -70,15 +70,6 @@ class PayoutHistory extends React.Component {
       this.props.getPayoutDateFilter(
         this.onPayoutDateFilterSuccess,
         this.onPayoutDateFilterFailed,
-      );
-      this.props.getPayoutHistoryList(
-        0,
-        this.onPayoutHistoryListSuccess,
-        this.onPayoutHistoryListFailed,
-      );
-      this.props.getPayoutDetails(
-        this.onPayoutDetailsSuccess,
-        this.onPayoutDetailsFailed,
       );
     });
   }
@@ -100,7 +91,11 @@ class PayoutHistory extends React.Component {
 
   onPayoutHistoryListSuccess = () => {
     console.log('PayoutHistoryList success');
-    this.setState({isLoading: false});
+    // this.setState({isLoading: false});
+    this.props.getPayoutDetails(
+      this.onPayoutDetailsSuccess,
+      this.onPayoutDetailsFailed,
+    );
   };
 
   onPayoutHistoryListFailed = errorMsg => {
@@ -115,7 +110,14 @@ class PayoutHistory extends React.Component {
 
   onPayoutDateFilterSuccess = () => {
     console.log('payout date filter success');
-    this.setState({isLoading: false});
+    // this.setState({isLoading: false});
+    this.props.getPayoutHistoryList(
+      0,
+      this.onPayoutHistoryListSuccess,
+      this.onPayoutHistoryListFailed,
+    );
+
+    this.setState({selectedValue: this.props.dateFilter[4]?.Text});
   };
 
   onPayoutDateFilterFailed = errorMsg => {

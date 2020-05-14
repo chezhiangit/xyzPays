@@ -1,7 +1,7 @@
 import {all} from 'redux-saga/effects';
 import watchuserLoginAction from './loginSaga';
 import watchDashboarAction from './dashboardSaga';
-import watchProductsListAction from './productListSaga';
+import watchEventBasedTaskAction from './eventBasedTaskSaga';
 import watchProfileAction from './profileSaga';
 import watchCommissionAction from './commissionSaga';
 import watchForgotPasswordActions from './forgotPasswordSaga';
@@ -11,12 +11,13 @@ import watchPayoutAction from './payoutSaga';
 import watchUserVerificationActions from './userVerificationSaga';
 import watchContactsUsActions from './contactUSSaga';
 import watchTaskEntryAction from './taskEntrySaga';
+import watchLandingPageAction from './landingPageSaga';
 
 export default function* rootSaga() {
   yield all([
     watchuserLoginAction(),
     watchDashboarAction(),
-    watchProductsListAction(),
+    watchEventBasedTaskAction(),
     watchProfileAction(),
     watchCommissionAction(),
     watchForgotPasswordActions(),
@@ -26,5 +27,6 @@ export default function* rootSaga() {
     watchUserVerificationActions(),
     watchContactsUsActions(),
     watchTaskEntryAction(),
+    watchLandingPageAction(),
   ]);
 }

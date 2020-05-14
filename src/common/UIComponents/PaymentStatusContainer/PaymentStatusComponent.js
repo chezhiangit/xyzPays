@@ -12,7 +12,7 @@ const PaymentStatusComponent = props => {
     <View style={styles.paymentContainer}>
       <RoundButton
         onSubmit={props.onSubmit}
-        btnName={props.btnName}
+        btnName={'$' + props.btnName}
         btnStyle={props.btnStyle}
         textStyle={props.textStyle}
       />

@@ -1,8 +1,17 @@
-import {SET_INITIAL_ROUTE} from './ActionTypes';
+import {SET_INITIAL_ROUTE, SAGA_GET_LANDING_PAGE_DETAILS} from './ActionTypes';
 
 const setIntialRoute = initialRoute => ({
   type: SET_INITIAL_ROUTE,
   initialRoute,
 });
 
-export {setIntialRoute};
+const getLandingPageDetails = (
+  onSuccesscallback = () => {},
+  onErrorcallback = () => {},
+) => ({
+  type: SAGA_GET_LANDING_PAGE_DETAILS,
+  onSuccesscallback,
+  onErrorcallback,
+});
+
+export {setIntialRoute, getLandingPageDetails};

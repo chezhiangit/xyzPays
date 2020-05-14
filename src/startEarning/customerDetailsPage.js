@@ -18,7 +18,10 @@ import styles from './styles';
 import {widthAdapter, fontscale, heightAdapter} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
 import WarningDialog from '../common/UIComponents/warningDialog';
-import {postCustomerDetails} from '../AppStore/productsActions';
+import {
+  postCustomerDetails,
+  getEventBasedTaskSummary,
+} from '../AppStore/eventBasedTaskActions';
 
 class CustomerDetailsPage extends React.Component {
   constructor(props) {
@@ -37,51 +40,10 @@ class CustomerDetailsPage extends React.Component {
     };
   }
 
-  // static getDerivedStateFromProps(nextProps, state) {
-  //   if (state.components.length === 0) {
-  //     this.parseFormDefenition();
-  //   }
-  //   return {};
-  // }
-
-  // componentDidUpdate() {
-  //   this.parseFormDefenition();
-  // }
-
   componentDidMount() {
     console.log('this.props.formDefenition ....', this.props.formDefenition);
     this.parseFormDefenition();
-    // this.props.navigation.addListener('focus', () => {
-    //   this.setState({isLoading: true});
-    //   Image.getSize(
-    //     this.props.productDetails?.ProductPicture,
-    //     (width, height) => {
-    //       this.setState({width, height});
-    //     },
-    //   );
-
-    //   this.props.getFormDefenitionDetailsData(
-    //     this.props.FormKey,
-    //     this.getFormDefenitionDetailsSuccess,
-    //     this.getFormDefenitionDetailsFailed,
-    //   );
-    // });
   }
-
-  //   getFormDefenitionDetailsSuccess = () => {
-  //     this.setState({isLoading: false}, () => {
-  //       const components = this.parseFormDefenition();
-  //       this.setState({components});
-  //     });
-  //   };
-
-  //   getFormDefenitionDetailsFailed = errorMsg => {
-  //     this.setState({
-  //       isLoading: false,
-  //       showDlg: true,
-  //       dlgMsg: errorMsg,
-  //     });
-  //   };
 
   constructPayload = () => {
     const payload = [];
@@ -155,8 +117,9 @@ class CustomerDetailsPage extends React.Component {
     payload &&
       this.props.postCustomerDetails(
         payload,
-        this.props.currentFormKey,
-        this.props.currentLeadKey,
+        this.props.stepInfo.FormKey,
+        this.props.stepInfo.ProductKey,
+        this.props.stepInfo.StepKey,
         this.onPostEntrySuccess,
         this.onPostEntryFailed,
       );
@@ -477,6 +440,29 @@ class CustomerDetailsPage extends React.Component {
     return FormView;
   };
 
+  onViewAllEntries = () => {
+    this.setState({isLoading: true});
+    this.props.getEventBasedTaskSummary(
+      this.props.stepInfo.FormKey,
+      this.onGetEventBaseTaskSummarySuccess,
+      this.onGetEventBaseTaskSummaryFailed,
+    );
+    // this.props.navigation.navigate('TaskSummaryPage');
+  };
+
+  onGetEventBaseTaskSummarySuccess = () => {
+    this.setState({isLoading: false});
+    this.props.navigation.navigate('TaskSummaryPage');
+  };
+
+  onGetEventBaseTaskSummaryFailed = errorMsg => {
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+  };
+
   render() {
     return (
       <View style={[BaseStyles.baseContainer]}>
@@ -486,13 +472,12 @@ class CustomerDetailsPage extends React.Component {
             <View style={styles.topContainer}>
               <View stye={styles.productNameRow}>
                 <Text style={styles.productName}>
-                  {this.props.selectedProductName}
+                  {this.props.formInfo.ProductName}
                 </Text>
               </View>
               <View style={styles.userInfo}>
                 <Text style={styles.userInfoTxt}>
-                  Please fill all mandatory fields about the customer or
-                  company, only valid information will fetch you the commission.
+                  {this.props.formInfo.FormDesc}
                 </Text>
               </View>
               <View style={styles.linkBtnRow}>
@@ -506,6 +491,7 @@ class CustomerDetailsPage extends React.Component {
                   btnTextStyle={{marginLeft: 0}}
                 />
                 <LinkBtnComponent
+                  onClick={this.onViewAllEntries}
                   btnName={I18n.t('LeadTaskEntry.viewAll')}
                   containerStyle={{
                     width: widthAdapter(300),
@@ -585,25 +571,22 @@ class CustomerDetailsPage extends React.Component {
 const mapStateToProps = state => {
   console.log('state from new customer details page ....', state);
   return {
-    // productDetails: state.taskEntry.productDetails[0],
-    // FormKey: state.taskEntry.productDetails.FormKey,
-    // TaskKey: state.taskEntry.productDetails.TaskKey,
     formDefenition: state.products.formDefenition,
-    currentFormKey: state.products.currentFormKey,
-    currentLeadKey: state.products.currentLeadKey,
-    selectedProductName: state.products.selectedProductName,
+    formInfo: state.products.formInfo[0],
+    stepInfo: state.products.StepInfo[0],
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  //   getFormDefenitionDetailsData: (FormKey, onSuccesscallback, onErrocallback) =>
-  //     dispatch(
-  //       getFormDefenitionDetailsData(FormKey, onSuccesscallback, onErrocallback),
-  //     ),
+  getEventBasedTaskSummary: (FormKey, onSuccesscallback, onErrocallback) =>
+    dispatch(
+      getEventBasedTaskSummary(FormKey, onSuccesscallback, onErrocallback),
+    ),
   postCustomerDetails: (
     payload,
     FormKey,
     LeadKey,
+    StepKey,
     onSuccesscallback,
     onErrocallback,
   ) =>
@@ -612,6 +595,7 @@ const mapDispatchToProps = dispatch => ({
         payload,
         FormKey,
         LeadKey,
+        StepKey,
         onSuccesscallback,
         onErrocallback,
       ),

@@ -13,7 +13,7 @@ import {heightAdapter, fontscale, widthAdapter} from '../uttils/adapterUtil';
 import {
   getProductsList,
   getProductsFormDefenitionDetailsData,
-} from '../AppStore/productsActions';
+} from '../AppStore/eventBasedTaskActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
 
@@ -78,7 +78,9 @@ class ProductsListPage extends React.Component {
     console.log(errorMsg);
   };
 
-  onStartReferring = () => {};
+  onStartReferring = () => {
+    this.props.navigation.navigate('ReferAndEarnPage');
+  };
 
   renderTrendingCard = (item, index) => {
     return (

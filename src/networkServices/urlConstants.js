@@ -49,4 +49,14 @@ export default {
   getProductsFormDefinition: 'api/EventBased/GetFormDefinition?AccessToken=',
 
   postCustomerDetails: 'api/EventBased/PostEntry?AccessToken=',
+
+  landingPageDetails: 'api/Home/GetHomeDetails?AccessToken=',
+
+  getFilterForEventBasedTaskList:
+    'api/EventBased/GetFilterForEventBasedTaskList?AccessToken=',
+
+  loadEventBasedTaskSummary:
+    'api/EventBased/LoadEventBasedTaskSummary?AccessToken=',
+
+  getEventBasedTaskList: 'api/EventBased/GetEventBasedTaskList?AccessToken=',
 };

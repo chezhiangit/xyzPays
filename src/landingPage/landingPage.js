@@ -13,19 +13,53 @@ import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
 import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
 import styles from './styles';
-import {setIntialRoute} from '../AppStore/landingPageActions';
+import {
+  setIntialRoute,
+  getLandingPageDetails,
+} from '../AppStore/landingPageActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
 import images from '../Assets';
+import {widthAdapter, heightAdapter} from '../uttils/adapterUtil';
 
 class AppLandingPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false,
+      isLoading: true,
       showDlg: false,
       dlgMsg: '',
+      makeMoneywidth: 0,
+      makeMoneyheight: 0,
+      myMoneywidth: 0,
+      myMoneyheight: 0,
     };
   }
+
+  componentDidMount() {
+    this.props.getLandingPageDetails(
+      this.onGetLandingPageDetailsSuccess,
+      this.onGetLandingPageDetailsFailed,
+    );
+  }
+
+  onGetLandingPageDetailsSuccess = () => {
+    this.setState({isLoading: false});
+    Image.getSize(this.props.MakeMoney, (makeMoneywidth, makeMoneyheight) => {
+      this.setState({makeMoneywidth, makeMoneyheight});
+    });
+    Image.getSize(this.props.MakeMoney, (myMoneywidth, myMoneyheight) => {
+      this.setState({myMoneywidth, myMoneyheight});
+    });
+  };
+
+  onGetLandingPageDetailsFailed = errorMsg => {
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+    console.log(errorMsg);
+  };
 
   onCancel = () => {
     this.setState({showDlg: false});
@@ -42,6 +76,7 @@ class AppLandingPage extends React.Component {
 
   onBannerRightViewPressed = () => {
     console.log('Right banner selected');
+    this.props.setIntialRoute('Home');
   };
 
   render() {
@@ -59,11 +94,11 @@ class AppLandingPage extends React.Component {
               {I18n.t('landingPage.hi')}
             </Text>
             <Text style={[styles.logedInUserHiText, styles.primaryColor]}>
-              {` ${this.props.dashboardData?.repFirstName}`}
+              {` ${this.props.RepName}`}
             </Text>
-            <Text style={styles.logedInUserHiText}>
+            {/* <Text style={styles.logedInUserHiText}>
               {` ${this.props.dashboardData?.repLastName}`}
-            </Text>
+            </Text> */}
           </View>
           <View style={styles.userMessage}>
             <Text style={styles.userMessageTxt}>
@@ -77,7 +112,23 @@ class AppLandingPage extends React.Component {
               <View style={styles.leftView}>
                 <View style={styles.leftBannerView}>
                   <View style={styles.bannerImageView}>
-                    <Image />
+                    <Image
+                      source={{
+                        isStatic: true,
+                        uri: this.props.MakeMoney,
+                        method: 'GET',
+                        // headers: {
+                        //   clubId: NetTool.clubId,
+                        //   'Ocp-Apim-Subscription-Key': NetTool.subscriptionKey,
+                        // },
+                      }}
+                      style={{
+                        // width: this.state.makeMoneywidth,
+                        // height: this.state.makeMoneyheight,
+                        width: widthAdapter(100),
+                        height: heightAdapter(200),
+                      }}
+                    />
                   </View>
                   <View style={styles.bannerTextView}>
                     <Text style={styles.bannerViewText}>
@@ -97,7 +148,23 @@ class AppLandingPage extends React.Component {
               <View style={styles.rightView}>
                 <View style={styles.rightBannerView}>
                   <View style={styles.bannerImageView}>
-                    <Image />
+                    <Image
+                      source={{
+                        isStatic: true,
+                        uri: this.props.MyMoney,
+                        method: 'GET',
+                        // headers: {
+                        //   clubId: NetTool.clubId,
+                        //   'Ocp-Apim-Subscription-Key': NetTool.subscriptionKey,
+                        // },
+                      }}
+                      style={{
+                        // width: this.state.myMoneywidth,
+                        // height: this.state.myMoneyheight,
+                        width: widthAdapter(100),
+                        height: heightAdapter(200),
+                      }}
+                    />
                   </View>
                   <View style={styles.bannerTextView}>
                     <Text style={styles.bannerViewText}>
@@ -131,11 +198,16 @@ const mapStateToProps = state => {
   console.log('state from landing page ', state);
   return {
     // dashboardData: state.dashboard.dashboardData,
+    RepName: state.login.RepName,
+    MakeMoney: state.landingPage.landingPageDetails.MakeMoney,
+    MyMoney: state.landingPage.landingPageDetails.MyMoney,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   setIntialRoute: initialRoute => dispatch(setIntialRoute(initialRoute)),
+  getLandingPageDetails: (onSuccesscallback, onErrorcallback) =>
+    dispatch(getLandingPageDetails(onSuccesscallback, onErrorcallback)),
 });
 
 export default connect(
