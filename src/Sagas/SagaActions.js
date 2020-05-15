@@ -32,6 +32,7 @@ import {
   STORE_EVENTBASED_TASK_SUMMARY,
   STORE_EVENTBASED_TASK_LIST,
   STORE_EVENTBASED_TASK_LIST_FILTER,
+  STORE_TRANSACTION_FORM_DEFENITION_LIST,
 } from '../AppStore/ActionTypes';
 
 export const userLoginSuccess = ({
@@ -194,15 +195,20 @@ export const storeProviders = providers => ({
 
 export const storeProductsFormDefenitionDetails = (
   formDefenition,
-  FormKey,
-  LeadKey,
-  ProductName,
+  // FormKey,
+  // LeadKey,
+  // ProductName,
 ) => ({
   type: STORE_PRODUCTS_FORM_DEFENITION_LIST,
   formDefenition,
-  FormKey,
-  LeadKey,
-  ProductName,
+  // FormKey,
+  // LeadKey,
+  // ProductName,
+});
+
+export const storeTransactionFormDefenitionDetails = formDefenition => ({
+  type: STORE_TRANSACTION_FORM_DEFENITION_LIST,
+  formDefenition,
 });
 
 export const storeLandingPageDetails = landingPageDetails => ({

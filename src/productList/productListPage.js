@@ -55,7 +55,7 @@ class ProductsListPage extends React.Component {
     this.props.getProductsFormDefenitionDetailsData(
       FormKey,
       LeadKey,
-      ProductName,
+      'ProductsList',
       this.onGetProductsFormDefenitionDetailsSuccess,
       this.onGetProductsFormDefenitionDetailsFailed,
     );
@@ -201,7 +201,7 @@ const mapDispatchToProps = dispatch => ({
   getProductsFormDefenitionDetailsData: (
     FormKey,
     LeadKey,
-    ProductName,
+    calledFrom,
     onSuccesscallback,
     onErrorcallback,
   ) =>
@@ -209,7 +209,7 @@ const mapDispatchToProps = dispatch => ({
       getProductsFormDefenitionDetailsData(
         FormKey,
         LeadKey,
-        ProductName,
+        calledFrom,
         onSuccesscallback,
         onErrorcallback,
       ),

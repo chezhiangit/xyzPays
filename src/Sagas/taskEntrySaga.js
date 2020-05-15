@@ -72,10 +72,10 @@ function* getFormDefenitionDetails(action) {
       accessToken,
       action.FormKey,
     );
-    console.log('saga getFormDefenitionDetails api response...', response);
+    console.log('pending task saga getFormDefenitionDetails api response...', response);
     if (response !== null && response.status === 200) {
-      console.log('getFormDefenitionDetails data ....', response);
-      console.log('getFormDefenitionDetails saga action ....', action);
+      console.log('pending task getFormDefenitionDetails data ....', response);
+      console.log('pending task getFormDefenitionDetails saga action ....', action);
       const formDefenition = {...response};
 
       // if (action.calledFrom === 'StartPendingTask') {

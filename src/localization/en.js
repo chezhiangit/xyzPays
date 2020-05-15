@@ -267,4 +267,7 @@ export default {
     totalEntries: 'Total Entries',
     addBtn: 'Add',
   },
+  LeadTransactionDetails: {
+    headerTitle: 'Lead Transactions',
+  },
 };

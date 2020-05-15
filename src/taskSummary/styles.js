@@ -71,6 +71,62 @@ const styles = StyleSheet.create({
     // borderColor: 'red',
     // borderWidth: 1,
   },
+  taskItemContainer: {
+    marginTop: heightAdapter(30),
+    // marginBottom: heightAdapter(30),
+    marginLeft: widthAdapter(20),
+    marginRight: widthAdapter(20),
+  },
+  taskItemDivider: {
+    marginLeft: widthAdapter(40),
+    marginRight: widthAdapter(40),
+    marginTop: heightAdapter(40),
+    height: heightAdapter(20),
+    borderTopWidth: 0.3,
+    borderBottomWidth: 0.3,
+    borderColor: '#a7a7a7',
+    backgroundColor: 'rgb(247, 247, 247)',
+  },
+  taskListView: {
+    // width: widthAdapter(),
+    // flex: 1,
+    borderColor: '#a7a7a7',
+    borderWidth: 1,
+  },
+  labelContainer: {
+    flexDirection: 'row',
+    // width: widthAdapter(500),
+    // height: heightAdapter(100),
+    // width: '100%',
+    // borderColor: 'red',
+    // borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  label: {
+    fontSize: fontscale(15),
+    fontWeight: 'bold',
+    color: '#737373',
+  },
+  value: {
+    fontSize: fontscale(15),
+    color: '#31708f',
+  },
+  labelViewStyle: {
+    width: widthAdapter(500),
+    height: heightAdapter(60),
+  },
+  valueViewStyle: {
+    width: widthAdapter(175),
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    height: heightAdapter(60),
+  },
+  btnStyle: {
+    height: heightAdapter(60),
+    width: widthAdapter(250),
+    fontSize: fontscale(12),
+  },
 });
 
 export default styles;

@@ -18,14 +18,14 @@ const getProductsList = (
 const getProductsFormDefenitionDetailsData = (
   FormKey,
   LeadKey,
-  ProductName,
+  calledFrom,
   onSuccesscallback = () => {},
   onErrorcallback = () => {},
 ) => ({
   type: SAGA_GET_PRODUCTS_FORM_DEFENITION_LIST,
   FormKey,
   LeadKey,
-  ProductName,
+  calledFrom,
   onSuccesscallback,
   onErrorcallback,
 });

@@ -10,6 +10,7 @@ import {
 import {
   storeProductsList,
   storeProductsFormDefenitionDetails,
+  storeTransactionFormDefenitionDetails,
   storeEventBasedTaskSummary,
   storeEventBasedTaskList,
 } from './SagaActions';
@@ -58,25 +59,37 @@ function* getProductsFormDefenitionDetails(action) {
       action.FormKey,
       action.LeadKey,
     );
-    console.log('saga getFormDefenitionDetails api response...', response);
+    console.log('task transaction saga getFormDefenitionDetails api response...', response);
     if (response !== null && response.status === 200) {
-      console.log('getFormDefenitionDetails data ....', response);
-      console.log('getFormDefenitionDetails saga action ....', action);
+      console.log('task transaction getFormDefenitionDetails data ....', response);
+      console.log('task transaction getFormDefenitionDetails saga action ....', action);
       const formDefenition = {...response}; // [...response.FormDefinition];
+
+      // const formDefenition = {
+      //   formDefenition: [...response.formDefenition.FormDefinition],
+      //   formInfo: [...response.formDefenition.FormInfo],
+      //   StepInfo: [...response.formDefenition.StepInfo],
+      //   Lead:
+      //     response.formDefenition?.Lead === undefined
+      //       ? []
+      //       : [...response.formDefenition?.Lead],
+      //   ConfirmedLead:
+      //     response.formDefenition['Confirmed Lead'] === undefined
+      //       ? []
+      //       : [...response.formDefenition['Confirmed Lead']],
+      // };
 
       // if (action.calledFrom === 'StartPendingTask') {
       console.log(
-        ' pending task getFormDefenitionDetails data object ....',
+        ' task transaction getFormDefenitionDetails data object ....',
         formDefenition,
       );
-      yield put(
-        storeProductsFormDefenitionDetails(
-          formDefenition,
-          action.FormKey,
-          action.LeadKey,
-          action.ProductName,
-        ),
-      );
+      if (action.calledFrom === 'ProductsList') {
+        yield put(storeProductsFormDefenitionDetails(formDefenition));
+      } else if (action.calledFrom === 'TaskTransaction') {
+        yield put(storeTransactionFormDefenitionDetails(formDefenition));
+      }
+      
       action.onSuccesscallback();
     } else if (response !== null) {
       action.onErrorcallback(response.Message);

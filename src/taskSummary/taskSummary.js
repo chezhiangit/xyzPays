@@ -55,7 +55,7 @@ class TaskSummaryPage extends React.Component {
 
   onGetEventBasedTaskListFilterSuccess = () => {
     this.setState({isLoading: false, isFilter: true});
-    this.state.isTaskList &&
+    // this.state.isTaskList &&
       this.props.navigation.navigate('TaskTransactionList');
   };
 
@@ -69,7 +69,7 @@ class TaskSummaryPage extends React.Component {
 
   onGetEventBasedTaskListSuccess = () => {
     this.setState({isLoading: false, isTaskList: true});
-    this.state.isFilter &&
+    // this.state.isFilter &&
       this.props.navigation.navigate('TaskTransactionList');
   };
 
