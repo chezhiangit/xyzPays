@@ -59,4 +59,6 @@ export default {
     'api/EventBased/LoadEventBasedTaskSummary?AccessToken=',
 
   getEventBasedTaskList: 'api/EventBased/GetEventBasedTaskList?AccessToken=',
+
+  loadLastFiveTransactions: 'api/EventBased/LoadLastFiveTransactions?AccessToken=',
 };

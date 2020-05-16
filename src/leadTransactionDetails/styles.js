@@ -193,27 +193,35 @@ const styles = StyleSheet.create({
   },
   labelContainer: {
     flexDirection: 'row',
+    // width: widthAdapter(700),
     alignItems: 'center',
     justifyContent: 'flex-start',
+    // borderColor: 'red',
+    // borderWidth: 1,
   },
   label: {
-    fontSize: fontscale(15),
+    fontSize: fontscale(17),
     fontWeight: 'bold',
-    color: '#737373',
+    color: '#333',
   },
   value: {
     fontSize: fontscale(15),
-    color: '#31708f',
+    color: '#ff5722',
+    fontWeight: 'bold',
   },
   labelViewStyle: {
-    width: widthAdapter(500),
+    width: widthAdapter(700),
     height: heightAdapter(60),
+    // borderColor: 'red',
+    // borderWidth: 1,
   },
   valueViewStyle: {
-    width: widthAdapter(175),
+    width: widthAdapter(700),
     alignItems: 'flex-start',
     justifyContent: 'center',
     height: heightAdapter(60),
+    // borderColor: 'blue',
+    // borderWidth: 1,
   },
 });
 

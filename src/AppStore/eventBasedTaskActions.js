@@ -5,6 +5,7 @@ import {
   SAGA_GET_EVENTBASED_TASK_SUMMARY,
   SAGA_GET_EVENTBASED_TASK_LIST,
   SAGA_GET_EVENTBASED_TASK_LIST_FILTER,
+  SAGA_LOAD_LAST_FIVE_TRANSACTIONS,
 } from './ActionTypes';
 const getProductsList = (
   onSuccesscallback = () => {},
@@ -82,6 +83,17 @@ const getFilterForEventBasedTaskList = (
   onErrorcallback,
 });
 
+const loadLastFiveTransactions = (
+  FormKey,
+  onSuccesscallback = () => {},
+  onErrorcallback = () => {},
+) => ({
+  type: SAGA_LOAD_LAST_FIVE_TRANSACTIONS,
+  FormKey,
+  onSuccesscallback,
+  onErrorcallback,
+});
+
 export {
   getProductsList,
   getProductsFormDefenitionDetailsData,
@@ -89,4 +101,5 @@ export {
   getEventBasedTaskSummary,
   getEventBasedTaskList,
   getFilterForEventBasedTaskList,
+  loadLastFiveTransactions,
 };

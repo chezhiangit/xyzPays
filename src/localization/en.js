@@ -258,16 +258,24 @@ export default {
     referBtnName: 'Start Referring',
   },
   LeadTaskEntry: {
+    headerTitle: 'Lead',
     videlink: 'How to sell? Watch here!',
     viewAll: 'View All Entries',
     submitBtnName: 'Submit',
   },
   TaskSummaryPage: {
-    headerTitle: 'Task Summary',
+    headerTitle: 'Lead Summary',
     totalEntries: 'Total Entries',
     addBtn: 'Add',
+    transHeader: 'Last 5 Transactions',
   },
   LeadTransactionDetails: {
+    headerTitle: 'Lead Confimation',
+  },
+  TaskTransactionList: {
     headerTitle: 'Lead Transactions',
+  },
+  TransactionDetails: {
+    headerTitle: 'Trans Details',
   },
 };

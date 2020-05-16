@@ -46,103 +46,111 @@ class LeadTransactionDetails extends React.Component {
     this.props.formDefenition?.length > 0 && this.parseFormDefenition();
   }
 
-  // constructPayload = () => {
-  //   const payload = [];
-  //   try {
-  //     this.state.components.forEach(item => {
-  //       if (item.ControlType === 'text' || item.ControlType === 'textarea') {
-  //         if (item.ControlReq === true && item.inputValue.length === 0) {
-  //           throw {msg: 'Pls enter ' + item.ControlLabel};
-  //         }
-  //         const textObj = {
-  //           ControlColumn: item.ControlColumn,
-  //           ControlValue: item.inputValue,
-  //         };
-  //         payload.push(textObj);
-  //       } else if (item.ControlType === 'checkbox') {
-  //         let isFilled = false;
-  //         const checkboxObj = {};
-  //         item.checkBoxGroup.forEach(el => {
-  //           if (el.status) {
-  //             isFilled = true;
-  //             checkboxObj.ControlColumn = item.ControlColumn;
-  //             checkboxObj.ControlValue = el.value;
-  //             payload.push(checkboxObj);
-  //           }
-  //         });
-  //         if (item.ControlReq === true && isFilled === false) {
-  //           throw {msg: 'Pls select ' + item.ControlLabel};
-  //         }
-  //       } else if (item.ControlType === 'radio') {
-  //         let isFilled = false;
-  //         const selectObj = {};
-  //         item.radioButtomGroup.forEach(el => {
-  //           if (el.status) {
-  //             isFilled = true;
-  //             selectObj.ControlColumn = item.ControlColumn;
-  //             selectObj.ControlValue = el.value;
-  //             payload.push(selectObj);
-  //           }
-  //         });
-  //         if (item.ControlReq === true && isFilled === false) {
-  //           throw {msg: 'Pls select ' + item.ControlLabel};
-  //         }
-  //       } else if (item.ControlType === 'select') {
-  //         const selectObj = {};
+  getErrorMessage = item => {
+    return item.ControlLabel === undefined ||
+      item.ControlLabel === null ||
+      item.ControlLabel === ''
+      ? item.placeholder
+      : item.ControlLabel;
+  };
 
-  //         if (
-  //           item.ControlReq === true &&
-  //           (item.selectedValue === undefined ||
-  //             item.selectedValue?.length === 0)
-  //         ) {
-  //           throw {msg: 'Pls select ' + item.ControlLabel};
-  //         }
-  //         selectObj.ControlColumn = item.ControlColumn;
-  //         selectObj.ControlValue = item.selectedValue;
-  //       }
-  //     });
-  //     return payload;
-  //   } catch (e) {
-  //     this.setState({
-  //       showDlg: true,
-  //       dlgMsg: e.msg,
-  //     });
-  //     return null;
-  //   }
-  //   // return payload;
-  // };
+  constructPayload = () => {
+    const payload = [];
+    try {
+      this.state.components.forEach(item => {
+        if (item.ControlType === 'text' || item.ControlType === 'textarea') {
+          if (item.ControlReq === true && item.inputValue.length === 0) {
+            throw {msg: this.getErrorMessage(item)};
+          }
+          const textObj = {
+            ControlColumn: item.ControlColumn,
+            ControlValue: item.inputValue,
+          };
+          payload.push(textObj);
+        } else if (item.ControlType === 'checkbox') {
+          let isFilled = false;
+          const checkboxObj = {};
+          item.checkBoxGroup.forEach(el => {
+            if (el.status) {
+              isFilled = true;
+              checkboxObj.ControlColumn = item.ControlColumn;
+              checkboxObj.ControlValue = el.value;
+              payload.push(checkboxObj);
+            }
+          });
+          if (item.ControlReq === true && isFilled === false) {
+            throw {msg: 'Pls select ' + item.ControlLabel};
+          }
+        } else if (item.ControlType === 'radio') {
+          let isFilled = false;
+          const selectObj = {};
+          item.radioButtomGroup.forEach(el => {
+            if (el.status) {
+              isFilled = true;
+              selectObj.ControlColumn = item.ControlColumn;
+              selectObj.ControlValue = el.value;
+              payload.push(selectObj);
+            }
+          });
+          if (item.ControlReq === true && isFilled === false) {
+            throw {msg: 'Pls select ' + item.ControlLabel};
+          }
+        } else if (item.ControlType === 'select') {
+          const selectObj = {};
+
+          if (
+            item.ControlReq === true &&
+            (item.selectedValue === undefined ||
+              item.selectedValue?.length === 0)
+          ) {
+            throw {msg: 'Pls select ' + item.ControlLabel};
+          }
+          selectObj.ControlColumn = item.ControlColumn;
+          selectObj.ControlValue = item.selectedValue;
+        }
+      });
+      return payload;
+    } catch (e) {
+      this.setState({
+        showDlg: true,
+        dlgMsg: e.msg,
+      });
+      return null;
+    }
+    // return payload;
+  };
 
   onSave = () => {
-    // const payload = this.constructPayload();
-    // console.log('payload .........', payload);
-    // payload &&
-    //   this.props.postCustomerDetails(
-    //     payload,
-    //     this.props.stepInfo.FormKey,
-    //     this.props.stepInfo.ProductKey,
-    //     this.props.stepInfo.StepKey,
-    //     this.onPostEntrySuccess,
-    //     this.onPostEntryFailed,
-    //   );
-    // payload && this.setState({isLoading: true});
+    const payload = this.constructPayload();
+    console.log('payload .........', payload);
+    payload &&
+      this.props.postCustomerDetails(
+        payload,
+        this.props.stepInfo.FormKey,
+        this.props.stepInfo.ProductKey,
+        this.props.stepInfo.StepKey,
+        this.onPostEntrySuccess,
+        this.onPostEntryFailed,
+      );
+    payload && this.setState({isLoading: true});
   };
 
   onPostEntrySuccess = msg => {
-    // // this.setState({isLoading: false, postEntry: true});
-    // this.setState({
-    //   isLoading: false,
-    //   showDlg: true,
-    //   dlgMsg: msg,
-    //   postEntry: true,
-    // });
+    // this.setState({isLoading: false, postEntry: true});
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: msg,
+      postEntry: true,
+    });
   };
 
   onPostEntryFailed = errorMsg => {
-    // this.setState({
-    //   isLoading: false,
-    //   showDlg: true,
-    //   dlgMsg: errorMsg,
-    // });
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
   };
 
   onCancel = () => {
@@ -150,10 +158,10 @@ class LeadTransactionDetails extends React.Component {
   };
 
   onConfirm = () => {
-    // if (this.state.postEntry === true) {
-    //   this.props.navigation.goBack();
-    // }
-    // this.setState({showDlg: false});
+    if (this.state.postEntry === true) {
+      this.props.navigation.goBack();
+    }
+    this.setState({showDlg: false});
   };
 
   onTextChange = (text, index) => {
@@ -530,7 +538,12 @@ class LeadTransactionDetails extends React.Component {
                 />
                 <LinkBtnComponent
                   onClick={this.onViewAllEntries}
-                  btnName={I18n.t('LeadTaskEntry.viewAll')}
+                  btnName={
+                    I18n.t('LeadTaskEntry.viewAll') +
+                    '(' +
+                    this.props.formInfo.TotalEntries +
+                    ')'
+                  }
                   containerStyle={styles.viewAllLinkContainer}
                 />
               </View>

@@ -59,6 +59,16 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     marginTop: heightAdapter(20),
   },
+  viewAllLinkContainer: {
+    width: widthAdapter(300),
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  videoLinkContainer: {
+    width: widthAdapter(400),
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
   taskDetailsContainer: {
     width: '70%',
     height: '100%',

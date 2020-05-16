@@ -33,6 +33,7 @@ import {
   STORE_EVENTBASED_TASK_LIST,
   STORE_EVENTBASED_TASK_LIST_FILTER,
   STORE_TRANSACTION_FORM_DEFENITION_LIST,
+  STORE_LAST_FIVE_TRANSACTIONS,
 } from '../AppStore/ActionTypes';
 
 export const userLoginSuccess = ({
@@ -231,3 +232,7 @@ export const storeFilterForEventBasedTaskList = taskListFilter => ({
   taskListFilter,
 });
 
+export const storeLastFiveTransactions = lastFiveTransaction => ({
+  type: STORE_LAST_FIVE_TRANSACTIONS,
+  lastFiveTransaction,
+});

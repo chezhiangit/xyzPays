@@ -45,13 +45,21 @@ class CustomerDetailsPage extends React.Component {
     this.parseFormDefenition();
   }
 
+  getErrorMessage = item => {
+    return item.ControlLabel === undefined ||
+      item.ControlLabel === null ||
+      item.ControlLabel === ''
+      ? item.placeholder
+      : item.ControlLabel;
+  };
+
   constructPayload = () => {
     const payload = [];
     try {
       this.state.components.forEach(item => {
         if (item.ControlType === 'text' || item.ControlType === 'textarea') {
           if (item.ControlReq === true && item.inputValue.length === 0) {
-            throw {msg: 'Pls enter ' + item.ControlLabel};
+            throw {msg: this.getErrorMessage(item)};
           }
           const textObj = {
             ControlColumn: item.ControlColumn,
@@ -70,7 +78,7 @@ class CustomerDetailsPage extends React.Component {
             }
           });
           if (item.ControlReq === true && isFilled === false) {
-            throw {msg: 'Pls select ' + item.ControlLabel};
+            throw {msg: this.getErrorMessage(item)};
           }
         } else if (item.ControlType === 'radio') {
           let isFilled = false;
@@ -84,7 +92,7 @@ class CustomerDetailsPage extends React.Component {
             }
           });
           if (item.ControlReq === true && isFilled === false) {
-            throw {msg: 'Pls select ' + item.ControlLabel};
+            throw {msg: this.getErrorMessage(item)};
           }
         } else if (item.ControlType === 'select') {
           const selectObj = {};
@@ -94,7 +102,7 @@ class CustomerDetailsPage extends React.Component {
             (item.selectedValue === undefined ||
               item.selectedValue?.length === 0)
           ) {
-            throw {msg: 'Pls select ' + item.ControlLabel};
+            throw {msg: this.getErrorMessage(item)};
           }
           selectObj.ControlColumn = item.ControlColumn;
           selectObj.ControlValue = item.selectedValue;
@@ -483,21 +491,18 @@ class CustomerDetailsPage extends React.Component {
               <View style={styles.linkBtnRow}>
                 <LinkBtnComponent
                   btnName={I18n.t('LeadTaskEntry.videlink')}
-                  containerStyle={{
-                    width: widthAdapter(400),
-                    justifyContent: 'center',
-                    alignItems: 'flex-start',
-                  }}
+                  containerStyle={styles.videoLinkContainer}
                   btnTextStyle={{marginLeft: 0}}
                 />
                 <LinkBtnComponent
                   onClick={this.onViewAllEntries}
-                  btnName={I18n.t('LeadTaskEntry.viewAll')}
-                  containerStyle={{
-                    width: widthAdapter(300),
-                    justifyContent: 'center',
-                    alignItems: 'flex-end',
-                  }}
+                  btnName={
+                    I18n.t('LeadTaskEntry.viewAll') +
+                    '(' +
+                    this.props.formInfo.TotalEntries +
+                    ')'
+                  }
+                  containerStyle={styles.viewAllLinkContainer}
                 />
               </View>
               {/* <View style={styles.taskDetailsContainer}>

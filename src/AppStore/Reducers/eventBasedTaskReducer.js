@@ -5,6 +5,7 @@ import {
   STORE_EVENTBASED_TASK_LIST,
   STORE_EVENTBASED_TASK_LIST_FILTER,
   STORE_TRANSACTION_FORM_DEFENITION_LIST,
+  STORE_LAST_FIVE_TRANSACTIONS,
 } from '../ActionTypes';
 
 const productsListReducer = (
@@ -20,11 +21,9 @@ const productsListReducer = (
       StepInfo: [],
       Lead: [],
     },
-    // currentFormKey: '',
-    // currentLeadKey: '',
-    // selectedProductName: '',
     taskSummary: [],
     totalEntries: [],
+    lastFiveTransaction: [],
     taskList: [],
     taskListFilter: [],
   },
@@ -74,6 +73,11 @@ const productsListReducer = (
         ...state,
         taskSummary: [...action.taskSummary.Summary],
         totalEntries: [...action.taskSummary.TotalEntries],
+      };
+    case STORE_LAST_FIVE_TRANSACTIONS:
+      return {
+        ...state,
+        lastFiveTransaction: [...action.taskSummary.lastFiveTransaction],
       };
     case STORE_EVENTBASED_TASK_LIST:
       return {

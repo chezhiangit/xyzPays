@@ -41,19 +41,19 @@ class TaskTransactionList extends React.Component {
 
   onDropDownChanges = (value, selectedIndex, data) => {};
 
-  renderRountBtn = index => {
-    return (
-      <View style={styles.roundBtnView}>
-        <RoundButton
-          onSubmit={() => this.onLeadBtnSelect(index)}
-          btnName={'10'}
-          btnStyle={styles.roundBtnStyle}
-          textStyle={styles.countText}
-        />
-        <Text style={styles.rountBtnCaption}>Lead</Text>
-      </View>
-    );
-  };
+  // renderRountBtn = index => {
+  //   return (
+  //     <View style={styles.roundBtnView}>
+  //       <RoundButton
+  //         onSubmit={() => this.onLeadBtnSelect(index)}
+  //         btnName={'10'}
+  //         btnStyle={styles.roundBtnStyle}
+  //         textStyle={styles.countText}
+  //       />
+  //       <Text style={styles.rountBtnCaption}>Lead</Text>
+  //     </View>
+  //   );
+  // };
   onAddEntries = () => {
     this.props.navigation.navigate('CustomerDetailsPage');
   };

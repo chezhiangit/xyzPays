@@ -22,7 +22,10 @@ import RoundButton from '../common/UIComponents/RoundButton';
 import {
   getEventBasedTaskList,
   getFilterForEventBasedTaskList,
+  loadLastFiveTransactions,
 } from '../AppStore/eventBasedTaskActions';
+import ReadOnlyView from '../common/UIComponents/readOnlyView/ReadOnlyView';
+import moment from 'moment';
 
 class TaskSummaryPage extends React.Component {
   constructor(props) {
@@ -30,11 +33,31 @@ class TaskSummaryPage extends React.Component {
     this.state = {
       showDlg: false,
       dlgMsg: '',
-      isLoading: false,
+      isLoading: true,
       isFilter: false,
       isTaskList: false,
     };
   }
+
+  componentDidMount() {
+    this.props.loadLastFiveTransactions(
+      this.props.stepInfo.FormKey,
+      this.onLoadLastFiveTransactionsSuccess,
+      this.onLoadLastFiveTransactionsFailed,
+    );
+  }
+
+  onLoadLastFiveTransactionsSuccess = () => {
+    this.setState({isLoading: false});
+  };
+
+  onLoadLastFiveTransactionsFailed = errorMsg => {
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+  };
 
   onLeadBtnSelect = (item, index) => {
     console.log('onLeadBtnSelect ......', item);
@@ -56,7 +79,7 @@ class TaskSummaryPage extends React.Component {
   onGetEventBasedTaskListFilterSuccess = () => {
     this.setState({isLoading: false, isFilter: true});
     // this.state.isTaskList &&
-      this.props.navigation.navigate('TaskTransactionList');
+    this.props.navigation.navigate('TaskTransactionList');
   };
 
   onGetEventBasedTaskListFilterFailed = errorMsg => {
@@ -70,7 +93,7 @@ class TaskSummaryPage extends React.Component {
   onGetEventBasedTaskListSuccess = () => {
     this.setState({isLoading: false, isTaskList: true});
     // this.state.isFilter &&
-      this.props.navigation.navigate('TaskTransactionList');
+    this.props.navigation.navigate('TaskTransactionList');
   };
 
   onGetEventBasedTaskListFailed = errorMsg => {
@@ -79,6 +102,14 @@ class TaskSummaryPage extends React.Component {
       showDlg: true,
       dlgMsg: errorMsg,
     });
+  };
+
+  onCancel = () => {
+    this.setState({showDlg: false});
+  };
+
+  onConfirm = () => {
+    this.setState({showDlg: false});
   };
 
   renderRountBtn = (item, index) => {
@@ -97,6 +128,67 @@ class TaskSummaryPage extends React.Component {
 
   onAddEntries = () => {
     this.props.navigation.goBack();
+  };
+
+  taksItemSelected = () => {
+    this.props.navigation.navigate('TransactionDetails');
+  };
+
+  renderLatestTransaction = () => {
+    return (
+      <TouchableOpacity onPress={() => this.taksItemSelected()}>
+        <View style={styles.transTaskItemContainer}>
+          <View style={styles.transTopView}>
+            <View style={styles.tranIdContainer}>
+              <ReadOnlyView
+                viewStyle={styles.transLabelViewStyle}
+                label={'TransId:'}
+                labelStyle={styles.transLeadLabel}
+              />
+              <ReadOnlyView
+                viewStyle={styles.transLabelViewStyle}
+                label={'12345'}
+                labelStyle={styles.tansValue}
+              />
+              <ReadOnlyView
+                viewStyle={styles.transLabelViewStyle}
+                label={'Lead'}
+                labelStyle={styles.transLeadLabel}
+              />
+            </View>
+            <View style={styles.tranStatus}>
+              <ReadOnlyView
+                viewStyle={styles.tranStatusView}
+                label={'Pending'}
+                labelStyle={styles.transPendinglabel}
+              />
+            </View>
+          </View>
+          <View style={styles.dateTimeAmountRow}>
+            <View style={styles.payoutLeftView}>
+              <View style={styles.dateRow}>
+                {/* <Image style={styles.imageStyle} source={''} /> */}
+                <Text>
+                  <Icon name="calendar" size={fontscale(12)} color={'gray'} />
+                </Text>
+                <Text style={styles.dateTimeTxt}>
+                  {moment().format('MM/DD/YYYY')}
+                </Text>
+              </View>
+              <View style={[styles.dateRow, {marginLeft: widthAdapter(30)}]}>
+                {/* <Image style={styles.imageStyle} source={''} /> */}
+                <Text>
+                  <Icon name="clock-o" size={fontscale(12)} color={'gray'} />
+                </Text>
+                <Text style={styles.dateTimeTxt}>
+                  {moment().format('MM/DD/YYYY')}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
   };
 
   render() {
@@ -131,6 +223,14 @@ class TaskSummaryPage extends React.Component {
                 this.renderRountBtn(item, index),
               )}
             </View>
+            <View style={styles.transHeaderView}>
+              <Text style={styles.headerTxt}>
+                {I18n.t('TaskSummaryPage.transHeader')}
+              </Text>
+            </View>
+            <View style={styles.transListView}>
+              {this.renderLatestTransaction()}
+            </View>
           </View>
         </ScrollView>
         <Footer />
@@ -151,6 +251,7 @@ const mapStateToProps = state => {
   return {
     totalEntries: state.products.totalEntries[0].TotalEntries,
     taskSummary: state.products.taskSummary,
+    stepInfo: state.products.StepInfo[0],
   };
 };
 
@@ -181,8 +282,10 @@ const mapDispatchToProps = dispatch => ({
         onErrocallback,
       ),
     ),
-  // getProductDetailsData: (onSuccesscallback, onErrocallback) =>
-  //   dispatch(getProductDetailsData(onSuccesscallback, onErrocallback)),
+  loadLastFiveTransactions: (FormKey, onSuccesscallback, onErrocallback) =>
+    dispatch(
+      loadLastFiveTransactions(FormKey, onSuccesscallback, onErrocallback),
+    ),
 });
 
 export default connect(

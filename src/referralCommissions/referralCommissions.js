@@ -31,64 +31,6 @@ import {
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import SliderView from '../common/UIComponents/SliderView';
 
-const commission = [
-  {
-    referredUser: 'Chezhian',
-    referralCommissions: '6.00',
-    status: 'Paid',
-    paymentDate: moment().format('MM/DD/YYYY'),
-    email: 'chezhian.p@gmail.com',
-    mobile: '9585058087',
-  },
-  {
-    referredUser: 'JimKim',
-    referralCommissions: '6.00',
-    status: 'Pending',
-    paymentDate: moment().format('MM/DD/YYYY'),
-    email: 'chezhian.p@gmail.com',
-    mobile: '9585058087',
-  },
-  {
-    referredUser: 'Chezhian',
-    referralCommissions: '6.00',
-    status: 'Paid',
-    paymentDate: moment().format('MM/DD/YYYY'),
-    email: 'chezhian.p@gmail.com',
-    mobile: '9585058087',
-  },
-  {
-    referredUser: 'JimKim',
-    referralCommissions: '6.00',
-    status: 'Pending',
-    paymentDate: moment().format('MM/DD/YYYY'),
-    email: 'chezhian.p@gmail.com',
-    mobile: '9585058087',
-  },
-  {
-    referredUser: 'Chezhian',
-    referralCommissions: '6.00',
-    status: 'Paid',
-    paymentDate: moment().format('MM/DD/YYYY'),
-    email: 'chezhian.p@gmail.com',
-    mobile: '9585058087',
-  },
-  {
-    referredUser: 'JimKim',
-    referralCommissions: '6.00',
-    status: 'Pending',
-    paymentDate: moment().format('MM/DD/YYYY'),
-    email: 'chezhian.p@gmail.com',
-    mobile: '9585058087',
-  },
-];
-// const segmentationData = [
-//   I18n.t('commission.dropdownAll'),
-//   I18n.t('commission.dropdown7Days'),
-//   I18n.t('commission.dropdownLast2Weeks'),
-//   I18n.t('commission.dropdownLast3Weeks'),
-//   I18n.t('commission.dropdownLast1Month'),
-//   I18n.t('commission.dropdownLast3Months'),
-// ];
 class ReferralCommissions extends React.Component {
   constructor(props) {
     super(props);
@@ -109,14 +51,14 @@ class ReferralCommissions extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (props.dateFilter.length === 0) {
-      return {
-        isLoading: true,
-      };
-    }
-    if (state.selectedValue === '') {
-      return {selectedValue: props.dateFilter[4]?.Text};
-    }
+    // if (props.dateFilter.length === 0) {
+    //   return {
+    //     isLoading: true,
+    //   };
+    // }
+    // if (state.selectedValue === '') {
+    //   return {selectedValue: props.dateFilter[4]?.Text};
+    // }
     return {};
   }
 
@@ -300,7 +242,7 @@ class ReferralCommissions extends React.Component {
   };
 
   onDateFilterSuccess = () => {
-    console.log('registration status success');
+    console.log('onDateFilterSuccess success');
     // this.setState({isLoading: false});
     this.props.getReferralCommissionList(
       4,
@@ -311,7 +253,7 @@ class ReferralCommissions extends React.Component {
   };
 
   onDateFilterFailed = errorMsg => {
-    console.log('registration status fails');
+    console.log('onDateFilterFailed fails');
     this.setState({
       isLoading: false,
       showDlg: true,

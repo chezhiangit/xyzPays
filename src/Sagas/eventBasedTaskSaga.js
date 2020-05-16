@@ -6,6 +6,7 @@ import {
   SAGA_GET_EVENTBASED_TASK_SUMMARY,
   SAGA_GET_EVENTBASED_TASK_LIST,
   SAGA_GET_EVENTBASED_TASK_LIST_FILTER,
+  SAGA_LOAD_LAST_FIVE_TRANSACTIONS,
 } from '../AppStore/ActionTypes';
 import {
   storeProductsList,
@@ -13,6 +14,7 @@ import {
   storeTransactionFormDefenitionDetails,
   storeEventBasedTaskSummary,
   storeEventBasedTaskList,
+  storeLastFiveTransactions,
 } from './SagaActions';
 import {
   getProductListService,
@@ -21,6 +23,7 @@ import {
   getEventBasedTaskSummaryService,
   getEventBasedTaskListService,
   getFilterForEventBasedTaskListService,
+  loadLastFiveTransactionsService,
 } from '../networkServices/eventBasedTaskServices/eventBasedTaskService';
 
 const getAccessToken = state => state.login.accessToken;
@@ -59,27 +62,21 @@ function* getProductsFormDefenitionDetails(action) {
       action.FormKey,
       action.LeadKey,
     );
-    console.log('task transaction saga getFormDefenitionDetails api response...', response);
+    console.log(
+      'task transaction saga getFormDefenitionDetails api response...',
+      response,
+    );
     if (response !== null && response.status === 200) {
-      console.log('task transaction getFormDefenitionDetails data ....', response);
-      console.log('task transaction getFormDefenitionDetails saga action ....', action);
+      console.log(
+        'task transaction getFormDefenitionDetails data ....',
+        response,
+      );
+      console.log(
+        'task transaction getFormDefenitionDetails saga action ....',
+        action,
+      );
       const formDefenition = {...response}; // [...response.FormDefinition];
 
-      // const formDefenition = {
-      //   formDefenition: [...response.formDefenition.FormDefinition],
-      //   formInfo: [...response.formDefenition.FormInfo],
-      //   StepInfo: [...response.formDefenition.StepInfo],
-      //   Lead:
-      //     response.formDefenition?.Lead === undefined
-      //       ? []
-      //       : [...response.formDefenition?.Lead],
-      //   ConfirmedLead:
-      //     response.formDefenition['Confirmed Lead'] === undefined
-      //       ? []
-      //       : [...response.formDefenition['Confirmed Lead']],
-      // };
-
-      // if (action.calledFrom === 'StartPendingTask') {
       console.log(
         ' task transaction getFormDefenitionDetails data object ....',
         formDefenition,
@@ -89,7 +86,7 @@ function* getProductsFormDefenitionDetails(action) {
       } else if (action.calledFrom === 'TaskTransaction') {
         yield put(storeTransactionFormDefenitionDetails(formDefenition));
       }
-      
+
       action.onSuccesscallback();
     } else if (response !== null) {
       action.onErrorcallback(response.Message);
@@ -149,6 +146,34 @@ function* getEventBasedTaskSummary(action) {
       // if (action.calledFrom === 'StartPendingTask') {
       console.log(' getEventBasedTaskSummary data object ....', taskSummary);
       yield put(storeEventBasedTaskSummary(taskSummary));
+      action.onSuccesscallback();
+    } else if (response !== null) {
+      action.onErrorcallback(response.Message);
+    } else {
+      action.onErrorcallback('Unable to complete your request. Pls try again.');
+    }
+  } catch (error) {
+    action.onErrorcallback('Unable to complete your request. Pls try again.');
+  }
+}
+
+function* loadLastFiveTransactions(action) {
+  try {
+    console.log('saga loadLastFiveTransactions action received ....', action);
+    const accessToken = yield select(getAccessToken);
+    const response = yield call(
+      loadLastFiveTransactionsService,
+      accessToken,
+      action.FormKey,
+    );
+    console.log('saga loadLastFiveTransactions api response...', response);
+    if (response !== null && response.status === 200) {
+      delete response.status;
+      console.log('loadLastFiveTransactions data ....', response);
+      console.log('loadLastFiveTransactions saga action ....', action);
+      const lastFiveTransaction = {recentTransaction: [...response]}; // [...response.FormDefinition];
+
+      yield put(storeLastFiveTransactions(lastFiveTransaction));
       action.onSuccesscallback();
     } else if (response !== null) {
       action.onErrorcallback(response.Message);
@@ -244,4 +269,5 @@ export default function* watchEventBasedTaskAction() {
     SAGA_GET_EVENTBASED_TASK_LIST_FILTER,
     getFilterForEventBasedTaskList,
   );
+  yield takeLatest(SAGA_LOAD_LAST_FIVE_TRANSACTIONS, loadLastFiveTransactions);
 }

@@ -19,6 +19,7 @@ import AppLandingPage from './src/landingPage/landingPage';
 import ProductsListPage from './src/productList/productListPage';
 import TaskSummaryPage from './src/taskSummary/taskSummary';
 import TaskTransactionList from './src/taskSummary/taskTransaction';
+import TransactionDetails from './src/taskSummary/transactionDetails/transactionDetails';
 import LeadTransactionDetails from './src/leadTransactionDetails/leadTransactionDetails';
 import CustomerDetailsPage from './src/startEarning/customerDetailsPage';
 import HomePage from './src/home/HomePage';
@@ -160,13 +161,13 @@ class Main extends React.Component {
           //   title: I18n.t('profile.headerTitle'),
           // }}
         />
-        <Drawer.Screen
+        {/* <Drawer.Screen
           name="CustomerDetailsPage"
           component={CustomerDetailsPage}
           // options={{
           //   title: I18n.t('profile.headerTitle'),
           // }}
-        />
+        /> */}
         <Drawer.Screen
           name="EditProfilePage"
           component={EditProfilePage}
@@ -448,11 +449,29 @@ class Main extends React.Component {
             // headerBackTitle: 'Trending Products',
           }}
         />
+        <Drawer.Screen
+          name="CustomerDetailsPage"
+          component={CustomerDetailsPage}
+          options={{
+            title: I18n.t('LeadTaskEntry.headerTitle'),
+            headerStyle: {
+              backgroundColor: Colors.primaryAppColor,
+            },
+            headerTintColor: Colors.primaryFontColor,
+            headerTitleStyle: {
+              fontSize: FontsSize.headerName,
+              fontWeight: FontsWeight.header,
+              color: Colors.primaryFontColor,
+              fontFamily: fontFamily.primaryFontFamily,
+            },
+            // headerBackTitle: 'Trending Products',
+          }}
+        />
         <Stack.Screen
           name="TaskTransactionList"
           component={TaskTransactionList}
           options={{
-            title: I18n.t('TaskSummaryPage.headerTitle'),
+            title: I18n.t('TaskTransactionList.headerTitle'),
             headerStyle: {
               backgroundColor: Colors.primaryAppColor,
             },
@@ -484,7 +503,24 @@ class Main extends React.Component {
             // headerBackTitle: 'Trending Products',
           }}
         />
-        
+        <Stack.Screen
+          name="TransactionDetails"
+          component={TransactionDetails}
+          options={{
+            title: I18n.t('TransactionDetails.headerTitle'),
+            headerStyle: {
+              backgroundColor: Colors.primaryAppColor,
+            },
+            headerTintColor: Colors.primaryFontColor,
+            headerTitleStyle: {
+              fontSize: FontsSize.headerName,
+              fontWeight: FontsWeight.header,
+              color: Colors.primaryFontColor,
+              fontFamily: fontFamily.primaryFontFamily,
+            },
+            // headerBackTitle: 'Trending Products',
+          }}
+        />
       </Stack.Navigator>
     );
   };

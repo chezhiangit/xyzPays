@@ -162,6 +162,43 @@ const getEventBasedTaskSummaryService = async (accessToken, FormKey) => {
   }
 };
 
+const loadLastFiveTransactionsService = async (accessToken, FormKey) => {
+  try {
+    const url =
+      urlConstants.BaseUrl +
+      urlConstants.loadLastFiveTransactions +
+      accessToken +
+      '&FormKey=' +
+      FormKey;
+    const headersParams = {};
+    headersParams['Content-Type'] = 'application/json';
+    console.log('loadLastFiveTransactionsService url ...', url);
+    console.log(
+      'loadLastFiveTransactionsService headersParams ...',
+      headersParams,
+    );
+
+    const response = await RNFetchBlob.config({timeout: TIMEOUT}).fetch(
+      'GET',
+      url,
+      headersParams,
+    );
+    console.log('loadLastFiveTransactionsService response ...', response);
+    const result = response.json();
+    if (response.respInfo.status === 200) {
+      result.status = 200;
+      return result;
+    } else if (response.respInfo.status === 500) {
+      result.status = 500;
+      return result;
+    }
+    return null;
+  } catch (e) {
+    console.log('loadLastFiveTransactionsService data failed.', e);
+    return null;
+  }
+};
+
 const getEventBasedTaskListService = async (accessToken, FormKey, StepKey) => {
   try {
     const url =
@@ -244,4 +281,5 @@ export {
   getEventBasedTaskSummaryService,
   getEventBasedTaskListService,
   getFilterForEventBasedTaskListService,
+  loadLastFiveTransactionsService,
 };
