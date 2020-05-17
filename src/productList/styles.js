@@ -79,8 +79,10 @@ const styles = StyleSheet.create({
   },
   btnStyle: {
     height: heightAdapter(60),
-    width: widthAdapter(250),
+    // width: widthAdapter(250),
     fontSize: fontscale(12),
+    paddingLeft: widthAdapter(10),
+    paddingRight: widthAdapter(10),
   },
   taskInfo: {
     marginLeft: widthAdapter(70),

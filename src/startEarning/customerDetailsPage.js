@@ -471,6 +471,12 @@ class CustomerDetailsPage extends React.Component {
     });
   };
 
+  onPlayVideo = () => {
+    // console.log('onPlayVideo .......');
+    // this.setState({showVideo: true});
+    this.props.navigation.navigate('VideoPage');
+  };
+
   render() {
     return (
       <View style={[BaseStyles.baseContainer]}>
@@ -489,11 +495,21 @@ class CustomerDetailsPage extends React.Component {
                 </Text>
               </View>
               <View style={styles.linkBtnRow}>
-                <LinkBtnComponent
-                  btnName={I18n.t('LeadTaskEntry.videlink')}
-                  containerStyle={styles.videoLinkContainer}
-                  btnTextStyle={{marginLeft: 0}}
-                />
+                <View style={styles.videoRow}>
+                  <LinkBtnComponent
+                    btnName={I18n.t('LeadTaskEntry.videlink')}
+                    containerStyle={styles.videoLinkContainer}
+                    btnTextStyle={{marginLeft: 0}}
+                    onClick={() => this.onPlayVideo()}
+                  />
+                  <Text>
+                    <Icon
+                      name="play"
+                      size={fontscale(20)}
+                      color={Colors.linkBtnColor}
+                    />
+                  </Text>
+                </View>
                 <LinkBtnComponent
                   onClick={this.onViewAllEntries}
                   btnName={
@@ -505,49 +521,6 @@ class CustomerDetailsPage extends React.Component {
                   containerStyle={styles.viewAllLinkContainer}
                 />
               </View>
-              {/* <View style={styles.taskDetailsContainer}>
-                <View style={styles.taskEntryProduct}>
-                  <View style={styles.dotWithTick}>
-                    <Text>
-                      <Icon
-                        name="check-circle"
-                        size={fontscale(20)}
-                        color={Colors.primaryAppColor}
-                      />
-                    </Text>
-                  </View>
-                  <Text style={styles.taskEntryProductTxt}>
-                    {this.props.productDetails.ProductName}
-                  </Text>
-                </View>
-                <View style={styles.activeContainer}>
-                  <Text style={styles.statusTxt}>
-                    {this.props.productDetails['Product Status']}
-                  </Text>
-                </View>
-                <View style={styles.skuContainer}>
-                  <Text style={styles.skuLabel}>
-                    {I18n.t('taskEntryPage.sku')}
-                    {': '}
-                  </Text>
-                  <Text style={styles.skuTxt}>
-                    {this.props.productDetails.SKU}
-                  </Text>
-                </View>
-              </View> */}
-              {/* <View style={styles.taskEntryImageContainer}>
-                <Image
-                  source={{
-                    isStatic: true,
-                    uri: this.props.productDetails?.ProductPicture,
-                    method: 'GET',
-                  }}
-                  style={[
-                    styles.productImage,
-                    // {width: this.state.width, height: this.state.height},
-                  ]}
-                />
-              </View> */}
             </View>
 
             {this.createComponentsDynamically()}

@@ -43,6 +43,7 @@ import EmailVerificationStep1 from './src/userVerification/emailVerificationStep
 import EmailVerificationStep2 from './src/userVerification/emailVerificationStep2';
 import MobileVerificationStep1 from './src/userVerification/mobileVerificationStep1';
 import MobileVerificationStep2 from './src/userVerification/mobileVerificationStep2';
+import VideoPage from './src/video/videoPage';
 import FAQPage from './src/faq/faq';
 import I18n from './src/localization/i18n';
 import Colors from './src/uttils/Colors';
@@ -508,6 +509,24 @@ class Main extends React.Component {
           component={TransactionDetails}
           options={{
             title: I18n.t('TransactionDetails.headerTitle'),
+            headerStyle: {
+              backgroundColor: Colors.primaryAppColor,
+            },
+            headerTintColor: Colors.primaryFontColor,
+            headerTitleStyle: {
+              fontSize: FontsSize.headerName,
+              fontWeight: FontsWeight.header,
+              color: Colors.primaryFontColor,
+              fontFamily: fontFamily.primaryFontFamily,
+            },
+            // headerBackTitle: 'Trending Products',
+          }}
+        />
+        <Stack.Screen
+          name="VideoPage"
+          component={VideoPage}
+          options={{
+            title: I18n.t('videoPage.headerTitle'),
             headerStyle: {
               backgroundColor: Colors.primaryAppColor,
             },

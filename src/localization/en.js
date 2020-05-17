@@ -278,4 +278,7 @@ export default {
   TransactionDetails: {
     headerTitle: 'Trans Details',
   },
+  videoPage: {
+    headerTitle: 'XYZ pays Demo',
+  },
 };

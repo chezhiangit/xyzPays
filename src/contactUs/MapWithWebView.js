@@ -133,7 +133,8 @@ class ContactUs extends React.Component {
         <WebView
           source={{
             html: `<iframe width="100%" height="75%" src=${
-              this.props.XyziesGoogleMapCoordinates
+              'https://player.vimeo.com/video/403879610?autoplay=1&loop=1&title=0&byline=0&portrait=0'
+              // this.props.XyziesGoogleMapCoordinates
             } frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`,
           }}
           onLoadEnd={() => this.setState({isLoading: false})}
