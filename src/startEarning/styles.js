@@ -65,9 +65,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   videoLinkContainer: {
-    width: widthAdapter(400),
+    width: widthAdapter(350),
     justifyContent: 'center',
     alignItems: 'flex-start',
+    padding: widthAdapter(0),
   },
   taskDetailsContainer: {
     width: '70%',
@@ -179,6 +180,23 @@ const styles = StyleSheet.create({
   productImage: {
     height: heightAdapter(150),
     width: widthAdapter(200),
+  },
+  videoRow: {
+    flexDirection: 'row',
+    width: widthAdapter(400),
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    borderWidth: 1,
+    borderColor: 'red',
+  },
+  videoContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    borderColor: 'red',
+    borderWidth: 1,
   },
 });
 

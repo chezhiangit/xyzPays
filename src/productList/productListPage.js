@@ -82,6 +82,13 @@ class ProductsListPage extends React.Component {
     this.props.navigation.navigate('ReferAndEarnPage');
   };
 
+  renderCommission = (el, index) => (
+    <View style={styles.leadCommission}>
+      <Text>{`$${el?.CommissionRate} `}</Text>
+      <Text style={styles.leadCommissionTxt}>for each {el.StepName}</Text>
+    </View>
+  );
+
   renderTrendingCard = (item, index) => {
     return (
       <View style={styles.trendingItemContainer}>
@@ -103,7 +110,13 @@ class ProductsListPage extends React.Component {
           </View>
           <PrimaryButton
             btnName={I18n.t('productsList.earningBtnName')}
-            onSubmit={() => this.onStartEarning(item.FormKey, item.ProductKey, item?.ProductName)}
+            onSubmit={() =>
+              this.onStartEarning(
+                item.FormKey,
+                item.ProductKey,
+                item?.ProductName,
+              )
+            }
             btnStyle={styles.btnStyle}
             btnTexStyle={{fontSize: fontscale(13)}}
           />
@@ -112,16 +125,7 @@ class ProductsListPage extends React.Component {
           <View style={styles.taskDescription}>
             <Text style={styles.taskDescriptionTxt}>{item?.ProductDesc}</Text>
           </View>
-          <View style={styles.leadCommission}>
-            <Text>{`$${item?.leadCommission} `}</Text>
-            <Text style={styles.leadCommissionTxt}>for each Lead</Text>
-          </View>
-          <View style={styles.confirmCommission}>
-            <Text>{`$${item.confirmationCommission} `}</Text>
-            <Text style={styles.confirmCommissionTxt}>
-              for each confirmed Lead
-            </Text>
-          </View>
+          {item.Commissions.map(this.renderCommission)}
         </View>
       </View>
     );

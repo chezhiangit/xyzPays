@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
     marginBottom: heightAdapter(20),
     // borderWidth: 1,
     // borderColor: 'red',
-    // alignItems: 'center',
+    alignItems: 'center',
+    // justifyContent: 'center',
   },
   transIdLabel: {
     color: '#777',
@@ -75,6 +76,7 @@ const styles = StyleSheet.create({
     // height: heightAdapter(200),
     // borderWidth: 1,
     // borderColor: 'red',
+    alignItems: 'center',
   },
   amountTxt: {
     fontSize: fontscale(30),

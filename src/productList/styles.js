@@ -9,11 +9,14 @@ const styles = StyleSheet.create({
     // flex: 1,
     marginLeft: widthAdapter(40),
     marginRight: widthAdapter(40),
-    paddingTop: heightAdapter(50),
+    paddingTop: heightAdapter(30),
   },
   trendingList: {
     // marginTop: heightAdapter(50),
     // marginBottom: heightAdapter(200),
+    padding: widthAdapter(20),
+    // borderColor: 'red',
+    // borderWidth: 1,
   },
   trendingItemContainer: {
     // flexDirection: 'row',

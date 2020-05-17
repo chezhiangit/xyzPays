@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     // borderColor: 'red',
     marginLeft: widthAdapter(40),
     marginRight: widthAdapter(40),
-    paddingTop: heightAdapter(50),
+    paddingTop: heightAdapter(20),
     marginBottom: widthAdapter(175),
   },
   totalAddRow: {
