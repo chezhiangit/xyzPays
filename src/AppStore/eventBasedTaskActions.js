@@ -6,6 +6,8 @@ import {
   SAGA_GET_EVENTBASED_TASK_LIST,
   SAGA_GET_EVENTBASED_TASK_LIST_FILTER,
   SAGA_LOAD_LAST_FIVE_TRANSACTIONS,
+  SAGA_GET_TASK_TRANSACTION_DETAILS,
+  SAGA_GET_TASK_TRANSACTION_HISTORY,
 } from './ActionTypes';
 const getProductsList = (
   onSuccesscallback = () => {},
@@ -94,6 +96,28 @@ const loadLastFiveTransactions = (
   onErrorcallback,
 });
 
+const getTxnDetail = (
+  TxnKey,
+  onSuccesscallback = () => {},
+  onErrorcallback = () => {},
+) => ({
+  type: SAGA_GET_TASK_TRANSACTION_DETAILS,
+  TxnKey,
+  onSuccesscallback,
+  onErrorcallback,
+});
+
+const getTxnHistory = (
+  TxnKey,
+  onSuccesscallback = () => {},
+  onErrorcallback = () => {},
+) => ({
+  type: SAGA_GET_TASK_TRANSACTION_HISTORY,
+  TxnKey,
+  onSuccesscallback,
+  onErrorcallback,
+});
+
 export {
   getProductsList,
   getProductsFormDefenitionDetailsData,
@@ -102,4 +126,6 @@ export {
   getEventBasedTaskList,
   getFilterForEventBasedTaskList,
   loadLastFiveTransactions,
+  getTxnDetail,
+  getTxnHistory,
 };

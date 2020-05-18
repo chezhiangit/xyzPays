@@ -23,6 +23,7 @@ import {
   getEventBasedTaskList,
   getFilterForEventBasedTaskList,
   loadLastFiveTransactions,
+  getTxnDetail,
 } from '../AppStore/eventBasedTaskActions';
 import ReadOnlyView from '../common/UIComponents/readOnlyView/ReadOnlyView';
 import moment from 'moment';
@@ -73,13 +74,12 @@ class TaskSummaryPage extends React.Component {
       this.onGetEventBasedTaskListSuccess,
       this.onGetEventBasedTaskListFailed,
     );
-    // this.props.navigation.navigate('TaskTransactionList');
   };
 
   onGetEventBasedTaskListFilterSuccess = () => {
-    this.setState({isLoading: false, isFilter: true});
+    this.setState({isLoading: false});
     // this.state.isTaskList &&
-    this.props.navigation.navigate('TaskTransactionList');
+    // this.props.navigation.navigate('TaskTransactionList');
   };
 
   onGetEventBasedTaskListFilterFailed = errorMsg => {
@@ -130,13 +130,30 @@ class TaskSummaryPage extends React.Component {
     this.props.navigation.goBack();
   };
 
-  taksItemSelected = () => {
-    this.props.navigation.navigate('TransactionDetails');
+  taksItemSelected = (item, index) => {
+    this.setState({isLoading: true});
+    this.props.getTxnDetail(
+      item.TxnKey,
+      this.onGetTransactionDetailsSuccess,
+      this.onGetTransactionDetailsFailed,
+    );
   };
 
-  renderLatestTransaction = () => {
+  onGetTransactionDetailsSuccess = () => {
+    this.setState({isLoading: false});
+    this.props.navigation.navigate('TransactionDetails');
+  };
+  onGetTransactionDetailsFailed = errorMsg => {
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+  };
+
+  renderLatestTransaction = (item, index) => {
     return (
-      <TouchableOpacity onPress={() => this.taksItemSelected()}>
+      <TouchableOpacity onPress={() => this.taksItemSelected(item, index)}>
         <View style={styles.transTaskItemContainer}>
           <View style={styles.transTopView}>
             <View style={styles.tranIdContainer}>
@@ -147,19 +164,19 @@ class TaskSummaryPage extends React.Component {
               />
               <ReadOnlyView
                 viewStyle={styles.transLabelViewStyle}
-                label={'12345'}
+                label={item.TxnSeq}
                 labelStyle={styles.tansValue}
               />
               <ReadOnlyView
                 viewStyle={styles.transLabelViewStyle}
-                label={'Lead'}
+                label={item.StepName}
                 labelStyle={styles.transLeadLabel}
               />
             </View>
             <View style={styles.tranStatus}>
               <ReadOnlyView
                 viewStyle={styles.tranStatusView}
-                label={'Pending'}
+                label={item.Status}
                 labelStyle={styles.transPendinglabel}
               />
             </View>
@@ -167,22 +184,16 @@ class TaskSummaryPage extends React.Component {
           <View style={styles.dateTimeAmountRow}>
             <View style={styles.payoutLeftView}>
               <View style={styles.dateRow}>
-                {/* <Image style={styles.imageStyle} source={''} /> */}
                 <Text>
                   <Icon name="calendar" size={fontscale(12)} color={'gray'} />
                 </Text>
-                <Text style={styles.dateTimeTxt}>
-                  {moment().format('MM/DD/YYYY')}
-                </Text>
+                <Text style={styles.dateTimeTxt}>{item.TxnDate}</Text>
               </View>
               <View style={[styles.dateRow, {marginLeft: widthAdapter(30)}]}>
-                {/* <Image style={styles.imageStyle} source={''} /> */}
                 <Text>
                   <Icon name="clock-o" size={fontscale(12)} color={'gray'} />
                 </Text>
-                <Text style={styles.dateTimeTxt}>
-                  {moment().format('MM/DD/YYYY')}
-                </Text>
+                <Text style={styles.dateTimeTxt}>{item.TxnTime}</Text>
               </View>
             </View>
           </View>
@@ -229,7 +240,7 @@ class TaskSummaryPage extends React.Component {
               </Text>
             </View>
             <View style={styles.transListView}>
-              {this.renderLatestTransaction()}
+              {this.props.lastFiveTransaction.map(this.renderLatestTransaction)}
             </View>
           </View>
         </ScrollView>
@@ -252,6 +263,7 @@ const mapStateToProps = state => {
     totalEntries: state.products.totalEntries[0].TotalEntries,
     taskSummary: state.products.taskSummary,
     stepInfo: state.products.StepInfo[0],
+    lastFiveTransaction: state.products.lastFiveTransaction,
   };
 };
 
@@ -286,6 +298,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(
       loadLastFiveTransactions(FormKey, onSuccesscallback, onErrocallback),
     ),
+  getTxnDetail: (TxnKey, onSuccesscallback, onErrocallback) =>
+    dispatch(getTxnDetail(TxnKey, onSuccesscallback, onErrocallback)),
 });
 
 export default connect(

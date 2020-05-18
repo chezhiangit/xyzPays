@@ -277,6 +277,12 @@ export default {
   },
   TransactionDetails: {
     headerTitle: 'Trans Details',
+    product: 'Product',
+    Amount: 'Amount',
+    SKU: 'SKU',
+    Type: 'Type',
+    Log: 'Log',
+    TransId: 'Trans Id',
   },
   videoPage: {
     headerTitle: 'XYZ pays Demo',

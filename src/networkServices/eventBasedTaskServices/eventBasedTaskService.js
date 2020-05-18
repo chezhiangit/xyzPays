@@ -186,10 +186,10 @@ const loadLastFiveTransactionsService = async (accessToken, FormKey) => {
     console.log('loadLastFiveTransactionsService response ...', response);
     const result = response.json();
     if (response.respInfo.status === 200) {
-      result.status = 200;
+      // result.status = 200;
       return result;
     } else if (response.respInfo.status === 500) {
-      result.status = 500;
+      // result.status = 500;
       return result;
     }
     return null;
@@ -261,15 +261,83 @@ const getFilterForEventBasedTaskListService = async (accessToken, FormKey) => {
     console.log('getFilterForEventBasedTaskListService response ...', response);
     const result = response.json();
     if (response.respInfo.status === 200) {
-      result.status = 200;
+      // result.status = 200;
       return result;
     } else if (response.respInfo.status === 500) {
-      result.status = 500;
+      // result.status = 500;
       return result;
     }
     return null;
   } catch (e) {
     console.log('getFilterForEventBasedTaskListService data failed.', e);
+    return null;
+  }
+};
+
+const getTxnDetailService = async (accessToken, TxnKey) => {
+  try {
+    const url =
+      urlConstants.BaseUrl +
+      urlConstants.getTxnDetail +
+      accessToken +
+      '&TxnKey=' +
+      TxnKey;
+    const headersParams = {};
+    headersParams['Content-Type'] = 'application/json';
+    console.log('getTxnDetailService url ...', url);
+    console.log('getTxnDetailService headersParams ...', headersParams);
+
+    const response = await RNFetchBlob.config({timeout: TIMEOUT}).fetch(
+      'POST',
+      url,
+      headersParams,
+    );
+    console.log('getTxnDetailService response ...', response);
+    const result = response.json();
+    if (response.respInfo.status === 200) {
+      // result.status = 200;
+      return result;
+    } else if (response.respInfo.status === 500) {
+      // result.status = 500;
+      return result;
+    }
+    return null;
+  } catch (e) {
+    console.log('getTxnDetailService data failed.', e);
+    return null;
+  }
+};
+
+const getTxnHistoryService = async (accessToken, TxnKey) => {
+  try {
+    const url =
+      urlConstants.BaseUrl +
+      urlConstants.getTxnHistory +
+      accessToken +
+      '&TxnKey=' +
+      TxnKey;
+    const headersParams = {};
+    headersParams['Content-Type'] = 'application/json';
+    console.log('getTxnHistoryService url ...', url);
+    console.log('getTxnHistoryService headersParams ...', headersParams);
+
+    const response = await RNFetchBlob.config({timeout: TIMEOUT}).fetch(
+      'GET',
+      url,
+      headersParams,
+    );
+    console.log('getTxnHistoryService response ...', response);
+    const result = response.json();
+    if (response.respInfo.status === 200) {
+      // result.status = 200;
+      return result;
+    } else if (response.respInfo.status === 500) {
+      // result.status = 500;
+      return result;
+    }
+    return null;
+  } catch (e) {
+    console.log('getTxnHistoryService data failed.', e);
     return null;
   }
 };
@@ -282,4 +350,6 @@ export {
   getEventBasedTaskListService,
   getFilterForEventBasedTaskListService,
   loadLastFiveTransactionsService,
+  getTxnDetailService,
+  getTxnHistoryService,
 };

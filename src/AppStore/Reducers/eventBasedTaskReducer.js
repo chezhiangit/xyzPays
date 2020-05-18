@@ -6,6 +6,8 @@ import {
   STORE_EVENTBASED_TASK_LIST_FILTER,
   STORE_TRANSACTION_FORM_DEFENITION_LIST,
   STORE_LAST_FIVE_TRANSACTIONS,
+  STORE_TASK_TRANSACTION_DETAILS,
+  STORE_TASK_TRANSACTION_HISTORY,
 } from '../ActionTypes';
 
 const productsListReducer = (
@@ -24,6 +26,7 @@ const productsListReducer = (
     taskSummary: [],
     totalEntries: [],
     lastFiveTransaction: [],
+    taskTransactionDetails: {},
     taskList: [],
     taskListFilter: [],
   },
@@ -77,7 +80,7 @@ const productsListReducer = (
     case STORE_LAST_FIVE_TRANSACTIONS:
       return {
         ...state,
-        lastFiveTransaction: [...action.taskSummary.lastFiveTransaction],
+        lastFiveTransaction: [...action.lastFiveTransaction],
       };
     case STORE_EVENTBASED_TASK_LIST:
       return {
@@ -89,6 +92,17 @@ const productsListReducer = (
         ...state,
         taskListFilter: [...action.taskListFilter],
       };
+    case STORE_TASK_TRANSACTION_DETAILS:
+      return {
+        ...state,
+        taskTransactionDetails: {...action.taskTransactionDetails},
+      };
+    case STORE_TASK_TRANSACTION_HISTORY:
+      return {
+        ...state,
+        taskTransactionHistory: [...action.taskTransactionHistory],
+      };
+
     default:
       return state;
   }

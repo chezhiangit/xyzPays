@@ -107,6 +107,12 @@ const styles = StyleSheet.create({
   },
   imageView: {
     margin: widthAdapter(20),
+    // height: heightAdapter(220),
+    // width: heightAdapter(220),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  imageStyle: {
     height: heightAdapter(200),
     width: heightAdapter(200),
   },

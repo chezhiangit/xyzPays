@@ -19,11 +19,7 @@ import Colors from '../../uttils/Colors';
 import WarningDialog from '../../common/UIComponents/warningDialog';
 import LinkBtnComponent from '../../common/UIComponents/LinkBtn/LinkBtn';
 import RoundButton from '../../common/UIComponents/RoundButton';
-import {
-  getEventBasedTaskList,
-  getFilterForEventBasedTaskList,
-  loadLastFiveTransactions,
-} from '../../AppStore/eventBasedTaskActions';
+import {getTxnHistory} from '../../AppStore/eventBasedTaskActions';
 import ReadOnlyView from '../../common/UIComponents/readOnlyView/ReadOnlyView';
 import moment from 'moment';
 
@@ -39,6 +35,10 @@ class TransactionDetails extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.props.getTxnHistory(this.props.taskTransactionDetails[0].TxnKey);
+  }
+
   onCancel = () => {
     this.setState({showDlg: false});
   };
@@ -51,8 +51,12 @@ class TransactionDetails extends React.Component {
     <View style={styles.topView}>
       <View style={styles.leftView}>
         <View style={styles.transIdView}>
-          <Text style={styles.transIdLabel}>Trans Id</Text>
-          <Text style={styles.transIdTxt}>12345</Text>
+          <Text style={styles.transIdLabel}>
+            {I18n.t('TransactionDetails.TransId')}
+          </Text>
+          <Text style={styles.transIdTxt}>
+            {this.props.taskTransactionDetails[0].TxnSeq}
+          </Text>
         </View>
         <View style={styles.dateTimeAmountRow}>
           <View style={styles.dateTimeLeftView}>
@@ -61,7 +65,7 @@ class TransactionDetails extends React.Component {
                 <Icon name="calendar" size={fontscale(12)} color={'gray'} />
               </Text>
               <Text style={styles.dateTimeTxt}>
-                {moment().format('MM/DD/YYYY')}
+                {this.props.taskTransactionDetails[0].PaymentDate}
               </Text>
             </View>
             <View style={[styles.dateRow, {marginLeft: widthAdapter(30)}]}>
@@ -70,14 +74,16 @@ class TransactionDetails extends React.Component {
                 <Icon name="clock-o" size={fontscale(12)} color={'gray'} />
               </Text>
               <Text style={styles.dateTimeTxt}>
-                {moment().format('MM/DD/YYYY')}
+                {this.props.taskTransactionDetails[0].PaymentTime}
               </Text>
             </View>
           </View>
         </View>
       </View>
       <View style={styles.rightView}>
-        <Text style={styles.amountTxt}>$11.00</Text>
+        <Text style={styles.amountTxt}>
+          {'$' + this.props.taskTransactionDetails[0].ComAmount}
+        </Text>
         <View style={styles.statusView}>
           <Text>
             <Icon
@@ -86,7 +92,9 @@ class TransactionDetails extends React.Component {
               color={'white'}
             />
           </Text>
-          <Text style={styles.statusTxt}>Not Paid</Text>
+          <Text style={styles.statusTxt}>
+            {this.props.taskTransactionDetails[0].PaymentStatus}
+          </Text>
         </View>
       </View>
     </View>
@@ -107,20 +115,51 @@ class TransactionDetails extends React.Component {
     </View>
   );
 
-  renderProductDetails = () => (
+  renderProductDetails = item => (
     <View style={styles.productView}>
       <View style={styles.imageView}>
-        <Image style={styles.imageView} />
+        <Image
+          source={{
+            isStatic: true,
+            uri: item?.ProductPicture,
+            method: 'GET',
+            // headers: {
+            //   clubId: NetTool.clubId,
+            //   'Ocp-Apim-Subscription-Key': NetTool.subscriptionKey,
+            // },
+          }}
+          style={styles.imageStyle}
+        />
       </View>
-      {this.renderProductRow('Product', 'Vonage Lead', {})}
-      {this.renderProductRow('Amount', '$11.00', {backgroundColor: 'white'})}
-      {this.renderProductRow('SKU', 'NewVonabgeLead', {})}
-      {this.renderProductRow('Type', 'Event Based', {backgroundColor: 'white'})}
+      {this.renderProductRow(
+        I18n.t('TransactionDetails.product'),
+        item.ProductName,
+        {},
+      )}
+      {this.renderProductRow(
+        I18n.t('TransactionDetails.Amount'),
+        '$' + item.ComAmount,
+        {
+          backgroundColor: 'white',
+        },
+      )}
+      {this.renderProductRow(I18n.t('TransactionDetails.SKU'), item.SKU, {})}
+      {this.renderProductRow(
+        I18n.t('TransactionDetails.Type'),
+        item.ProductTypeName,
+        {
+          backgroundColor: 'white',
+        },
+      )}
       <View style={styles.productDetails} />
     </View>
   );
 
-  renderLogs = () => (
+  logRefresView = () => {
+    this.props.getTxnHistory(this.props.taskTransactionDetails[0].TxnKey);
+  };
+
+  renderLogs = item => (
     <View style={styles.logContainer}>
       <View style={styles.logLeftView}>
         <Text>
@@ -132,11 +171,11 @@ class TransactionDetails extends React.Component {
         </Text>
       </View>
       <View style={styles.logRightView}>
-        <Text style={styles.logTitle}>Transaction</Text>
+        <Text style={styles.logTitle}>{item.PaymentLog}</Text>
         <Text style={styles.logDetails}>
-          on {moment().format('MM/DD/YYYY')}
+          on {item.PaymentDate} {item.PaymentTime}
         </Text>
-        <Text style={styles.logDetails}>by Jose Fraga</Text>
+        <Text style={styles.logDetails}>{item.StatusChangedBy}</Text>
       </View>
     </View>
   );
@@ -146,14 +185,22 @@ class TransactionDetails extends React.Component {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.scrollContainer}>
             {this.renderTopRow()}
-            {this.renderProductDetails()}
+            {this.props.taskTransactionDetails.map(this.renderProductDetails)}
+
             <View style={styles.logRefresView}>
-              <Text>
-                <Icon name="history" size={fontscale(20)} color={'gray'} />
-              </Text>
-              <Text style={styles.logTxt}>Log</Text>
+              <TouchableOpacity
+                onPress={this.onRefreshLog}
+                style={{flexDirection: 'row'}}>
+                <Text>
+                  <Icon name="history" size={fontscale(20)} color={'gray'} />
+                </Text>
+                <Text style={styles.logTxt}>
+                  {I18n.t('TransactionDetails.Log')}
+                </Text>
+              </TouchableOpacity>
             </View>
-            {this.renderLogs()}
+
+            {this.props.taskTransactionHistory.map(this.renderLogs)}
           </View>
         </ScrollView>
         <Footer />
@@ -172,25 +219,14 @@ class TransactionDetails extends React.Component {
 const mapStateToProps = state => {
   console.log('state from task entry page ....', state);
   return {
-    // totalEntries: state.products.totalEntries[0].TotalEntries,
+    taskTransactionDetails: state.products.taskTransactionDetails.tbl,
+    taskTransactionHistory: state.products.taskTransactionHistory,
     // taskSummary: state.products.taskSummary,
     // stepInfo: state.products.StepInfo[0],
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  // getFilterForEventBasedTaskList: (
-  //   FormKey,
-  //   onSuccesscallback,
-  //   onErrocallback,
-  // ) =>
-  //   dispatch(
-  //     getFilterForEventBasedTaskList(
-  //       FormKey,
-  //       onSuccesscallback,
-  //       onErrocallback,
-  //     ),
-  //   ),
   // getEventBasedTaskList: (
   //   FormKey,
   //   StepKey,
@@ -205,10 +241,7 @@ const mapDispatchToProps = dispatch => ({
   //       onErrocallback,
   //     ),
   //   ),
-  // loadLastFiveTransactions: (FormKey, onSuccesscallback, onErrocallback) =>
-  //   dispatch(
-  //     loadLastFiveTransactions(FormKey, onSuccesscallback, onErrocallback),
-  //   ),
+  getTxnHistory: TxnKey => dispatch(getTxnHistory(TxnKey)),
 });
 
 export default connect(

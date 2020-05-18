@@ -27,7 +27,10 @@ import WarningDialog from '../common/UIComponents/warningDialog';
 import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
 import RoundButton from '../common/UIComponents/RoundButton';
 import ReadOnlyView from '../common/UIComponents/readOnlyView/ReadOnlyView';
-import {getProductsFormDefenitionDetailsData} from '../AppStore/eventBasedTaskActions';
+import {
+  getProductsFormDefenitionDetailsData,
+  getEventBasedTaskList,
+} from '../AppStore/eventBasedTaskActions';
 
 class TaskTransactionList extends React.Component {
   constructor(props) {
@@ -39,21 +42,29 @@ class TaskTransactionList extends React.Component {
     };
   }
 
-  onDropDownChanges = (value, selectedIndex, data) => {};
+  onDropDownChanges = (value, selectedIndex, data) => {
+    this.setState({isLoading: true});
+    this.props.getEventBasedTaskList(
+      this.props.stepInfo.FormKey,
+      data[selectedIndex].StepKey,
+      this.onGetEventBasedTaskListSuccess,
+      this.onGetEventBasedTaskListFailed,
+    );
+  };
 
-  // renderRountBtn = index => {
-  //   return (
-  //     <View style={styles.roundBtnView}>
-  //       <RoundButton
-  //         onSubmit={() => this.onLeadBtnSelect(index)}
-  //         btnName={'10'}
-  //         btnStyle={styles.roundBtnStyle}
-  //         textStyle={styles.countText}
-  //       />
-  //       <Text style={styles.rountBtnCaption}>Lead</Text>
-  //     </View>
-  //   );
-  // };
+  onGetEventBasedTaskListSuccess = () => {
+    this.setState({isLoading: false});
+    this.props.navigation.navigate('TaskTransactionList');
+  };
+
+  onGetEventBasedTaskListFailed = errorMsg => {
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
+  };
+
   onAddEntries = () => {
     this.props.navigation.navigate('CustomerDetailsPage');
   };
@@ -128,6 +139,11 @@ class TaskTransactionList extends React.Component {
       </View>
     );
   };
+
+  parseFilterItems = (item, index) => {
+    return {value: item.StepName, StepKey: item.StepKey};
+  };
+
   render() {
     return (
       <View style={[BaseStyles.baseContainer]}>
@@ -135,7 +151,7 @@ class TaskTransactionList extends React.Component {
         <View style={styles.scrollContainer}>
           <Dropdown
             label={'Select'}
-            data={[{value: 'Item1'}, {value: 'Item2'}]}
+            data={this.props.taskListFilter?.map(this.parseFilterItems)}
             dropdownOffset={{
               top: heightAdapter(10),
             }}
@@ -216,6 +232,8 @@ const mapStateToProps = state => {
   console.log('state from task entry page ....', state);
   return {
     taskList: state.products.taskList,
+    taskListFilter: state.products.taskListFilter,
+    stepInfo: state.products.StepInfo[0],
   };
 };
 
@@ -234,6 +252,21 @@ const mapDispatchToProps = dispatch => ({
         calledFrom,
         onSuccesscallback,
         onErrorcallback,
+      ),
+    ),
+
+  getEventBasedTaskList: (
+    FormKey,
+    StepKey,
+    onSuccesscallback,
+    onErrocallback,
+  ) =>
+    dispatch(
+      getEventBasedTaskList(
+        FormKey,
+        StepKey,
+        onSuccesscallback,
+        onErrocallback,
       ),
     ),
 });

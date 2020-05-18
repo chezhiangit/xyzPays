@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     // borderColor: 'red',
     marginLeft: widthAdapter(40),
     marginRight: widthAdapter(40),
-    paddingTop: heightAdapter(20),
+    paddingTop: heightAdapter(40),
     marginBottom: widthAdapter(175),
   },
   totalAddRow: {
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
   },
   btnStyle: {
     height: heightAdapter(60),
-    width: widthAdapter(250),
+    // width: widthAdapter(250),
     fontSize: fontscale(12),
   },
 });
