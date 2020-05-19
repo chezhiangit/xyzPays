@@ -49,6 +49,7 @@ class PayoutHistory extends React.Component {
       showDlg: false,
       dlgMsg: '',
       isLoading: false,
+      selectedPayoutItemIndex: -1,
     };
     this.translate = new Animated.Value(0);
   }
@@ -175,41 +176,125 @@ class PayoutHistory extends React.Component {
     </TouchableWithoutFeedback>
   );
 
+  renderPayoutHistoryItemDetails = (item, index) => {
+    return (
+      <View style={styles.mainContainer}>
+        <View style={styles.topContainer}>
+          <View style={styles.leftViewContainer}>
+            <View style={styles.productView}>
+              <View style={styles.dotWithTick}>
+                <Text>
+                  <Icon
+                    name="check-circle"
+                    size={fontscale(20)}
+                    color={Colors.primaryAppColor}
+                  />
+                </Text>
+              </View>
+              <Text style={styles.productNameTxt}>{item.ProductName}</Text>
+            </View>
+            <View style={styles.amountStatusContainer}>
+              <Text style={styles.amount}>{I18n.t('trending.amount')} </Text>
+              <Text style={styles.amount}>
+                {I18n.t('trending.currencySymbol')}
+              </Text>
+              <Text style={styles.amount}>{item.ComAmount}</Text>
+            </View>
+            <View style={styles.skuContainer}>
+              <Text style={styles.skuLabel}>SKU: </Text>
+    <Text style={styles.skuLabel}>{item.SKU}</Text>
+            </View>
+          </View>
+          <View style={styles.rightViewContainer}>
+            <Image
+              source={{
+                isStatic: true,
+                uri: item.ProductPicture,
+                method: 'GET',
+                // headers: {
+                //   clubId: NetTool.clubId,
+                //   'Ocp-Apim-Subscription-Key': NetTool.subscriptionKey,
+                // },
+              }}
+              style={styles.trendingImage}
+            />
+          </View>
+        </View>
+        <View style={styles.transMessageContainer}>
+          <Text style={styles.transMessage}>
+            Txn Message: {item.TxnMessage}
+          </Text>
+        </View>
+      </View>
+    );
+  };
+
+  onPayoutItemSelected = index => {
+    if (this.state.selectedPayoutItemIndex === index) {
+      this.setState({selectedPayoutItemIndex: -1});
+    } else {
+      this.setState({selectedPayoutItemIndex: index});
+    }
+  };
+
   renderPayoutCard = ({item, index}) => {
     return (
-      <View style={styles.payoutItemContainer}>
-        <View style={styles.payoutStatusRow}>
-          <View style={styles.payoutLeftView}>
-            <Text style={styles.payoutStatusLabel}>
-              {I18n.t('payoutHistory.payoutStatus')}{' '}
-            </Text>
-            <Text style={styles.payoutStatus}>{item.PayoutStatus}</Text>
-          </View>
-          <View style={styles.payoutRightView}>
-            <Text style={[styles.payoutStatusLabel, {color: 'green'}]}>$</Text>
-          </View>
-        </View>
-        <View style={styles.dateTimeAmountRow}>
-          <View style={styles.payoutLeftView}>
-            <View style={styles.dateRow}>
-              {/* <Image style={styles.imageStyle} source={''} /> */}
-              <Text>
-                <Icon name="calendar" size={fontscale(12)} color={'gray'} />
-              </Text>
-              <Text style={styles.dateTimeTxt}>{item.PayoutDate}</Text>
+      <View>
+        <TouchableOpacity onPress={() => this.onPayoutItemSelected(index)}>
+          <View style={styles.payoutItemContainer}>
+            <View style={styles.payoutStatusRow}>
+              <View style={styles.payoutLeftView}>
+                <Text style={styles.payoutStatusLabel}>
+                  {I18n.t('payoutHistory.payoutStatus')}{' '}
+                </Text>
+                <Text style={styles.payoutStatus}>{item.PayoutStatus}</Text>
+              </View>
+              <View style={styles.payoutRightView}>
+                <Text style={[styles.payoutStatusLabel, {color: 'green'}]}>
+                  $
+                </Text>
+              </View>
             </View>
-            <View style={[styles.dateRow, {marginLeft: widthAdapter(30)}]}>
-              {/* <Image style={styles.imageStyle} source={''} /> */}
-              <Text>
-                <Icon name="clock-o" size={fontscale(12)} color={'gray'} />
-              </Text>
-              <Text style={styles.dateTimeTxt}>{item.PayoutTime}</Text>
+            <View style={styles.dateTimeAmountRow}>
+              <View style={styles.payoutLeftView}>
+                <View style={styles.dateRow}>
+                  {/* <Image style={styles.imageStyle} source={''} /> */}
+                  <Text>
+                    <Icon name="calendar" size={fontscale(12)} color={'gray'} />
+                  </Text>
+                  <Text style={styles.dateTimeTxt}>{item.PayoutDate}</Text>
+                </View>
+                <View style={[styles.dateRow, {marginLeft: widthAdapter(30)}]}>
+                  {/* <Image style={styles.imageStyle} source={''} /> */}
+                  <Text>
+                    <Icon name="clock-o" size={fontscale(12)} color={'gray'} />
+                  </Text>
+                  <Text style={styles.dateTimeTxt}>{item.PayoutTime}</Text>
+                </View>
+              </View>
+              <View style={styles.payoutRightView}>
+                <Text style={styles.payoutStatusLabel}>
+                  {item.PayoutAmount}
+                </Text>
+              </View>
             </View>
           </View>
-          <View style={styles.payoutRightView}>
-            <Text style={styles.payoutStatusLabel}>{item.PayoutAmount}</Text>
+        </TouchableOpacity>
+
+        {this.state.selectedPayoutItemIndex === index && (
+          <View style={styles.payoutItemDetails}>
+            {item.PayoutProducts.map(
+            this.renderPayoutHistoryItemDetails)}
+            <View style={styles.payoutItemDetailsTotalView}>
+              <Text style={styles.payoutItemDetailsTotal}>
+              Total Amount:{' '}
+              </Text>
+              <Text style={styles.payoutItemDetailsTotalAmount}>
+                25.00
+              </Text>
+            </View>
           </View>
-        </View>
+        )}
       </View>
     );
   };
