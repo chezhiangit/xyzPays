@@ -99,7 +99,7 @@ class ReferAndEarn extends React.Component {
       <View style={[BaseStyles.baseContainer]}>
         <ScrollView style={styles.scrollContainer}>
           {/* <View style={BaseStyles.emptyHView} /> */}
-          <View style={styles.userInfo}>
+          <View style={BaseStyles.userInfo}>
             <Text style={styles.userInfoTxt}>
               {I18n.t('referAndEarn.userInfo')}
             </Text>

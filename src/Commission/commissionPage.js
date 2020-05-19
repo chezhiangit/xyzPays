@@ -26,142 +26,6 @@ import WarningDialog from '../common/UIComponents/warningDialog';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import SliderView from '../common/UIComponents/SliderView';
 
-const commission = [
-  {
-    commissionName: 'Customer Lead',
-    Amount: '6.00',
-    Status: 'Paid',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Customer Lead',
-    Amount: '6.00',
-    Status: 'Paid',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Customer Lead',
-    Amount: '6.00',
-    Status: 'Paid',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Customer Lead',
-    Amount: '6.00',
-    Status: 'Paid',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Customer Lead',
-    Amount: '6.00',
-    Status: 'Approved',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Customer Lead',
-    Amount: '6.00',
-    Status: 'Pending',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Appoinment confirmation',
-    Amount: '6.00',
-    Status: 'Denied',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Customer Lead',
-    Amount: '6.00',
-    Status: 'Approved',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Vonage',
-    Amount: '6.00',
-    Status: 'Pending',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Customer Lead',
-    Amount: '6.00',
-    Status: 'Paid',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Customer Lead',
-    Amount: '6.00',
-    Status: 'Paid',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Appoinment confirmation',
-    Amount: '6.00',
-    Status: 'Paid',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Customer Lead',
-    Amount: '6.00',
-    Status: 'Paid',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Appoinment confirmation',
-    Amount: '6.00',
-    Status: 'Approved',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Vonage',
-    Amount: '6.00',
-    Status: 'Pending',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Vonage',
-    Amount: '6.00',
-    Status: 'Denied',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Vonage',
-    Amount: '6.00',
-    Status: 'Approved',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-  {
-    commissionName: 'Appoinment confirmation',
-    Amount: '6.00',
-    Status: 'Pending',
-    PaymentDate: new Date(),
-    AccountNo: 'xxxxxxxx567',
-  },
-];
-// const segmentationData = [
-//   I18n.t('commission.dropdownAll'),
-//   I18n.t('commission.dropdown7Days'),
-//   I18n.t('commission.dropdownLast2Weeks'),
-//   I18n.t('commission.dropdownLast3Weeks'),
-//   I18n.t('commission.dropdownLast1Month'),
-//   I18n.t('commission.dropdownLast3Months'),
-// ];
 class CommissionPage extends React.Component {
   constructor(props) {
     super(props);
@@ -191,20 +55,22 @@ class CommissionPage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getDateFilter(
-      this.onGetDateFilterSuccess,
-      this.onGetDateFilterFailed,
-    );
-    const payload = {
-      SelectedDateRange: 4,
-      TxnStatusType: '',
-    };
-    this.props.getCommissionList(
-      payload.SelectedDateRange,
-      payload.TxnStatusType,
-      this.onGetCommissionLisSuccess,
-      this.onGetCommissionLisFailed,
-    );
+    this.props.navigation.addListener('focus', () => {
+      this.props.getDateFilter(
+        this.onGetDateFilterSuccess,
+        this.onGetDateFilterFailed,
+      );
+      const payload = {
+        SelectedDateRange: 4,
+        TxnStatusType: '',
+      };
+      this.props.getCommissionList(
+        payload.SelectedDateRange,
+        payload.TxnStatusType,
+        this.onGetCommissionLisSuccess,
+        this.onGetCommissionLisFailed,
+      );
+    });
   }
 
   onGetDateFilterSuccess = () => {

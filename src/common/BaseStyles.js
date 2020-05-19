@@ -23,9 +23,11 @@ export default StyleSheet.create({
   },
   userInfo: {
     width: '100%',
-    height: heightAdapter(150),
+    // height: heightAdapter(150),
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: heightAdapter(50),
+    marginTop: heightAdapter(50),
   },
   userInfoTxt: {
     fontSize: fontscale(24),

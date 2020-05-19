@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: widthAdapter(40),
     marginRight: widthAdapter(40),
-    paddingTop: heightAdapter(50),
+    // paddingTop: heightAdapter(50),
   },
   dropdownAndFilterContainer: {
     flexDirection: 'row',

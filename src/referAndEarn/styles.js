@@ -14,11 +14,11 @@ export default StyleSheet.create({
     flexDirection: 'column',
     marginLeft: widthAdapter(40),
     marginRight: widthAdapter(40),
-    paddingTop: heightAdapter(50),
+    // paddingTop: heightAdapter(50),
   },
   userInfo: {
     width: '100%',
-    height: heightAdapter(150),
+    // height: heightAdapter(150),
     alignItems: 'center',
     justifyContent: 'center',
   },
