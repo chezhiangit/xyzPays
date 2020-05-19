@@ -40,22 +40,24 @@ class CommissionPage extends React.Component {
       dlgMsg: '',
       showFilter: false,
       selectedFilterIndex: 4, // All
+      isLoading: false,
     };
     // this.show=false;
     this.translate = new Animated.Value(0);
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (!state.dateFilterServiceDone || state.commissionListServiceDone) {
-      return {
-        isLoading: true,
-      };
-    }
+    // if (!state.dateFilterServiceDone || state.commissionListServiceDone) {
+    //   return {
+    //     isLoading: true,
+    //   };
+    // }
     return {};
   }
 
   componentDidMount() {
     this.props.navigation.addListener('focus', () => {
+      this.setState({isLoading: true});
       this.props.getDateFilter(
         this.onGetDateFilterSuccess,
         this.onGetDateFilterFailed,
@@ -133,6 +135,7 @@ class CommissionPage extends React.Component {
         selectedDateRangeValue: item.Text,
         selectedDateRangeIndex: index,
         commissionListServiceDone: true,
+        isLoading: true,
       },
       () => this.getCommissionListData(),
     );
@@ -232,7 +235,7 @@ class CommissionPage extends React.Component {
 
   onFilterSelected = selectedFilterIndex => {
     this.setState(
-      {selectedFilterIndex, showFilter: false, commissionListServiceDone: true},
+      {selectedFilterIndex, showFilter: false, commissionListServiceDone: true, isLoading: true},
       () => this.getCommissionListData(),
     );
   };
@@ -396,9 +399,6 @@ class CommissionPage extends React.Component {
               style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
             />
             <View style={styles.sliderBtnContainer}>
-              {/* <Text>
-                <Icon name="window-close" size={25} color="black" />
-              </Text> */}
               <PrimaryButton
                 btnStyle={styles.sliderBtnStyle}
                 onSubmit={() => this.onFilterSelected(5)}
@@ -406,9 +406,6 @@ class CommissionPage extends React.Component {
                 btnTexStyle={styles.sliderBtnTxtStyle}
               />
             </View>
-            {/* <View
-              style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
-            /> */}
           </View>
         </SliderView>
       </View>

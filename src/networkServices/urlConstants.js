@@ -63,4 +63,8 @@ export default {
   loadLastFiveTransactions: 'api/EventBased/LoadLastFiveTransactions?AccessToken=',
   getTxnDetail: 'api/Transation/GetTxnDetail?AccessToken=',
   getTxnHistory: 'api/Transation/GetTxnHistory?AccessToken=',
+
+  transferToPaypal: 'api/Payout/TransferToPaypal',
+
+  addRemoveFromWishList: 'api/Product/AddRemoveFromWishList',
 };

@@ -1,7 +1,13 @@
 import {takeLatest, call, put, select} from 'redux-saga/effects';
-import {SAGA_GET_TRENDING_PRODUCTS} from '../AppStore/ActionTypes';
+import {
+  SAGA_GET_TRENDING_PRODUCTS,
+  SAGA_ADD_REMOVE_FROM_WISH_LIST,
+} from '../AppStore/ActionTypes';
 import {storeTrendingProductsList} from './SagaActions';
-import {getTrendingProductsService} from '../networkServices/trendingProductsServices/trendingProductsService';
+import {
+  getTrendingProductsService,
+  addRemoveFromWishListService,
+} from '../networkServices/trendingProductsServices/trendingProductsService';
 
 const getAccessToken = state => state.login.accessToken;
 
@@ -28,7 +34,28 @@ function* getTrendingProducts(action) {
   }
 }
 
+function* addRemoveFromWishList(action) {
+  try {
+    const accessToken = yield select(getAccessToken);
+    const payload = {...action.payload, AccessToken: accessToken};
+    console.log('saga addRemoveFromWishList payload.....', payload);
+    const response = yield call(addRemoveFromWishListService, payload);
+    console.log('saga addRemoveFromWishList api response...', response);
+    if (response !== null && response.status === 200) {
+      console.log('addRemoveFromWishList data ....', response);
+      console.log('addRemoveFromWishList saga action ....', action);
+      action.onSuccesscallback(response.Message);
+    } else if (response !== null) {
+      action.onErrorcallback(response.Message);
+    } else {
+      action.onErrorcallback('Unable to complete your request. Pls try again.');
+    }
+  } catch (error) {
+    action.onErrorcallback('Unable to complete your request. Pls try again.');
+  }
+}
+
 export default function* watchTrendingProductActions() {
   yield takeLatest(SAGA_GET_TRENDING_PRODUCTS, getTrendingProducts);
-  // yield takeLatest(SAGA_GET_COMMISSION_LIST, getCommissionListData);
+  yield takeLatest(SAGA_ADD_REMOVE_FROM_WISH_LIST, addRemoveFromWishList);
 }

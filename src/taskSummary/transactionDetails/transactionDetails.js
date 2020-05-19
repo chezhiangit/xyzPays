@@ -156,7 +156,7 @@ class TransactionDetails extends React.Component {
   );
 
   logRefresView = () => {
-    this.props.getTxnHistory(this.props.taskTransactionDetails[0].TxnKey);
+    this.props.getTxnHistory(this.props.taskTransactionDetails.TxnKey);
   };
 
   renderLogs = item => (
@@ -185,7 +185,9 @@ class TransactionDetails extends React.Component {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.scrollContainer}>
             {this.renderTopRow()}
-            {this.props.taskTransactionDetails.map(this.renderProductDetails)}
+            {this.props.taskTransactionDetails.map(
+              this.renderProductDetails,
+            )}
 
             <View style={styles.logRefresView}>
               <TouchableOpacity

@@ -34,4 +34,39 @@ const getTrendingProductsService = async accessToken => {
   }
 };
 
-export {getTrendingProductsService};
+const addRemoveFromWishListService = async payload => {
+  try {
+    const url = urlConstants.BaseUrl + urlConstants.addRemoveFromWishList;
+    const headersParams = {};
+    const paramsStr = JSON.stringify(payload);
+    headersParams['Content-Type'] = 'application/json';
+    console.log('addRemoveFromWishListService url ...', url);
+    console.log('addRemoveFromWishListService paramsStr ...', paramsStr);
+    console.log(
+      'addRemoveFromWishListService headersParams ...',
+      headersParams,
+    );
+
+    const response = await RNFetchBlob.config({timeout: TIMEOUT}).fetch(
+      'POST',
+      url,
+      headersParams,
+      paramsStr,
+    );
+    console.log('addRemoveFromWishListService response ...', response);
+    const result = response.json();
+    if (response.respInfo.status === 200) {
+      result.status = 200;
+      return result;
+    } else if (response.respInfo.status === 500) {
+      result.status = 500;
+      return result;
+    }
+    return null;
+  } catch (e) {
+    console.log('fetch addRemoveFromWishListService failed.', e);
+    return null;
+  }
+};
+
+export {getTrendingProductsService, addRemoveFromWishListService};

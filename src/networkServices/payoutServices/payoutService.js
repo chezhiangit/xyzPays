@@ -103,8 +103,42 @@ const getPayoutDetailsDataService = async AccessToken => {
   }
 };
 
+const transferToPaypalService = async payload => {
+  try {
+    const url = urlConstants.BaseUrl + urlConstants.transferToPaypal;
+    const headersParams = {};
+    const paramsStr = JSON.stringify(payload);
+    headersParams['Content-Type'] = 'application/json';
+    console.log('transferToPaypalService url ...', url);
+    console.log('transferToPaypalService paramsStr ...', paramsStr);
+    console.log('transferToPaypalService headersParams ...', headersParams);
+
+    const response = await RNFetchBlob.config({timeout: TIMEOUT}).fetch(
+      'POST',
+      url,
+      headersParams,
+      paramsStr,
+    );
+    console.log('transferToPaypalService response ...', response);
+    const result = response.json();
+    if (response.respInfo.status === 200) {
+      result.status = 200;
+      return result;
+    } else if (response.respInfo.status === 500) {
+      result.status = 500;
+      return result;
+    }
+    return null;
+  } catch (e) {
+    console.log('fetch transferToPaypalService failed.', e);
+    return null;
+    // throw new Error('User authentication failed.');
+  }
+};
+
 export {
   fetchDateFilterDataService,
   getPayoutHistoryDataService,
   getPayoutDetailsDataService,
+  transferToPaypalService,
 };

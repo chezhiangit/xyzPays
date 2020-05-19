@@ -2,11 +2,13 @@ import {takeLatest, call, put, select} from 'redux-saga/effects';
 import {
   SAGA_GET_PROFILE_INFO,
   SAGA_SAVE_PROFILE_INFO,
+  SAGA_ADD_REMOVE_FROM_WISH_LIST,
 } from '../AppStore/ActionTypes';
 import {storeProfileInfo} from './SagaActions';
 import {
   fetchProfileInfoService,
   saveProfileInfoService,
+  addRemoveFromWishListService,
 } from '../networkServices/profileServices/profileInfoService';
 import moment from 'moment';
 

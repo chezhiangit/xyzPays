@@ -1,6 +1,7 @@
 import {
   SAGA_GET_TRENDING_PRODUCTS,
   SAGA_GET_PRODUCT_DETAILS_DATA,
+  SAGA_ADD_REMOVE_FROM_WISH_LIST,
 } from './ActionTypes';
 
 const getTrendingProducts = (
@@ -25,4 +26,17 @@ const getProductDetailsData = (
   calledFrom,
 });
 
-export {getTrendingProducts, getProductDetailsData};
+const addRemoveFromWishList = (
+  payload,
+  onSuccesscallback = () => {},
+  onErrorcallback = () => {},
+) => ({
+  type: SAGA_ADD_REMOVE_FROM_WISH_LIST,
+  payload,
+  onSuccesscallback,
+  onErrorcallback,
+});
+
+
+
+export {getTrendingProducts, getProductDetailsData, addRemoveFromWishList};

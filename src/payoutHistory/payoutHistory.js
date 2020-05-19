@@ -32,6 +32,7 @@ import {
   getPayoutDateFilter,
   getPayoutHistoryList,
   getPayoutDetails,
+  transferToPaypal,
 } from '../AppStore/payoutActions';
 
 class PayoutHistory extends React.Component {
@@ -202,7 +203,7 @@ class PayoutHistory extends React.Component {
             </View>
             <View style={styles.skuContainer}>
               <Text style={styles.skuLabel}>SKU: </Text>
-    <Text style={styles.skuLabel}>{item.SKU}</Text>
+              <Text style={styles.skuLabel}>{item.SKU}</Text>
             </View>
           </View>
           <View style={styles.rightViewContainer}>
@@ -283,15 +284,10 @@ class PayoutHistory extends React.Component {
 
         {this.state.selectedPayoutItemIndex === index && (
           <View style={styles.payoutItemDetails}>
-            {item.PayoutProducts.map(
-            this.renderPayoutHistoryItemDetails)}
+            {item.PayoutProducts.map(this.renderPayoutHistoryItemDetails)}
             <View style={styles.payoutItemDetailsTotalView}>
-              <Text style={styles.payoutItemDetailsTotal}>
-              Total Amount:{' '}
-              </Text>
-              <Text style={styles.payoutItemDetailsTotalAmount}>
-                25.00
-              </Text>
+              <Text style={styles.payoutItemDetailsTotal}>Total Amount: </Text>
+              <Text style={styles.payoutItemDetailsTotalAmount}>25.00</Text>
             </View>
           </View>
         )}
@@ -305,6 +301,26 @@ class PayoutHistory extends React.Component {
 
   onConfirm = () => {
     this.setState({showDlg: false});
+  };
+
+  onTransferMoney = () => {
+    this.setState({isLoading: true});
+    this.props.transferToPaypal(
+      this.onTransferToPaypalSuccess,
+      this.onTransferToPapalFailed,
+    );
+  };
+
+  onTransferToPaypalSuccess = () => {
+    this.setState({isLoading: false});
+  };
+
+  onTransferToPapalFailed = errorMsg => {
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: errorMsg,
+    });
   };
 
   render() {
@@ -343,7 +359,7 @@ class PayoutHistory extends React.Component {
               />
               <PrimaryButton
                 btnStyle={styles.transferBtn}
-                onSubmit={this.onPressTaskButton}
+                onSubmit={this.onTransferMoney}
                 btnName={I18n.t('payoutHistory.transferBtnName')}
               />
               {/* <View
@@ -442,6 +458,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
+  transferToPaypal: (onSuccesscallback, onErrocallback) =>
+    dispatch(transferToPaypal(onSuccesscallback, onErrocallback)),
   getPayoutDetails: (onSuccesscallback, onErrocallback) =>
     dispatch(getPayoutDetails(onSuccesscallback, onErrocallback)),
   getPayoutDateFilter: (onSuccesscallback, onErrocallback) =>

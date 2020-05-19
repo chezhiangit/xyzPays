@@ -13,17 +13,14 @@ import {connect} from 'react-redux';
 import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
 // import moment from 'moment';
-// import Spinner from 'react-native-loading-spinner-overlay';
+import Spinner from 'react-native-loading-spinner-overlay';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
 import {heightAdapter, fontscale, widthAdapter} from '../uttils/adapterUtil';
 // import Images from '../Assets/index';
-// import {
-//   getTrendingProducts,
-//   getProductDetailsData,
-// } from '../AppStore/trendingProductsActions';
-// import WarningDialog from '../common/UIComponents/warningDialog';
+import {addRemoveFromWishList} from '../AppStore/trendingProductsActions';
+import WarningDialog from '../common/UIComponents/warningDialog';
 // import Colors from '../uttils/Colors';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import ReadOnlyView from '../common/UIComponents/readOnlyView/ReadOnlyView';
@@ -48,6 +45,43 @@ class ProductDetailsPage extends React.Component {
       },
     );
   }
+
+  onClickWishList = () => {
+    this.setState({isLoading: true});
+    const payload = {
+      ProductKey: this.props.productDetails.ProductKey,
+      Action: this.props.productDetails?.IsInWishList === 0 ? 'ADD' : 'REMOVE',
+    };
+    this.props.addRemoveFromWishList(
+      payload,
+      this.onAddRemoveFromWishListSuccess,
+      this.onAddRemoveFromWishListFailed,
+    );
+  };
+
+  onAddRemoveFromWishListSuccess = msg => {
+    this.setState({
+      isLoading: false,
+      dlgMsg: msg,
+      showDlg: true,
+    });
+  };
+
+  onAddRemoveFromWishListFailed = errorMsg => {
+    this.setState({
+      isLoading: false,
+      dlgMsg: errorMsg,
+      showDlg: true,
+    });
+  };
+
+  onCancel = () => {
+    this.setState({showDlg: false});
+  };
+
+  onConfirm = () => {
+    this.setState({showDlg: false});
+  };
 
   render() {
     return (
@@ -101,7 +135,12 @@ class ProductDetailsPage extends React.Component {
           <PrimaryButton
             btnStyle={styles.addWishListBtn}
             btnTexStyle={styles.addWishListBtnText}
-            btnName={I18n.t('productDetails.wishBtnName')}
+            btnName={
+              this.props.productDetails?.IsInWishList === 0
+                ? I18n.t('productDetails.wishBtnAdd')
+                : I18n.t('productDetails.wishBtnRemove')
+            }
+            onSubmit={this.onClickWishList}
           />
           <View style={BaseStyles.emptyHView} />
           <View style={styles.productInfoContainer}>
@@ -178,6 +217,13 @@ class ProductDetailsPage extends React.Component {
           </View>
         </View>
         <Footer />
+        <WarningDialog
+          shouldShowDeleteWarning={this.state.showDlg}
+          // onCancel={this.onCancel}
+          onOK={this.onConfirm}
+          dlgMsg={this.state.dlgMsg}
+        />
+        <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
       </View>
     );
   }
@@ -193,10 +239,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   // getTrendingProducts: (onSuccesscallback, onErrorcallback) =>
   //   dispatch(getTrendingProducts(onSuccesscallback, onErrorcallback)),
-  // getProductDetailsData: (ProductKey, onSuccesscallback, onErrorcallback) =>
-  //   dispatch(
-  //     getProductDetailsData(ProductKey, onSuccesscallback, onErrorcallback),
-  //   ),
+  addRemoveFromWishList: (payload, onSuccesscallback, onErrorcallback) =>
+    dispatch(
+      addRemoveFromWishList(payload, onSuccesscallback, onErrorcallback),
+    ),
 });
 
 export default connect(

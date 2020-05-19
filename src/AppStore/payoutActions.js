@@ -2,6 +2,7 @@ import {
   SAGA_GET_PAYOUT_DATE_FILTER,
   SAGA_GET_PAYOUT_HISTORY_LIST,
   SAGA_GET_PAYOUT_DETAILS,
+  SAGA_POST_TRANSFER_MONEY_TO_PAYPAL,
 } from './ActionTypes';
 
 const getPayoutDateFilter = (
@@ -33,4 +34,18 @@ const getPayoutDetails = (
   onErrorcallback,
 });
 
-export {getPayoutDateFilter, getPayoutHistoryList, getPayoutDetails};
+const transferToPaypal = (
+  onSuccesscallback = () => {},
+  onErrorcallback = () => {},
+) => ({
+  type: SAGA_POST_TRANSFER_MONEY_TO_PAYPAL,
+  onSuccesscallback,
+  onErrorcallback,
+});
+
+export {
+  getPayoutDateFilter,
+  getPayoutHistoryList,
+  getPayoutDetails,
+  transferToPaypal,
+};

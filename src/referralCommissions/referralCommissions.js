@@ -35,8 +35,8 @@ class ReferralCommissions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedValue: '',
-      selectedIndex: 4,
+      selectedDateFilterValue: '',
+      selectedDateFilterIndex: 4,
       isSegmentVisible: false,
       commissionData: [],
       segmentBorder: 0,
@@ -44,7 +44,7 @@ class ReferralCommissions extends React.Component {
       dlgMsg: '',
       isLoading: false,
       showFilter: false,
-      selectedFilterIndex: 0,
+      selectedStatusFilterIndex: 0,
     };
     // this.show=false;
     this.translate = new Animated.Value(0);
@@ -93,13 +93,13 @@ class ReferralCommissions extends React.Component {
   onSegmentItemSelected = (item, index) => {
     this.toggleDropdown(false);
     this.setState({
-      selectedValue: this.props.dateFilter[index].Text,
-      selectedIndex: index,
+      selectedDateFilterValue: this.props.dateFilter[index].Text,
+      selectedDateFilterIndex: index,
       isLoading: true,
     });
     this.props.getReferralCommissionList(
       index,
-      this.state.selectedFilterIndex,
+      this.state.selectedStatusFilterIndex,
       this.onReferralCommissionSuccess,
       this.onReferralCommissionFailed,
     );
@@ -243,7 +243,7 @@ class ReferralCommissions extends React.Component {
 
   onDateFilterSuccess = () => {
     console.log('onDateFilterSuccess success');
-    // this.setState({isLoading: false});
+    this.setState({selectedDateFilterValue: this.props.dateFilter[this.state.selectedDateFilterIndex].Text,});
     this.props.getReferralCommissionList(
       4,
       0,
@@ -262,18 +262,18 @@ class ReferralCommissions extends React.Component {
     console.log(errorMsg);
   };
 
-  onFilterSelected = selectedFilterIndex => {
+  onFilterSelected = selectedStatusFilterIndex => {
     this.setState(
       {
-        selectedFilterIndex,
+        selectedStatusFilterIndex,
         showFilter: false,
         // commissionListServiceDone: true,
         isLoading: true,
       },
       () =>
         this.props.getReferralCommissionList(
-          this.state.selectedIndex,
-          selectedFilterIndex,
+          this.state.selectedDateFilterIndex,
+          selectedStatusFilterIndex,
           this.onReferralCommissionSuccess,
           this.onReferralCommissionFailed,
         ),
@@ -311,7 +311,7 @@ class ReferralCommissions extends React.Component {
                       />
                     </Text>
                     <Text style={styles.selectedValue}>
-                      {this.state.selectedValue}
+                      {this.state.selectedDateFilterValue}
                     </Text>
                   </View>
                   <View>
