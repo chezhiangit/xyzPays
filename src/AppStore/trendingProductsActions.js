@@ -37,6 +37,4 @@ const addRemoveFromWishList = (
   onErrorcallback,
 });
 
-
-
 export {getTrendingProducts, getProductDetailsData, addRemoveFromWishList};

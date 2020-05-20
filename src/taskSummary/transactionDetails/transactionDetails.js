@@ -202,7 +202,7 @@ class TransactionDetails extends React.Component {
               </TouchableOpacity>
             </View>
 
-            {this.props.taskTransactionHistory.map(this.renderLogs)}
+            {this.props.taskTransactionHistory?.map(this.renderLogs)}
           </View>
         </ScrollView>
         <Footer />

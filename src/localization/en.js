@@ -230,7 +230,7 @@ export default {
     group: 'Group',
     prodStatus: 'Status',
     wishBtnAdd: 'ADD TO WISH LIST',
-    wishBtnRemove: 'REMOVE TO WISH LIST',
+    wishBtnRemove: 'REMOVE FROM WISH LIST',
   },
   userVerification: {
     headerTitleEmail: 'Email Verification',

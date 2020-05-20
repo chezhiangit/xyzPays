@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     // borderColor: 'blue',
     // borderWidth: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
   roundBtnView: {
     alignItems: 'center',

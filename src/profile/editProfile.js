@@ -21,11 +21,15 @@ import TextInputComponent from '../common/UIComponents/TextInputComponent';
 // import PasswordInputComponent from '../common/UIComponents/PasswordInputComponent';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import EmailInputComponent from '../common/UIComponents/EmailInputComponent';
-import ReadOnlyView from '../common/UIComponents/readOnlyView/ReadOnlyView';
-import CheckBoxComponent from '../common/UIComponents/CheckBox/CheckBox';
+// import ReadOnlyView from '../common/UIComponents/readOnlyView/ReadOnlyView';
+// import CheckBoxComponent from '../common/UIComponents/CheckBox/CheckBox';
 import styles from './styles';
 import editStyles from './editProfileStyle';
-import {getProfileInfo, saveProfileInfo} from '../AppStore/profileActions';
+import {
+  getProfileInfo,
+  saveProfileInfo,
+  addProfilePicture,
+} from '../AppStore/profileActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
 // import {displayPhoneNumber} from '../uttils/UtilityFunctions';
 import SliderView from '../common/UIComponents/SliderView';
@@ -68,6 +72,7 @@ class EditProfilePage extends React.Component {
       showPhotoSelectionView: false,
 
       profileImageUri: '',
+      croppedBase64: '',
     };
   }
 
@@ -239,9 +244,19 @@ class EditProfilePage extends React.Component {
       showsSelectedCount: true,
       showCropGuidelines: true,
       cropperChooseText: 'Save',
+      includeBase64: true,
     }).then(imageCroped => {
       console.log('imageCropped', imageCroped);
-      this.setState({profileImageUri: imageCroped.path});
+      this.setState({
+        profileImageUri: imageCroped.path,
+        croppedBase64: imageCroped.data,
+      });
+      const payload = {
+        FileName: imageCroped.filename,
+        intArray: [imageCroped.data],
+        ContentType: imageCroped.mime,
+      };
+      this.props.addProfilePicture(payload);
     });
   };
 
@@ -530,6 +545,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(getProfileInfo(onSuccesscallback, onErrorcallback)),
   saveProfileInfo: (payload, onSuccesscallback, onErrorcallback) =>
     dispatch(saveProfileInfo(payload, onSuccesscallback, onErrorcallback)),
+
+  addProfilePicture: (payload, onSuccesscallback, onErrorcallback) =>
+    dispatch(addProfilePicture(payload, onSuccesscallback, onErrorcallback)),
 });
 
 export default connect(

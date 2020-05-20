@@ -68,4 +68,40 @@ const saveProfileInfoService = async payload => {
   }
 };
 
-export {fetchProfileInfoService, saveProfileInfoService};
+const addProfilePictureService = async payload => {
+  try {
+    const url = urlConstants.BaseUrl + urlConstants.addProfilePicture;
+    const headersParams = {};
+    const paramsStr = JSON.stringify(payload);
+    headersParams['Content-Type'] = 'application/json';
+    console.log('addProfilePicture url ...', url);
+    console.log('addProfilePicture paramsStr ...', paramsStr);
+    console.log('addProfilePicture headersParams ...', headersParams);
+
+    const response = await RNFetchBlob.config({timeout: TIMEOUT}).fetch(
+      'POST',
+      url,
+      headersParams,
+      paramsStr,
+    );
+    console.log('addProfilePicture response ...', response);
+    const result = response.json();
+    if (response.respInfo.status === 200) {
+      result.status = 200;
+      return result;
+    } else if (response.respInfo.status === 500) {
+      result.status = 500;
+      return result;
+    }
+    return null;
+  } catch (e) {
+    console.log('fetch addProfilePicture failed.', e);
+    return null;
+  }
+};
+
+export {
+  fetchProfileInfoService,
+  saveProfileInfoService,
+  addProfilePictureService,
+};

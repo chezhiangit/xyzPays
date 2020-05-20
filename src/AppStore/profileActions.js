@@ -1,4 +1,8 @@
-import {SAGA_GET_PROFILE_INFO, SAGA_SAVE_PROFILE_INFO} from './ActionTypes';
+import {
+  SAGA_GET_PROFILE_INFO,
+  SAGA_SAVE_PROFILE_INFO,
+  SAGA_ADD_PROFILE_PICTURE,
+} from './ActionTypes';
 
 const getProfileInfo = (
   onSuccesscallback = () => {},
@@ -20,4 +24,15 @@ const saveProfileInfo = (
   onErrorcallback,
 });
 
-export {getProfileInfo, saveProfileInfo};
+const addProfilePicture = (
+  payload,
+  onSuccesscallback = () => {},
+  onErrorcallback = () => {},
+) => ({
+  type: SAGA_ADD_PROFILE_PICTURE,
+  payload,
+  onSuccesscallback,
+  onErrorcallback,
+});
+
+export {getProfileInfo, saveProfileInfo, addProfilePicture};

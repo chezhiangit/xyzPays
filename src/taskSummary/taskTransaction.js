@@ -150,6 +150,7 @@ class TaskTransactionList extends React.Component {
         {/* <ScrollView showsVerticalScrollIndicator={false}> */}
         <View style={styles.scrollContainer}>
           <Dropdown
+            // value
             label={'Select'}
             data={this.props.taskListFilter?.map(this.parseFilterItems)}
             dropdownOffset={{

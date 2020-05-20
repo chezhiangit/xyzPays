@@ -6,7 +6,8 @@ const TIMEOUT = 30000;
 
 const getTrendingProductsService = async accessToken => {
   try {
-    const url = urlConstants.BaseUrl + urlConstants.getTrendingProducts + accessToken;
+    const url =
+      urlConstants.BaseUrl + urlConstants.getTrendingProducts + accessToken;
     const headersParams = {};
     headersParams['Content-Type'] = 'application/json';
     console.log('getTrendingProductsService url ...', url);

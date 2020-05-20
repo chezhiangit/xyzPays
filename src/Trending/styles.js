@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
   addWishListBtn: {
     borderWidth: 1,
     borderColor: '#ccc',
-    width: widthAdapter(300),
+    // width: widthAdapter(300),
     height: heightAdapter(75),
     borderRadius: heightAdapter(5),
     backgroundColor: '#fff',
@@ -199,6 +199,8 @@ const styles = StyleSheet.create({
     color: '#333',
     fontSize: fontscale(13),
     fontFamily: fontFamily.primaryFontFamily,
+    marginLeft: widthAdapter(10),
+    marginRight: widthAdapter(10),
   },
   labelContainer: {
     flexDirection: 'row',

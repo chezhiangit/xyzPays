@@ -3,7 +3,7 @@ import {
   SAGA_GET_TRENDING_PRODUCTS,
   SAGA_ADD_REMOVE_FROM_WISH_LIST,
 } from '../AppStore/ActionTypes';
-import {storeTrendingProductsList} from './SagaActions';
+import {storeTrendingProductsList, storeWishListStatus} from './SagaActions';
 import {
   getTrendingProductsService,
   addRemoveFromWishListService,
@@ -42,8 +42,10 @@ function* addRemoveFromWishList(action) {
     const response = yield call(addRemoveFromWishListService, payload);
     console.log('saga addRemoveFromWishList api response...', response);
     if (response !== null && response.status === 200) {
+      const status = response.Action;
       console.log('addRemoveFromWishList data ....', response);
       console.log('addRemoveFromWishList saga action ....', action);
+      yield put(storeWishListStatus(status));
       action.onSuccesscallback(response.Message);
     } else if (response !== null) {
       action.onErrorcallback(response.Message);

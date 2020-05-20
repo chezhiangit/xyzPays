@@ -67,4 +67,6 @@ export default {
   transferToPaypal: 'api/Payout/TransferToPaypal',
 
   addRemoveFromWishList: 'api/Product/AddRemoveFromWishList',
+
+  addProfilePicture: 'api/Profile/AddProfilePicture',
 };

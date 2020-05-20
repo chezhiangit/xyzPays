@@ -2,15 +2,15 @@ import {takeLatest, call, put, select} from 'redux-saga/effects';
 import {
   SAGA_GET_PROFILE_INFO,
   SAGA_SAVE_PROFILE_INFO,
-  SAGA_ADD_REMOVE_FROM_WISH_LIST,
+  SAGA_ADD_PROFILE_PICTURE,
 } from '../AppStore/ActionTypes';
 import {storeProfileInfo} from './SagaActions';
 import {
   fetchProfileInfoService,
   saveProfileInfoService,
-  addRemoveFromWishListService,
+  addProfilePictureService,
 } from '../networkServices/profileServices/profileInfoService';
-import moment from 'moment';
+// import moment from 'moment';
 
 const getAccessToken = state => state.login.accessToken;
 
@@ -87,7 +87,31 @@ function* saveProfileInfo(action) {
   }
 }
 
+function* addProfilePicture(action) {
+  try {
+    const accessToken = yield select(getAccessToken);
+    const payload = {...action.payload, AccessToken: accessToken};
+    console.log('saga addProfilePicture payload.....', payload);
+    const response = yield call(addProfilePictureService, payload);
+    console.log('saga addRemoveFromWishList api response...', response);
+    if (response !== null && response.status === 200) {
+      // const status = response.Action;
+      console.log('addProfilePicture data ....', response);
+      console.log('addProfilePicture saga action ....', action);
+      // yield put(storeWishListStatus(status));
+      action.onSuccesscallback(response.Message);
+    } else if (response !== null) {
+      action.onErrorcallback(response.Message);
+    } else {
+      action.onErrorcallback('Unable to complete your request. Pls try again.');
+    }
+  } catch (error) {
+    action.onErrorcallback('Unable to complete your request. Pls try again.');
+  }
+}
+
 export default function* watchProfileAction() {
   yield takeLatest(SAGA_GET_PROFILE_INFO, fetchProfileInfo);
   yield takeLatest(SAGA_SAVE_PROFILE_INFO, saveProfileInfo);
+  yield takeLatest(SAGA_ADD_PROFILE_PICTURE, addProfilePicture);
 }

@@ -36,6 +36,7 @@ import {
   STORE_LAST_FIVE_TRANSACTIONS,
   STORE_TASK_TRANSACTION_DETAILS,
   STORE_TASK_TRANSACTION_HISTORY,
+  STORE_WISHLIST_STATUS,
 } from '../AppStore/ActionTypes';
 
 export const userLoginSuccess = ({
@@ -247,4 +248,9 @@ export const storeTxnDetail = taskTransactionDetails => ({
 export const storeTxnHistory = taskTransactionHistory => ({
   type: STORE_TASK_TRANSACTION_HISTORY,
   taskTransactionHistory,
+});
+
+export const storeWishListStatus = status => ({
+  type: STORE_WISHLIST_STATUS,
+  status,
 });

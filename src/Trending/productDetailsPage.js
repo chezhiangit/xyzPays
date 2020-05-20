@@ -50,7 +50,7 @@ class ProductDetailsPage extends React.Component {
     this.setState({isLoading: true});
     const payload = {
       ProductKey: this.props.productDetails.ProductKey,
-      Action: this.props.productDetails?.IsInWishList === 0 ? 'ADD' : 'REMOVE',
+      Action: this.props.productDetails?.IsInWishList === 0 ? '1' : '0',
     };
     this.props.addRemoveFromWishList(
       payload,
@@ -132,16 +132,18 @@ class ProductDetailsPage extends React.Component {
             />
           </View>
           <View style={BaseStyles.emptyHView} />
-          <PrimaryButton
-            btnStyle={styles.addWishListBtn}
-            btnTexStyle={styles.addWishListBtnText}
-            btnName={
-              this.props.productDetails?.IsInWishList === 0
-                ? I18n.t('productDetails.wishBtnAdd')
-                : I18n.t('productDetails.wishBtnRemove')
-            }
-            onSubmit={this.onClickWishList}
-          />
+          <View style={{flexDirection: 'row'}}>
+            <PrimaryButton
+              btnStyle={styles.addWishListBtn}
+              btnTexStyle={styles.addWishListBtnText}
+              btnName={
+                this.props.productDetails?.IsInWishList === 0
+                  ? I18n.t('productDetails.wishBtnAdd')
+                  : I18n.t('productDetails.wishBtnRemove')
+              }
+              onSubmit={this.onClickWishList}
+            />
+          </View>
           <View style={BaseStyles.emptyHView} />
           <View style={styles.productInfoContainer}>
             <View style={styles.labelContainer}>
