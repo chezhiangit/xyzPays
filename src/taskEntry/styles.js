@@ -139,6 +139,7 @@ const styles = StyleSheet.create({
   productImage: {
     height: heightAdapter(150),
     width: widthAdapter(200),
+    resizeMode: 'contain',
   },
 });
 

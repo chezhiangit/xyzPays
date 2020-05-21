@@ -301,6 +301,7 @@ export default StyleSheet.create({
   trendingImage: {
     height: heightAdapter(100),
     width: widthAdapter(150),
+    resizeMode: 'contain',
   },
   transMessageContainer: {
     width: widthAdapter(600),
