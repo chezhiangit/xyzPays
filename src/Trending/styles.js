@@ -42,8 +42,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   trendingImage: {
-    height: heightAdapter(100),
-    width: widthAdapter(100),
+    height: heightAdapter(200),
+    width: widthAdapter(200),
+    resizeMode: 'contain',
   },
   trendingProduct: {
     flexDirection: 'row',
@@ -186,6 +187,7 @@ const styles = StyleSheet.create({
   productImage: {
     height: heightAdapter(150),
     width: widthAdapter(200),
+    resizeMode: 'contain',
   },
   addWishListBtn: {
     borderWidth: 1,
