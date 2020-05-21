@@ -93,7 +93,7 @@ function* addProfilePicture(action) {
     const payload = {...action.payload, AccessToken: accessToken};
     console.log('saga addProfilePicture payload.....', payload);
     const response = yield call(addProfilePictureService, payload);
-    console.log('saga addRemoveFromWishList api response...', response);
+    console.log('saga addProfilePicture api response...', response);
     if (response !== null && response.status === 200) {
       // const status = response.Action;
       console.log('addProfilePicture data ....', response);

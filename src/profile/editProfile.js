@@ -253,7 +253,7 @@ class EditProfilePage extends React.Component {
       });
       const payload = {
         FileName: imageCroped.filename,
-        intArray: [imageCroped.data],
+        intArray: imageCroped.data,
         ContentType: imageCroped.mime,
       };
       this.props.addProfilePicture(payload);
