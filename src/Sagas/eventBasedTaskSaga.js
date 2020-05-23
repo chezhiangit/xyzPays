@@ -127,7 +127,8 @@ function* postCustomerDetails(action) {
       console.log('postTaskEntry saga action ....', action);
       action.onSuccesscallback(response.Message);
     } else if (response !== null) {
-      action.onErrorcallback(response.Message);
+      console.log(' saga postTaskEntry failed message....', response[0].Message);
+      action.onErrorcallback(response[0].Message);
     } else {
       action.onErrorcallback('Unable to complete your request. Pls try again.');
     }

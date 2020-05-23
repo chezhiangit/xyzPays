@@ -35,6 +35,10 @@ import {
   transferToPaypal,
 } from '../AppStore/payoutActions';
 
+const bgClore = {
+  backgroundColor: '#FF6600',
+};
+
 class PayoutHistory extends React.Component {
   constructor(props) {
     super(props);
@@ -53,6 +57,7 @@ class PayoutHistory extends React.Component {
       selectedPayoutItemIndex: -1,
     };
     this.translate = new Animated.Value(0);
+    this.totalAmount = 0;
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -171,13 +176,25 @@ class PayoutHistory extends React.Component {
   renderSegmentItem = ({item, index}) => (
     <TouchableWithoutFeedback
       onPress={() => this.onSegmentItemSelected(item, index)}>
-      <View style={styles.segmentItemRow}>
-        <Text style={styles.segmentItemText}>{item.Text}</Text>
+      <View
+        style={[
+          styles.segmentItemRow,
+          this.state.selectedIndex === index && bgClore,
+        ]}>
+        <Text
+          style={[
+            styles.segmentItemText,
+            this.state.selectedIndex === index && {color: 'white'},
+          ]}>
+          {item.Text}
+        </Text>
       </View>
     </TouchableWithoutFeedback>
   );
 
   renderPayoutHistoryItemDetails = (item, index) => {
+    this.totalAmount = this.totalAmount + Number(item.ComAmount);
+    console.log('renderPayoutHistoryItemDetails .....', item);
     return (
       <View style={styles.mainContainer}>
         <View style={styles.topContainer}>
@@ -195,14 +212,14 @@ class PayoutHistory extends React.Component {
               <Text style={styles.productNameTxt}>{item.ProductName}</Text>
             </View>
             <View style={styles.amountStatusContainer}>
-              <Text style={styles.amount}>{I18n.t('trending.amount')} </Text>
+              <Text style={styles.amount}>{I18n.t('trending.amount')}</Text>
               <Text style={styles.amount}>
                 {I18n.t('trending.currencySymbol')}
               </Text>
               <Text style={styles.amount}>{item.ComAmount}</Text>
             </View>
             <View style={styles.skuContainer}>
-              <Text style={styles.skuLabel}>SKU: </Text>
+              <Text style={styles.skuLabel}>{I18n.t('trending.sku')}</Text>
               <Text style={styles.skuLabel}>{item.SKU}</Text>
             </View>
           </View>
@@ -223,7 +240,7 @@ class PayoutHistory extends React.Component {
         </View>
         <View style={styles.transMessageContainer}>
           <Text style={styles.transMessage}>
-            Txn Message: {item.TxnMessage}
+            {I18n.t('trending.txnMessage')} {item.TxnMessage}
           </Text>
         </View>
       </View>
@@ -286,8 +303,12 @@ class PayoutHistory extends React.Component {
           <View style={styles.payoutItemDetails}>
             {item.PayoutProducts.map(this.renderPayoutHistoryItemDetails)}
             <View style={styles.payoutItemDetailsTotalView}>
-              <Text style={styles.payoutItemDetailsTotal}>Total Amount: </Text>
-              <Text style={styles.payoutItemDetailsTotalAmount}>25.00</Text>
+              <Text style={styles.payoutItemDetailsTotal}>
+                {I18n.t('payoutHistory.totalAmount')}{' '}
+              </Text>
+              <Text style={styles.payoutItemDetailsTotalAmount}>
+                ${this.totalAmount.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0]}
+              </Text>
             </View>
           </View>
         )}

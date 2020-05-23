@@ -28,6 +28,10 @@ import {
   getReferredUsersList,
 } from '../AppStore/referralActions';
 
+const bgClore = {
+  backgroundColor: '#FF6600',
+};
+
 class MyReferrals extends React.Component {
   constructor(props) {
     super(props);
@@ -58,12 +62,12 @@ class MyReferrals extends React.Component {
     } else if (state.selectedValue === '') {
       return {selectedValue: props.registrationStatus[0]?.Text};
     }
-    if (state.getUserListService === true && state.isLoading === false) {
-      return {
-        commissionData: props.userList.map(x => ({...x, Expand: false})),
-        getUserListService: false,
-      };
-    }
+    // if (state.getUserListService === true && state.isLoading === false) {
+    //   return {
+    //     commissionData: props.userList.map(x => ({...x, Expand: false})),
+    //     getUserListService: false,
+    //   };
+    // }
     return {};
   }
 
@@ -126,8 +130,18 @@ class MyReferrals extends React.Component {
   renderSegmentItem = ({item, index}) => (
     <TouchableWithoutFeedback
       onPress={() => this.onSegmentItemSelected(item, index)}>
-      <View style={styles.segmentItemRow}>
-        <Text style={styles.segmentItemText}>{item.Text}</Text>
+      <View
+        style={[
+          styles.segmentItemRow,
+          this.state.selectedIndex === index && bgClore,
+        ]}>
+        <Text
+          style={[
+            styles.segmentItemText,
+            this.state.selectedIndex === index && {color: 'white'},
+          ]}>
+          {item.Text}
+        </Text>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -135,6 +149,12 @@ class MyReferrals extends React.Component {
   onReferralUserListSuccess = () => {
     console.log('referral user list success');
     this.setState({isLoading: false});
+    const commissionData = this.props.userList.map(x => ({
+      ...x,
+      Expanded: false,
+    }));
+    console.log('commissionData ..........', commissionData);
+    this.setState({commissionData, currentIndex: -1});
   };
 
   onReferralUserListFailed = errorMsg => {
@@ -192,6 +212,7 @@ class MyReferrals extends React.Component {
   };
 
   toggleExpandCollapse = (show, index) => {
+    console.log('this.state.commissionData ....', this.state.commissionData);
     this.expandedViewHeight =
       this.state.commissionData[index].ReferralStatus === 'Registered'
         ? heightAdapter(400)

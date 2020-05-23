@@ -82,6 +82,8 @@ export default {
     confirmPasswordPlaceHolder: 'Confirm Password',
     pwdError: 'New Password and Confirm Password should be same.',
     step4next: 'Reset Password',
+    newPwdError: 'New Password can not be empty.',
+    confimPwdError: 'Confirm Password can not be empty',
   },
   commission: {
     headerTitle: 'Commissions',
@@ -110,6 +112,8 @@ export default {
     status: 'Status:',
     currencySymbol: '$',
     sales: 'Sales:',
+    txnMessage: 'Txn Message: ',
+    sku: 'SKU: ',
   },
   taskEntryPage: {
     headerTitle: 'Task Entry',
@@ -195,6 +199,9 @@ export default {
     payoutStatus: 'Payout Status:',
     notEnoughAmountTxt:
       'Cannot Tranfer To PayPal Account. Pending Amount is less than Minimum Withdraw Amount',
+    sku: 'SKU:',
+    txnMessage: 'Txn Message:',
+    totalAmount: 'Total Amount:',
   },
   faq: {
     headerTitle: 'FAQ',
@@ -263,6 +270,8 @@ export default {
     videlink: 'How to sell? Watch here!',
     viewAll: 'View All Entries',
     submitBtnName: 'Submit',
+    lead: 'Lead',
+    confirmedLead: 'Confirmed Lead',
   },
   TaskSummaryPage: {
     headerTitle: 'Lead Summary',

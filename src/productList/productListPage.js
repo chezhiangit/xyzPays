@@ -157,7 +157,7 @@ class ProductsListPage extends React.Component {
             <View style={styles.referEarnContainer}>
               <View style={styles.titleRow}>
                 <Text style={styles.titlTextRefer}>Refer</Text>
-                <Text style={styles.titlTextEarn}>{'& Earn'}</Text>
+                <Text style={styles.titlTextEarn}>{' & Earn'}</Text>
               </View>
               <View
                 style={[

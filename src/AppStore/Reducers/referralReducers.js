@@ -29,7 +29,7 @@ const referralReducer = (
     case STORE_REP_REFERRED_USERS_LIST:
       return {
         ...state,
-        userList: [...action.userList],
+        userList: Object.assign([], [...action.userList]),
       };
     case STORE_REFERRAL_COMMISSION_LIST:
       return {

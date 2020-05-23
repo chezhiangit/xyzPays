@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {connect} from 'react-redux';
 // import {SafeAreaView} from 'react-native-safe-area-context';

@@ -31,12 +31,16 @@ import {
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import SliderView from '../common/UIComponents/SliderView';
 
+const bgClore = {
+  backgroundColor: '#FF6600',
+};
+
 class ReferralCommissions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedDateFilterValue: '',
-      selectedDateFilterIndex: 4,
+      selectedDateFilterIndex: 0,
       isSegmentVisible: false,
       commissionData: [],
       segmentBorder: 0,
@@ -44,7 +48,7 @@ class ReferralCommissions extends React.Component {
       dlgMsg: '',
       isLoading: false,
       showFilter: false,
-      selectedStatusFilterIndex: 0,
+      selectedStatusFilterIndex: 4,
     };
     // this.show=false;
     this.translate = new Animated.Value(0);
@@ -107,8 +111,18 @@ class ReferralCommissions extends React.Component {
   renderSegmentItem = ({item, index}) => (
     <TouchableWithoutFeedback
       onPress={() => this.onSegmentItemSelected(item, index)}>
-      <View style={styles.segmentItemRow}>
-        <Text style={styles.segmentItemText}>{item.Text}</Text>
+      <View
+        style={[
+          styles.segmentItemRow,
+          this.state.selectedDateFilterIndex === index && bgClore,
+        ]}>
+        <Text
+          style={[
+            styles.segmentItemText,
+            this.state.selectedDateFilterIndex === index && {color: 'white'},
+          ]}>
+          {item.Text}
+        </Text>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -243,10 +257,14 @@ class ReferralCommissions extends React.Component {
 
   onDateFilterSuccess = () => {
     console.log('onDateFilterSuccess success');
-    this.setState({selectedDateFilterValue: this.props.dateFilter[this.state.selectedDateFilterIndex].Text,});
+    this.setState({
+      selectedDateFilterValue: this.props.dateFilter[
+        this.state.selectedDateFilterIndex
+      ].Text,
+    });
     this.props.getReferralCommissionList(
-      4,
-      0,
+      this.state.selectedDateFilterIndex,
+      this.state.selectedStatusFilterIndex,
       this.onReferralCommissionSuccess,
       this.onReferralCommissionFailed,
     );
@@ -387,12 +405,16 @@ class ReferralCommissions extends React.Component {
           height={heightAdapter(300)}
           width="100%">
           <View style={styles.sliderContainer}>
-            <View style={styles.sliderBtnContainer}>
-              {/* <Text>
-                <Icon name="camera" size={25} color="black" />
-              </Text> */}
+            <View
+              style={[
+                styles.sliderBtnContainer,
+                this.state.selectedStatusFilterIndex === 4 && bgClore,
+              ]}>
               <PrimaryButton
-                btnStyle={styles.sliderBtnStyle}
+                btnStyle={[
+                  styles.sliderBtnStyle,
+                  this.state.selectedStatusFilterIndex === 4 && bgClore,
+                ]}
                 onSubmit={() => this.onFilterSelected(4)}
                 btnName={I18n.t('commission.filterAll')}
                 btnTexStyle={styles.sliderBtnTxtStyle}
@@ -401,12 +423,16 @@ class ReferralCommissions extends React.Component {
             <View
               style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
             />
-            <View style={styles.sliderBtnContainer}>
-              {/* <Text>
-                <Icon name="camera" size={25} color="black" />
-              </Text> */}
+            <View
+              style={[
+                styles.sliderBtnContainer,
+                this.state.selectedStatusFilterIndex === 2 && bgClore,
+              ]}>
               <PrimaryButton
-                btnStyle={styles.sliderBtnStyle}
+                btnStyle={[
+                  styles.sliderBtnStyle,
+                  this.state.selectedStatusFilterIndex === 2 && bgClore,
+                ]}
                 onSubmit={() => this.onFilterSelected(2)}
                 btnName={I18n.t('commission.filterPaid')}
                 btnTexStyle={styles.sliderBtnTxtStyle}
@@ -415,12 +441,16 @@ class ReferralCommissions extends React.Component {
             <View
               style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
             />
-            <View style={styles.sliderBtnContainer}>
-              {/* <Text>
-                <Icon name="image" size={25} color="black" />
-              </Text> */}
+            <View
+              style={[
+                styles.sliderBtnContainer,
+                this.state.selectedStatusFilterIndex === 1 && bgClore,
+              ]}>
               <PrimaryButton
-                btnStyle={styles.sliderBtnStyle}
+                btnStyle={[
+                  styles.sliderBtnStyle,
+                  this.state.selectedStatusFilterIndex === 1 && bgClore,
+                ]}
                 onSubmit={() => this.onFilterSelected(1)}
                 btnName={I18n.t('commission.filterPending')}
                 btnTexStyle={styles.sliderBtnTxtStyle}
@@ -429,20 +459,21 @@ class ReferralCommissions extends React.Component {
             <View
               style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
             />
-            <View style={styles.sliderBtnContainer}>
-              {/* <Text>
-                <Icon name="window-close" size={25} color="black" />
-              </Text> */}
+            <View
+              style={[
+                styles.sliderBtnContainer,
+                this.state.selectedStatusFilterIndex === 5 && bgClore,
+              ]}>
               <PrimaryButton
-                btnStyle={styles.sliderBtnStyle}
+                btnStyle={[
+                  styles.sliderBtnStyle,
+                  this.state.selectedStatusFilterIndex === 5 && bgClore,
+                ]}
                 onSubmit={() => this.onFilterSelected(5)}
                 btnName={I18n.t('commission.filterDenied')}
                 btnTexStyle={styles.sliderBtnTxtStyle}
               />
             </View>
-            {/* <View
-              style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
-            /> */}
           </View>
         </SliderView>
         {/* {this.state.isSegmentVisible && (

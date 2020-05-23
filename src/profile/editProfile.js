@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
-  Animated,
   TouchableWithoutFeedback,
   NativeModules,
 } from 'react-native';

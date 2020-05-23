@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
-import {SafeAreaView} from 'react-native-safe-area-context';
+// import {SafeAreaView} from 'react-native-safe-area-context';
 import Spinner from 'react-native-loading-spinner-overlay';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
-import Header from '../common/UIComponents/Header';
+// import Header from '../common/UIComponents/Header';
 import Footer from '../common/UIComponents/Footer';
 import EmailInputComponent from '../common/UIComponents/EmailInputComponent';
 import PasswordInputComponent from '../common/UIComponents/PasswordInputComponent';

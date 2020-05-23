@@ -62,7 +62,7 @@ class TaskSummaryPage extends React.Component {
 
   onLeadBtnSelect = (item, index) => {
     console.log('onLeadBtnSelect ......', item);
-    this.setState({isLoading: true});
+    this.setState({isLoading: true, selectedStepName: item.StepName});
     this.props.getFilterForEventBasedTaskList(
       item.FormKey,
       this.onGetFilterForEventBasedTaskListSuccess,
@@ -93,7 +93,9 @@ class TaskSummaryPage extends React.Component {
   onGetEventBasedTaskListSuccess = () => {
     this.setState({isLoading: false, isTaskList: true});
     // this.state.isFilter &&
-    this.props.navigation.navigate('TaskTransactionList');
+    this.props.navigation.navigate('TaskTransactionList', {
+      selecteLead: this.state.selectedStepName,
+    });
   };
 
   onGetEventBasedTaskListFailed = errorMsg => {
@@ -215,18 +217,33 @@ class TaskSummaryPage extends React.Component {
                 </Text>
               </View>
               <View style={styles.addView}>
-                <LinkBtnComponent
-                  onClick={this.onAddEntries}
-                  btnName={I18n.t('TaskSummaryPage.addBtn')}
-                  containerStyle={{
-                    alignItems: 'flex-end',
-                  }}
-                  btnTextStyle={{
-                    marginLeft: 0,
-                    fontWeight: 'bold',
-                    fontSize: fontscale(17),
-                  }}
-                />
+                <View
+                  style={{
+                    width: widthAdapter(90),
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Text>
+                    <Icon
+                      name="plus-circle"
+                      size={fontscale(20)}
+                      color={Colors.linkBtnColor}
+                    />
+                  </Text>
+                  <LinkBtnComponent
+                    onClick={this.onAddEntries}
+                    btnName={I18n.t('TaskSummaryPage.addBtn')}
+                    containerStyle={{
+                      alignItems: 'flex-end',
+                    }}
+                    btnTextStyle={{
+                      marginLeft: 0,
+                      fontWeight: 'bold',
+                      fontSize: fontscale(17),
+                    }}
+                  />
+                </View>
               </View>
             </View>
             <View style={styles.leadCountBtnRow}>

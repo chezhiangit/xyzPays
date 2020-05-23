@@ -113,9 +113,17 @@ const postCustomerDetailsService = async (
     console.log('postEntryService response ...', response);
     const result = response.json();
     console.log('postEntryService result ...', result);
-    if (response.respInfo.status === 200) {
+    if (
+      response.respInfo.status === 200 ||
+      response.respInfo.status === '200'
+    ) {
       return result;
-    } else if (result.HttpStatusCode === 500) {
+    } else if (
+      result.HttpStatusCode === 500 ||
+      result[0].HttpStatusCode === 500 ||
+      result.HttpStatusCode === '500' ||
+      result[0].HttpStatusCode === '500'
+    ) {
       return result;
     }
     return null;

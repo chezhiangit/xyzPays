@@ -3,8 +3,8 @@ import {StyleSheet} from 'react-native';
 import Colors from '../uttils/Colors';
 import fontFamily from '../uttils/FontFamily';
 import {heightAdapter, fontscale} from '../uttils/adapterUtil';
-import DeviceInfo from 'react-native-device-info';
-import {Platform} from 'react-native';
+// import DeviceInfo from 'react-native-device-info';
+// import {Platform} from 'react-native';
 
 export default StyleSheet.create({
   baseContainer: {

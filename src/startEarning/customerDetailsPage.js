@@ -142,6 +142,7 @@ class CustomerDetailsPage extends React.Component {
       dlgMsg: msg,
       postEntry: true,
     });
+    console.log('onPostEntrySuccess .....', msg);
   };
 
   onPostEntryFailed = errorMsg => {
@@ -150,6 +151,7 @@ class CustomerDetailsPage extends React.Component {
       showDlg: true,
       dlgMsg: errorMsg,
     });
+    console.log('onPostEntryFailed .....', errorMsg);
   };
 
   onCancel = () => {

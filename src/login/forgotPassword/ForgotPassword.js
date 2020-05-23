@@ -8,7 +8,7 @@ import I18n from '../../localization/i18n';
 // import Header from '../../common/UIComponents/Header';
 import Footer from '../../common/UIComponents/Footer';
 import EmailInputComponent from '../../common/UIComponents/EmailInputComponent';
-import PasswordInputComponent from '../../common/UIComponents/PasswordInputComponent';
+// import PasswordInputComponent from '../../common/UIComponents/PasswordInputComponent';
 import PrimaryButton from '../../common/UIComponents/PrimaryButton';
 // import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
 import styles from './styles';
@@ -33,7 +33,10 @@ class ForgotPassword extends React.Component {
   };
 
   onStepOneNext = () => {
-    // this.props.navigation.navigate('ForgotPasswordStep2');
+    if (this.state.userEmail.length === 0) {
+      this.setState({showDlg: true, dlgMsg: I18n.t('forgotPassword.step1')});
+      return;
+    }
     this.setState({isLoading: true});
     this.props.verifyUserEmail(
       this.state.userEmail,

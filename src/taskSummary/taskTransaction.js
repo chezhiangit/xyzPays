@@ -35,15 +35,17 @@ import {
 class TaskTransactionList extends React.Component {
   constructor(props) {
     super(props);
+    console.log('props from task transaction list .....', props);
     this.state = {
       showDlg: false,
       dlgMsg: '',
       isLoading: false,
+      selecteLead: this.props.route.params.selecteLead,
     };
   }
 
   onDropDownChanges = (value, selectedIndex, data) => {
-    this.setState({isLoading: true});
+    this.setState({isLoading: true, selecteLead: value});
     this.props.getEventBasedTaskList(
       this.props.stepInfo.FormKey,
       data[selectedIndex].StepKey,
@@ -128,7 +130,7 @@ class TaskTransactionList extends React.Component {
     return (
       <View style={styles.taskItemContainer}>
         {item?.Lead.map(this.renderTaskItemRow)}
-        <View style={{width: widthAdapter(250)}}>
+        <View style={{flexDirection: 'row'}}>
           <PrimaryButton
             btnName={item.StepName}
             onSubmit={() => this.onStartLead(item)}
@@ -150,7 +152,7 @@ class TaskTransactionList extends React.Component {
         {/* <ScrollView showsVerticalScrollIndicator={false}> */}
         <View style={styles.scrollContainer}>
           <Dropdown
-            // value
+            value={this.state.selecteLead}
             label={'Select'}
             data={this.props.taskListFilter?.map(this.parseFilterItems)}
             dropdownOffset={{
@@ -194,18 +196,33 @@ class TaskTransactionList extends React.Component {
           />
           <View style={styles.addBtnRow}>
             <View style={styles.addView}>
-              <LinkBtnComponent
-                onClick={this.onAddEntries}
-                btnName={I18n.t('TaskSummaryPage.addBtn')}
-                containerStyle={{
-                  alignItems: 'flex-end',
-                }}
-                btnTextStyle={{
-                  marginLeft: 0,
-                  fontWeight: 'bold',
-                  fontSize: fontscale(17),
-                }}
-              />
+              <View
+                style={{
+                  width: widthAdapter(90),
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Text>
+                  <Icon
+                    name="plus-circle"
+                    size={fontscale(20)}
+                    color={Colors.linkBtnColor}
+                  />
+                </Text>
+                <LinkBtnComponent
+                  onClick={this.onAddEntries}
+                  btnName={I18n.t('TaskSummaryPage.addBtn')}
+                  containerStyle={{
+                    alignItems: 'flex-end',
+                  }}
+                  btnTextStyle={{
+                    marginLeft: 0,
+                    fontWeight: 'bold',
+                    fontSize: fontscale(17),
+                  }}
+                />
+              </View>
             </View>
           </View>
           <FlatList

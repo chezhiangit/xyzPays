@@ -59,6 +59,14 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     marginTop: heightAdapter(20),
   },
+  videoRow: {
+    flexDirection: 'row',
+    width: widthAdapter(400),
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    // borderWidth: 1,
+    // borderColor: 'red',
+  },
   taskDetailsContainer: {
     width: '70%',
     height: '100%',
@@ -103,9 +111,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   videoLinkContainer: {
-    width: widthAdapter(400),
+    width: widthAdapter(350),
     justifyContent: 'center',
     alignItems: 'flex-start',
+    padding: widthAdapter(0),
   },
   dotWithTick: {
     height: widthAdapter(40),

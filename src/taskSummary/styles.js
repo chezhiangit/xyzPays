@@ -30,7 +30,9 @@ const styles = StyleSheet.create({
   },
   addView: {
     width: widthAdapter(300),
-    alignItems: 'flex-end',
+    // alignItems: 'center',
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
     // borderColor: 'blue',
     // borderWidth: 1,
   },
@@ -224,6 +226,8 @@ const styles = StyleSheet.create({
     height: heightAdapter(60),
     // width: widthAdapter(250),
     fontSize: fontscale(12),
+    paddingLeft: widthAdapter(20),
+    paddingRight: widthAdapter(20),
   },
 });
 

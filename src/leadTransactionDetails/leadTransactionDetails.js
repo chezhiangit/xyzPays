@@ -450,9 +450,10 @@ class LeadTransactionDetails extends React.Component {
   };
 
   onViewAllEntries = () => {
+    console.log('this.props.stepInfo.FormKey ....', this.props.stepInfo);
     this.setState({isLoading: true});
     this.props.getEventBasedTaskSummary(
-      this.props.stepInfo.FormKey,
+      this.props.formInfo.FormKey,
       this.onGetEventBaseTaskSummarySuccess,
       this.onGetEventBaseTaskSummaryFailed,
     );
@@ -469,6 +470,12 @@ class LeadTransactionDetails extends React.Component {
       showDlg: true,
       dlgMsg: errorMsg,
     });
+  };
+
+  onPlayVideo = () => {
+    // console.log('onPlayVideo .......');
+    // this.setState({showVideo: true});
+    this.props.navigation.navigate('VideoPage');
   };
 
   renderConfirmedLeadDetails = (item, index) => {
@@ -531,11 +538,21 @@ class LeadTransactionDetails extends React.Component {
                 </Text>
               </View>
               <View style={styles.linkBtnRow}>
+              <View style={styles.videoRow}>
                 <LinkBtnComponent
                   btnName={I18n.t('LeadTaskEntry.videlink')}
                   containerStyle={styles.videoLinkContainer}
                   btnTextStyle={{marginLeft: 0}}
+                  onClick={() => this.onPlayVideo()}
                 />
+                <Text>
+                    <Icon
+                      name="play"
+                      size={fontscale(20)}
+                      color={Colors.linkBtnColor}
+                    />
+                  </Text>
+              </View>
                 <LinkBtnComponent
                   onClick={this.onViewAllEntries}
                   btnName={
@@ -551,20 +568,24 @@ class LeadTransactionDetails extends React.Component {
 
             {/* {this.createComponentsDynamically()} */}
             <View style={styles.leadContainer}>
-              <Text style={styles.leadText}>Lead</Text>
+              <Text style={styles.leadText}>
+                {I18n.t('LeadTaskEntry.lead')}
+              </Text>
               {this.props.Lead.map(this.renderTaskTransactionDetails)}
             </View>
             {this.props.ConfirmedLead.length > 0 && (
               <View
                 style={[styles.leadContainer, {marginTop: heightAdapter(40)}]}>
-                <Text style={styles.leadText}>Confirmed Lead</Text>
+                <Text style={styles.leadText}>{I18n.t('LeadTaskEntry.confirmedLead')}</Text>
                 {this.props.ConfirmedLead.map(this.renderConfirmedLeadDetails)}
               </View>
             )}
             {this.props.formDefenition?.length > 0 && (
               <View
                 style={[styles.leadContainer, {marginTop: heightAdapter(40)}]}>
-                <Text style={styles.leadText}>Confirmed Lead</Text>
+                <Text style={styles.leadText}>
+                  {I18n.t('LeadTaskEntry.confirmedLead')}
+                </Text>
                 {this.createComponentsDynamically()}
               </View>
             )}

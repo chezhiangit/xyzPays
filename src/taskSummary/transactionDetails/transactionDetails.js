@@ -36,7 +36,7 @@ class TransactionDetails extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getTxnHistory(this.props.taskTransactionDetails[0].TxnKey);
+    this.onRefreshLog();
   }
 
   onCancel = () => {
@@ -45,6 +45,24 @@ class TransactionDetails extends React.Component {
 
   onConfirm = () => {
     this.setState({showDlg: false});
+  };
+
+  onRefreshLog = () => {
+    console.log('onRefreshLog');
+    this.setState({isLoading: true});
+    this.props.getTxnHistory(
+      this.props.taskTransactionDetails[0].TxnKey,
+      this.onRefreshLogSuccess,
+      this.onRefreshLogFailed,
+    );
+  };
+
+  onRefreshLogSuccess = () => {
+    this.setState({isLoading: false});
+  };
+
+  onRefreshLogFailed = errorMsg => {
+    this.setState({isLoading: false, showDlg: true, dlgMsg: errorMsg});
   };
 
   renderTopRow = () => (
@@ -185,9 +203,7 @@ class TransactionDetails extends React.Component {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.scrollContainer}>
             {this.renderTopRow()}
-            {this.props.taskTransactionDetails.map(
-              this.renderProductDetails,
-            )}
+            {this.props.taskTransactionDetails.map(this.renderProductDetails)}
 
             <View style={styles.logRefresView}>
               <TouchableOpacity
@@ -243,7 +259,8 @@ const mapDispatchToProps = dispatch => ({
   //       onErrocallback,
   //     ),
   //   ),
-  getTxnHistory: TxnKey => dispatch(getTxnHistory(TxnKey)),
+  getTxnHistory: (TxnKey, onSuccessCallback, onErrorCallback) =>
+    dispatch(getTxnHistory(TxnKey, onSuccessCallback, onErrorCallback)),
 });
 
 export default connect(

@@ -7,7 +7,7 @@ import BaseStyles from '../../common/BaseStyles';
 import I18n from '../../localization/i18n';
 // import Header from '../../common/UIComponents/Header';
 import Footer from '../../common/UIComponents/Footer';
-import EmailInputComponent from '../../common/UIComponents/EmailInputComponent';
+// import EmailInputComponent from '../../common/UIComponents/EmailInputComponent';
 import PasswordInputComponent from '../../common/UIComponents/PasswordInputComponent';
 import PrimaryButton from '../../common/UIComponents/PrimaryButton';
 import LinkBtnComponent from '../../common/UIComponents/LinkBtn/LinkBtn';
@@ -34,6 +34,21 @@ class ForgotPasswordStep4 extends React.Component {
   };
 
   onStepNext = () => {
+    if (this.state.newPassword.length === 0) {
+      this.setState({
+        showDlg: true,
+        dlgMsg: I18n.t('forgotPassword.newPwdError'),
+      });
+      return;
+    }
+    if (this.state.confirmPassword.length === 0) {
+      this.setState({
+        showDlg: true,
+        dlgMsg: I18n.t('forgotPassword.confimPwdError'),
+      });
+      return;
+    }
+
     if (this.state.newPassword === this.state.confirmPassword) {
       this.setState({isLoading: true});
       const payload = {

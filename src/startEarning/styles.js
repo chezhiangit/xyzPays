@@ -186,8 +186,8 @@ const styles = StyleSheet.create({
     width: widthAdapter(400),
     alignItems: 'center',
     justifyContent: 'flex-start',
-    borderWidth: 1,
-    borderColor: 'red',
+    // borderWidth: 1,
+    // borderColor: 'red',
   },
   videoContainer: {
     position: 'absolute',

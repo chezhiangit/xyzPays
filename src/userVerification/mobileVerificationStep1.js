@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, TouchableOpacity, Image} from 'react-native';
+import {View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {connect} from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -9,10 +9,10 @@ import I18n from '../localization/i18n';
 // import Header from '../../common/UIComponents/Header';
 import Footer from '../common/UIComponents/Footer';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
-import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
+// import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
 import styles from './styles';
 import WarningDialog from '../common/UIComponents/warningDialog';
-import RadioButton from '../common/UIComponents/RadioButtom/radioButton';
+// import RadioButton from '../common/UIComponents/RadioButtom/radioButton';
 // import {displayPhoneNumber} from '../uttils/UtilityFunctions';
 import {
   sendMobileVerificationCode,
