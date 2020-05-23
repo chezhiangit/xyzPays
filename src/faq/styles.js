@@ -60,6 +60,8 @@ const styles = StyleSheet.create({
   faqDetailsContainer: {
     height: 0,
     backgroundColor: '#eee',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   faqDetails: {
     width: '100%',

@@ -14,18 +14,18 @@ import {Dropdown} from 'react-native-material-dropdown';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
-import TextInputComponent from '../common/UIComponents/TextInputComponent';
-import CheckBoxComponent from '../common/UIComponents/CheckBox/CheckBox';
-import RadioButton from '../common/UIComponents/RadioButtom/radioButton';
+// import TextInputComponent from '../common/UIComponents/TextInputComponent';
+// import CheckBoxComponent from '../common/UIComponents/CheckBox/CheckBox';
+// import RadioButton from '../common/UIComponents/RadioButtom/radioButton';
 // import PasswordInputComponent from '../common/UIComponents/PasswordInputComponent';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
-import Images from '../Assets/index';
+// import Images from '../Assets/index';
 import styles from './styles';
 import {widthAdapter, fontscale, heightAdapter} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
 import WarningDialog from '../common/UIComponents/warningDialog';
 import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
-import RoundButton from '../common/UIComponents/RoundButton';
+// import RoundButton from '../common/UIComponents/RoundButton';
 import ReadOnlyView from '../common/UIComponents/readOnlyView/ReadOnlyView';
 import {
   getProductsFormDefenitionDetailsData,

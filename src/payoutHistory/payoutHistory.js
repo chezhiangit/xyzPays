@@ -163,7 +163,12 @@ class PayoutHistory extends React.Component {
     console.log('selected item ...', item);
     this.toggleDropdown(false);
     this.setState(
-      {selectedValue: item.Text, selectedIndex: item.Value, isLoading: true},
+      {
+        selectedValue: item.Text,
+        selectedIndex: item.Value,
+        isLoading: true,
+        selectedPayoutItemIndex: -1,
+      },
       () =>
         this.props.getPayoutHistoryList(
           item.Value,

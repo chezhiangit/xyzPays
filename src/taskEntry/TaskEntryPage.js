@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {connect} from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {Dropdown} from 'react-native-material-dropdown';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
@@ -473,65 +474,67 @@ class TaskEntryPage extends React.Component {
   render() {
     return (
       <View style={[BaseStyles.baseContainer]}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.scrollContainer}>
-            <View style={BaseStyles.emptyHView} />
-            <View style={styles.taskItemContainer}>
-              <View style={styles.taskDetailsContainer}>
-                <View style={styles.taskEntryProduct}>
-                  <View style={styles.dotWithTick}>
-                    <Text>
-                      <Icon
-                        name="check-circle"
-                        size={fontscale(20)}
-                        color={Colors.primaryAppColor}
-                      />
+        <KeyboardAwareScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={styles.scrollContainer}>
+              <View style={BaseStyles.emptyHView} />
+              <View style={styles.taskItemContainer}>
+                <View style={styles.taskDetailsContainer}>
+                  <View style={styles.taskEntryProduct}>
+                    <View style={styles.dotWithTick}>
+                      <Text>
+                        <Icon
+                          name="check-circle"
+                          size={fontscale(20)}
+                          color={Colors.primaryAppColor}
+                        />
+                      </Text>
+                    </View>
+                    <Text style={styles.taskEntryProductTxt}>
+                      {this.props.productDetails.ProductName}
                     </Text>
                   </View>
-                  <Text style={styles.taskEntryProductTxt}>
-                    {this.props.productDetails.ProductName}
-                  </Text>
+                  <View style={styles.activeContainer}>
+                    <Text style={styles.statusTxt}>
+                      {this.props.productDetails['Product Status']}
+                    </Text>
+                  </View>
+                  <View style={styles.skuContainer}>
+                    <Text style={styles.skuLabel}>
+                      {I18n.t('taskEntryPage.sku')}
+                      {': '}
+                    </Text>
+                    <Text style={styles.skuTxt}>
+                      {this.props.productDetails.SKU}
+                    </Text>
+                  </View>
                 </View>
-                <View style={styles.activeContainer}>
-                  <Text style={styles.statusTxt}>
-                    {this.props.productDetails['Product Status']}
-                  </Text>
-                </View>
-                <View style={styles.skuContainer}>
-                  <Text style={styles.skuLabel}>
-                    {I18n.t('taskEntryPage.sku')}
-                    {': '}
-                  </Text>
-                  <Text style={styles.skuTxt}>
-                    {this.props.productDetails.SKU}
-                  </Text>
+                <View style={styles.taskEntryImageContainer}>
+                  <Image
+                    source={{
+                      isStatic: true,
+                      uri: this.props.productDetails?.ProductPicture,
+                      method: 'GET',
+                    }}
+                    style={[
+                      styles.productImage,
+                      // {width: this.state.width, height: this.state.height},
+                    ]}
+                  />
                 </View>
               </View>
-              <View style={styles.taskEntryImageContainer}>
-                <Image
-                  source={{
-                    isStatic: true,
-                    uri: this.props.productDetails?.ProductPicture,
-                    method: 'GET',
-                  }}
-                  style={[
-                    styles.productImage,
-                    // {width: this.state.width, height: this.state.height},
-                  ]}
-                />
-              </View>
-            </View>
 
-            {this.createComponentsDynamically()}
-            <View style={BaseStyles.emptyHView} />
-            {this.state.components.length > 0 && (
-              <PrimaryButton
-                btnName={I18n.t('taskEntryPage.saveBtnName')}
-                onSubmit={this.onSave}
-              />
-            )}
-          </View>
-        </ScrollView>
+              {this.createComponentsDynamically()}
+              <View style={BaseStyles.emptyHView} />
+              {this.state.components.length > 0 && (
+                <PrimaryButton
+                  btnName={I18n.t('taskEntryPage.saveBtnName')}
+                  onSubmit={this.onSave}
+                />
+              )}
+            </View>
+          </ScrollView>
+        </KeyboardAwareScrollView>
         <Footer />
         <WarningDialog
           shouldShowDeleteWarning={this.state.showDlg}

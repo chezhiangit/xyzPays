@@ -2,6 +2,7 @@ import * as React from 'react';
 import {View, Text} from 'react-native';
 import {connect} from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 // import {SafeAreaView} from 'react-native-safe-area-context';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
@@ -61,31 +62,33 @@ class EmailVerificationStep2 extends React.Component {
   render() {
     return (
       <View style={[BaseStyles.baseContainer]}>
-        <View style={styles.verificationContainer}>
-          <View style={styles.userInfo}>
-            <Text style={styles.userInfoTxt}>
-              {I18n.t('userVerification.userInfo')}
-            </Text>
-          </View>
-          <View style={styles.forgotPwdUserStep1}>
-            <Text style={styles.forgotPwdUserStep1Txt}>
-              {I18n.t('userVerification.emailStep2')}
-            </Text>
-          </View>
-          <View style={BaseStyles.emptyHView} />
-          <TextInputComponent
-            placeholder={I18n.t('userVerification.emailPlaceHolder')}
-            autoFocus={false}
-            inputValue={this.state.verificatioCode}
-            onTextChange={text => this.setState({verificatioCode: text})}
-          />
-          <View style={styles.forgotStepOneNextContainer}>
-            <PrimaryButton
-              btnName={I18n.t('userVerification.step2Next')}
-              onSubmit={this.onStepNext}
+        <KeyboardAwareScrollView>
+          <View style={styles.verificationContainer}>
+            <View style={styles.userInfo}>
+              <Text style={styles.userInfoTxt}>
+                {I18n.t('userVerification.userInfo')}
+              </Text>
+            </View>
+            <View style={styles.forgotPwdUserStep1}>
+              <Text style={styles.forgotPwdUserStep1Txt}>
+                {I18n.t('userVerification.emailStep2')}
+              </Text>
+            </View>
+            <View style={BaseStyles.emptyHView} />
+            <TextInputComponent
+              placeholder={I18n.t('userVerification.emailPlaceHolder')}
+              autoFocus={false}
+              inputValue={this.state.verificatioCode}
+              onTextChange={text => this.setState({verificatioCode: text})}
             />
+            <View style={styles.forgotStepOneNextContainer}>
+              <PrimaryButton
+                btnName={I18n.t('userVerification.step2Next')}
+                onSubmit={this.onStepNext}
+              />
+            </View>
           </View>
-        </View>
+        </KeyboardAwareScrollView>
         <Footer />
         <WarningDialog
           shouldShowDeleteWarning={this.state.showDlg}

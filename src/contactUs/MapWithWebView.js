@@ -1,12 +1,5 @@
 import * as React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Animated,
-  Keyboard,
-} from 'react-native';
+import {View, StyleSheet, Animated, Keyboard} from 'react-native';
 import {connect} from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {WebView} from 'react-native-webview';
@@ -14,10 +7,10 @@ import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import {heightAdapter, widthAdapter} from '../uttils/adapterUtil';
-import SliderView from '../common/UIComponents/SliderView';
+// import SliderView from '../common/UIComponents/SliderView';
 import TextInputComponent from '../common/UIComponents/TextInputComponent';
 import KeyboardAwareComponent from '../common/UIComponents/hoc/KeyboardAwareComponent';
-import Footer from '../common/UIComponents/Footer';
+// import Footer from '../common/UIComponents/Footer';
 import {
   getGoogleMapCoordinates,
   saveSuggestion,
@@ -147,7 +140,10 @@ class ContactUs extends React.Component {
         </View> */}
         {/* <Footer /> */}
         <Animated.View
-          style={{width: '100%', transform: [{translateY: this.props.shift}]}}>
+          style={{
+            width: '100%',
+            transform: [{translateY: this.props.shift}],
+          }}>
           {/* <SliderView
           // containerStyle={{transform: [{translateY: this.props.shift}]}}
           visible={this.state.showFindUsView}

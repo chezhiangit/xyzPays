@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {connect} from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {Dropdown} from 'react-native-material-dropdown';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
@@ -482,59 +483,61 @@ class CustomerDetailsPage extends React.Component {
   render() {
     return (
       <View style={[BaseStyles.baseContainer]}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.scrollContainer}>
-            {/* <View style={BaseStyles.emptyHView} /> */}
-            <View style={styles.topContainer}>
-              <View stye={styles.productNameRow}>
-                <Text style={styles.productName}>
-                  {this.props.formInfo.ProductName}
-                </Text>
-              </View>
-              <View style={styles.userInfo}>
-                <Text style={styles.userInfoTxt}>
-                  {this.props.formInfo.FormDesc}
-                </Text>
-              </View>
-              <View style={styles.linkBtnRow}>
-                <View style={styles.videoRow}>
-                  <LinkBtnComponent
-                    btnName={I18n.t('LeadTaskEntry.videlink')}
-                    containerStyle={styles.videoLinkContainer}
-                    btnTextStyle={{marginLeft: 0}}
-                    onClick={() => this.onPlayVideo()}
-                  />
-                  <Text>
-                    <Icon
-                      name="play"
-                      size={fontscale(20)}
-                      color={Colors.linkBtnColor}
-                    />
+        <KeyboardAwareScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={styles.scrollContainer}>
+              {/* <View style={BaseStyles.emptyHView} /> */}
+              <View style={styles.topContainer}>
+                <View stye={styles.productNameRow}>
+                  <Text style={styles.productName}>
+                    {this.props.formInfo.ProductName}
                   </Text>
                 </View>
-                <LinkBtnComponent
-                  onClick={this.onViewAllEntries}
-                  btnName={
-                    I18n.t('LeadTaskEntry.viewAll') +
-                    '(' +
-                    this.props.formInfo.TotalEntries +
-                    ')'
-                  }
-                  containerStyle={styles.viewAllLinkContainer}
-                />
+                <View style={styles.userInfo}>
+                  <Text style={styles.userInfoTxt}>
+                    {this.props.formInfo.FormDesc}
+                  </Text>
+                </View>
+                <View style={styles.linkBtnRow}>
+                  <View style={styles.videoRow}>
+                    <LinkBtnComponent
+                      btnName={I18n.t('LeadTaskEntry.videlink')}
+                      containerStyle={styles.videoLinkContainer}
+                      btnTextStyle={{marginLeft: 0}}
+                      onClick={() => this.onPlayVideo()}
+                    />
+                    <Text>
+                      <Icon
+                        name="play"
+                        size={fontscale(20)}
+                        color={Colors.linkBtnColor}
+                      />
+                    </Text>
+                  </View>
+                  <LinkBtnComponent
+                    onClick={this.onViewAllEntries}
+                    btnName={
+                      I18n.t('LeadTaskEntry.viewAll') +
+                      '(' +
+                      this.props.formInfo.TotalEntries +
+                      ')'
+                    }
+                    containerStyle={styles.viewAllLinkContainer}
+                  />
+                </View>
               </View>
-            </View>
 
-            {this.createComponentsDynamically()}
-            <View style={BaseStyles.emptyHView} />
-            {this.state.components.length > 0 && (
-              <PrimaryButton
-                btnName={I18n.t('LeadTaskEntry.submitBtnName')}
-                onSubmit={this.onSave}
-              />
-            )}
-          </View>
-        </ScrollView>
+              {this.createComponentsDynamically()}
+              <View style={BaseStyles.emptyHView} />
+              {this.state.components.length > 0 && (
+                <PrimaryButton
+                  btnName={I18n.t('LeadTaskEntry.submitBtnName')}
+                  onSubmit={this.onSave}
+                />
+              )}
+            </View>
+          </ScrollView>
+        </KeyboardAwareScrollView>
         <Footer />
         <WarningDialog
           shouldShowDeleteWarning={this.state.showDlg}

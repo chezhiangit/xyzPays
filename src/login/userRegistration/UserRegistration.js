@@ -2,6 +2,7 @@ import * as React from 'react';
 import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {connect} from 'react-redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 // import {SafeAreaView} from 'react-native-safe-area-context';
 import BaseStyles from '../../common/BaseStyles';
 import I18n from '../../localization/i18n';
@@ -154,68 +155,70 @@ class UserRegistration extends React.Component {
     // const {navigation} = this.props;
     return (
       <View style={[BaseStyles.baseContainer]}>
-        <ScrollView style={styles.scrollContainer}>
-          {/* <View style={styles.loginUserInfo}>
+        <KeyboardAwareScrollView>
+          <ScrollView style={styles.scrollContainer}>
+            {/* <View style={styles.loginUserInfo}>
             <Text style={styles.loginUserInfoTxt}>
               {I18n.t('login.userInfo')}
             </Text>
           </View> */}
-          <TextInputComponent
-            placeholder={I18n.t('userRegistration.firstName')}
-            autoFocus={false}
-            inputValue={this.state.FirstName}
-            onTextChange={text => this.setState({FirstName: text})}
-          />
-          <TextInputComponent
-            placeholder={I18n.t('userRegistration.lastName')}
-            autoFocus={false}
-            inputValue={this.state.LastName}
-            onTextChange={text => this.setState({LastName: text})}
-          />
-          <TextInputComponent
-            placeholder={I18n.t('userRegistration.mobileNumber')}
-            autoFocus={false}
-            inputValue={this.state.Mobile}
-            onTextChange={text => this.setState({Mobile: text})}
-            phone
-          />
-          <EmailInputComponent
-            placeholder={I18n.t('userRegistration.email')}
-            autoFocus={false}
-            onEmailEntered={Email => this.setState({Email})}
-            email={this.state.Email}
-          />
-          <PasswordInputComponent
-            placeholder={I18n.t('userRegistration.password')}
-            autoFocus={false}
-            password={this.state.Password}
-            onPassworEntered={text => this.setState({Password: text})}
-          />
-          <PasswordInputComponent
-            placeholder={I18n.t('userRegistration.retypePassword')}
-            autoFocus={false}
-            password={this.state.ConfirmPassword}
-            onPassworEntered={text => this.setState({ConfirmPassword: text})}
-          />
-          <View style={styles.labelContainer}>
-            <ReadOnlyView
-              label={I18n.t('userRegistration.providers')}
-              labelStyle={styles.providersLabel}
+            <TextInputComponent
+              placeholder={I18n.t('userRegistration.firstName')}
+              autoFocus={false}
+              inputValue={this.state.FirstName}
+              onTextChange={text => this.setState({FirstName: text})}
             />
-          </View>
-          <View style={styles.providersContainer}>
-            {this.renderProviders()}
-          </View>
-          <View style={BaseStyles.emptyHView} />
-          <PrimaryButton
-            btnName={I18n.t('userRegistration.registerBtnName')}
-            onSubmit={this.onSubmitRegistration}
-          />
-          {/* <View style={BaseStyles.emptyHView} />
+            <TextInputComponent
+              placeholder={I18n.t('userRegistration.lastName')}
+              autoFocus={false}
+              inputValue={this.state.LastName}
+              onTextChange={text => this.setState({LastName: text})}
+            />
+            <TextInputComponent
+              placeholder={I18n.t('userRegistration.mobileNumber')}
+              autoFocus={false}
+              inputValue={this.state.Mobile}
+              onTextChange={text => this.setState({Mobile: text})}
+              phone
+            />
+            <EmailInputComponent
+              placeholder={I18n.t('userRegistration.email')}
+              autoFocus={false}
+              onEmailEntered={Email => this.setState({Email})}
+              email={this.state.Email}
+            />
+            <PasswordInputComponent
+              placeholder={I18n.t('userRegistration.password')}
+              autoFocus={false}
+              password={this.state.Password}
+              onPassworEntered={text => this.setState({Password: text})}
+            />
+            <PasswordInputComponent
+              placeholder={I18n.t('userRegistration.retypePassword')}
+              autoFocus={false}
+              password={this.state.ConfirmPassword}
+              onPassworEntered={text => this.setState({ConfirmPassword: text})}
+            />
+            <View style={styles.labelContainer}>
+              <ReadOnlyView
+                label={I18n.t('userRegistration.providers')}
+                labelStyle={styles.providersLabel}
+              />
+            </View>
+            <View style={styles.providersContainer}>
+              {this.renderProviders()}
+            </View>
+            <View style={BaseStyles.emptyHView} />
+            <PrimaryButton
+              btnName={I18n.t('userRegistration.registerBtnName')}
+              onSubmit={this.onSubmitRegistration}
+            />
+            {/* <View style={BaseStyles.emptyHView} />
             <LinkBtnComponent btnName={I18n.t('login.signUpNow')} />
             <LinkBtnComponent btnName={I18n.t('login.forgotPwd')} /> */}
-          {/* </View> */}
-        </ScrollView>
+            {/* </View> */}
+          </ScrollView>
+        </KeyboardAwareScrollView>
         <Footer />
         <WarningDialog
           shouldShowDeleteWarning={this.state.showDlg}

@@ -125,8 +125,8 @@ class AppLandingPage extends React.Component {
                       style={{
                         // width: this.state.makeMoneywidth,
                         // height: this.state.makeMoneyheight,
-                        width: widthAdapter(200),
-                        height: heightAdapter(200),
+                        width: widthAdapter(400),
+                        height: heightAdapter(300),
                       }}
                     />
                   </View>
@@ -161,8 +161,8 @@ class AppLandingPage extends React.Component {
                       style={{
                         // width: this.state.myMoneywidth,
                         // height: this.state.myMoneyheight,
-                        width: widthAdapter(200),
-                        height: heightAdapter(200),
+                        width: widthAdapter(400),
+                        height: heightAdapter(300),
                       }}
                     />
                   </View>

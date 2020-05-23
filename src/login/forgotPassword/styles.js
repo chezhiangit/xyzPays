@@ -7,8 +7,10 @@ import Colors from '../../uttils/Colors';
 export default StyleSheet.create({
   forgotPwdViewContainer: {
     backgroundColor: Clors.appContainerBgColor,
-    width: '100%',
-    height: '75%',
+    // width: '100%',
+    // height: '75%',
+    // flex: 1,
+    // flexDirection: 'column',
     // paddingLeft: widthAdapter(20),
     // paddingRight: widthAdapter(20),
     alignItems: 'center',

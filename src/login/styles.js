@@ -6,8 +6,8 @@ import {widthAdapter, fontscale, heightAdapter} from '../uttils/adapterUtil';
 export default StyleSheet.create({
   loginViewContainer: {
     backgroundColor: Clors.appContainerBgColor,
-    width: '100%',
-    height: '75%',
+    // width: '100%',
+    // height: '75%',
     // paddingLeft: widthAdapter(20),
     // paddingRight: widthAdapter(20),
     alignItems: 'center',

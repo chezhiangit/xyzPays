@@ -2,6 +2,7 @@ import * as React from 'react';
 import {View, Text, ScrollView} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {connect} from 'react-redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 // import {SafeAreaView} from 'react-native-safe-area-context';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
@@ -97,45 +98,47 @@ class ReferAndEarn extends React.Component {
   render() {
     return (
       <View style={[BaseStyles.baseContainer]}>
-        <ScrollView style={styles.scrollContainer}>
-          {/* <View style={BaseStyles.emptyHView} /> */}
-          <View style={BaseStyles.userInfo}>
-            <Text style={styles.userInfoTxt}>
-              {I18n.t('referAndEarn.userInfo')}
-            </Text>
-          </View>
-          <TextInputComponent
-            placeholder={I18n.t('referAndEarn.name') + '(Madatory)'}
-            madatory
-            autoFocus={false}
-            inputValue={this.state.name}
-            onTextChange={name => this.setState({name})}
-          />
-          <EmailInputComponent
-            placeholder={I18n.t('referAndEarn.email') + '(Madatory)'}
-            autoFocus={false}
-            onEmailEntered={email => this.setState({email})}
-            email={this.state.email}
-          />
-          <TextInputComponent
-            placeholder={I18n.t('referAndEarn.mobileNumber') + '(Madatory)'}
-            autoFocus={false}
-            inputValue={this.state.mobileNumber}
-            onTextChange={mobileNumber => this.setState({mobileNumber})}
-            phone
-          />
-          <View style={BaseStyles.emptyHView} />
-          <PrimaryButton
-            btnName={I18n.t('referAndEarn.sendBtnName')}
-            onSubmit={this.onSendMessage}
-          />
-          <View style={BaseStyles.emptyHView} />
-          <LinkBtnComponent
-            onClick={this.onViewReferrals}
-            btnName={I18n.t('referAndEarn.linkBtn')}
-            btnTextStyle={{fontSize: fontscale(20)}}
-          />
-        </ScrollView>
+        <KeyboardAwareScrollView>
+          <ScrollView style={styles.scrollContainer}>
+            {/* <View style={BaseStyles.emptyHView} /> */}
+            <View style={BaseStyles.userInfo}>
+              <Text style={styles.userInfoTxt}>
+                {I18n.t('referAndEarn.userInfo')}
+              </Text>
+            </View>
+            <TextInputComponent
+              placeholder={I18n.t('referAndEarn.name') + '(Madatory)'}
+              madatory
+              autoFocus={false}
+              inputValue={this.state.name}
+              onTextChange={name => this.setState({name})}
+            />
+            <EmailInputComponent
+              placeholder={I18n.t('referAndEarn.email') + '(Madatory)'}
+              autoFocus={false}
+              onEmailEntered={email => this.setState({email})}
+              email={this.state.email}
+            />
+            <TextInputComponent
+              placeholder={I18n.t('referAndEarn.mobileNumber') + '(Madatory)'}
+              autoFocus={false}
+              inputValue={this.state.mobileNumber}
+              onTextChange={mobileNumber => this.setState({mobileNumber})}
+              phone
+            />
+            <View style={BaseStyles.emptyHView} />
+            <PrimaryButton
+              btnName={I18n.t('referAndEarn.sendBtnName')}
+              onSubmit={this.onSendMessage}
+            />
+            <View style={BaseStyles.emptyHView} />
+            <LinkBtnComponent
+              onClick={this.onViewReferrals}
+              btnName={I18n.t('referAndEarn.linkBtn')}
+              btnTextStyle={{fontSize: fontscale(20)}}
+            />
+          </ScrollView>
+        </KeyboardAwareScrollView>
         <Footer />
         <WarningDialog
           shouldShowDeleteWarning={this.state.showDlg}
