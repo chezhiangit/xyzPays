@@ -181,16 +181,24 @@ class HomePage extends React.Component {
     return taskBtnText;
   };
   onPressApprovedButton = () => {
-    this.props.navigation.navigate('CommissionPage');
+    this.props.navigation.navigate('CommissionPage', {
+      paymentStatus: 2,
+    });
   };
   onPressPaidButton = () => {
-    this.props.navigation.navigate('CommissionPage');
+    this.props.navigation.navigate('CommissionPage', {
+      paymentStatus: 4,
+    });
   };
   onPressPendingButton = () => {
-    this.props.navigation.navigate('CommissionPage');
+    this.props.navigation.navigate('CommissionPage', {
+      paymentStatus: 1,
+    });
   };
   onPressDeniedButton = () => {
-    this.props.navigation.navigate('CommissionPage');
+    this.props.navigation.navigate('CommissionPage', {
+      paymentStatus: 5,
+    });
   };
 
   onViewableItemsChanged = ({viewableItems, changed}) => {

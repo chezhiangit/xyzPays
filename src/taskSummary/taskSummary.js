@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {connect} from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -160,17 +160,17 @@ class TaskSummaryPage extends React.Component {
           <View style={styles.transTopView}>
             <View style={styles.tranIdContainer}>
               <ReadOnlyView
-                viewStyle={styles.transLabelViewStyle}
+                viewStyle={styles.transIdLabel}
                 label={'TransId:'}
                 labelStyle={styles.transLeadLabel}
               />
               <ReadOnlyView
-                viewStyle={styles.transLabelViewStyle}
+                viewStyle={styles.transId}
                 label={item.TxnSeq}
                 labelStyle={styles.tansValue}
               />
               <ReadOnlyView
-                viewStyle={styles.transLabelViewStyle}
+                viewStyle={styles.transLead}
                 label={item.StepName}
                 labelStyle={styles.transLeadLabel}
               />
@@ -217,13 +217,7 @@ class TaskSummaryPage extends React.Component {
                 </Text>
               </View>
               <View style={styles.addView}>
-                <View
-                  style={{
-                    width: widthAdapter(90),
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
+                <View style={styles.addBtnIcon}>
                   <Text>
                     <Icon
                       name="plus-circle"
@@ -231,17 +225,12 @@ class TaskSummaryPage extends React.Component {
                       color={Colors.linkBtnColor}
                     />
                   </Text>
+                  
                   <LinkBtnComponent
                     onClick={this.onAddEntries}
                     btnName={I18n.t('TaskSummaryPage.addBtn')}
-                    containerStyle={{
-                      alignItems: 'flex-end',
-                    }}
-                    btnTextStyle={{
-                      marginLeft: 0,
-                      fontWeight: 'bold',
-                      fontSize: fontscale(17),
-                    }}
+                    containerStyle={styles.addBtnContainer}
+                    btnTextStyle={styles.addBtnTextStyle}
                   />
                 </View>
               </View>

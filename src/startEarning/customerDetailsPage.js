@@ -514,6 +514,7 @@ class CustomerDetailsPage extends React.Component {
                       />
                     </Text>
                   </View>
+                  <View>
                   <LinkBtnComponent
                     onClick={this.onViewAllEntries}
                     btnName={
@@ -524,6 +525,7 @@ class CustomerDetailsPage extends React.Component {
                     }
                     containerStyle={styles.viewAllLinkContainer}
                   />
+                  </View>
                 </View>
               </View>
 

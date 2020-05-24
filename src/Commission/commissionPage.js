@@ -43,7 +43,7 @@ class CommissionPage extends React.Component {
       showDlg: false,
       dlgMsg: '',
       showFilter: false,
-      selectedFilterIndex: 4, // All
+      selectedFilterIndex: '', // All
       isLoading: false,
     };
     // this.show=false;
@@ -61,14 +61,23 @@ class CommissionPage extends React.Component {
 
   componentDidMount() {
     this.props.navigation.addListener('focus', () => {
-      this.setState({isLoading: true});
+      this.setState({
+        isLoading: true,
+        selectedFilterIndex:
+          this.props.route.params?.paymentStatus === undefined
+            ? ''
+            : this.props.route.params?.paymentStatus,
+      });
       this.props.getDateFilter(
         this.onGetDateFilterSuccess,
         this.onGetDateFilterFailed,
       );
       const payload = {
-        SelectedDateRange: 4,
-        TxnStatusType: '',
+        SelectedDateRange: this.state.selectedDateRangeIndex,
+        TxnStatusType:
+          this.props.route.params?.paymentStatus === undefined
+            ? ''
+            : this.props.route.params?.paymentStatus,
       };
       this.props.getCommissionList(
         payload.SelectedDateRange,
@@ -84,7 +93,9 @@ class CommissionPage extends React.Component {
     this.setState({
       isLoading: false,
       dateFilterServiceDone: true,
-      selectedDateRangeValue: this.props.dateFilter[4]?.Text,
+      selectedDateRangeValue: this.props.dateFilter[
+        this.state.selectedDateRangeIndex
+      ]?.Text,
     });
   };
 
@@ -119,10 +130,7 @@ class CommissionPage extends React.Component {
   getCommissionListData = () => {
     const payload = {
       SelectedDateRange: this.state.selectedDateRangeIndex,
-      TxnStatusType:
-        this.state.selectedFilterIndex === 4
-          ? ''
-          : this.state.selectedFilterIndex,
+      TxnStatusType: this.state.selectedFilterIndex,
     };
     this.props.getCommissionList(
       payload.SelectedDateRange,
@@ -203,12 +211,14 @@ class CommissionPage extends React.Component {
               {I18n.t('commission.currencySymbol')}
             </Text>
             <Text style={styles.amount}>{item.Amount}, </Text>
+          </View>
+          <View style={styles.amountStatusContainer}>
             <Text style={styles.statusLabel}>
               {I18n.t('commission.status')}{' '}
             </Text>
             <Text style={styles.status}>{item.Status}</Text>
           </View>
-          <View style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]} />
+          {/* <View style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]} /> */}
           <View style={styles.paymentDateContainer}>
             <Text style={styles.paymentDateLabel}>
               {I18n.t('commission.paymentDate')}
@@ -362,20 +372,20 @@ class CommissionPage extends React.Component {
         <SliderView
           visible={this.state.showFilter}
           animateFrom="bottom"
-          height={heightAdapter(300)}
+          height={heightAdapter(400)}
           width="100%">
           <View style={styles.sliderContainer}>
             <View
               style={[
                 styles.sliderBtnContainer,
-                this.state.selectedFilterIndex === 4 && bgClore,
+                this.state.selectedFilterIndex === '' && bgClore,
               ]}>
               <PrimaryButton
                 btnStyle={[
                   styles.sliderBtnStyle,
-                  this.state.selectedFilterIndex === 4 && bgClore,
+                  this.state.selectedFilterIndex === '' && bgClore,
                 ]}
-                onSubmit={() => this.onFilterSelected(4)}
+                onSubmit={() => this.onFilterSelected('')}
                 btnName={I18n.t('commission.filterAll')}
                 btnTexStyle={styles.sliderBtnTxtStyle}
               />
@@ -394,6 +404,24 @@ class CommissionPage extends React.Component {
                   this.state.selectedFilterIndex === 2 && bgClore,
                 ]}
                 onSubmit={() => this.onFilterSelected(2)}
+                btnName={I18n.t('commission.filterApproved')}
+                btnTexStyle={styles.sliderBtnTxtStyle}
+              />
+            </View>
+            <View
+              style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
+            />
+            <View
+              style={[
+                styles.sliderBtnContainer,
+                this.state.selectedFilterIndex === 4 && bgClore,
+              ]}>
+              <PrimaryButton
+                btnStyle={[
+                  styles.sliderBtnStyle,
+                  this.state.selectedFilterIndex === 4 && bgClore,
+                ]}
+                onSubmit={() => this.onFilterSelected(4)}
                 btnName={I18n.t('commission.filterPaid')}
                 btnTexStyle={styles.sliderBtnTxtStyle}
               />

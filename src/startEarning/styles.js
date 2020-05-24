@@ -60,9 +60,11 @@ const styles = StyleSheet.create({
     marginTop: heightAdapter(20),
   },
   viewAllLinkContainer: {
-    width: widthAdapter(300),
+    // width: widthAdapter(300),
     justifyContent: 'center',
     alignItems: 'flex-end',
+    // borderColor: 'red',
+    // borderWidth: 1,
   },
   videoLinkContainer: {
     width: widthAdapter(350),

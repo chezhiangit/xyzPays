@@ -198,7 +198,7 @@ class TaskTransactionList extends React.Component {
             <View style={styles.addView}>
               <View
                 style={{
-                  width: widthAdapter(90),
+                  width: widthAdapter(100),
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -214,7 +214,8 @@ class TaskTransactionList extends React.Component {
                   onClick={this.onAddEntries}
                   btnName={I18n.t('TaskSummaryPage.addBtn')}
                   containerStyle={{
-                    alignItems: 'flex-end',
+                    // alignItems: 'flex-end',
+                    padding: 0,
                   }}
                   btnTextStyle={{
                     marginLeft: 0,

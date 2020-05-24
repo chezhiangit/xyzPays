@@ -104,6 +104,7 @@ export default {
     filterPaid: 'Paid',
     filterPending: 'Pending',
     filterDenied: 'Denied',
+    filterApproved: 'Approved',
   },
   trending: {
     headerTitle: 'Trending',
