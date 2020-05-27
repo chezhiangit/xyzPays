@@ -92,6 +92,7 @@ export default StyleSheet.create({
 
   taskListContainer: {
     height: heightAdapter(435),
+    width: widthAdapter(745),
     // borderColor: 'gray',
     // borderWidth: 1,
     // justifyContent: 'center',
@@ -122,13 +123,16 @@ export default StyleSheet.create({
   taskList: {
     // height: heightAdapter(50),
     // // width: '100%',
+    width: widthAdapter(700),
     // borderWidth: 1,
     // borderColor: 'blue',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
   taskItemContainer: {
     width: widthAdapter(700),
-    marginRight: widthAdapter(50),
-    // borderColor: 'blue',
+    // marginRight: widthAdapter(50),
+    // borderColor: 'green',
     // borderWidth: 1,
   },
   taskItemCardContainer: {
@@ -144,12 +148,12 @@ export default StyleSheet.create({
   },
   taskDetailRow: {
     flexDirection: 'row',
-    width: '100%',
-    height: '100%',
+    width: widthAdapter(700),
+    // height: '100%',
   },
   taskNameRow: {
-    width: '70%',
-    height: '100%',
+    width: widthAdapter(500),
+    // height: '100%',
     justifyContent: 'center',
   },
   productName: {
@@ -160,8 +164,8 @@ export default StyleSheet.create({
     color: Clors.primaryAppColor,
   },
   productImageContainer: {
-    width: '30%',
-    height: '100%',
+    width: widthAdapter(200),
+    // height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
