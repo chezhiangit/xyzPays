@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
+import {View, Text, ScrollView, Image} from 'react-native';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -10,12 +10,12 @@ import Footer from '../common/UIComponents/Footer';
 import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';
 import ReadOnlyView from '../common/UIComponents/readOnlyView/ReadOnlyView';
 import styles from './styles';
-import editStyles from './editProfileStyle';
+// import editStyles from './editProfileStyle';
 import Colors from '../uttils/Colors';
 import {getProfileInfo} from '../AppStore/profileActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
-import CheckBoxComponent from '../common/UIComponents/CheckBox/CheckBox';
-import {widthAdapter} from '../uttils/adapterUtil';
+// import CheckBoxComponent from '../common/UIComponents/CheckBox/CheckBox';
+// import {widthAdapter} from '../uttils/adapterUtil';
 // import {displayPhoneNumber} from '../uttils/UtilityFunctions';
 
 class ProfilePage extends React.Component {

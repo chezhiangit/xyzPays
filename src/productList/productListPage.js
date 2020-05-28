@@ -8,7 +8,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
-import {heightAdapter, fontscale, widthAdapter} from '../uttils/adapterUtil';
+import {fontscale, widthAdapter} from '../uttils/adapterUtil';
 // import Images from '../Assets/index';
 import {
   getProductsList,

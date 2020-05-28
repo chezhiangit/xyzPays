@@ -147,9 +147,10 @@ class Main extends React.Component {
       <Drawer.Navigator
         drawerContent={() => <DrawerComponent navigation={navigation} />}
         drawerPosition={'right'}
+        // drawerBackgroundColor={'red'}
         initialRouteName={this.props.initialRoute} //"Home"
         hideStatusBar={false}
-        overlayColor>
+        overlayColor={'rgba(220,220,220,0.7)'}>
         <Drawer.Screen name="Home" component={HomePage} />
         <Drawer.Screen
           name="ProfilePage"

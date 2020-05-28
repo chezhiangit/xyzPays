@@ -14,7 +14,7 @@ import Footer from '../common/UIComponents/Footer';
 // import PrimaryButton from '../common/UIComponents/PrimaryButton';
 // import Images from '../Assets/index';
 import styles from './styles';
-import {widthAdapter, fontscale, heightAdapter} from '../uttils/adapterUtil';
+import {widthAdapter, fontscale} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
 import WarningDialog from '../common/UIComponents/warningDialog';
 import LinkBtnComponent from '../common/UIComponents/LinkBtn/LinkBtn';

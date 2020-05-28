@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 import Clors from '../uttils/Colors';
-import fontFamily from '../uttils/FontFamily';
-import {widthAdapter, fontscale, heightAdapter} from '../uttils/adapterUtil';
+// import fontFamily from '../uttils/FontFamily';
+// import {widthAdapter, fontscale, heightAdapter} from '../uttils/adapterUtil';
 
 export default StyleSheet.create({
   videoViewContainer: {

@@ -10,7 +10,7 @@ import Colors from '../../../uttils/Colors';
 const ReactOnlyView = props => {
   return (
     <View style={[styles.viewStyle, props.viewStyle]}>
-      <Text style={[styles.label, props.labelStyle]}>{props.label}</Text>
+      <Text style={[styles.label, props.labelStyle]}>{props.label ?? ''}</Text>
     </View>
   );
 };

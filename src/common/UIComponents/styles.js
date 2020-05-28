@@ -1,5 +1,10 @@
 import {StyleSheet} from 'react-native';
-import {widthAdapter, heightAdapter, fontscale, deviceWidth} from '../../uttils/adapterUtil';
+import {
+  widthAdapter,
+  heightAdapter,
+  fontscale,
+  deviceWidth,
+} from '../../uttils/adapterUtil';
 import Colors from '../../uttils/Colors';
 import FontsSize from '../../uttils/FontsSize';
 import FontsWeight from '../../uttils/FontsWeight';

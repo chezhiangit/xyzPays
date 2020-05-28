@@ -3,18 +3,26 @@ import {
   widthAdapter,
   heightAdapter,
   fontscale,
-  deviceWidth,
 } from '../../../uttils/adapterUtil';
 import Colors from '../../../uttils/Colors';
-import FontsSize from '../../../uttils/FontsSize';
-import FontsWeight from '../../../uttils/FontsWeight';
+// import FontsSize from '../../../uttils/FontsSize';
+// import FontsWeight from '../../../uttils/FontsWeight';
 import fontFamily from '../../../uttils/FontFamily';
 
 export default StyleSheet.create({
   container: {
     // paddingTop: 20,
     flex: 1,
-    backgroundColor: '#f2f2f2', // 'white',
+    backgroundColor: 'white', // 'white',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.0,
+
+    elevation: 24,
   },
   navItemStyle: {
     padding: widthAdapter(25),
@@ -28,7 +36,7 @@ export default StyleSheet.create({
   sectionHeadingStyle: {
     paddingVertical: widthAdapter(10),
     paddingHorizontal: widthAdapter(5),
-    backgroundColor: '#a9a9a9', // Colors.primaryAppColor,
+    backgroundColor: 'rgb(242,242,242)', // Colors.primaryAppColor,
     fontFamily: fontFamily.primaryFontFamily,
     fontSize: fontscale(20),
   },

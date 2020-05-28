@@ -5,20 +5,18 @@ import {
   FlatList,
   Animated,
   Image,
-  Easing,
-  TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native';
 import {connect} from 'react-redux';
 import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
-import moment from 'moment';
+// import moment from 'moment';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
-import {heightAdapter, fontscale} from '../uttils/adapterUtil';
-import Images from '../Assets/index';
+import {fontscale} from '../uttils/adapterUtil';
+// import Images from '../Assets/index';
 import {
   getTrendingProducts,
   getProductDetailsData,

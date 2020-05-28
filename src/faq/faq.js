@@ -4,22 +4,17 @@ import {
   Text,
   SectionList,
   Animated,
-  Image,
   Easing,
-  TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native';
 import BaseStyles from '../common/BaseStyles';
 import styles from './styles';
-import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
 import {heightAdapter, fontscale} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
-import Images from '../Assets/index';
 import {TextInput} from 'react-native-gesture-handler';
-// import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const faqData = [
   {

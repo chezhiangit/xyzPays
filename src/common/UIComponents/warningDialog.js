@@ -1,19 +1,8 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  DeviceEventEmitter,
-} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import Dialog, {DialogContent} from 'react-native-popup-dialog';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {
-  widthAdapter as adapter,
-  fontscale,
-  widthAdapter,
-} from '../../uttils/adapterUtil';
+import {widthAdapter as adapter, fontscale} from '../../uttils/adapterUtil';
 import images from '../../Assets/index';
 import Colors from '../../uttils/Colors';
 import FontFamily from '../../uttils/FontFamily';

@@ -4,7 +4,6 @@ import {
   Text,
   FlatList,
   Animated,
-  Image,
   Easing,
   TouchableOpacity,
   // TouchableWithoutFeedback,
@@ -18,7 +17,6 @@ import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
 import {heightAdapter, fontscale} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
-import Images from '../Assets/index';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import WarningDialog from '../common/UIComponents/warningDialog';
 // import {displayPhoneNumber} from '../uttils/UtilityFunctions';

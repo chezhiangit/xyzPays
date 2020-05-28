@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
+import {View, Text, ScrollView, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {connect} from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -13,7 +13,7 @@ import CheckBoxComponent from '../common/UIComponents/CheckBox/CheckBox';
 import RadioButton from '../common/UIComponents/RadioButtom/radioButton';
 // import PasswordInputComponent from '../common/UIComponents/PasswordInputComponent';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
-import Images from '../Assets/index';
+// import Images from '../Assets/index';
 import styles from './styles';
 import {widthAdapter, fontscale, heightAdapter} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';

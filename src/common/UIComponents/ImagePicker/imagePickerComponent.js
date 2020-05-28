@@ -1,7 +1,5 @@
 import * as React from 'react';
-import {View, Text, TextInput, NativeModules} from 'react-native';
-// import ImagePicker from 'react-native-image-crop-picker';
-import styles from './styles';
+import {View, NativeModules} from 'react-native';
 import BaseStyles from '../../BaseStyles';
 
 var ImagePicker = NativeModules.ImageCropPicker;

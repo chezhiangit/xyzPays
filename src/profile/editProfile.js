@@ -33,7 +33,7 @@ import {
 import WarningDialog from '../common/UIComponents/warningDialog';
 // import {displayPhoneNumber} from '../uttils/UtilityFunctions';
 import SliderView from '../common/UIComponents/SliderView';
-import {heightAdapter, widthAdapter} from '../uttils/adapterUtil';
+import {heightAdapter} from '../uttils/adapterUtil';
 
 let ImagePicker = NativeModules.ImageCropPicker;
 
@@ -372,57 +372,57 @@ class EditProfilePage extends React.Component {
               autoFocus={false}
               onTextChange={FirstName => this.setState({FirstName})}
               // onTextChange={this.onFirnameChanged}
-              inputValue={this.state.FirstName}
+              inputValue={this.state.FirstName ?? ''}
             />
             <TextInputComponent
               placeholder={I18n.t('editProfile.lastName')}
               autoFocus={false}
               onTextChange={text => this.setState({LastName: text})}
-              inputValue={this.state.LastName}
+              inputValue={this.state.LastName ?? ''}
             />
             <EmailInputComponent
               placeholder={I18n.t('editProfile.email')}
               autoFocus={false}
               // onTextChange={text => this.setState({PaypalEmail: text})}
               onEmailEntered={PaypalEmail => this.setState({PaypalEmail})}
-              email={this.state.PaypalEmail}
+              email={this.state.PaypalEmail ?? ''}
             />
             <TextInputComponent
               placeholder={I18n.t('editProfile.mobileNumber')}
               autoFocus={false}
               onTextChange={text => this.setState({Mobile: text})}
-              inputValue={this.state.Mobile}
+              inputValue={this.state.Mobile ?? ''}
               phone
             />
             <TextInputComponent
               placeholder={I18n.t('editProfile.address')}
               autoFocus={false}
               onTextChange={text => this.setState({AddressLine: text})}
-              inputValue={this.state.AddressLine}
+              inputValue={this.state.AddressLine ?? ''}
             />
             <TextInputComponent
               placeholder={I18n.t('editProfile.state')}
               autoFocus={false}
               onTextChange={text => this.setState({State: text})}
-              inputValue={this.state.State}
+              inputValue={this.state.State ?? ''}
             />
             <TextInputComponent
               placeholder={I18n.t('editProfile.city')}
               autoFocus={false}
               onTextChange={text => this.setState({City: text})}
-              inputValue={this.state.City}
+              inputValue={this.state.City ?? ''}
             />
             <TextInputComponent
               placeholder={I18n.t('editProfile.zipCode')}
               autoFocus={false}
               onTextChange={text => this.setState({ZipCode: text})}
-              inputValue={this.state.ZipCode}
+              inputValue={this.state.ZipCode ?? ''}
             />
             <TextInputComponent
               placeholder={I18n.t('editProfile.website')}
               autoFocus={false}
               onTextChange={text => this.setState({Website: text})}
-              inputValue={this.state.Website}
+              inputValue={this.state.Website ?? ''}
             />
             <View style={BaseStyles.emptyHView} />
             <PrimaryButton

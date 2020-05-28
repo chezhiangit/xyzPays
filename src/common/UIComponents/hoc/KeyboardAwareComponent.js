@@ -1,10 +1,6 @@
 import React, {PureComponent} from 'react';
 import {Animated, Keyboard, Easing} from 'react-native';
-import {
-  heightAdapter,
-  widthAdapter,
-  fontscale,
-} from '../../../uttils/adapterUtil';
+import {heightAdapter} from '../../../uttils/adapterUtil';
 
 const KeyboardAwareComponent = ChildComponent =>
   class ParentComponent extends PureComponent {

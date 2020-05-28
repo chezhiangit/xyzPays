@@ -7,7 +7,6 @@ import {
   Animated,
   Easing,
 } from 'react-native';
-// import {TouchableOpacity} from 'react-native-gesture-handler';
 import styles from './styles';
 import {heightAdapter} from '../../../uttils/adapterUtil';
 

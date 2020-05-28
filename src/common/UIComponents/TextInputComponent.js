@@ -1,8 +1,6 @@
 import * as React from 'react';
 import {View, Text, TextInput} from 'react-native';
 import styles from './styles';
-// import {placeholder} from 'i18n-js';
-// import {displayPhoneNumber, checkPhone} from '../../uttils/UtilityFunctions';
 
 class TextInputComponent extends React.Component {
   constructor(props) {

@@ -1,11 +1,5 @@
 import * as React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Animated,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import {Text, Animated, TouchableWithoutFeedback} from 'react-native';
 import styles from './styles';
 import SprinnerView from './hoc/SpinnerView';
 

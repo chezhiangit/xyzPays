@@ -4,7 +4,6 @@ import {
   Text,
   FlatList,
   Animated,
-  Image,
   Easing,
   TouchableOpacity,
   // TouchableWithoutFeedback,
@@ -18,13 +17,11 @@ import moment from 'moment';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
 import {heightAdapter} from '../uttils/adapterUtil';
-import Images from '../Assets/index';
 import Colors from '../uttils/Colors';
 import WarningDialog from '../common/UIComponents/warningDialog';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 // import {displayPhoneNumber} from '../uttils/UtilityFunctions';
 import {
-  getReferralRegFilter,
   getReferralCommissionList,
   getReferralDateFilter,
 } from '../AppStore/referralActions';
