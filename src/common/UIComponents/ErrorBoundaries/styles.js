@@ -1,0 +1,95 @@
+import {StyleSheet} from 'react-native';
+import {
+  widthAdapter as adapter,
+  fontscale,
+  widthAdapter,
+} from '../../../uttils/adapterUtil';
+import images from '../../../Assets/index';
+import Colors from '../../../uttils/Colors';
+import FontFamily from '../../../uttils/FontFamily';
+
+export default StyleSheet.create({
+  warningImageContainer: {
+    // width: '100%',
+    // height: adapter(80),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  warningImage: {
+    // width: adapter(57),
+    // height: adapter(56),
+    marginTop: adapter(40),
+    marginBottom: adapter(40),
+  },
+  warningTextContainer: {
+    flexDirection: 'row',
+    height: adapter(200),
+    alignItems: 'center',
+    justifyContent: 'center',
+    // borderColor: 'red',
+    // borderWidth: 1,
+  },
+  WarningText: {
+    // fontFamily: 'Roboto-Regular',
+    fontSize: fontscale(20),
+    // lineHeight: adapter(24),
+    // textAlign: 'center',
+    color: 'rgb(66,66,66)',
+    // marginTop: adapter(24),
+    fontFamily: FontFamily.primaryFontFamily,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // borderWidth: 1,
+    // borderColor: 'green',
+    marginTop: adapter(30),
+  },
+  cancelButton: {
+    width: adapter(250),
+    height: adapter(75),
+    borderRadius: adapter(4),
+    backgroundColor: 'rgb(255,255,255)',
+    // marginLeft: adapter(22),
+    // marginTop: adapter(70),
+    borderColor: Colors.primaryAppColor,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: adapter(15),
+  },
+  cancelButtonText: {
+    color: 'rgb(66,66,66)', //'rgb(0,113,233)',
+    fontSize: fontscale(15),
+    // fontFamily: 'Roboto-Medium',
+    textAlign: 'center',
+    // lineHeight: adapter(24),
+    // marginTop: adapter(8),
+    // borderWidth: 1,
+    // borderColor: 'green',
+    fontWeight: 'bold',
+    fontFamily: FontFamily.primaryFontFamily,
+  },
+  okButton: {
+    width: adapter(250),
+    height: adapter(75),
+    borderRadius: adapter(4),
+    borderColor: Colors.primaryAppColor,
+    borderWidth: 1,
+    backgroundColor: Colors.primaryAppColor,
+    // marginTop: adapter(70),
+    // marginLeft: adapter(24),
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: adapter(15),
+  },
+  doneText: {
+    color: 'rgb(255,255,255)',
+    fontSize: fontscale(15),
+    fontFamily: FontFamily.primaryFontFamily,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+});

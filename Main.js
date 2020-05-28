@@ -50,7 +50,10 @@ import Colors from './src/uttils/Colors';
 import FontsSize from './src/uttils/FontsSize';
 import fontFamily from './src/uttils/FontFamily';
 import FontsWeight from './src/uttils/FontsWeight';
-// import Spinner from 'react-native-loading-spinner-overlay';
+
+import ErrorBoundary from './src/common/UIComponents/ErrorBoundaries/ErrorBoundaries';
+
+// import DummyPage from './src/dummypages/testpage1';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -546,69 +549,71 @@ class Main extends React.Component {
 
   render() {
     return (
-      <NavigationContainer>
-        {this.props.userLoggedIn === false ? (
-          <Stack.Navigator
-            initialRouteName="Login"
-            screenOptions={{
-              headerStyle: {
-                backgroundColor: Colors.primaryAppColor,
-              },
-              headerTintColor: Colors.primaryFontColor,
-              headerTitleStyle: {
-                fontSize: FontsSize.headerName,
-                fontWeight: FontsWeight.header,
-                color: Colors.primaryFontColor,
-                fontFamily: fontFamily.primaryFontFamily,
-              },
-            }}>
-            <Stack.Screen
-              name="Login"
-              component={LoginPage}
-              options={{
-                title: I18n.t('login.headerTitle'),
-              }}
-            />
-            <Stack.Screen
-              name="UserRegistration"
-              component={UserRegistration}
-              options={{
-                title: I18n.t('userRegistration.headerTitle'),
-              }}
-            />
-            <Stack.Screen
-              name="ForgotPassword"
-              component={ForgotPassword}
-              options={{
-                title: I18n.t('forgotPassword.headerTitle'),
-              }}
-            />
-            <Stack.Screen
-              name="ForgotPasswordStep2"
-              component={ForgotPasswordStep2}
-              options={{
-                title: I18n.t('forgotPassword.headerTitle'),
-              }}
-            />
-            <Stack.Screen
-              name="ForgotPasswordStep3"
-              component={ForgotPasswordStep3}
-              options={{
-                title: I18n.t('forgotPassword.headerTitle'),
-              }}
-            />
-            <Stack.Screen
-              name="ForgotPasswordStep4"
-              component={ForgotPasswordStep4}
-              options={{
-                title: I18n.t('forgotPassword.headerTitle'),
-              }}
-            />
-          </Stack.Navigator>
-        ) : (
-          this.renderPage()
-        )}
-      </NavigationContainer>
+      <ErrorBoundary>
+        <NavigationContainer>
+          {this.props.userLoggedIn === false ? (
+            <Stack.Navigator
+              initialRouteName="Login"
+              screenOptions={{
+                headerStyle: {
+                  backgroundColor: Colors.primaryAppColor,
+                },
+                headerTintColor: Colors.primaryFontColor,
+                headerTitleStyle: {
+                  fontSize: FontsSize.headerName,
+                  fontWeight: FontsWeight.header,
+                  color: Colors.primaryFontColor,
+                  fontFamily: fontFamily.primaryFontFamily,
+                },
+              }}>
+              <Stack.Screen
+                name="Login"
+                component={LoginPage}
+                options={{
+                  title: I18n.t('login.headerTitle'),
+                }}
+              />
+              <Stack.Screen
+                name="UserRegistration"
+                component={UserRegistration}
+                options={{
+                  title: I18n.t('userRegistration.headerTitle'),
+                }}
+              />
+              <Stack.Screen
+                name="ForgotPassword"
+                component={ForgotPassword}
+                options={{
+                  title: I18n.t('forgotPassword.headerTitle'),
+                }}
+              />
+              <Stack.Screen
+                name="ForgotPasswordStep2"
+                component={ForgotPasswordStep2}
+                options={{
+                  title: I18n.t('forgotPassword.headerTitle'),
+                }}
+              />
+              <Stack.Screen
+                name="ForgotPasswordStep3"
+                component={ForgotPasswordStep3}
+                options={{
+                  title: I18n.t('forgotPassword.headerTitle'),
+                }}
+              />
+              <Stack.Screen
+                name="ForgotPasswordStep4"
+                component={ForgotPasswordStep4}
+                options={{
+                  title: I18n.t('forgotPassword.headerTitle'),
+                }}
+              />
+            </Stack.Navigator>
+          ) : (
+            this.renderPage()
+          )}
+        </NavigationContainer>
+      </ErrorBoundary>
     );
   }
 }
