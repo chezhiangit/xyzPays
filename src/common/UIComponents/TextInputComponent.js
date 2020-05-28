@@ -1,14 +1,8 @@
 import * as React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  TextInput,
-} from 'react-native';
+import {View, Text, TextInput} from 'react-native';
 import styles from './styles';
-import {placeholder} from 'i18n-js';
-import {displayPhoneNumber, checkPhone} from '../../uttils/UtilityFunctions';
+// import {placeholder} from 'i18n-js';
+// import {displayPhoneNumber, checkPhone} from '../../uttils/UtilityFunctions';
 
 class TextInputComponent extends React.Component {
   constructor(props) {
@@ -24,7 +18,7 @@ class TextInputComponent extends React.Component {
     // if (props.inputValue?.length === 0) {
     //   return {validInput: true};
     // }
-    if (props.inputValue.length > 0) {
+    if (props.inputValue?.length > 0) {
       return {focus: true};
     }
     return {};
@@ -69,7 +63,7 @@ class TextInputComponent extends React.Component {
           }}
           value={this.props.inputValue}
         />
-        {this.state.focus && this.props.placeholder.length > 0 && (
+        {this.state.focus && this.props.placeholder?.length > 0 && (
           <Text style={styles.captionText}>{this.props.placeholder}</Text>
         )}
       </View>

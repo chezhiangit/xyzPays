@@ -57,7 +57,7 @@ class EmailInputComponent extends React.Component {
           placeholderTextColor="rgb(117, 129, 155)"
           autoCorrect={false}
           placeholder={
-            !this.state.focus && this.props.email.length === 0
+            !this.state.focus && this.props.email?.length === 0
               ? this.props.placeholder
               : ''
           }
@@ -67,7 +67,7 @@ class EmailInputComponent extends React.Component {
           }}
           // onEndEditing={() => this.props.onEmailEntered(this.state.email)}
           onBlur={() => {
-            if (this.props.email.length === 0) {
+            if (this.props.email?.length === 0) {
               this.setState({focus: false});
             }
           }}
