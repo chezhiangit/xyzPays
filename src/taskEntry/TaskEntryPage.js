@@ -316,7 +316,7 @@ class TaskEntryPage extends React.Component {
               <Text style={{fontSize: fontscale(16)}}>{item.ControlLabel}</Text>
               {item.ControlReq && (
                 <Text style={{fontSize: fontscale(12), color: 'red'}}>
-                  (Mandatory)
+                  <Icon name="star" size={fontscale(12)} color={'red'} />
                 </Text>
               )}
             </View>
