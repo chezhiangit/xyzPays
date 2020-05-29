@@ -59,7 +59,7 @@ function* registerUser(action) {
       response.status === 200 &&
       response.IsRegistrationSuccess
     ) {
-      action.onSuccesscallback();
+      action.onSuccesscallback(response.Message);
     } else if (response !== null) {
       action.onErrorcallback(response.Message);
     } else {

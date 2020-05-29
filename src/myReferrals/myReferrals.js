@@ -15,6 +15,7 @@ import styles from './styles';
 import moment from 'moment';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
+import NoRecordsFoundView from '../common/UIComponents/NoRecordsFoundView/noRecordsFoundView';
 import {heightAdapter, fontscale} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -262,6 +263,10 @@ class MyReferrals extends React.Component {
     }
   };
 
+  renderNoRecordsFound = () => {
+    return <NoRecordsFoundView />;
+  };
+
   renderReferralsCard = ({item, index}) => {
     return (
       <View style={styles.referralsItemContainer}>
@@ -424,13 +429,17 @@ class MyReferrals extends React.Component {
               <View style={styles.transparentView} />
             </TouchableOpacity>
           )}
-          <FlatList
-            style={styles.referralList}
-            data={this.state.commissionData}
-            renderItem={this.renderReferralsCard}
-            keyExtractor={(item, index) => index}
-            showsVerticalScrollIndicator={false}
-          />
+          {this.props.userList.length > 0 ? (
+            <FlatList
+              style={styles.referralList}
+              data={this.state.commissionData}
+              renderItem={this.renderReferralsCard}
+              keyExtractor={(item, index) => index}
+              showsVerticalScrollIndicator={false}
+            />
+          ) : (
+            this.renderNoRecordsFound()
+          )}
         </View>
         <Footer />
         <WarningDialog

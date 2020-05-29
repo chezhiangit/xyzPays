@@ -36,6 +36,7 @@ class UserRegistration extends React.Component {
       showDlg: false,
       dlgMsg: '',
       checkBoxesStatus: [],
+      rigstrationSuccess: false,
     };
   }
 
@@ -96,8 +97,13 @@ class UserRegistration extends React.Component {
     }
   };
 
-  onRegistrationSuccess = () => {
-    this.setState({isLoading: false}, () => this.props.navigation.goBack());
+  onRegistrationSuccess = msg => {
+    this.setState({
+      isLoading: false,
+      showDlg: true,
+      dlgMsg: msg,
+      rigstrationSuccess: true,
+    });
   };
 
   onRegistrationFailed = errorMsg => {
@@ -110,7 +116,12 @@ class UserRegistration extends React.Component {
   };
 
   onConfirm = () => {
-    this.setState({showDlg: false});
+    if (this.state.rigstrationSuccess) {
+      this.setState({showDlg: false, rigstrationSuccess: false});
+      this.props.navigation.goBack();
+    } else {
+      this.setState({showDlg: false});
+    }
   };
 
   onCheckBoxSelected = index => {

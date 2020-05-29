@@ -15,6 +15,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
+import NoRecordsFoundView from '../common/UIComponents/NoRecordsFoundView/noRecordsFoundView';
 import {fontscale} from '../uttils/adapterUtil';
 // import Images from '../Assets/index';
 import {
@@ -93,6 +94,10 @@ class TrendingPage extends React.Component {
       dlgMsg: errorMsg,
     });
     console.log(errorMsg);
+  };
+
+  renderNoRecordsFound = () => {
+    return <NoRecordsFoundView />;
   };
 
   renderTrendingCard = ({item, index}) => {
@@ -175,14 +180,18 @@ class TrendingPage extends React.Component {
               {I18n.t('trending.userInfo')}
             </Text>
           </View>
-          <FlatList
-            style={styles.trendingList}
-            // data={this.state.trendingData}
-            data={this.props.trendingProductList}
-            renderItem={this.renderTrendingCard}
-            keyExtractor={(item, index) => index}
-            showsVerticalScrollIndicator={false}
-          />
+          {this.props.trendingProductList.length > 0 ? (
+            <FlatList
+              style={styles.trendingList}
+              // data={this.state.trendingData}
+              data={this.props.trendingProductList}
+              renderItem={this.renderTrendingCard}
+              keyExtractor={(item, index) => index}
+              showsVerticalScrollIndicator={false}
+            />
+          ) : (
+            this.renderNoRecordsFound()
+          )}
         </View>
         <Footer />
         <WarningDialog

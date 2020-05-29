@@ -17,6 +17,7 @@ import styles from './styles';
 import moment from 'moment';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
+import NoRecordsFoundView from '../common/UIComponents/NoRecordsFoundView/noRecordsFoundView';
 import {heightAdapter, fontscale} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
 import Images from '../Assets/index';
@@ -196,6 +197,10 @@ class CommissionPage extends React.Component {
     }
   };
 
+  renderNoRecordsFound = () => {
+    return <NoRecordsFoundView />;
+  };
+
   renderCommissionCard = ({item, index}) => {
     return (
       <View style={styles.commissionItemContainer}>
@@ -343,13 +348,17 @@ class CommissionPage extends React.Component {
               </View>
             </TouchableWithoutFeedback>
           </View>
-          <FlatList
-            style={styles.commissionList}
-            data={this.props.commissionList}
-            renderItem={this.renderCommissionCard}
-            keyExtractor={(item, index) => index}
-            showsVerticalScrollIndicator={false}
-          />
+          {this.props.commissionList.length > 0 ? (
+            <FlatList
+              style={styles.commissionList}
+              data={this.props.commissionList}
+              renderItem={this.renderCommissionCard}
+              keyExtractor={(item, index) => index}
+              showsVerticalScrollIndicator={false}
+            />
+          ) : (
+            this.renderNoRecordsFound()
+          )}
           {(this.state.isSegmentVisible || this.state.showFilter) && (
             <TouchableOpacity
               style={styles.transparentView}

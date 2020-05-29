@@ -298,4 +298,7 @@ export default {
   videoPage: {
     headerTitle: 'XYZ pays Demo',
   },
+  noRecordsFound: {
+    info: 'No Records found',
+  },
 };

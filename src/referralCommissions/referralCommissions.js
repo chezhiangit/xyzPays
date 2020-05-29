@@ -16,6 +16,7 @@ import styles from './styles';
 import moment from 'moment';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
+import NoRecordsFoundView from '../common/UIComponents/NoRecordsFoundView/noRecordsFoundView';
 import {heightAdapter} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
 import WarningDialog from '../common/UIComponents/warningDialog';
@@ -147,6 +148,10 @@ class ReferralCommissions extends React.Component {
         // useNativeDriver: true,
       }).start(() => this.setState({segmentBorder: 0}));
     }
+  };
+
+  renderNoRecordsFound = () => {
+    return <NoRecordsFoundView />;
   };
 
   renderCommissionCard = ({item, index}) => {
@@ -380,13 +385,17 @@ class ReferralCommissions extends React.Component {
               <View style={styles.transparentView} />
             </TouchableOpacity>
           )}
-          <FlatList
-            style={styles.commissionList}
-            data={this.props.referralCommissionList}
-            renderItem={this.renderCommissionCard}
-            keyExtractor={(item, index) => index}
-            showsVerticalScrollIndicator={false}
-          />
+          {this.props.referralCommissionList.length > 0 ? (
+            <FlatList
+              style={styles.commissionList}
+              data={this.props.referralCommissionList}
+              renderItem={this.renderCommissionCard}
+              keyExtractor={(item, index) => index}
+              showsVerticalScrollIndicator={false}
+            />
+          ) : (
+            this.renderNoRecordsFound()
+          )}
         </View>
         <Footer />
         <WarningDialog

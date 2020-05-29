@@ -7,6 +7,7 @@ import {Dropdown} from 'react-native-material-dropdown';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
+import NoRecordsFoundView from '../common/UIComponents/NoRecordsFoundView/noRecordsFoundView';
 // import TextInputComponent from '../common/UIComponents/TextInputComponent';
 // import CheckBoxComponent from '../common/UIComponents/CheckBox/CheckBox';
 // import RadioButton from '../common/UIComponents/RadioButtom/radioButton';
@@ -118,6 +119,10 @@ class TaskTransactionList extends React.Component {
     );
   };
 
+  renderNoRecordsFound = () => {
+    return <NoRecordsFoundView />;
+  };
+
   renderTaskList = ({item, index}) => {
     console.log('task item ....', item);
     return (
@@ -219,13 +224,17 @@ class TaskTransactionList extends React.Component {
               </View>
             </View>
           </View>
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            style={styles.taskListView}
-            data={this.props.taskList}
-            renderItem={this.renderTaskList}
-            keyExtractor={(item, index) => index}
-          />
+          {this.props.taskList.length > 0 ? (
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              style={styles.taskListView}
+              data={this.props.taskList}
+              renderItem={this.renderTaskList}
+              keyExtractor={(item, index) => index}
+            />
+          ) : (
+            this.renderNoRecordsFound()
+          )}
         </View>
         {/* </ScrollView> */}
         <Footer />

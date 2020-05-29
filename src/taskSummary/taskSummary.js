@@ -7,6 +7,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import BaseStyles from '../common/BaseStyles';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
+import NoRecordsFoundView from '../common/UIComponents/NoRecordsFoundView/noRecordsFoundView';
 // import TextInputComponent from '../common/UIComponents/TextInputComponent';
 // import CheckBoxComponent from '../common/UIComponents/CheckBox/CheckBox';
 // import RadioButton from '../common/UIComponents/RadioButtom/radioButton';
@@ -153,6 +154,10 @@ class TaskSummaryPage extends React.Component {
     });
   };
 
+  renderNoRecordsFound = () => {
+    return <NoRecordsFoundView />;
+  };
+
   renderLatestTransaction = (item, index) => {
     return (
       <TouchableOpacity onPress={() => this.taksItemSelected(item, index)}>
@@ -225,7 +230,7 @@ class TaskSummaryPage extends React.Component {
                       color={Colors.linkBtnColor}
                     />
                   </Text>
-                  
+
                   <LinkBtnComponent
                     onClick={this.onAddEntries}
                     btnName={I18n.t('TaskSummaryPage.addBtn')}
@@ -245,9 +250,15 @@ class TaskSummaryPage extends React.Component {
                 {I18n.t('TaskSummaryPage.transHeader')}
               </Text>
             </View>
-            <View style={styles.transListView}>
-              {this.props.lastFiveTransaction.map(this.renderLatestTransaction)}
-            </View>
+            {this.props.lastFiveTransaction.length > 0 ? (
+              <View style={styles.transListView}>
+                {this.props.lastFiveTransaction.map(
+                  this.renderLatestTransaction,
+                )}
+              </View>
+            ) : (
+              this.renderNoRecordsFound()
+            )}
           </View>
         </ScrollView>
         <Footer />

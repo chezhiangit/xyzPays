@@ -19,6 +19,7 @@ import styles from './styles';
 import I18n from '../localization/i18n';
 // import Header from '../common/UIComponents/Header';
 import Footer from '../common/UIComponents/Footer';
+import NoRecordsFoundView from '../common/UIComponents/NoRecordsFoundView/noRecordsFoundView';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import {heightAdapter, widthAdapter, fontscale} from '../uttils/adapterUtil';
 import Colors from '../uttils/Colors';
@@ -259,6 +260,10 @@ class PayoutHistory extends React.Component {
     }
   };
 
+  renderNoRecordsFound = () => {
+    return <NoRecordsFoundView />;
+  };
+
   renderPayoutCard = ({item, index}) => {
     return (
       <View>
@@ -452,13 +457,17 @@ class PayoutHistory extends React.Component {
               <View style={styles.transparentView} />
             </TouchableOpacity>
           )}
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            style={styles.payoutList}
-            data={this.props.payoutHistoryList}
-            renderItem={this.renderPayoutCard}
-            keyExtractor={(item, index) => index}
-          />
+          {this.props.payoutHistoryList.length > 0 ? (
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              style={styles.payoutList}
+              data={this.props.payoutHistoryList}
+              renderItem={this.renderPayoutCard}
+              keyExtractor={(item, index) => index}
+            />
+          ) : (
+            this.renderNoRecordsFound()
+          )}
         </View>
         <Footer />
         <WarningDialog

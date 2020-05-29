@@ -28,6 +28,7 @@ class ReferAndEarn extends React.Component {
       name: '',
       mobileNumber: '',
       isLoading: false,
+      userReferralSuccess: false,
     };
   }
   onSendMessage = () => {
@@ -71,7 +72,13 @@ class ReferAndEarn extends React.Component {
   };
 
   onConfirm = () => {
-    this.setState({showDlg: false});
+    if (this.state.userReferralSuccess) {
+      this.setState({showDlg: false, userReferralSuccess: false}, () =>
+        this.onViewReferrals(),
+      );
+    } else {
+      this.setState({showDlg: false});
+    }
   };
 
   onPostUserdDataSuccess = msg => {
@@ -82,6 +89,7 @@ class ReferAndEarn extends React.Component {
       isLoading: false,
       showDlg: true,
       dlgMsg: msg,
+      userReferralSuccess: true,
     });
   };
 

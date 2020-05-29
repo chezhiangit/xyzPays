@@ -8,6 +8,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import I18n from '../localization/i18n';
 import Footer from '../common/UIComponents/Footer';
+import NoRecordsFoundView from '../common/UIComponents/NoRecordsFoundView/noRecordsFoundView';
 import {fontscale, widthAdapter} from '../uttils/adapterUtil';
 // import Images from '../Assets/index';
 import {
@@ -89,6 +90,10 @@ class ProductsListPage extends React.Component {
     </View>
   );
 
+  renderNoRecordsFound = () => {
+    return <NoRecordsFoundView />;
+  };
+
   renderTrendingCard = (item, index) => {
     return (
       <View style={styles.trendingItemContainer}>
@@ -151,9 +156,11 @@ class ProductsListPage extends React.Component {
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={styles.trendingList}>
-            {this.props.productsList?.map((item, index) =>
-              this.renderTrendingCard(item, index),
-            )}
+            {this.props.productsList.length > 0
+              ? this.props.productsList?.map((item, index) =>
+                  this.renderTrendingCard(item, index),
+                )
+              : this.renderNoRecordsFound()}
             <View style={styles.referEarnContainer}>
               <View style={styles.titleRow}>
                 <Text style={styles.titlTextRefer}>Refer</Text>
