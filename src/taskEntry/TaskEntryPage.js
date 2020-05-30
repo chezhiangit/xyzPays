@@ -315,8 +315,8 @@ class TaskEntryPage extends React.Component {
               }}>
               <Text style={{fontSize: fontscale(16)}}>{item.ControlLabel}</Text>
               {item.ControlReq && (
-                <Text style={{fontSize: fontscale(12), color: 'red'}}>
-                  <Icon name="star" size={fontscale(12)} color={'red'} />
+                <Text style={{fontSize: fontscale(12)}}>
+                  {'\u2B51'}
                 </Text>
               )}
             </View>
@@ -351,8 +351,8 @@ class TaskEntryPage extends React.Component {
               }}>
               <Text style={{fontSize: fontscale(16)}}>{item.ControlLabel}</Text>
               {item.ControlReq && (
-                <Text style={{fontSize: fontscale(12), color: 'red'}}>
-                  (Mandatory)
+                <Text style={{fontSize: fontscale(12)}}>
+                  {'\u2B51'}
                 </Text>
               )}
             </View>
@@ -388,7 +388,7 @@ class TaskEntryPage extends React.Component {
                 justifyContent: 'flex-start',
               }}>
               <Text>{item.ControlLabel}</Text>
-              {item.ControlReq && <Text>(Mandatory)</Text>}
+              {item.ControlReq && <Text>{'\u2B51'}</Text>}
             </View>
             <View
               style={{
@@ -414,8 +414,7 @@ class TaskEntryPage extends React.Component {
             />
             <Dropdown
               label={
-                item.ControlLabel +
-                (item.ControlReq === false ? '' : '(Mandatory)')
+                item.ControlLabel + (item.ControlReq === false ? '' : '\u2B51')
               }
               data={item.dropDownGroup}
               inputContainerStyle={{width: widthAdapter(700)}}

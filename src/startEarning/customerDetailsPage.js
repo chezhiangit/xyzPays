@@ -303,9 +303,7 @@ class CustomerDetailsPage extends React.Component {
               )}
             </View> */}
             <TextInputComponent
-              placeholder={
-                item.placeholder + (item.ControlReq ? '(Mandatory)' : '')
-              }
+              placeholder={item.placeholder + (item.ControlReq ? '\u2B51' : '')}
               autoFocus={false}
               inputValue={this.state.components[index].inputValue}
               onTextChange={text => this.onTextChange(text, index)}
@@ -336,7 +334,7 @@ class CustomerDetailsPage extends React.Component {
               <Text style={{fontSize: fontscale(16)}}>{item.ControlLabel}</Text>
               {item.ControlReq && (
                 <Text style={{fontSize: fontscale(12), color: 'red'}}>
-                  (Mandatory)
+                  {'\u2B51'}
                 </Text>
               )}
             </View>
@@ -372,7 +370,7 @@ class CustomerDetailsPage extends React.Component {
                 justifyContent: 'flex-start',
               }}>
               <Text>{item.ControlLabel}</Text>
-              {item.ControlReq && <Text>(Mandatory)</Text>}
+              {item.ControlReq && <Text>{'\u2B51'}</Text>}
             </View>
             <View
               style={{
@@ -398,8 +396,7 @@ class CustomerDetailsPage extends React.Component {
             />
             <Dropdown
               label={
-                item.ControlLabel +
-                (item.ControlReq === false ? '' : '(Mandatory)')
+                item.ControlLabel + (item.ControlReq === false ? '' : '\u2B51')
               }
               data={item.dropDownGroup}
               inputContainerStyle={{width: widthAdapter(700)}}
@@ -515,16 +512,16 @@ class CustomerDetailsPage extends React.Component {
                     </Text>
                   </View>
                   <View>
-                  <LinkBtnComponent
-                    onClick={this.onViewAllEntries}
-                    btnName={
-                      I18n.t('LeadTaskEntry.viewAll') +
-                      '(' +
-                      this.props.formInfo.TotalEntries +
-                      ')'
-                    }
-                    containerStyle={styles.viewAllLinkContainer}
-                  />
+                    <LinkBtnComponent
+                      onClick={this.onViewAllEntries}
+                      btnName={
+                        I18n.t('LeadTaskEntry.viewAll') +
+                        '(' +
+                        this.props.formInfo.TotalEntries +
+                        ')'
+                      }
+                      containerStyle={styles.viewAllLinkContainer}
+                    />
                   </View>
                 </View>
               </View>

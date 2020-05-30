@@ -36,11 +36,13 @@ class VideoPage extends React.Component {
     );
     return (
       <WebView
-        source={{
-          html: `<iframe width="100%" height="75%" src=${
-            this.props.formInfo.VideoLink
-          } frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`,
-        }}
+        source={{uri: this.props.formInfo.VideoLink}}
+        style={{flex: 1}}
+        //   source={{
+        //     html: `<iframe width="100%" height="100%" src=${
+        //       this.props.formInfo.VideoLink
+        //     } frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`,
+        //   }}
         onLoadEnd={() => this.setState({isLoading: false})}
       />
     );
@@ -48,15 +50,9 @@ class VideoPage extends React.Component {
 
   render() {
     return (
-      <View style={[BaseStyles.baseContainer]}>
+      <View style={{flex: 1}}>
         <View style={styles.videoViewContainer}>{this.renderVideo()}</View>
-        <Footer />
-        {/* <WarningDialog
-          shouldShowDeleteWarning={this.state.showDlg}
-          // onCancel={this.onCancel}
-          onOK={this.onConfirm}
-          dlgMsg={this.state.dlgMsg}
-        /> */}
+        {/* <Footer /> */}
         <Spinner visible={this.state.isLoading} textContent={'Loading...'} />
       </View>
     );
@@ -69,8 +65,7 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-});
+const mapDispatchToProps = dispatch => ({});
 
 export default connect(
   mapStateToProps,
