@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   box: {
     width: widthAdapter(35),
     height: widthAdapter(35),
-    marginLeft: widthAdapter(10),
+    // marginLeft: widthAdapter(10),
     marginRight: widthAdapter(20),
     borderWidth: 1,
     borderColor: 'gray',
@@ -29,9 +29,16 @@ const styles = StyleSheet.create({
     height: heightAdapter(60),
     alignItems: 'center',
     justifyContent: 'center',
-    margin: widthAdapter(10),
+    marginRight: widthAdapter(10),
     // borderWidth: 1,
     // borderColor: 'red',
+  },
+  providerImage: {
+    height: heightAdapter(40),
+    width: heightAdapter(40),
+    marginRight: widthAdapter(10),
+    // borderColor: 'gray',
+    // borderWidth: 1,
   },
 });
 

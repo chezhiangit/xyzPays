@@ -12,7 +12,7 @@ import ReadOnlyView from '../common/UIComponents/readOnlyView/ReadOnlyView';
 import styles from './styles';
 // import editStyles from './editProfileStyle';
 import Colors from '../uttils/Colors';
-import {getProfileInfo} from '../AppStore/profileActions';
+import {getProfileInfo, getProviderInfo} from '../AppStore/profileActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
 // import CheckBoxComponent from '../common/UIComponents/CheckBox/CheckBox';
 // import {widthAdapter} from '../uttils/adapterUtil';
@@ -57,12 +57,16 @@ class ProfilePage extends React.Component {
         this.onGetProfileInfoSuccess,
         this.onGetProfileInfoFailed,
       );
+      this.props.getProviderInfo(
+        this.onGetProviderInfoSuccess,
+        this.onGetProviderInfoFailed,
+      );
     });
-    // this.props.getProfileInfo(
-    //   this.onGetProfileInfoSuccess,
-    //   this.onGetProfileInfoFailed,
-    // );
   }
+
+  onGetProviderInfoSuccess = () => {};
+
+  onGetProviderInfoFailed = () => {};
 
   onGetProfileInfoSuccess = () => {
     this.setState({isLoading: false, profileInfoServiceDone: true});
@@ -97,6 +101,17 @@ class ProfilePage extends React.Component {
     //     checBoxArray,
     //   };
     // });
+  };
+
+  parserSelectedProviders = () => {
+    let provdersSelected = '';
+    this.props.providersInfo.forEach(element => {
+      if (element.ProviderUserSelection === 'Selected') {
+        provdersSelected += element.ProviderName + ', ';
+      }
+    });
+    // provdersSelected.length > 0 && provdersSelected.slice(-1,);
+    return provdersSelected;
   };
 
   render() {
@@ -316,12 +331,17 @@ class ProfilePage extends React.Component {
           </View>
           <View style={BaseStyles.emptyHView} />
           <View style={BaseStyles.emptyHView} />
-          {/* <View style={styles.labelContainer}>
+          <View style={styles.providersContainer}>
             <ReadOnlyView
-              label={I18n.t('profile.interest')}
+              label={I18n.t('profile.providers')}
               labelStyle={styles.accountInforLabel}
             />
-          </View> */}
+            <ReadOnlyView
+              viewStyle={styles.providersViewStyle}
+              label={this.parserSelectedProviders()}
+              labelStyle={styles.label}
+            />
+          </View>
           {/* <View style={editStyles.interestContainer}>
             <CheckBoxComponent
               btnName={'Healthcare'}
@@ -367,12 +387,15 @@ const mapStateToProps = state => {
   console.log('state from profile info page ... ', state);
   return {
     profileInfo: state.profileInfo.profileInfo,
+    providersInfo: state.profileInfo.providersInfo,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   getProfileInfo: (onSuccesscallback, onErrorcallback) =>
     dispatch(getProfileInfo(onSuccesscallback, onErrorcallback)),
+  getProviderInfo: (onSuccesscallback, onErrorcallback) =>
+    dispatch(getProviderInfo(onSuccesscallback, onErrorcallback)),
 });
 
 export default connect(

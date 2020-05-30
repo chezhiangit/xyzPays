@@ -3,12 +3,14 @@ import {
   SAGA_GET_PROFILE_INFO,
   SAGA_SAVE_PROFILE_INFO,
   SAGA_ADD_PROFILE_PICTURE,
+  SAGA_PROFILE_GET_PROVIDERINFO,
 } from '../AppStore/ActionTypes';
-import {storeProfileInfo} from './SagaActions';
+import {storeProfileInfo, storeGetProviderInfo} from './SagaActions';
 import {
   fetchProfileInfoService,
   saveProfileInfoService,
   addProfilePictureService,
+  getProviderInfoService,
 } from '../networkServices/profileServices/profileInfoService';
 // import moment from 'moment';
 
@@ -110,8 +112,32 @@ function* addProfilePicture(action) {
   }
 }
 
+function* getProviderInfo(action) {
+  try {
+    const accessToken = yield select(getAccessToken);
+    const response = yield call(getProviderInfoService, accessToken);
+    console.log('saga getProviderInfoService info api response...', response);
+    if (response !== null && response.status === 200) {
+      console.log('getProviderInfoService info data ....', response);
+      console.log('getProviderInfoService info saga action ....', action);
+      const providersInfo = [...response];
+
+      console.log('getProviderInfoService info object ....', providersInfo);
+      yield put(storeGetProviderInfo(providersInfo));
+      action.onSuccesscallback();
+    } else if (response !== null) {
+      action.onErrorcallback(response.Message);
+    } else {
+      action.onErrorcallback('Unable to complete your request. Pls try again.');
+    }
+  } catch (error) {
+    action.onErrorcallback('Unable to complete your request. Pls try again.');
+  }
+}
+
 export default function* watchProfileAction() {
   yield takeLatest(SAGA_GET_PROFILE_INFO, fetchProfileInfo);
   yield takeLatest(SAGA_SAVE_PROFILE_INFO, saveProfileInfo);
   yield takeLatest(SAGA_ADD_PROFILE_PICTURE, addProfilePicture);
+  yield takeLatest(SAGA_PROFILE_GET_PROVIDERINFO, getProviderInfo);
 }

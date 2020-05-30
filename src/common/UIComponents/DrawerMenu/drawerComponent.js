@@ -18,13 +18,38 @@ class DrawerComponent extends Component {
       dlgMsg: '',
     };
   }
+
+  onRouteToCommissionPage = route => {
+    if (route === 'Paid') {
+      return CommonActions.navigate({
+        name: 'CommissionPage',
+        params: {paymentStatus: 4},
+      });
+    } else if (route === 'Pending') {
+      return CommonActions.navigate({
+        name: 'CommissionPage',
+        params: {paymentStatus: 1},
+      });
+    } else if (route === 'Approved') {
+      return CommonActions.navigate({
+        name: 'CommissionPage',
+        params: {paymentStatus: 2},
+      });
+    } else if (route === 'Denied') {
+      return CommonActions.navigate({
+        name: 'CommissionPage',
+        params: {paymentStatus: 5},
+      });
+    }
+  };
+
   navigateToScreen = route => () => {
     try {
       if (route === 'USER_LOGOUT') {
         // this.setState({isLoading: true});
         this.setState({
           showDlg: true,
-          dlgMsg: 'Do you want to logout from Application?',
+          dlgMsg: I18n.t('common.logoutMessage'),
         });
         // this.props.signOut();
         return;
@@ -33,6 +58,17 @@ class DrawerComponent extends Component {
         this.props.setIntialRoute();
         return;
       }
+
+      if (
+        route === 'Paid' ||
+        route === 'Approved' ||
+        route === 'Pending' ||
+        route === 'Denied'
+      ) {
+        this.props.navigation.dispatch(this.onRouteToCommissionPage(route));
+        return;
+      }
+
       const navigateAction = CommonActions.navigate({
         name: route,
       });
@@ -40,7 +76,7 @@ class DrawerComponent extends Component {
     } catch (e) {
       this.setState({
         showDlg: true,
-        dlgMsg: 'Could not complete your request. Pls trye again.',
+        dlgMsg: I18n.t('common.errorMsg'),
       });
     }
   };
@@ -123,19 +159,39 @@ class DrawerComponent extends Component {
           </View>
           <View>
             <Text style={styles.sectionHeadingStyle}>
-              {I18n.t('hamburgerMenu.commissionAndPayout')}
+              {I18n.t('hamburgerMenu.commissionReports')}
             </Text>
             <View style={styles.navSectionStyle}>
               <Text
                 style={styles.navItemStyle}
-                onPress={this.navigateToScreen('CommissionPage')}>
-                {I18n.t('hamburgerMenu.viewCommissions')}
+                onPress={this.navigateToScreen('Paid')}>
+                {I18n.t('hamburgerMenu.paid')}
               </Text>
               <Text
                 style={styles.navItemStyle}
+                onPress={this.navigateToScreen('Approved')}>
+                {I18n.t('hamburgerMenu.approved')}
+              </Text>
+              <Text
+                style={styles.navItemStyle}
+                onPress={this.navigateToScreen('Pending')}>
+                {I18n.t('hamburgerMenu.pending')}
+              </Text>
+              <Text
+                style={styles.navItemStyle}
+                onPress={this.navigateToScreen('Denied')}>
+                {I18n.t('hamburgerMenu.denied')}
+              </Text>
+              {/* <Text
+                style={styles.navItemStyle}
+                onPress={this.navigateToScreen('CommissionPage')}>
+                {I18n.t('hamburgerMenu.viewCommissions')}
+              </Text> */}
+              {/* <Text
+                style={styles.navItemStyle}
                 onPress={this.navigateToScreen('PayoutHistoryPage')}>
                 {I18n.t('hamburgerMenu.transferMoney')}
-              </Text>
+              </Text> */}
             </View>
           </View>
           <View>
@@ -152,6 +208,11 @@ class DrawerComponent extends Component {
           </View>
           <View style={styles.sectionLine} />
           <View style={styles.navSectionStyle}>
+            <Text
+              style={styles.navItemStyle}
+              onPress={this.navigateToScreen('PayoutHistoryPage')}>
+              {I18n.t('hamburgerMenu.transferMoney')}
+            </Text>
             <Text
               style={styles.navItemStyle}
               onPress={this.navigateToScreen('ContactUsPage')}>

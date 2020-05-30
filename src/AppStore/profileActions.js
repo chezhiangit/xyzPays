@@ -2,6 +2,7 @@ import {
   SAGA_GET_PROFILE_INFO,
   SAGA_SAVE_PROFILE_INFO,
   SAGA_ADD_PROFILE_PICTURE,
+  SAGA_PROFILE_GET_PROVIDERINFO,
 } from './ActionTypes';
 
 const getProfileInfo = (
@@ -35,4 +36,13 @@ const addProfilePicture = (
   onErrorcallback,
 });
 
-export {getProfileInfo, saveProfileInfo, addProfilePicture};
+const getProviderInfo = (
+  onSuccesscallback = () => {},
+  onErrorcallback = () => {},
+) => ({
+  type: SAGA_PROFILE_GET_PROVIDERINFO,
+  onSuccesscallback,
+  onErrorcallback,
+});
+
+export {getProfileInfo, saveProfileInfo, addProfilePicture, getProviderInfo};

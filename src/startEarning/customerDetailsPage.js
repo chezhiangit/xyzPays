@@ -41,6 +41,19 @@ class CustomerDetailsPage extends React.Component {
     };
   }
 
+  // static navigationOptions = ({navigation, screenProps}) => ({
+  //   title: 'My Lead',
+  //   // headerRight: <Button color={screenProps.tintColor} {...} />,
+  // });
+
+  // static navigationOptions = {
+  //   title: 'Great',
+  // };
+
+  static navigationOptions = {
+    title: 'black',
+  };
+
   componentDidMount() {
     console.log('this.props.formDefenition ....', this.props.formDefenition);
     this.parseFormDefenition();

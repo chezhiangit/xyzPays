@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import styles from './styles';
 
@@ -14,6 +14,21 @@ const CheckBoxComponent = props => {
             props.isSelected && {backgroundColor: 'gray'},
           ]}
         />
+        {props.imageUrl && (
+          <Image
+            source={{
+              isStatic: true,
+              uri: props.imageUrl,
+              method: 'GET',
+              // headers: {
+              //   clubId: NetTool.clubId,
+              //   'Ocp-Apim-Subscription-Key': NetTool.subscriptionKey,
+              // },
+            }}
+            style={styles.providerImage}
+            defaultSource={4}
+          />
+        )}
         <Text style={[styles.btnText, props.btnTextStyle]}>
           {props.btnName}
         </Text>

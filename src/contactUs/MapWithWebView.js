@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, StyleSheet, Animated, Keyboard} from 'react-native';
+import {View, StyleSheet, Animated, Keyboard, Text} from 'react-native';
 import {connect} from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {WebView} from 'react-native-webview';
@@ -122,7 +122,11 @@ class ContactUs extends React.Component {
   render() {
     return (
       <View style={BaseStyles.baseContainer}>
-        {/* <WebView source={{uri: 'https://reactnative.dev/'}} /> */}
+        <View style={BaseStyles.userInfo}>
+          <Text style={BaseStyles.userInfoTxt}>
+            {I18n.t('contactUs.userInfo')}
+          </Text>
+        </View>
         <WebView
           source={{
             html: `<iframe width="100%" height="75%" src=${

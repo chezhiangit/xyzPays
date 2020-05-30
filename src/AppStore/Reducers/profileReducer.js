@@ -1,4 +1,4 @@
-import {STORE_PROFILE_INFO} from '../ActionTypes';
+import {STORE_PROFILE_INFO, STORE_PROFILE_PROVIDERINFO} from '../ActionTypes';
 
 const profileInfo = {
   RepId: 0,
@@ -26,6 +26,7 @@ const profileInfo = {
 const profileReducer = (
   state = {
     profileInfo,
+    providersInfo: [],
   },
   action,
 ) => {
@@ -34,6 +35,11 @@ const profileReducer = (
       return {
         ...state,
         ...action.profileInfo,
+      };
+    case STORE_PROFILE_PROVIDERINFO:
+      return {
+        ...state,
+        providersInfo: [...action.providersInfo],
       };
     default:
       return state;

@@ -21,14 +21,15 @@ import TextInputComponent from '../common/UIComponents/TextInputComponent';
 // import PasswordInputComponent from '../common/UIComponents/PasswordInputComponent';
 import PrimaryButton from '../common/UIComponents/PrimaryButton';
 import EmailInputComponent from '../common/UIComponents/EmailInputComponent';
-// import ReadOnlyView from '../common/UIComponents/readOnlyView/ReadOnlyView';
-// import CheckBoxComponent from '../common/UIComponents/CheckBox/CheckBox';
+import ReadOnlyView from '../common/UIComponents/readOnlyView/ReadOnlyView';
+import CheckBoxComponent from '../common/UIComponents/CheckBox/CheckBox';
 import styles from './styles';
 import editStyles from './editProfileStyle';
 import {
   getProfileInfo,
   saveProfileInfo,
   addProfilePicture,
+  getProviderInfo,
 } from '../AppStore/profileActions';
 import WarningDialog from '../common/UIComponents/warningDialog';
 // import {displayPhoneNumber} from '../uttils/UtilityFunctions';
@@ -67,12 +68,14 @@ class EditProfilePage extends React.Component {
       LoginEmail: '',
 
       dataLoaded: false,
-      checBoxArray: [false, false, false, false, false],
+      // checBoxArray: [false, false, false, false, false],
 
       showPhotoSelectionView: false,
 
       profileImageUri: '',
       croppedBase64: '',
+
+      checkBoxesStatus: [],
     };
   }
 
@@ -116,14 +119,51 @@ class EditProfilePage extends React.Component {
 
   componentDidMount() {
     this.props.navigation.addListener('focus', () => {
-      this.setState({isLoading: true});
+      this.setState({isLoading: true, dataLoaded: false});
       this.props.getProfileInfo(
         this.onGetProfileInfoSuccess,
         this.onGetProfileInfoFailed,
       );
-      this.setState({dataLoaded: false});
+      this.props.getProviderInfo(
+        this.onGetProviderInfoSuccess,
+        this.onGetProviderInfoFailed,
+      );
     });
   }
+
+  getSelectedProviders = () => {
+    const provider = [];
+
+    this.state.checkBoxesStatus.forEach((el, index) => {
+      if (el === true) {
+        provider.push({
+          Value: this.props.providersInfo[index].ProviderKey,
+        });
+      }
+    });
+    return provider;
+  };
+
+  parseProvidersInfo = () => {
+    let checkBoxesStatus = [];
+    this.props.providersInfo.forEach((element, index) => {
+      if (element.ProviderUserSelection === 'Selected') {
+        checkBoxesStatus[index] = true;
+      } else {
+        checkBoxesStatus[index] = false;
+      }
+    });
+    // provdersSelected.length > 0 && provdersSelected.slice(-1,);
+    return checkBoxesStatus;
+  };
+
+  onGetProviderInfoSuccess = () => {
+    this.setState({
+      checkBoxesStatus: this.parseProvidersInfo(),
+    });
+  };
+
+  onGetProviderInfoFailed = () => {};
 
   onGetProfileInfoSuccess = () => {
     this.setState({profileInfoServiceDone: true, isLoading: false});
@@ -180,6 +220,7 @@ class EditProfilePage extends React.Component {
           ? ''
           : this.state.Website,
       RepKey: this.props.profileInfo.RepKey,
+      Providers: this.getSelectedProviders(),
     };
     console.log('onUpdate payload ...', payload);
     this.setState({isLoading: true, saveProfileInfoServiceDone: true}, () =>
@@ -191,9 +232,9 @@ class EditProfilePage extends React.Component {
     );
   };
 
-  onCheckBoxSelected = index => {
-    this.setState({checkBoxIndex: index});
-  };
+  // onCheckBoxSelected = index => {
+  //   this.setState({checkBoxIndex: index});
+  // };
 
   onCancel = () => {
     this.setState({showDlg: false});
@@ -205,10 +246,10 @@ class EditProfilePage extends React.Component {
 
   onCheckBoxSelected = (index, value) => {
     this.setState(state => {
-      const checBoxArray = [...state.checBoxArray];
-      checBoxArray[index] = !state.checBoxArray[index];
+      const checkBoxesStatus = [...state.checkBoxesStatus];
+      checkBoxesStatus[index] = !state.checkBoxesStatus[index];
       return {
-        checBoxArray,
+        checkBoxesStatus,
       };
     });
   };
@@ -328,6 +369,36 @@ class EditProfilePage extends React.Component {
       .catch(e => alert(e));
   };
 
+  renderProviders = () => {
+    const checkBoxes = this.props.providersInfo?.map((el, index) => {
+      return (
+        <View style={styles.provider}>
+          {/* <Image
+            source={{
+              isStatic: true,
+              uri: el.ProviderIconImage,
+              method: 'GET',
+              // headers: {
+              //   clubId: NetTool.clubId,
+              //   'Ocp-Apim-Subscription-Key': NetTool.subscriptionKey,
+              // },
+            }}
+            style={styles.providerImage}
+            defaultSource={4}
+          /> */}
+          <CheckBoxComponent
+            btnName={el.ProviderName}
+            onClick={() => this.onCheckBoxSelected(index)}
+            isSelected={this.state.checkBoxesStatus[index]}
+            btnTextStyle={{fontWeight: 'bold'}}
+            imageUrl={el.ProviderIconImage}
+          />
+        </View>
+      );
+    });
+    return checkBoxes;
+  };
+
   render() {
     // const {navigation} = this.props;
     console.log('this.state.FirstName ....', this.state.FirstName);
@@ -424,6 +495,15 @@ class EditProfilePage extends React.Component {
               onTextChange={text => this.setState({Website: text})}
               inputValue={this.state.Website ?? ''}
             />
+            <View style={styles.labelContainer}>
+              <ReadOnlyView
+                label={I18n.t('userRegistration.providers')}
+                labelStyle={styles.providersLabel}
+              />
+            </View>
+            <View style={styles.providersContainer}>
+              {this.renderProviders()}
+            </View>
             <View style={BaseStyles.emptyHView} />
             <PrimaryButton
               btnName={I18n.t('editProfile.updateBtnName')}
@@ -506,6 +586,7 @@ const mapStateToProps = state => {
   console.log('state from profile info page ... ', state);
   return {
     profileInfo: state.profileInfo.profileInfo,
+    providersInfo: state.profileInfo.providersInfo,
   };
 };
 
@@ -517,6 +598,9 @@ const mapDispatchToProps = dispatch => ({
 
   addProfilePicture: (payload, onSuccesscallback, onErrorcallback) =>
     dispatch(addProfilePicture(payload, onSuccesscallback, onErrorcallback)),
+
+  getProviderInfo: (onSuccesscallback, onErrorcallback) =>
+    dispatch(getProviderInfo(onSuccesscallback, onErrorcallback)),
 });
 
 export default connect(

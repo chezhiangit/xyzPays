@@ -44,20 +44,26 @@ class CommissionPage extends React.Component {
       showDlg: false,
       dlgMsg: '',
       showFilter: false,
-      selectedFilterIndex: '', // All
+      selectedFilterIndex: -1, // All
       isLoading: false,
     };
     // this.show=false;
     this.translate = new Animated.Value(0);
   }
 
-  static getDerivedStateFromProps(props, state) {
-    // if (!state.dateFilterServiceDone || state.commissionListServiceDone) {
-    //   return {
-    //     isLoading: true,
-    //   };
-    // }
-    return {};
+  // static getDerivedStateFromProps(nextProps, state) {
+  //   // if (nextProps.route.params.paymentStatus !== state.selectedFilterIndex) {
+  //   //   return {selectedFilterIndex: nextProps.route.params.paymentStatus};
+  //   // }
+  //   return {};
+  // }
+
+  componentDidUpdate() {
+    if (
+      this.props.route.params.paymentStatus !== this.state.selectedFilterIndex
+    ) {
+      this.loadCommissionList();
+    }
   }
 
   componentDidMount() {
@@ -65,29 +71,36 @@ class CommissionPage extends React.Component {
       this.setState({
         isLoading: true,
         selectedFilterIndex:
-          this.props.route.params?.paymentStatus === undefined
-            ? ''
-            : this.props.route.params?.paymentStatus,
+          this.props.route.params?.paymentStatus ??
+          this.state.selectedFilterIndex,
       });
       this.props.getDateFilter(
         this.onGetDateFilterSuccess,
         this.onGetDateFilterFailed,
       );
-      const payload = {
-        SelectedDateRange: this.state.selectedDateRangeIndex,
-        TxnStatusType:
-          this.props.route.params?.paymentStatus === undefined
-            ? ''
-            : this.props.route.params?.paymentStatus,
-      };
-      this.props.getCommissionList(
-        payload.SelectedDateRange,
-        payload.TxnStatusType,
-        this.onGetCommissionLisSuccess,
-        this.onGetCommissionLisFailed,
-      );
     });
   }
+
+  loadCommissionList = () => {
+    this.setState({
+      isLoading: true,
+      selectedFilterIndex:
+        this.props.route.params?.paymentStatus ??
+        this.state.selectedFilterIndex,
+    });
+    const payload = {
+      SelectedDateRange: this.state.selectedDateRangeIndex,
+      TxnStatusType:
+        this.props.route.params?.paymentStatus ??
+        this.state.selectedFilterIndex,
+    };
+    this.props.getCommissionList(
+      payload.SelectedDateRange,
+      payload.TxnStatusType,
+      this.onGetCommissionLisSuccess,
+      this.onGetCommissionLisFailed,
+    );
+  };
 
   onGetDateFilterSuccess = () => {
     console.log('getDateFilter success');
@@ -278,13 +291,29 @@ class CommissionPage extends React.Component {
     this.setState({showFilter: show});
   };
 
+  getPageHeaderName = () => {
+    switch (this.state.selectedFilterIndex) {
+      case 2:
+        return 'Approved';
+      case 1:
+        return 'Pending';
+      case 4:
+        return 'Paid';
+      case 5:
+        return 'Denied';
+      default:
+        return 'Approved';
+    }
+  };
+
   render() {
     return (
       <View style={BaseStyles.baseContainer}>
         <View style={styles.commissionContainer}>
           <View style={BaseStyles.userInfo}>
             <Text style={BaseStyles.userInfoTxt}>
-              {I18n.t('commission.userInfo')}
+              {/* {I18n.t('commission.userInfo')} */}
+              {this.getPageHeaderName()}
             </Text>
           </View>
           <View style={styles.dropdownAndFilterContainer}>
@@ -384,7 +413,7 @@ class CommissionPage extends React.Component {
           height={heightAdapter(400)}
           width="100%">
           <View style={styles.sliderContainer}>
-            <View
+            {/* <View
               style={[
                 styles.sliderBtnContainer,
                 this.state.selectedFilterIndex === '' && bgClore,
@@ -401,7 +430,7 @@ class CommissionPage extends React.Component {
             </View>
             <View
               style={[BaseStyles.emptyHView, {height: heightAdapter(20)}]}
-            />
+            /> */}
             <View
               style={[
                 styles.sliderBtnContainer,

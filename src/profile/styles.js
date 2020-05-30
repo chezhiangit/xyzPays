@@ -56,6 +56,22 @@ export default StyleSheet.create({
     // borderColor: 'red',
     // borderWidth: 1,
   },
+  providersContainer: {
+    width: '100%',
+  },
+  providersViewStyle: {
+    width: '100%',
+    backgroundColor: '#f9f9f9',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    // justifyContent: 'space-between',
+    // alignItems: 'flex-start',
+  },
+  providersLabel: {
+    fontFamily: fontFamily.primaryFontFamily,
+    fontWeight: 'bold',
+    fontSize: fontscale(21),
+  },
   accountInforLabel: {
     fontFamily: fontFamily.primaryFontFamily,
     fontWeight: 'bold',
@@ -130,5 +146,17 @@ export default StyleSheet.create({
     fontFamily: fontFamily.primaryFontFamily,
     color: 'black',
     fontWeight: 'bold',
+  },
+  provider: {
+    flexDirection: 'row',
+    height: heightAdapter(50),
+    alignItems: 'center',
+    // justifyContent: 'flex-start',
+  },
+  providerImage: {
+    height: heightAdapter(40),
+    width: heightAdapter(40),
+    // borderColor: 'gray',
+    // borderWidth: 1,
   },
 });

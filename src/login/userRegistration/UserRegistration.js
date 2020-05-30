@@ -59,6 +59,19 @@ class UserRegistration extends React.Component {
     console.log(errorMsg);
   };
 
+  getSelectedProviders = () => {
+    const provider = [];
+
+    this.state.checkBoxesStatus.forEach((el, index) => {
+      if (el === true) {
+        provider.push({
+          Value: this.props.providers[index].ProviderKey,
+        });
+      }
+    });
+    return provider;
+  };
+
   onSubmitRegistration = () => {
     try {
       if (this.state.FirstName.length === 0) {
@@ -77,6 +90,7 @@ class UserRegistration extends React.Component {
         throw {msg: 'Password and Confirm Password mismatch.'};
       }
       this.setState({isLoading: true});
+      const selectedProviders = this.getSelectedProviders();
       const payload = {
         FirstName: this.state.FirstName,
         LastName: this.state.LastName,
@@ -84,6 +98,7 @@ class UserRegistration extends React.Component {
         Mobile: this.state.Mobile,
         Password: this.state.Password,
         ConfirmPassword: this.state.ConfirmPassword,
+        Providers: [...selectedProviders],
       };
       console.log('onSubmitRegistration payload....', payload);
 
@@ -131,12 +146,10 @@ class UserRegistration extends React.Component {
   };
 
   renderProviders = () => {
-    // const checkBoxesStatus = [];
     const checkBoxes = this.props.providers?.map((el, index) => {
-      // checkBoxesStatus.push(false);
       return (
         <View style={styles.provider}>
-          <Image
+          {/* <Image
             source={{
               isStatic: true,
               uri: el.ProviderIconImage,
@@ -148,17 +161,17 @@ class UserRegistration extends React.Component {
             }}
             style={styles.providerImage}
             defaultSource={4}
-          />
+          /> */}
           <CheckBoxComponent
             btnName={el.ProviderName}
             onClick={() => this.onCheckBoxSelected(index)}
             isSelected={this.state.checkBoxesStatus[index]}
             btnTextStyle={{fontWeight: 'bold'}}
+            imageUrl={el.ProviderIconImage}
           />
         </View>
       );
     });
-    // checkBoxesStatus.length === this.props.providers.length && this.setState({checkBoxesStatus});
     return checkBoxes;
   };
 

@@ -69,4 +69,6 @@ export default {
   addRemoveFromWishList: 'api/Product/AddRemoveFromWishList',
 
   addProfilePicture: 'api/Profile/AddProfilePicture',
+
+  getProviderInfo: 'api/Profile/GetProviderInfo?AccessToken=',
 };
