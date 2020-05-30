@@ -404,15 +404,16 @@ class EditProfilePage extends React.Component {
     console.log('this.state.FirstName ....', this.state.FirstName);
     return (
       <View style={[BaseStyles.baseContainer]}>
-        <KeyboardAwareScrollView>
+        <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
           <View style={BaseStyles.userInfo}>
             <Text style={BaseStyles.userInfoTxt}>
               {I18n.t('editProfile.userInfo')}
             </Text>
           </View>
-          <ScrollView
+          <View
             style={styles.profileViewContainer}
-            showsVerticalScrollIndicator={false}>
+            // showsVerticalScrollIndicator={false}
+          >
             <View style={styles.photoContainer}>
               <View style={styles.photoView}>
                 <Image
@@ -510,7 +511,7 @@ class EditProfilePage extends React.Component {
               onSubmit={this.onUpdate}
             />
             <View style={BaseStyles.emptyHView} />
-          </ScrollView>
+          </View>
           <Footer />
         </KeyboardAwareScrollView>
         <WarningDialog

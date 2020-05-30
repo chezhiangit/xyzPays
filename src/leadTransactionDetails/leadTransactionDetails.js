@@ -519,8 +519,8 @@ class LeadTransactionDetails extends React.Component {
   render() {
     return (
       <View style={[BaseStyles.baseContainer]}>
-        <KeyboardAwareScrollView>
-          <ScrollView showsVerticalScrollIndicator={false}>
+        <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
+          <View showsVerticalScrollIndicator={false}>
             <View style={styles.scrollContainer}>
               {/* <View style={BaseStyles.emptyHView} /> */}
               <View style={styles.topContainer}>
@@ -604,7 +604,7 @@ class LeadTransactionDetails extends React.Component {
                 />
               )}
             </View>
-          </ScrollView>
+          </View>
         </KeyboardAwareScrollView>
         <Footer />
         <WarningDialog
